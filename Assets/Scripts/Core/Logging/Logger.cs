@@ -1,3 +1,5 @@
+using UnityEngine;
+
 namespace Core.Logging {
     public static class Logger {
         public enum LogLevel {
@@ -7,7 +9,7 @@ namespace Core.Logging {
         }
 
         public static void Log(string message, LogLevel level) {
-            
+            Debug.Log(message);
         }
     }
 }
