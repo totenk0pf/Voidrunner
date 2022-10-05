@@ -7,13 +7,21 @@ using UnityEngine;
 
 namespace Assets.Scripts.Combat.Melee
 {
-    class MeleeBase : IMeleeWeapon
+    [RequireComponent(typeof(Rigidbody))]
+    [RequireComponent(typeof(BoxCollider))]
+
+    public class MeleeBase : MonoBehaviour,IMeleeWeapon
     {
         protected float damage;
 
+        private void Start()
+        {
+            this.gameObject.GetComponent<Rigidbody>().isKinematic = false;
+        }
+
         void IMeleeWeapon.AltFire()
         {
-
+            
         }
 
         void IMeleeWeapon.Fire()

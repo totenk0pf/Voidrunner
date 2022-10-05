@@ -6,4 +6,5 @@ public interface IMeleeWeapon
 {
     protected abstract void Fire();
     protected abstract void AltFire();
+    
 }

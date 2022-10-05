@@ -8,7 +8,7 @@ using UnityEngine;
  */
 
 
-public class GunCore : MonoBehaviour
+public class GunCore : MonoBehaviour,IGun
 {
     [Header("Gun Info")]
     public float GunDamage;
@@ -26,19 +26,41 @@ public class GunCore : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetMouseButtonDown(0) && gunAmmo >= 1 && clipAmount >= 1) 
+        if (Input.GetMouseButtonDown(0)) 
         {
-            gunAmmo--;
-            GunOnShootEvent();
+            if(gunAmmo >= 1) 
+            {
+                //play gun switching animation
+            }
+            else 
+            { 
+                //play no ammo animation
+            }
+            
+            
         }
 
         if (Input.GetKeyDown(KeyCode.R)) 
         {
-            isReloading = true;
-            StartCoroutine(Reload());
-            GunOnReloadEvent();
+            if(clipAmount >= 1) 
+            {
+                isReloading = true;
+                StartCoroutine(Reload());
+            }
+            else 
+            {
+                //play no item animation
+            }
+
+
         }
 
+    }
+
+    //funnction for animation event to shoot gun when player finish pulling gun out
+    public void ShootGun() 
+    {
+        gunAmmo--;
     }
 
     IEnumerator Reload() 
@@ -49,6 +71,13 @@ public class GunCore : MonoBehaviour
         isReloading = false;
     }
 
-    public virtual void GunOnShootEvent() { }
-    public virtual void GunOnReloadEvent() { }
+    void IGun.Fire()
+    {
+        throw new System.NotImplementedException();
+    }
+
+    void IGun.Reload()
+    {
+        throw new System.NotImplementedException();
+    }
 }
