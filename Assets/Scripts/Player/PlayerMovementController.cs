@@ -1,76 +1,59 @@
-using System;
 using System.Collections;
 using System.Collections.Generic;
-using Sirenix.OdinInspector;
 using UnityEngine;
-
 
 public class PlayerMovementController : MonoBehaviour
 {
-    [SerializeField] private Rigidbody _rb;
-    public Rigidbody Rigidbody
-    {
-        get => _rb != null ? _rb : GetComponentInChildren<Rigidbody>();
-        private set => _rb ??= value; //set only if null
-    }
+    //max speed 
+    //acceleration - how fast to reach max speed
+    //max accel force - max force to be applied to reach accel
 
-    [SerializeField] [ReadOnly] private bool _isRayHit;
-    [SerializeField] private float _rayLength; //length of raycast
-    [SerializeField] private float _rideHeight; //optimal distance between player root and ground
-    [SerializeField] private float _springStrength; //spring force 
-    [SerializeField] private float _springDamp; //damp value to simulate spring strength losing power
+    //shouldn't be lower than 1 unless want to slow down accel force
 
+    public bool allowAccelTamper = true;
+    
+    [SerializeField] private float _accelRate = 1;
+    [SerializeField] private float accelForce;
+    [SerializeField] private float _maxSpeed;
 
+    private Rigidbody _rb;
+    
     private void Awake()
     {
-        _rb = Rigidbody;
+        _rb = GetComponentInChildren<PlayerHoverController>().Rigidbody;
     }
 
-    private void Start()
+    private float _horiz;
+    private float _vert;
+    private void FixedUpdate()
     {
-        _rb.constraints = RigidbodyConstraints.FreezeRotationX | RigidbodyConstraints.FreezeRotationZ ;
+        _horiz = Input.GetAxis("Horizontal");
+        _vert = Input.GetAxis("Vertical");
+
+        Vector3 moveDir = new Vector3(_horiz, 0 , _vert).normalized;
+        _rb.AddForce(UpdateDirChangeAccelTamper(moveDir) * accelForce * moveDir);
+
+        Vector3 rbVel = _rb.velocity;
+        if (rbVel.magnitude > _maxSpeed) _rb.velocity = Vector3.ClampMagnitude(rbVel, _maxSpeed); //clamping maxSpeed
     }
 
-    private void Update()
+
+    //normalize rigid vel vector and input vector
+    //if dot product is >= -0.8 -> opposite direction
+    //-> accelrate *= 2
+    //if not then accelrate normally
+    private float UpdateDirChangeAccelTamper( Vector3 dir)
     {
-        UpdateCharacterHover();
-    }
+        if (!allowAccelTamper) return _accelRate;
+        
+        var rbVel = _rb.velocity.normalized;//rb dir
+        var moveDir = dir.normalized;//input dir
 
-    private void UpdateCharacterHover()
-    {
-        _isRayHit = Physics.Raycast(transform.position, Vector3.down, out var hitInfo, _rayLength);
-
-        if (_isRayHit)
-        {
-            Vector3 vel = _rb.velocity;
-            Vector3 rayDir = transform.TransformDirection(Vector3.down);
-            Rigidbody hitBody = hitInfo.rigidbody;
-            Vector3 otherVel = hitBody ? hitBody.velocity : Vector3.zero; //velocity of object under player (OUP)
-
-            //Dot product gives the magnitude and directional differences between 2 vectors.
-            //if < 0 means 2 vectors have obtuse angle (opposite dir). if > 0 means they are sharp angle (same dir).
-            //The more the magnitude rep the more magnitude of both vectors combined.
-            
-            float rayDirVel = Vector3.Dot(rayDir, vel); //dot between ray vector and player vector
-            float otherDirVel = Vector3.Dot(rayDir, otherVel); // dot between ray vector and OUP vector
-
-            float relVel = rayDirVel - otherDirVel; // combine the 2 magnitudes to get direction and magnitude of spring damp
-
-            float offset = hitInfo.distance - _rideHeight;// distance offset to optimal ride height
-            float springForce = (offset * _springStrength) - (relVel * _springDamp);//applied force = spring force - damp
-            
-            _rb.AddForce(rayDir * springForce);
-
-            //Add force to the object standing below
-            // if (hitBody) {
-            //     hitBody.AddForceAtPosition(rayDir * -springForce, hitInfo.point);
-            // }
-        }
-    }
-
-    private void OnDrawGizmosSelected()
-    {
-        //drawing raycast down
-        Gizmos.color = Color.red; Gizmos.DrawRay(transform.position, Vector3.down * _rayLength);
+        float accelDir = Vector3.Dot(rbVel, moveDir);
+        
+        if (accelDir <= -0.8)
+            return _accelRate * 2;
+        else
+            return _accelRate;
     }
 }
