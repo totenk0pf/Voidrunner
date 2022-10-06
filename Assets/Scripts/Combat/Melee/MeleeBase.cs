@@ -16,7 +16,22 @@ namespace Assets.Scripts.Combat.Melee
 
         private void Start()
         {
+            //disable rigibody
             this.gameObject.GetComponent<Rigidbody>().isKinematic = false;
+        }
+
+        private void OnTriggerEnter(Collider objCollided)
+        {
+            //checking whether object has enemy tag
+            if (objCollided.CompareTag("Enemy")) 
+            { 
+                //damage enemy and play effect
+            }
+        }
+
+        private void OnTriggerExit(Collider objCollided)
+        {
+            
         }
 
         void IMeleeWeapon.AltFire()

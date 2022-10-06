@@ -6,4 +6,5 @@ public interface IGun
 {
     protected void Fire();
     protected void Reload();
+    
 }

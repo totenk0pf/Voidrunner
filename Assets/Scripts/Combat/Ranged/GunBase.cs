@@ -26,8 +26,10 @@ public class GunCore : MonoBehaviour,IGun
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetMouseButtonDown(0)) 
+        //checking whether player have pressed right mouse button and whether gun switching animation playing
+        if (Input.GetMouseButtonDown(0) && this.gameObject.GetComponentInParent<Animator>().GetCurrentAnimatorStateInfo(0).IsName("GunSwitching")) 
         {
+            //checking if there is any ammo left
             if(gunAmmo >= 1) 
             {
                 //play gun switching animation
@@ -40,11 +42,15 @@ public class GunCore : MonoBehaviour,IGun
             
         }
 
+        //if player input R key
         if (Input.GetKeyDown(KeyCode.R)) 
         {
+            //making sure if there is gun clip left
             if(clipAmount >= 1) 
             {
+                //preventing from fire while reloading
                 isReloading = true;
+                //start reload couroutine
                 StartCoroutine(Reload());
             }
             else 
@@ -60,6 +66,7 @@ public class GunCore : MonoBehaviour,IGun
     //funnction for animation event to shoot gun when player finish pulling gun out
     public void ShootGun() 
     {
+        //decrease gun ammo
         gunAmmo--;
     }
 
@@ -73,11 +80,11 @@ public class GunCore : MonoBehaviour,IGun
 
     void IGun.Fire()
     {
-        throw new System.NotImplementedException();
+        
     }
 
     void IGun.Reload()
     {
-        throw new System.NotImplementedException();
+        
     }
 }
