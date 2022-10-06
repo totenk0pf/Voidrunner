@@ -8,13 +8,14 @@ using UnityEngine;
  */
 
 
-public class GunCore : MonoBehaviour,IGun
+public class GunBase : MonoBehaviour,IGun
 {
     [Header("Gun Info")]
-    public float GunDamage;
+    public float gunDamage;
     public int gunAmmo;
     public int clipAmount;
     public bool isReloading;
+    public Transform gunBarrel;
     //======== Gun Varibles Private ==========
     private int gunDefaultAmmo;
     // Start is called before the first frame update
@@ -32,6 +33,7 @@ public class GunCore : MonoBehaviour,IGun
             //checking if there is any ammo left
             if(gunAmmo >= 1) 
             {
+                ShootGun();
                 //play gun switching animation
             }
             else 
@@ -68,23 +70,38 @@ public class GunCore : MonoBehaviour,IGun
     {
         //decrease gun ammo
         gunAmmo--;
+
+        //raycast hit for info
+        RaycastHit gunRay;
+
+        //if it hits something
+        if(Physics.Raycast(gunBarrel.position,gunBarrel.forward,out gunRay, Mathf.Infinity)) 
+        {
+            //check whether It hits enemy
+            if (gunRay.transform.tag == "Enemy")
+            {
+                //damage enemy
+                gunRay.transform.gameObject.GetComponent<EnemyBase>().TakeDamage(gunDamage);
+            }
+        }
+         
+        
+        
     }
 
     IEnumerator Reload() 
     {
+        //wait until reload animation finished
         yield return new WaitForSeconds(this.gameObject.GetComponentInParent<Animator>().runtimeAnimatorController.animationClips[0].length);
+        //decrease clip amount
         clipAmount--;
+        //set gun ammo back to default
         gunAmmo = gunDefaultAmmo;
+        //set isReloading to false so player can use gun
         isReloading = false;
     }
 
-    void IGun.Fire()
-    {
-        
-    }
+    void IGun.Fire(){}
 
-    void IGun.Reload()
-    {
-        
-    }
+    void IGun.Reload(){}
 }
