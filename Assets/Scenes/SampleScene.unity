@@ -400,12 +400,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bde9c7c6efacc0942b5a76da00964237, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  moveState: 0
+  playerVisualProto: {fileID: 629518227}
   allowAccelTamper: 1
   accelRate: 1.5
   accelForce: 10
   maxSpeed: 5
-  rollDistance: 0
-  rollTime: 0
+  toggleProtoRoll: 1
+  rollAngleProto: 2.5
+  rollKey: 120
+  rollDistance: 3
+  rollTime: 0.5
+  routineInterval: 0
+  slideKey: 324
+  slideTime: 1
 --- !u!1 &629518226
 GameObject:
   m_ObjectHideFlags: 0

@@ -6,33 +6,46 @@ using UnityEngine.Serialization;
 
 public class PlayerMovementController : MonoBehaviour
 {
+    public enum MovementState
+    {
+        Normal,
+        Roll,
+        Slide
+    }
+    
     //max speed 
     //acceleration - how fast to reach max speed
     //max accel force - max force to be applied to reach accel
 
     //shouldn't be lower than 1 unless want to slow down accel force
+
+    public MovementState moveState;
+
+    [SerializeField] private Transform playerVisualProto;
     
-    public bool canMove = true;
+    [Space]
+    [Header("Movement General")]
     public bool allowAccelTamper = true;
-    
     [SerializeField] private float accelRate = 1;
     [SerializeField] private float accelForce;
     [SerializeField] private float maxSpeed;
 
     private Rigidbody _rb;
-
+    private Vector3 _moveDir;
 
     [Header("Roll Attributes")] 
-    [SerializeField]  private KeyCode rollKey;
+    public bool toggleProtoRoll = true;
+    public float rollAngleProto = 10;
     [Space]
+    [SerializeField]  private KeyCode rollKey;
     [SerializeField] private float rollDistance;
     [SerializeField] private float rollTime;
     [SerializeField] private float routineInterval;
 
-    [Header("Slide Attributes")] [SerializeField]
-    private KeyCode slideKey;
+    [Header("Slide Attributes")] 
+    [SerializeField] private KeyCode slideKey;
     [SerializeField] private float slideTime;
-    
+
     private void Awake()
     {
         _rb = GetComponentInChildren<PlayerHoverController>().Rigidbody;
@@ -44,11 +57,16 @@ public class PlayerMovementController : MonoBehaviour
     {
         _horiz = Input.GetAxis("Horizontal");
         _vert = Input.GetAxis("Vertical");
-        Vector3 moveDir = new Vector3(_horiz, 0 , _vert).normalized;
+        _moveDir = new Vector3(_horiz, 0 , _vert).normalized;
         
         
-        //if(Input.GetKeyDown(rollKey)) ActionRoll(moveDir);
-        if(canMove) UpdateStrafe(moveDir);
+        
+        if(moveState == MovementState.Normal) UpdateStrafe(_moveDir);
+    }
+
+    private void Update()
+    {
+        if(Input.GetKeyDown(rollKey)) ActionRoll(_moveDir);
     }
 
 
@@ -79,45 +97,52 @@ public class PlayerMovementController : MonoBehaviour
             return accelRate;
     }
     
-    //For Rolling
-    //Reset velocity from rigidbody
-    //lerp to designated position = roll distance * input dir vector
-    // private void ActionRoll(Vector3 moveDir)
-    // {
-    //     if (moveDir.magnitude == 0)
-    //     {
-    //         Debug.Log("no roll");
-    //         return;
-    //     }
-    //     Debug.Log("yes roll");
-    //     
-    //     _rb.velocity = Vector3.zero;
-    //     Vector3 dest = transform.position + (moveDir) * rollDistance;
-    //     StartCoroutine(LerpPosRoutine(dest));
-    // }
-    //
-    // private IEnumerator LerpPosRoutine(Vector3 dest)
-    // {
-    //     var startPos = transform.position;
-    //     float x = Time.time;
-    //     
-    //     while (x < rollTime)
-    //     {
-    //         canMove = false;
-    //         Vector3.Lerp(startPos, dest, x / rollTime);
-    //         x += Time.deltaTime;
-    //
-    //         yield return null;
-    //     }
-    //
-    //     canMove = true;
-    //     transform.position = dest;
-    // }
+    
+    /// <summary>
+    /// Roll the character
+    /// - reset velocity, lerp to (distance + direction) point
+    /// - roll visual towards said point
+    /// </summary>
+    /// <param name="moveDir"> normalized input direction vector </param>
+    private void ActionRoll(Vector3 moveDir)
+    {
+        //check for movement and prevent roll stack
+        if (moveDir.magnitude == 0 || moveState == MovementState.Roll) { return; }
+
+        moveState = MovementState.Roll;
+        
+        _rb.velocity = Vector3.zero;
+        Vector3 dest = transform.position + (moveDir) * rollDistance;
+        Vector3 rollAxis = Vector3.Cross(moveDir, playerVisualProto.up);
+        
+        StartCoroutine(LerpPosRoutine(dest, rollAxis));
+    }
+    
+    private IEnumerator LerpPosRoutine(Vector3 dest, Vector3 rollAxis)
+    {
+        var startPos = transform.position;
+        float time = 0;
+        
+        while (time < rollTime)
+        {
+            transform.position = Vector3.Lerp(startPos, dest, time / rollTime);
+            time += Time.deltaTime;
+            
+            if(toggleProtoRoll)
+                playerVisualProto.RotateAround(transform.position, rollAxis, rollAngleProto);
+            
+            
+            yield return null;
+        }
+        
+        transform.position = dest;
+        playerVisualProto.up = Vector3.up;
+        moveState = MovementState.Normal;
+    }
     
     //For Sliding
     //check for velocity from rb
-    //if reached max speed -> let player slide (add force)
-    
+    //if reached max speed -> let player slide (lerp)
     private void ActionSlide(Vector3 moveDir)
     {
         if (Mathf.Abs(_rb.velocity.magnitude - maxSpeed) <= 0.1f)
