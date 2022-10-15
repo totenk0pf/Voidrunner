@@ -5,7 +5,7 @@ using UnityEngine;
 
 namespace Core.Events {
     public class EventDispatcher : Singleton<EventDispatcher> {
-        public Dictionary<EventType, Action<object>> _events = new Dictionary<EventType,Action<object>>();
+        public Dictionary<EventType, Action<object>> Events = new();
         
         /// <summary>
         /// Add a listener to an event type.
@@ -13,11 +13,11 @@ namespace Core.Events {
         /// <param name="eventType">Type of event.</param>
         /// <param name="callback">Action to trigger on event.</param>
         public void AddListener(EventType eventType, Action<object> callback) {
-            if (_events.ContainsKey(eventType)) {
-                _events[eventType] += callback;
+            if (Events.ContainsKey(eventType)) {
+                Events[eventType] += callback;
             }
             else {
-                _events.Add(eventType, callback);
+                Events.Add(eventType, callback);
             }
         }
 
@@ -27,8 +27,8 @@ namespace Core.Events {
         /// <param name="eventType">Type of event</param>
         /// <param name="callback"></param>
         public void RemoveListener(EventType eventType, Action<object> callback) {
-            if (_events.ContainsKey(eventType)) {
-                _events[eventType] -= callback;
+            if (Events.ContainsKey(eventType)) {
+                Events[eventType] -= callback;
             }
         }
 
@@ -38,10 +38,10 @@ namespace Core.Events {
         /// <param name="eventType">Event to trigger.</param>
         /// <param name="param">Paramaters</param>
         public void FireEvent(EventType eventType, object param = null) {
-            if (_events.ContainsKey(eventType)) {
-                var actions = _events[eventType];
+            if (Events.ContainsKey(eventType)) {
+                var actions = Events[eventType];
                 if (actions == null) {
-                    _events.Remove(eventType);
+                    Events.Remove(eventType);
                     return;
                 }
                 actions.Invoke(param);
@@ -49,7 +49,7 @@ namespace Core.Events {
         }
 
         public void ClearListeners() {
-            _events.Clear();
+            Events.Clear();
         }
     }
 

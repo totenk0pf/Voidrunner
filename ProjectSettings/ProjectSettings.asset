@@ -611,7 +611,7 @@ PlayerSettings:
   webGLThreadsSupport: 0
   webGLDecompressionFallback: 0
   scriptingDefineSymbols:
-    Standalone: ODIN_INSPECTOR;ODIN_INSPECTOR_3
+    Standalone: ODIN_INSPECTOR;ODIN_INSPECTOR_3;TERRAINPACKAGE_EXIST
   additionalCompilerArguments: {}
   platformArchitecture: {}
   scriptingBackend: {}
