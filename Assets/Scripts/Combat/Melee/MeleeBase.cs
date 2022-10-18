@@ -1,47 +1,65 @@
-﻿using System;
+﻿using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using UnityEngine;
+using Sirenix.OdinInspector;
 
-namespace Assets.Scripts.Combat.Melee
-{
+namespace Combat {
     [RequireComponent(typeof(Rigidbody))]
     [RequireComponent(typeof(BoxCollider))]
+    public class MeleeBase : WeaponBase {
+        [TitleGroup("Melee settings")]
+        public float attackSpeed;
+        public float attackRadius;
+        public float attackSpeedModifier = 1f;
+        
+        [TitleGroup("Melee states")]
+        protected bool isAttacking;
+        protected bool canAttack;
 
-    public class MeleeBase : MonoBehaviour,IMeleeWeapon
-    {
-        protected float damage;
+        protected List<EnemyBase> enemies = new();
 
-        private void Start()
-        {
-            //disable rigibody
-            this.gameObject.GetComponent<Rigidbody>().isKinematic = false;
+        protected void Awake() {
+            StartCoroutine(Fire());
+            StartCoroutine(AltFire());
         }
 
-        private void OnTriggerEnter(Collider objCollided)
-        {
-            //checking whether object has enemy tag
-            if (objCollided.CompareTag("Enemy")) 
-            { 
-                //damage enemy and play effect
+        protected void Update() {
+            if (Input.GetMouseButtonDown(0)) {
+                if (canAttack) {
+                    isAttacking = true;
+                }
             }
         }
 
-        private void OnTriggerExit(Collider objCollided)
-        {
-            
+        protected void OnTriggerEnter(Collider col) {
+            var enemy = col.GetComponent<EnemyBase>();
+            if (!enemy) return;
+            enemies.Add(enemy);
         }
 
-        void IMeleeWeapon.AltFire()
-        {
-            
+        protected void OnTriggerExit(Collider col) {
+            var enemy = col.GetComponent<EnemyBase>();
+            if (!enemy) return;
+            if (enemies.Contains(enemy)) enemies.Remove(enemy);
         }
 
-        void IMeleeWeapon.Fire()
-        {
+        public override IEnumerator Fire() {
+            if (isAttacking) {
+                canAttack = false;
+                for (int i = 0; i < enemies.Count; i++) {
+                    if (Vector3.Distance(enemies[i].transform.position, transform.position) > attackRadius) continue;
+                    Damage(enemies[i]);
+                }
 
+                yield return new WaitForSeconds(attackSpeed / attackSpeedModifier);
+                canAttack = true;
+            }
+
+            yield return null;
+        }
+
+        public override IEnumerator AltFire() {
+            yield return null;
         }
     }
 }

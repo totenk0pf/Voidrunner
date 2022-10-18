@@ -1,105 +1,72 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
+using Sirenix.OdinInspector;
 
-/*
- * Object hold: every gun in game
- * Content: gun behaviour for raycast and projectile 
- */
+namespace Combat {
+    public class GunBase : WeaponBase {
+        [TitleGroup("Gun settings")]
+        public float preshotDelay;
+        public Transform firePoint;
+        [SerializeField] private int maxAmmo;
+        [SerializeField] private int maxClip;
+        
+        [TitleGroup("Gun states")]
+        protected bool isReloading;
+        protected bool isFiring;
 
+        public int currentAmmo;
+        public int clipAmount;
 
-public class GunBase : MonoBehaviour, IGunWeapon
-{
-    [Header("Gun Info")]
-    public float gunDamage;
-    public int gunAmmo;
-    public int clipAmount;
-    public bool isReloading;
-    public Transform gunBarrel;
-    //======== Gun Varibles Private ==========
-    private int gunDefaultAmmo;
-    // Start is called before the first frame update
-    void Start()
-    {
-        gunDefaultAmmo = gunAmmo;
-    }
+        [TitleGroup("Components")]
+        [SerializeField] protected Animator animator;
 
-    // Update is called once per frame
-    void Update()
-    {
-        //checking whether player have pressed right mouse button and whether gun switching animation playing
-        if (Input.GetMouseButtonDown(0) && this.gameObject.GetComponentInParent<Animator>().GetCurrentAnimatorStateInfo(0).IsName("GunSwitching")) 
-        {
-            //checking if there is any ammo left
-            if(gunAmmo >= 1) 
-            {
-                ShootGun();
-                //play gun switching animation
-            }
-            else 
-            { 
-                //play no ammo animation
-            }
-            
-            
+        protected void Awake() {
+            currentAmmo = maxAmmo;
         }
 
-        //if player input R key
-        if (Input.GetKeyDown(KeyCode.R)) 
-        {
-            //making sure if there is gun clip left
-            if(clipAmount >= 1) 
-            {
-                //preventing from fire while reloading
-                isReloading = true;
-                //start reload couroutine
-                StartCoroutine(Reload());
+        protected void Update() {
+            if (Input.GetMouseButtonDown(2) && animator.GetCurrentAnimatorStateInfo(0).IsName("GunSwitching")) {
+                if (isFiring) return;
+                if (currentAmmo >= 1) {
+                    currentAmmo--;
+                    StartCoroutine(Fire());
+                }
             }
-            else 
-            {
-                //play no item animation
-            }
-
-
-        }
-
-    }
-
-    //funnction for animation event to shoot gun when player finish pulling gun out
-    public void ShootGun() 
-    {
-        //decrease gun ammo
-        gunAmmo--;
-
-        //raycast hit for info
-        RaycastHit gunRay;
-
-        //if it hits something
-        if(Physics.Raycast(gunBarrel.position,gunBarrel.forward,out gunRay, Mathf.Infinity)) 
-        {
-            //check whether It hits enemy
-            if (gunRay.transform.tag == "Enemy")
-            {
-                //damage enemy
-                gunRay.transform.gameObject.GetComponent<EnemyBase>().TakeDamage(gunDamage);
+            if (Input.GetKeyDown(KeyCode.R)) {
+                if (isReloading) return;
+                if (clipAmount >= 1) {
+                    isReloading = true;
+                    StartCoroutine(Reload());
+                }
             }
         }
-    }
 
-    public IEnumerator Fire() {
-        yield return null;
-    }
+        protected EnemyBase GetEnemy() {
+            if (Physics.Raycast(firePoint.position, firePoint.forward, out var hit, Mathf.Infinity)) {
+                var enemy = hit.transform.GetComponent<EnemyBase>();
+                return !enemy ? null : enemy;
+            }
+            return null;
+        }
 
-    public IEnumerator Reload() 
-    {
-        //wait until reload animation finished
-        yield return new WaitForSeconds(this.gameObject.GetComponentInParent<Animator>().runtimeAnimatorController.animationClips[0].length);
-        //decrease clip amount
-        clipAmount--;
-        //set gun ammo back to default
-        gunAmmo = gunDefaultAmmo;
-        //set isReloading to false so player can use gun
-        isReloading = false;
-        yield return null;
+        public override IEnumerator AltFire() {
+            yield return null;
+        }
+
+        public override IEnumerator Fire() {
+            yield return new WaitForSeconds(preshotDelay);
+            Damage(GetEnemy());
+            isFiring = false;
+            yield return null;
+        }
+
+        protected IEnumerator Reload() {
+            yield return new WaitForSeconds(transform.GetComponentInParent<Animator>().runtimeAnimatorController
+                                                .animationClips[0].length);
+            clipAmount--;
+            currentAmmo = maxAmmo;
+            isReloading = false;
+            yield return null;
+        }
     }
 }
