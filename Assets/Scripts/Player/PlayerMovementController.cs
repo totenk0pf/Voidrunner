@@ -20,6 +20,12 @@ public class PlayerMovementController : MonoBehaviour
     //max accel force - max force to be applied to reach accel
 
     //shouldn't be lower than 1 unless want to slow down accel force
+    private Rigidbody _rb;
+    public Rigidbody Rigidbody
+    {
+        get => _rb != null ? _rb : GetComponentInChildren<Rigidbody>();
+        private set => _rb ??= value; //set only if null
+    }
 
     public MovementState moveState;
 
@@ -40,8 +46,7 @@ public class PlayerMovementController : MonoBehaviour
     [SerializeField] private float slopeCastDist;
     public float maxSlopeAngle;
     private RaycastHit _slopeHit;
-
-    private Rigidbody _rb;
+    
     private Vector3 _moveDir;
 
     [Header("Roll Attributes")] 
@@ -59,11 +64,6 @@ public class PlayerMovementController : MonoBehaviour
     [SerializeField] private float slideTime;
     [SerializeField] private float slideDistance;
     
-
-    private void Awake()
-    {
-        _rb = GetComponentInChildren<PlayerHoverController>().Rigidbody;
-    }
 
     private float _horiz;
     private float _vert;
