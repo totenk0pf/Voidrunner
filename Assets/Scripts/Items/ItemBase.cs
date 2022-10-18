@@ -19,18 +19,22 @@ public class ItemBase : MonoBehaviour,IItems
         UseItem();
     }
 
-    public virtual void UseItem() 
-    { 
-    
-    }
+    public virtual void UseItem() { }
 
     public virtual void PickUpItem() 
     { 
-    
+        //call duong add item function
     }
 
     public virtual void RemoveItem() 
-    { 
-    
+    {
+        //call duong remove item function
     }
+
+    private void OnCollisionEnter(Collision collision)
+    {
+        OnPickup();
+    }
+
+    
 }
