@@ -7,26 +7,31 @@ public class PlayerStats : MonoBehaviour
     //Will add more on the way. 
     [Header("Refs")]
     [SerializeField] private Oxygen oxygenComponent;
-    [SerializeField] private PlayerMovementController movementControllerComponent;
+    [SerializeField] private PlayerProgession progessionComponent;
 
-    [Header("Values and Modifiers")]
+    [Space]
+    public int vigor;
+    public int endurance;
+    public int strength;
+    public int dexterity;
 
-    [Header("Oxygen")]
-    public float oxygenPool;
-    public int regenerateTime;
-    public float regenMultiplier = 1;
+    [Space]
+    public int level;
 
-    [Header("Player Movement")]
-    public float speedModifier = 1;
-    public float accelModifier = 1;
+    private void Awake() {
+        CheckRef(oxygenComponent);
+        CheckRef(progessionComponent);
+
+        level = progessionComponent.level;
+
+        vigor = progessionComponent.vigor;
+        endurance = progessionComponent.endurance;
+        strength = progessionComponent.strength;
+        dexterity = progessionComponent.dexterity;
+    }
 
     private void Start() {
-        CheckRef(oxygenComponent);
-        oxygenComponent.oxygenPool      = oxygenPool;
-        oxygenComponent.regenerateTime  = regenerateTime;
-        oxygenComponent.regenMultipiler = regenMultiplier;
-
-        CheckRef(movementControllerComponent);
+        oxygenComponent.oxygenPool = 100 + 5 * vigor;
     }
 
     private void CheckRef<T>(T reference) {
