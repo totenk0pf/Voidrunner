@@ -27,4 +27,12 @@ public class EnemyStateMachine :MonoBehaviour
     private void SwitchState(EnemyState state) {
         _currentState = state;
     }
+
+    private void OnTriggerEnter(Collider other) {
+        _currentState.OnTriggerEnter(other);
+    }
+
+    private void OnTriggerStay(Collider other) {
+        _currentState.OnTriggerStay(other);
+    }
 }
