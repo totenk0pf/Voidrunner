@@ -23,8 +23,11 @@ public class PlayerMovementController : MonoBehaviour
     private Rigidbody _rb;
     public Rigidbody Rigidbody
     {
-        get => _rb != null ? _rb : GetComponentInChildren<Rigidbody>();
-        private set => _rb ??= value; //set only if null
+        get
+        {
+            if (!_rb) _rb = GetComponent<Rigidbody>();
+            return _rb;
+        }
     }
 
     public MovementState moveState;
@@ -67,6 +70,12 @@ public class PlayerMovementController : MonoBehaviour
 
     private float _horiz;
     private float _vert;
+
+    private void Awake()
+    {
+        _rb = Rigidbody;
+    }
+
     private void FixedUpdate()
     {
         UpdateMoveDir();
