@@ -26,7 +26,7 @@ public class WalkerHostile : EnemyState
 
         else Agent.speed = fastChaseSpeed;
 
-        if (Vector3.Distance(transform.position, target) < 2f) {
+        if (Agent.remainingDistance < 2f) {
             Agent.isStopped = true;
             return _nextState;
         }
