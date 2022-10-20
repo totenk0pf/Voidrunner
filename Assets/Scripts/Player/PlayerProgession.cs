@@ -1,10 +1,11 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerProgession : MonoBehaviour
+public class PlayerProgession
 {
     public int level;
+    public int skillCap;
+
+    [Header("Debug Only")]
     public int skillPoints;
     public float currentXP;
     public float levelupXP = 50;
@@ -48,30 +49,39 @@ public class PlayerProgession : MonoBehaviour
         if (skillPoints > 0) {
             switch (type) {
                 case SkillType.Vigor:
-                    vigor++;
+                    if (vigor < skillCap) {
+                        vigor++;
+                        skillPoints--;
+                        break;
+                    }
 
-                    skillPoints--;
                     break;
 
                 case SkillType.Endurance:
-                    endurance++;
+                    if (endurance < skillCap) {
+                        endurance++;
+                        skillPoints--;
+                        break;
+                    }
 
-
-                    skillPoints--;
                     break;
 
                 case SkillType.Strength:
-                    strength++;
+                    if (strength < skillCap) {
+                        strength++;
+                        skillPoints--;
+                        break;
+                    }
 
-
-                    skillPoints--;
                     break;
 
                 case SkillType.Dexterity:
-                    dexterity++;
+                    if (dexterity < skillCap) {
+                        dexterity++;
+                        skillPoints--;
+                        break;
+                    }
 
-
-                    skillPoints--;
                     break;
 
                 default:
