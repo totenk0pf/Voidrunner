@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class WalkerAttack : EnemyState
 {
-    public float damage;
     public float attackDelay;
 
     private GameObject target;
@@ -30,7 +29,7 @@ public class WalkerAttack : EnemyState
         _isAttacking = true;
 
         var oxygenComp = target.GetComponent<Oxygen>();
-        oxygenComp.ReducePermanentOxygen(damage);
+        oxygenComp.ReducePermanentOxygen(eBase.enemyDamage);
 
         yield return new WaitForSeconds(attackDelay);
 
