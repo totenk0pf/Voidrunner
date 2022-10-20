@@ -11,7 +11,7 @@ namespace Combat
         public abstract IEnumerator AltFire();
         protected virtual void Damage(EnemyBase enemy) {
             if (!enemy) return;
-            enemy.TakeDamage(damage);
+            enemy.TakeDamage(damage + damageModifier);
         }
     }
 }
