@@ -12,7 +12,8 @@ public class PlayerMovementController : MonoBehaviour
     {
         Normal,
         Roll,
-        Slide
+        Slide,
+        Falling
     }
     
     //max speed 
@@ -21,7 +22,6 @@ public class PlayerMovementController : MonoBehaviour
 
     //shouldn't be lower than 1 unless want to slow down accel force
     private Rigidbody _rb;
-
     private Rigidbody Rb
     {
         get {
@@ -42,9 +42,11 @@ public class PlayerMovementController : MonoBehaviour
     [SerializeField] private float maxSpeed;
 
     [Header("Movement Drag")] 
-    public bool canDrag = true;
-    public float rigidBodyDrag = 3;
-    
+    [SerializeField] private bool canDrag = true;
+    [SerializeField] private float slopeDrag = 3f;
+    [SerializeField] private float groundDrag;
+    [SerializeField] private float airDrag;
+
     [Header("Slope Handling")] 
     [SerializeField] private float slopeCastDist;
     public float maxSlopeAngle;
@@ -74,7 +76,7 @@ public class PlayerMovementController : MonoBehaviour
     {
         UpdateMoveDir();
         if(moveState == MovementState.Normal) UpdateStrafe();
-        if (canDrag) GivingDragOnSlope();
+        if (canDrag) ApplyDrag();
     }
 
     private void Update()
@@ -146,10 +148,10 @@ public class PlayerMovementController : MonoBehaviour
         return false;
     }
 
-    private void GivingDragOnSlope()
+    private void ApplyDrag()
     {
         if (!OnSlope()) {
-            Rb.drag = 0;
+            Rb.drag = groundDrag;
             Rb.useGravity = true;
             return;
         }
@@ -157,11 +159,11 @@ public class PlayerMovementController : MonoBehaviour
         float value = Vector3.Dot(Rb.velocity.normalized, Vector3.up);
         //going down
         if (value < 0) { 
-            Rb.drag = rigidBodyDrag;
+            Rb.drag = slopeDrag;
             Rb.useGravity = false;
         }
         else {
-            Rb.drag = 0;
+            Rb.drag = groundDrag;
             Rb.useGravity = true;
         }
 
