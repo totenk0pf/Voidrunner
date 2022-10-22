@@ -1,0 +1,33 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4935ddf828dc03245b949a789211b4bc, type: 3}
+  m_Name: UIData
+  m_EditorClassIdentifier: 
+  augmentData:
+  - type: 0
+    icon: {fileID: 0}
+    primaryColor: {r: 0.15, g: 0.15, b: 0.15, a: 1}
+    secondaryColor: {r: 0.3, g: 0.3, b: 0.3, a: 1}
+  - type: 1
+    icon: {fileID: 21300000, guid: fc712f69750cdb842874ce95b195ae40, type: 3}
+    primaryColor: {r: 0.63, g: 0.85499996, b: 0.9, a: 1}
+    secondaryColor: {r: 0.21000001, g: 0.28434783, b: 0.3, a: 1}
+  - type: 2
+    icon: {fileID: 21300000, guid: fdc388c199444d943b5467c3923b31f5, type: 3}
+    primaryColor: {r: 0.8, g: 0.26666668, b: 0.16, a: 1}
+    secondaryColor: {r: 0.29803923, g: 0.14901961, b: 0.11921568, a: 1}
+  - type: 3
+    icon: {fileID: 21300000, guid: 2f34e4c724389454e80ace316042b611, type: 3}
+    primaryColor: {r: 0.68, g: 0.8, b: 0.32, a: 1}
+    secondaryColor: {r: 0.25392157, g: 0.29803923, b: 0.12156861, a: 1}
+  defaultColor: {r: 1, g: 1, b: 1, a: 1}
+  disabledColor: {r: 0, g: 0, b: 0, a: 1}
