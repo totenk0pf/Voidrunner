@@ -12,7 +12,7 @@ public class EnemyBase : EntityBase
     private float _currentHP;
 
     //Modify NavMeshAgent Values in Inspector
-    private NavMeshAgent _navAgent;
+    protected NavMeshAgent _navAgent;
 
     private void Start() {
         _navAgent = GetComponent<NavMeshAgent>();
