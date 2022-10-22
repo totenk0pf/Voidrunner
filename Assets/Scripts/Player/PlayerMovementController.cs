@@ -12,7 +12,8 @@ public class PlayerMovementController : MonoBehaviour
     {
         Normal,
         Roll,
-        Slide
+        Slide,
+        Falling
     }
     
     //max speed 
@@ -21,10 +22,11 @@ public class PlayerMovementController : MonoBehaviour
 
     //shouldn't be lower than 1 unless want to slow down accel force
     private Rigidbody _rb;
-    public Rigidbody Rigidbody
-    {
-        get => _rb != null ? _rb : GetComponentInChildren<Rigidbody>();
-        private set => _rb ??= value; //set only if null
+    private Rigidbody Rb {
+        get {
+            if (!_rb) _rb = GetComponent<Rigidbody>();
+            return _rb;
+        }
     }
 
     public MovementState moveState;
@@ -148,34 +150,20 @@ public class PlayerMovementController : MonoBehaviour
     private void ApplyDrag()
     {
         if (!OnSlope()) {
-<<<<<<< Updated upstream
-            _rb.drag = 0;
-            _rb.useGravity = true;
-=======
             Rb.drag = groundDrag;
             Rb.useGravity = true;
->>>>>>> Stashed changes
             return;
         }
         
         float value = Vector3.Dot(_rb.velocity.normalized, Vector3.up);
         //going down
         if (value < 0) { 
-<<<<<<< Updated upstream
-            _rb.drag = rigidBodyDrag;
-            _rb.useGravity = false;
-        }
-        else {
-            _rb.drag = 0;
-            _rb.useGravity = true;
-=======
             Rb.drag = slopeDrag;
             Rb.useGravity = false;
         }
         else {
             Rb.drag = groundDrag;
             Rb.useGravity = true;
->>>>>>> Stashed changes
         }
 
         if (_rb.velocity.magnitude < 0.3f)
