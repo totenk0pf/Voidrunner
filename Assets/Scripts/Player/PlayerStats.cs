@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Combat;
 
 public class PlayerStats : MonoBehaviour
 {
@@ -8,6 +9,9 @@ public class PlayerStats : MonoBehaviour
     [Header("Refs")]
     [SerializeField] private Oxygen oxygenComponent;
     [SerializeField] private PlayerProgession progessionComponent;
+    [Space]
+    [SerializeField] private WeaponBase weaponBase;
+    [SerializeField] private MeleeBase meleeBase;
 
     [Space]
     public int vigor;
@@ -21,6 +25,8 @@ public class PlayerStats : MonoBehaviour
     private void Awake() {
         CheckRef(oxygenComponent);
         CheckRef(progessionComponent);
+        CheckRef(weaponBase);
+        CheckRef(meleeBase);
 
         level = progessionComponent.level;
 
@@ -31,7 +37,13 @@ public class PlayerStats : MonoBehaviour
     }
 
     private void Start() {
+        //Oxygen Modifiers
         oxygenComponent.oxygenPool = 100 + 5 * vigor;
+
+        //Combat Modifiers
+        weaponBase.damageScale = 1; //Default 1 haven't implemented damage scaling yet
+        weaponBase.damageModifier = weaponBase.damageScale * level;
+        meleeBase.attackSpeedModifier = dexterity;
     }
 
     private void CheckRef<T>(T reference) {
