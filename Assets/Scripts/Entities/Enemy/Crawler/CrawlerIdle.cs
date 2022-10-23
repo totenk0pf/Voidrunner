@@ -1,9 +1,8 @@
 using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
 using UnityEngine.AI;
+using UnityEngine;
 
-public class WalkerIdle : EnemyState
+public class CrawlerIdle : EnemyState
 {
     public float minEnemyRange;
     public float maxEnemyRange;
@@ -50,6 +49,7 @@ public class WalkerIdle : EnemyState
     }
 
     public override void OnTriggerStay(Collider other) {
-        
+
     }
 }
+
