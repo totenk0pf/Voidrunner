@@ -9,6 +9,7 @@ namespace Combat
         public float damageModifier;
         public abstract IEnumerator Fire();
         public abstract IEnumerator AltFire();
+        protected abstract EnemyBase GetEnemy(Collider col = null);
         protected virtual void Damage(EnemyBase enemy) {
             if (!enemy) return;
             enemy.TakeDamage(damage + damageModifier);
