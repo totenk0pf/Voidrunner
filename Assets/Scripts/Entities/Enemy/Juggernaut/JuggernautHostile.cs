@@ -2,29 +2,16 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class WalkerHostile : EnemyState
+public class JuggernautHostile : EnemyState
 {
     public float fastChaseSpeed;
     [SerializeField] private EnemyState _nextState;
 
-    private Vector3 target; 
-    private enum HostileStyle
-    {
-        Slow,
-        Fast
-    }
-
-    private HostileStyle chaseType;
-
+    private Vector3 target;
     public override EnemyState RunCurrentState() {
         Agent.SetDestination(target);
         Agent.isStopped = false;
-
-        if (chaseType == HostileStyle.Slow) {
-            Agent.speed = eBase.enemySpeed;
-        }
-
-        else Agent.speed = fastChaseSpeed;
+        Agent.speed = fastChaseSpeed;
 
         if (Agent.remainingDistance < 2f) {
             Agent.isStopped = true;
@@ -34,9 +21,6 @@ public class WalkerHostile : EnemyState
     }
 
     public override void OnTriggerEnter(Collider other) {
-        if (other.tag == "Player") {
-            chaseType = (HostileStyle)Random.Range(0, 1);
-        }
     }
 
     public override void OnTriggerStay(Collider other) {

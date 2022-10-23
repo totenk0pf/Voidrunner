@@ -11,5 +11,15 @@ public abstract class EnemyState : MonoBehaviour
         }
     }
 
+    protected EnemyBase _eBase;
+    protected EnemyBase eBase {
+        get {
+            if (!_eBase) _eBase = transform.root.GetComponent<EnemyBase>();
+            return _eBase;
+        }
+    }
+
     public abstract EnemyState RunCurrentState();
+    public abstract void OnTriggerEnter(Collider other);
+    public abstract void OnTriggerStay(Collider other);
 }
