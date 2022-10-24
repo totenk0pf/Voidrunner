@@ -15,6 +15,11 @@ public class Oxygen : MonoBehaviour {
     public float permanentOxygen;
     public float tempOxygen;
 
+    [Space]
+    public float totalOxygen; //sum of perm and temp oxygen\
+    public float currentOxygen; 
+    public float oxygenRatio; //for UI
+
     //Check if can regenerate temp oxygen 
     private bool _canRegenOxygen = true;
 
@@ -24,12 +29,18 @@ public class Oxygen : MonoBehaviour {
     //System.Timers.Timer for regeneration
     private Timer _regenTimer; 
     
-    private void Start() {
+    private void Awake() {
         permanentOxygen = oxygenPool;
         tempOxygen = permanentOxygen;
 
         _currentRegenTimer = regenerateTime;
 
+        totalOxygen = permanentOxygen + tempOxygen;
+        currentOxygen = totalOxygen;
+        oxygenRatio = currentOxygen / totalOxygen;
+    }
+
+    private void Start() {
         //Timer with interval of 1s 
         _regenTimer = new System.Timers.Timer(1000);
         _regenTimer.Enabled = true;
@@ -51,6 +62,13 @@ public class Oxygen : MonoBehaviour {
 
             tempOxygen += (regenMultipiler * Time.fixedDeltaTime);
         }
+    }
+
+    //For UI
+    public float GetOxygenRatio() {
+        currentOxygen = permanentOxygen + tempOxygen;
+        oxygenRatio = currentOxygen / totalOxygen;
+        return oxygenRatio;
     }
 
     /// <summary>
