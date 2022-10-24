@@ -1,5 +1,7 @@
+using Core.Events;
 using System.Timers;
 using UnityEngine;
+using EventType = Core.Events.EventType;
 
 public class Oxygen : MonoBehaviour {
     //Oxygen pool player has throughout the game
@@ -77,6 +79,7 @@ public class Oxygen : MonoBehaviour {
     /// <param name="amount">Amount to decrease</param>
     public void ReducePermanentOxygen(float amount) {
         permanentOxygen -= amount;
+        EventDispatcher.Instance.FireEvent(EventType.OxygenChangeEvent, GetOxygenRatio());
     }
 
     /// <summary>
@@ -88,6 +91,7 @@ public class Oxygen : MonoBehaviour {
 
         _canRegenOxygen = false;
         _currentRegenTimer = regenerateTime;
+        EventDispatcher.Instance.FireEvent(EventType.OxygenChangeEvent, GetOxygenRatio());
     }
 
     /// <summary>
@@ -96,6 +100,7 @@ public class Oxygen : MonoBehaviour {
     /// <param name="amount">Amount to add</param>
     public void AddPermanentOxygen(float amount) {
         permanentOxygen += amount;
+        EventDispatcher.Instance.FireEvent(EventType.OxygenChangeEvent, GetOxygenRatio());
     }
 
     /// <summary>
@@ -104,6 +109,7 @@ public class Oxygen : MonoBehaviour {
     /// <param name="amount">Amount to add</param>
     public void AddTempOxygen(float amount) {
         tempOxygen += amount;
+        EventDispatcher.Instance.FireEvent(EventType.OxygenChangeEvent, GetOxygenRatio());
     }
 
     /// <summary>
