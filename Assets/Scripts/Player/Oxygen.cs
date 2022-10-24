@@ -65,7 +65,7 @@ public class Oxygen : MonoBehaviour {
     }
 
     //For UI
-    public float OnOxygenChangeEvent() {
+    public float GetOxygenRatio() {
         currentOxygen = permanentOxygen + tempOxygen;
         oxygenRatio = currentOxygen / totalOxygen;
         return oxygenRatio;
