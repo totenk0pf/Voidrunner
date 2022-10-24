@@ -1,4 +1,8 @@
 using UnityEngine;
+using UnityEngine.UIElements;
+using Core.Events;
+using EventDispatcher = Core.Events.EventDispatcher;
+using EventType = Core.Events.EventType;
 
 public class PlayerProgession
 {
@@ -15,9 +19,7 @@ public class PlayerProgession
     public int endurance = 1;
     public int strength = 1;
     public int dexterity = 1;
-
-    //God i love chisato
-
+    
     public enum SkillType
     {
         Vigor,
@@ -30,65 +32,67 @@ public class PlayerProgession
         if (currentXP + amount >= levelupXP) {
             currentXP = (currentXP + amount) - levelupXP;
             levelupXP = 50 * Mathf.Pow(1.2f, level);
-            LevelUp();
+            
+            level++;
+            skillPoints++;
         }
 
         else {
             currentXP += amount;
         }
+        
+        EventDispatcher.Instance.FireEvent(EventType.LevelChangeEvent, GetXpRatio() );
     }
 
-    //Sex
-
-    public void LevelUp() {
-        level++;
-        skillPoints++;
-    }
-
-    public void AddSkillType(SkillType type) {
-        if (skillPoints > 0) {
-            switch (type) {
-                case SkillType.Vigor:
-                    if (vigor < skillCap) {
-                        vigor++;
-                        skillPoints--;
-                        break;
-                    }
-
+    public void AddSkillType(SkillType type)
+    {
+        if (skillPoints <= 0) return;
+        switch (type) {
+            case SkillType.Vigor:
+                if (vigor < skillCap) {
+                    vigor++;
+                    skillPoints--;
                     break;
+                }
 
-                case SkillType.Endurance:
-                    if (endurance < skillCap) {
-                        endurance++;
-                        skillPoints--;
-                        break;
-                    }
+                break;
 
+            case SkillType.Endurance:
+                if (endurance < skillCap) {
+                    endurance++;
+                    skillPoints--;
                     break;
+                }
 
-                case SkillType.Strength:
-                    if (strength < skillCap) {
-                        strength++;
-                        skillPoints--;
-                        break;
-                    }
+                break;
 
+            case SkillType.Strength:
+                if (strength < skillCap) {
+                    strength++;
+                    skillPoints--;
                     break;
+                }
 
-                case SkillType.Dexterity:
-                    if (dexterity < skillCap) {
-                        dexterity++;
-                        skillPoints--;
-                        break;
-                    }
+                break;
 
+            case SkillType.Dexterity:
+                if (dexterity < skillCap) {
+                    dexterity++;
+                    skillPoints--;
                     break;
+                }
 
-                default:
-                    Debug.Log("Invalid Skill Type in " + this);
-                    break;
-            }
+                break;
+
+            default:
+                Debug.Log($"Invalid Skill Type in {this}");
+                break;
         }
+    }
+
+    private float GetXpRatio()
+    {
+        return currentXP / levelupXP;
     }
 
 }

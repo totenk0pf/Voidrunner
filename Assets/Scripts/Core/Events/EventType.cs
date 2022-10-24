@@ -3,6 +3,7 @@ namespace Core.Events {
         TestEvent = 0,
         LogEvent,
         OxygenChangeEvent,
+        LevelChangeEvent,
         WeaponChangedEvent,
         AugmentChangedEvent,
         AugmentDrainEvent
