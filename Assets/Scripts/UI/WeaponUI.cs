@@ -1,19 +1,16 @@
 using System;
 using System.Collections.Generic;
+using Combat;
+using Core.Events;
 using DG.Tweening;
 using UnityEngine;
 using UnityEngine.UI;
+using EventType = Core.Events.EventType;
 
 namespace UI {
     public class WeaponUI : MonoBehaviour {
         [Serializable]
-        public enum WeaponType {
-            Melee,
-            Ranged
-        }
-
-        [Serializable]
-        public struct UIEntry {
+        private struct UIEntry {
             public WeaponType type;
             public RectTransform element;
         }
@@ -41,12 +38,13 @@ namespace UI {
         }
 
         private void Awake() {
-            ChangeActivePanel();
+            EventDispatcher.Instance.AddListener(EventType.WeaponChangedEvent, type => ChangeActivePanel((WeaponType) type));
         }
 
-        public void ChangeActivePanel() {
+        private void ChangeActivePanel(WeaponType type) {
+            currentType = type;
             _initHeight = Transform.rect.height - Layout.spacing;
-            var segmentHeight = _initHeight / (panelList.Count);
+            var segmentHeight = _initHeight / panelList.Count;
             foreach (var item in panelList) {
                 var selectedScale = segmentHeight * activeScale / _initHeight;
                 var unselectedScale = segmentHeight * inactiveScale / _initHeight;
@@ -58,12 +56,5 @@ namespace UI {
                     .OnUpdate(() => LayoutRebuilder.ForceRebuildLayoutImmediate(Transform));
             }
         }
-
-        #if UNITY_EDITOR
-        private void OnValidate() {
-            if (!Application.isPlaying) return;
-            ChangeActivePanel();
-        }
-        #endif
     }
 }

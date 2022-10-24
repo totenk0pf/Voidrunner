@@ -501,7 +501,7 @@ GameObject:
   - component: {fileID: 6037325520723149431}
   - component: {fileID: 6037325520723149430}
   - component: {fileID: 6037325520723149432}
-  - component: {fileID: 6037325520723149433}
+  - component: {fileID: 3108770257146399985}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -606,7 +606,7 @@ MonoBehaviour:
   isInverted: 0
   camLimit: 25
   gimbal: {fileID: 6037325518991385936}
---- !u!114 &6037325520723149433
+--- !u!114 &3108770257146399985
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -615,22 +615,17 @@ MonoBehaviour:
   m_GameObject: {fileID: 6037325520723149425}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0a24c4496aa6360499c011ce1925517e, type: 3}
+  m_Script: {fileID: 11500000, guid: 21266a94bd55c9f45983402752aa60cb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  damage: 10
-  damageScale: 0
-  damageModifier: 0
-  preshotDelay: 0
-  firePoint: {fileID: 6037325520643900592}
-  maxAmmo: 1
-  maxClip: 10
-  raycastMask:
-    serializedVersion: 2
-    m_Bits: 0
-  currentAmmo: 0
-  clipAmount: 0
-  animator: {fileID: 0}
+  oxygenPool: 100
+  regenerateTime: 1
+  regenMultipiler: 1
+  permanentOxygen: 0
+  tempOxygen: 0
+  totalOxygen: 0
+  currentOxygen: 0
+  oxygenRatio: 0
 --- !u!1 &8371405675199406494
 GameObject:
   m_ObjectHideFlags: 0
@@ -981,7 +976,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5343456865991583229, guid: 60e86fce881ae2a44af9c058ca63706d, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 155
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5343456865991583229, guid: 60e86fce881ae2a44af9c058ca63706d, type: 3}
       propertyPath: m_AnchoredPosition.y
