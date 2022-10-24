@@ -32,30 +32,33 @@ namespace Combat {
         }
 
         protected void OnTriggerEnter(Collider col) {
-            var enemy = col.GetComponent<EnemyBase>();
-            if (!enemy) return;
-            enemies.Add(enemy);
+            enemies.Add(GetEnemy(col));
         }
 
         protected void OnTriggerExit(Collider col) {
-            var enemy = col.GetComponent<EnemyBase>();
-            if (!enemy) return;
-            if (enemies.Contains(enemy)) enemies.Remove(enemy);
+            enemies.Remove(GetEnemy(col));
         }
 
+        protected override EnemyBase GetEnemy(Collider col) {
+            var enemy = col.GetComponent<EnemyBase>();
+            return !enemy & !enemies.Contains(enemy) ? null : enemy;
+        }
+        
         public override IEnumerator Fire() {
-            if (isAttacking) {
-                canAttack = false;
-                for (int i = 0; i < enemies.Count; i++) {
-                    if (Vector3.Distance(enemies[i].transform.position, transform.position) > attackRadius) continue;
-                    Damage(enemies[i]);
+            while (true) {
+                if (isAttacking) {
+                    canAttack = false;
+                    for (int i = 0; i < enemies.Count; i++) {
+                        if (Vector3.Distance(enemies[i].transform.position, transform.position) > attackRadius) continue;
+                        Damage(enemies[i]);
+                    }
+                    yield return new WaitForSeconds(attackSpeed / attackSpeedModifier);
+                    canAttack = true;
+                    isAttacking = false;
+                    yield return null;
                 }
-
-                yield return new WaitForSeconds(attackSpeed / attackSpeedModifier);
-                canAttack = true;
+                yield return null;
             }
-
-            yield return null;
         }
 
         public override IEnumerator AltFire() {
