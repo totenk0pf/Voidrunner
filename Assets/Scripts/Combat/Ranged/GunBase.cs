@@ -9,6 +9,7 @@ namespace Combat {
         public Transform firePoint;
         [SerializeField] private int maxAmmo;
         [SerializeField] private int maxClip;
+        [SerializeField] private LayerMask raycastMask;
         
         [TitleGroup("Gun states")]
         protected bool isReloading;
@@ -25,7 +26,7 @@ namespace Combat {
         }
 
         protected void Update() {
-            if (Input.GetMouseButtonDown(2) && animator.GetCurrentAnimatorStateInfo(0).IsName("GunSwitching")) {
+            if (Input.GetMouseButtonDown(0)) {
                 if (isFiring) return;
                 if (currentAmmo >= 1) {
                     currentAmmo--;
@@ -35,14 +36,14 @@ namespace Combat {
             if (Input.GetKeyDown(KeyCode.R)) {
                 if (isReloading) return;
                 if (clipAmount >= 1) {
-                    isReloading = true;
                     StartCoroutine(Reload());
                 }
             }
         }
 
-        protected EnemyBase GetEnemy() {
-            if (Physics.Raycast(firePoint.position, firePoint.forward, out var hit, Mathf.Infinity)) {
+        protected override EnemyBase GetEnemy(Collider col = null) {
+            Debug.DrawLine(firePoint.position, firePoint.forward * 100f, Color.yellow, 5f);
+            if (Physics.Raycast(firePoint.position, firePoint.forward, out var hit, Mathf.Infinity, raycastMask)) {
                 var enemy = hit.transform.GetComponent<EnemyBase>();
                 return !enemy ? null : enemy;
             }
@@ -54,6 +55,7 @@ namespace Combat {
         }
 
         public override IEnumerator Fire() {
+            isFiring = true;
             yield return new WaitForSeconds(preshotDelay);
             Damage(GetEnemy());
             isFiring = false;
@@ -61,8 +63,8 @@ namespace Combat {
         }
 
         protected IEnumerator Reload() {
-            yield return new WaitForSeconds(transform.GetComponentInParent<Animator>().runtimeAnimatorController
-                                                .animationClips[0].length);
+            isReloading = true;
+            // yield return new WaitForSeconds(transform.GetComponentInParent<Animator>().runtimeAnimatorController.animationClips[0].length);
             clipAmount--;
             currentAmmo = maxAmmo;
             isReloading = false;
