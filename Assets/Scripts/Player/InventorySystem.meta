@@ -1,9 +1,5 @@
 fileFormatVersion: 2
-<<<<<<< HEAD
 guid: 3ff962e779322934faddafdcea9ef0a3
-=======
-guid: f8d40467817e2d84fb2e3080e2cc49d9
->>>>>>> 3f67fab... duong improve inventory system and made it worked with iteam base
 folderAsset: yes
 DefaultImporter:
   externalObjects: {}
