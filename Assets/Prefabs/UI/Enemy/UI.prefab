@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 1878010406926862316}
   - component: {fileID: 7018743878030931706}
   - component: {fileID: 9027984690435827882}
-  m_Layer: 5
+  m_Layer: 0
   m_Name: Dithering
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -89,7 +89,7 @@ GameObject:
   - component: {fileID: 1855181622173296721}
   - component: {fileID: 3093795137327584141}
   - component: {fileID: 2387085961047800663}
-  m_Layer: 5
+  m_Layer: 0
   m_Name: UI
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -190,6 +190,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ccc6da7a32cef734c876b5af85cb9523, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  healthBar: {fileID: 8627564199236930948}
+  name: 
+  nameText: {fileID: 5622202323511500600}
 --- !u!1 &4870641205301826250
 GameObject:
   m_ObjectHideFlags: 0
@@ -199,7 +202,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 610107712058850187}
-  m_Layer: 5
+  m_Layer: 0
   m_Name: Name
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -239,7 +242,7 @@ GameObject:
   - component: {fileID: 8476158406067641753}
   - component: {fileID: 8605139639955111817}
   - component: {fileID: 7795988899145473925}
-  m_Layer: 5
+  m_Layer: 0
   m_Name: BG
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -312,7 +315,7 @@ GameObject:
   - component: {fileID: 4978140171863342753}
   - component: {fileID: 3234713081070312510}
   - component: {fileID: 9025958446347241003}
-  m_Layer: 5
+  m_Layer: 0
   m_Name: Border
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -388,7 +391,7 @@ GameObject:
   - component: {fileID: 8003677496983386853}
   - component: {fileID: 174615567945399756}
   - component: {fileID: 5622202323511500600}
-  m_Layer: 5
+  m_Layer: 0
   m_Name: NameText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -524,7 +527,7 @@ GameObject:
   - component: {fileID: 3707938112544090377}
   - component: {fileID: 3708848705380076361}
   - component: {fileID: 8627564199236930948}
-  m_Layer: 5
+  m_Layer: 0
   m_Name: HealthBar
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -652,7 +655,7 @@ GameObject:
   - component: {fileID: 8013615745327269686}
   - component: {fileID: 2520062218145021504}
   - component: {fileID: 1945833556095898937}
-  m_Layer: 5
+  m_Layer: 0
   m_Name: HealthIndicator
   m_TagString: Untagged
   m_Icon: {fileID: 0}

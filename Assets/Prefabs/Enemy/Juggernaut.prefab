@@ -225,10 +225,7 @@ MonoBehaviour:
   enemyDamage: 10
   enemySpeed: 2
   enemyHP: 100
-  enemyName: Juggernaut
-  UI: {fileID: 0}
-  healthBar: {fileID: 0}
-  enemyNameText: {fileID: 0}
+  _ui: {fileID: 2970694111892148635}
 --- !u!114 &5173689491316041485
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -352,6 +349,26 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 5173689491316041475}
     m_Modifications:
+    - target: {fileID: 2387085961047800663, guid: 156ffb807b55a0a47abfc0db3ec0aff6, type: 3}
+      propertyPath: name
+      value: Juggernaut
+      objectReference: {fileID: 0}
+    - target: {fileID: 4268977109600893350, guid: 156ffb807b55a0a47abfc0db3ec0aff6, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4268977109600893350, guid: 156ffb807b55a0a47abfc0db3ec0aff6, type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4268977109600893350, guid: 156ffb807b55a0a47abfc0db3ec0aff6, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4268977109600893350, guid: 156ffb807b55a0a47abfc0db3ec0aff6, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 4864161134674813235, guid: 156ffb807b55a0a47abfc0db3ec0aff6, type: 3}
       propertyPath: m_Name
       value: UI
@@ -450,6 +467,17 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 156ffb807b55a0a47abfc0db3ec0aff6, type: 3}
+--- !u!114 &2970694111892148635 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 2387085961047800663, guid: 156ffb807b55a0a47abfc0db3ec0aff6, type: 3}
+  m_PrefabInstance: {fileID: 583960001144318668}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ccc6da7a32cef734c876b5af85cb9523, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!224 &5671498355872179721 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 5093449348634070213, guid: 156ffb807b55a0a47abfc0db3ec0aff6, type: 3}

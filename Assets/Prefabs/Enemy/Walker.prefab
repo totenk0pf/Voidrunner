@@ -228,10 +228,7 @@ MonoBehaviour:
   enemyDamage: 10
   enemySpeed: 1.2
   enemyHP: 100
-  enemyName: Chisato
-  UI: {fileID: 7961971052986905167}
-  healthBar: {fileID: 6504641896429821688}
-  enemyNameText: {fileID: 7203632413244705860}
+  _ui: {fileID: 927390444342798379}
 --- !u!114 &6507194866629278068
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -354,6 +351,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 6507194866629278069}
     m_Modifications:
+    - target: {fileID: 2387085961047800663, guid: 156ffb807b55a0a47abfc0db3ec0aff6, type: 3}
+      propertyPath: name
+      value: Walker
+      objectReference: {fileID: 0}
     - target: {fileID: 4268977109600893350, guid: 156ffb807b55a0a47abfc0db3ec0aff6, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
@@ -468,35 +469,19 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 156ffb807b55a0a47abfc0db3ec0aff6, type: 3}
---- !u!114 &6504641896429821688 stripped
+--- !u!114 &927390444342798379 stripped
 MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 8627564199236930948, guid: 156ffb807b55a0a47abfc0db3ec0aff6, type: 3}
+  m_CorrespondingSourceObject: {fileID: 2387085961047800663, guid: 156ffb807b55a0a47abfc0db3ec0aff6, type: 3}
   m_PrefabInstance: {fileID: 3314194930413835132}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 67db9e8f0e2ae9c40bc1e2b64352a6b4, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &7203632413244705860 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 5622202323511500600, guid: 156ffb807b55a0a47abfc0db3ec0aff6, type: 3}
-  m_PrefabInstance: {fileID: 3314194930413835132}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
+  m_Script: {fileID: 11500000, guid: ccc6da7a32cef734c876b5af85cb9523, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!224 &7733229803120156601 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 5093449348634070213, guid: 156ffb807b55a0a47abfc0db3ec0aff6, type: 3}
-  m_PrefabInstance: {fileID: 3314194930413835132}
-  m_PrefabAsset: {fileID: 0}
---- !u!1 &7961971052986905167 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 4864161134674813235, guid: 156ffb807b55a0a47abfc0db3ec0aff6, type: 3}
   m_PrefabInstance: {fileID: 3314194930413835132}
   m_PrefabAsset: {fileID: 0}

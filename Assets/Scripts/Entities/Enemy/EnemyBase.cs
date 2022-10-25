@@ -8,12 +8,9 @@ public class EnemyBase : EntityBase
     public float enemyDamage; 
     public float enemySpeed;
     public float enemyHP;
-    public string enemyName;
 
-    [Header("Enemy UI")]
-    public GameObject UI;
-    public Slider healthBar;
-    public TextMeshProUGUI enemyNameText;
+    [Header("Enemy UI")] 
+    [SerializeField] private EnemyUI _ui;
 
     private float _currentHP;
 
@@ -29,20 +26,17 @@ public class EnemyBase : EntityBase
         }
 
         _currentHP = enemyHP;
-        healthBar.maxValue = enemyHP;
-        enemyNameText.text = enemyName;
+        
+        if (!_ui) Debug.LogWarning("Missing EnemyUI ref in " + this);
+        _ui.healthBar.maxValue = enemyHP;
+        _ui.healthBar.value = enemyHP;
     }
 
     private void Update() {
         if (_currentHP <= 0) {
             Die();
         }
-
-        //Make UI lookat
-        UI.transform.LookAt(UI.transform.position + Camera.main.transform.rotation * Vector3.forward, Camera.main.transform.rotation * Vector3.up);
-        //Update healthbar
-        healthBar.value = enemyHP;
-    }
+    }   
 
     public virtual void Attack() {
         throw new System.NotImplementedException();
@@ -64,5 +58,6 @@ public class EnemyBase : EntityBase
 
     public virtual void TakeDamage(float ammount) {
         _currentHP -= ammount;
+        _ui.healthBar.value = _currentHP;
     }
 }
