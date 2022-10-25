@@ -1,6 +1,4 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
+using DG.Tweening;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -8,6 +6,7 @@ using UnityEngine.UI;
 public class EnemyUI : MonoBehaviour
 {
     public Slider healthBar;
+    [SerializeField] private float animTime;
     
     [SerializeField] private string name;
     [SerializeField] private TextMeshProUGUI nameText;
@@ -16,17 +15,19 @@ public class EnemyUI : MonoBehaviour
 
     private void Awake() {
         nameText.text = name;
-
-        _cam = Camera.main;
-        if (_cam == null) Debug.LogError("Missing Camera Ref in " + this);
+        _cam          = Camera.main;
+        LayoutRebuilder.ForceRebuildLayoutImmediate(GetComponent<RectTransform>());
     }
 
     private void Update()
     {
-        //Update UI Pos
         var rotation = _cam.transform.rotation;
         var worldPos = transform.position + rotation * Vector3.forward;
         var worldUp = rotation * Vector3.up;
         transform.LookAt(worldPos, worldUp);
+    }
+
+    public void UpdateBar(float health) {
+        DOTween.To(() => healthBar.value, x => healthBar.value = x, health, animTime);
     }
 }
