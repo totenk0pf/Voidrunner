@@ -10,7 +10,6 @@ public class PlayerStats : MonoBehaviour
     [SerializeField] private Oxygen oxygenComponent;
     [SerializeField] private PlayerProgession progessionComponent;
     [Space]
-    [SerializeField] private WeaponBase weaponBase;
     [SerializeField] private MeleeBase meleeBase;
 
     [Space]
@@ -25,7 +24,6 @@ public class PlayerStats : MonoBehaviour
     private void Awake() {
         CheckRef(oxygenComponent);
         CheckRef(progessionComponent);
-        CheckRef(weaponBase);
         CheckRef(meleeBase);
 
         level = progessionComponent.level;
@@ -41,8 +39,8 @@ public class PlayerStats : MonoBehaviour
         oxygenComponent.oxygenPool = 100 + 5 * vigor;
 
         //Combat Modifiers
-        weaponBase.damageScale = 1; //Default 1 haven't implemented damage scaling yet
-        weaponBase.damageModifier = weaponBase.damageScale * level;
+        meleeBase.damageScale = 1; //Default 1 haven't implemented damage scaling yet
+        meleeBase.damageModifier = meleeBase.damageScale * level;
         meleeBase.attackSpeedModifier = dexterity;
     }
 
