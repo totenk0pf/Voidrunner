@@ -20,8 +20,7 @@ namespace Level
             public float weight;
         }
 
-        //GameObject: Type of Enemy, float: Weight
-        private List<SpawnData> _enemies = new();
+        [SerializeField] private List<SpawnData> _enemies = new();
         private WeightedArray<SpawnData> _enemyWeightedList = new();
 
         private void Awake() {

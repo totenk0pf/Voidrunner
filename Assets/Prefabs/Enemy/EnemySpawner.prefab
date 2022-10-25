@@ -44,15 +44,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: def9bb374f0f7084cb2141192892be44, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  walker:
-    type: 0
+  _enemies:
+  - type: 0
     prefab: {fileID: 6507194866629278073, guid: d09c06033202a004bbb77f72a6f0c472, type: 3}
-    weight: 3
-  crawler:
-    type: 1
-    prefab: {fileID: 5391198623046352643, guid: 847ab110624c91a4d8834d8315b4f97a, type: 3}
-    weight: 2
-  juggernaut:
-    type: 2
-    prefab: {fileID: 5173689491316041483, guid: 8e8b695d352be494eb7120878d1549a8, type: 3}
     weight: 1
+  - type: 1
+    prefab: {fileID: 5391198623046352643, guid: 847ab110624c91a4d8834d8315b4f97a, type: 3}
+    weight: 0.6
+  - type: 2
+    prefab: {fileID: 5173689491316041483, guid: 8e8b695d352be494eb7120878d1549a8, type: 3}
+    weight: 0.3
