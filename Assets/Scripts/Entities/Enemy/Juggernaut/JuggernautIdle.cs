@@ -2,7 +2,7 @@ using System.Collections;
 using UnityEngine.AI;
 using UnityEngine;
 
-public class JuggernautIlde : EnemyState
+public class JuggernautIdle : EnemyState
 {
     public float minEnemyRange;
     public float maxEnemyRange;

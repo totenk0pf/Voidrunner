@@ -191,7 +191,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   healthBar: {fileID: 8627564199236930948}
-  animTime: 0
+  animTime: 0.15
   name: 
   nameText: {fileID: 5622202323511500600}
 --- !u!1 &6380413267042890217
