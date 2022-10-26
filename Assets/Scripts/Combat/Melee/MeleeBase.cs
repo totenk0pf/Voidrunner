@@ -1,7 +1,10 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using Core.Events;
 using UnityEngine;
 using Sirenix.OdinInspector;
+using UI;
+using EventType = Core.Events.EventType;
 
 namespace Combat {
     [RequireComponent(typeof(Rigidbody))]
@@ -59,7 +62,12 @@ namespace Combat {
                     foreach (var enemy in enemies) {
                         if (!enemy) enemies.Remove(enemy);
                     }
-                    yield return new WaitForSeconds(attackSpeed / attackSpeedModifier);
+                    var rechargeTime = attackSpeed / attackSpeedModifier;
+                    this.FireEvent(EventType.WeaponFiredEvent, new WeaponFireUIMsg {
+                        type = WeaponType.Melee,
+                        rechargeDuration = rechargeTime
+                    });
+                    yield return new WaitForSeconds(rechargeTime);
                     canAttack = true;
                     isAttacking = false;
                     yield return null;
