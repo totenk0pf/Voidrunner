@@ -1,17 +1,14 @@
 using System;
 using System.Collections.Generic;
+using Combat;
+using Core.Events;
 using DG.Tweening;
 using UnityEngine;
 using UnityEngine.UI;
+using EventType = Core.Events.EventType;
 
 namespace UI {
     public class WeaponUI : MonoBehaviour {
-        [Serializable]
-        public enum WeaponType {
-            Melee,
-            Ranged
-        }
-
         [Serializable]
         public struct UIEntry {
             public WeaponType type;
@@ -41,10 +38,12 @@ namespace UI {
         }
 
         private void Awake() {
-            ChangeActivePanel();
+            this.AddListener(EventType.WeaponChangedEvent, 
+                             type => ChangeActivePanel((WeaponType) type));
         }
 
-        public void ChangeActivePanel() {
+        private void ChangeActivePanel(WeaponType type) {
+            currentType = type;
             _initHeight = Transform.rect.height - Layout.spacing;
             var segmentHeight = _initHeight / (panelList.Count);
             foreach (var item in panelList) {
@@ -62,7 +61,7 @@ namespace UI {
         #if UNITY_EDITOR
         private void OnValidate() {
             if (!Application.isPlaying) return;
-            ChangeActivePanel();
+            ChangeActivePanel(currentType);
         }
         #endif
     }

@@ -46,7 +46,7 @@ public class EnemyBase : EntityBase
     }
 
     public virtual void Die() {
-        Destroy(this);
+        Destroy(gameObject);
     }
 
     public virtual void TakeDamage(float ammount) {
