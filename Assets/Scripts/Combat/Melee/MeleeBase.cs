@@ -1,7 +1,10 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using Core.Events;
 using UnityEngine;
 using Sirenix.OdinInspector;
+using UI;
+using EventType = Core.Events.EventType;
 
 namespace Combat {
     [RequireComponent(typeof(Rigidbody))]
@@ -49,15 +52,22 @@ namespace Combat {
         
         public override IEnumerator Fire() {
             while (true) {
+                if (enemies.Count < 1) yield return null;
                 if (isAttacking) {
-                    enemies.RemoveAll(x => !x);
-                    if (enemies.Count < 1) yield return null;
                     canAttack = false;
                     for (int i = 0; i < enemies.Count; i++) {
                         if (Vector3.Distance(enemies[i].transform.position, transform.position) > attackRadius) continue;
                         Damage(enemies[i]);
                     }
-                    yield return new WaitForSeconds(attackSpeed / attackSpeedModifier);
+                    foreach (var enemy in enemies) {
+                        if (!enemy) enemies.Remove(enemy);
+                    }
+                    var rechargeTime = attackSpeed / attackSpeedModifier;
+                    this.FireEvent(EventType.WeaponFiredEvent, new WeaponFireUIMsg {
+                        type = WeaponType.Melee,
+                        rechargeDuration = rechargeTime
+                    });
+                    yield return new WaitForSeconds(rechargeTime);
                     canAttack = true;
                     isAttacking = false;
                     yield return null;

@@ -1,11 +1,15 @@
 using System.Collections;
+using Core.Events;
 using UnityEngine;
 using Sirenix.OdinInspector;
+using UI;
+using EventType = Core.Events.EventType;
 
 namespace Combat {
     public class GunBase : WeaponBase {
         [TitleGroup("Gun settings")]
         public float preshotDelay;
+        public float aftershotDelay;
         public Transform firePoint;
         [SerializeField] private int maxAmmo;
         [SerializeField] private int maxClip;
@@ -23,6 +27,15 @@ namespace Combat {
 
         protected void Awake() {
             currentAmmo = maxAmmo;
+            clipAmount = maxClip;
+            UpdateUI();
+        }
+
+        protected void UpdateUI() {
+            this.FireEvent(EventType.RangedShotEvent, new RangedUIMsg {
+                ammo = currentAmmo,
+                clip = clipAmount
+            });
         }
 
         protected void Update() {
@@ -58,6 +71,12 @@ namespace Combat {
             isFiring = true;
             yield return new WaitForSeconds(preshotDelay);
             Damage(GetEnemy());
+            UpdateUI();
+            this.FireEvent(EventType.WeaponFiredEvent, new WeaponFireUIMsg {
+                type = WeaponType.Ranged,
+                rechargeDuration = aftershotDelay
+            });
+            yield return new WaitForSeconds(aftershotDelay);
             isFiring = false;
             yield return null;
         }
@@ -68,6 +87,7 @@ namespace Combat {
             clipAmount--;
             currentAmmo = maxAmmo;
             isReloading = false;
+            UpdateUI();
             yield return null;
         }
     }
