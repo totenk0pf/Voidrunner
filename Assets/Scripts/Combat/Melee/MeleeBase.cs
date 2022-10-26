@@ -14,10 +14,6 @@ namespace Combat {
         public float attackSpeed;
         public float attackRadius;
         public float attackSpeedModifier = 1f;
-        
-        [TitleGroup("Melee states")]
-        protected bool isAttacking;
-        protected bool canAttack;
 
         protected List<EnemyBase> enemies = new();
 

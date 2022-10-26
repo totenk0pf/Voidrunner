@@ -35,7 +35,7 @@ namespace Combat {
 
         private void OnWeaponSwap(WeaponType weapon) {
             foreach (var item in weaponList) {
-                item.reference.gameObject.SetActive(item.type == weapon);
+                item.reference.canAttack = item.type == weapon;
             }
             currentWeapon = weapon;
             EventDispatcher.Instance.FireEvent(EventType.WeaponChangedEvent, currentWeapon);
