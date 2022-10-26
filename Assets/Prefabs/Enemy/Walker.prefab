@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1302716198}
   - component: {fileID: 1302716199}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: WalkerAttack
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -58,8 +58,7 @@ GameObject:
   - component: {fileID: 8617455265835720857}
   - component: {fileID: 8956729784865950129}
   - component: {fileID: 8909397989870907334}
-  - component: {fileID: 1178364708221757645}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Body
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -109,7 +108,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 0}
+  - {fileID: 2100000, guid: 3efe93fb29f338d4fbe169a286bd6c11, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -131,19 +130,50 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!136 &1178364708221757645
-CapsuleCollider:
+--- !u!1 &5041641387933449494
+GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 838233835853083119}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1796571918466964671}
+  - component: {fileID: 6644274692447204540}
+  m_Layer: 6
+  m_Name: _Detection
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1796571918466964671
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5041641387933449494}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -0.13, y: -1, z: -6.14}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 6507194866629278069}
+  m_RootOrder: 3
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!65 &6644274692447204540
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5041641387933449494}
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_Enabled: 1
-  m_Radius: 0.5
-  m_Height: 2
-  m_Direction: 1
+  serializedVersion: 2
+  m_Size: {x: 15, y: 2, z: 15}
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &6507194865925282637
 GameObject:
@@ -155,7 +185,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6507194865925282635}
   - component: {fileID: 6507194865925282636}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: WalkerIdle
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -203,11 +233,11 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6507194866629278069}
-  - component: {fileID: 1216283336}
   - component: {fileID: 6507194866629278067}
   - component: {fileID: 6507194866629278068}
   - component: {fileID: 6507194866629278065}
-  m_Layer: 0
+  - component: {fileID: 3417005503821622740}
+  m_Layer: 8
   m_Name: Walker
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -229,22 +259,10 @@ Transform:
   - {fileID: 8617455265835720857}
   - {fileID: 6507194867201685404}
   - {fileID: 7733229803120156601}
+  - {fileID: 1796571918466964671}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!65 &1216283336
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6507194866629278073}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 15, y: 2, z: 15}
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!114 &6507194866629278067
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -294,8 +312,22 @@ NavMeshAgent:
   m_AutoRepath: 1
   m_Height: 2
   m_BaseOffset: 1
-  m_WalkableMask: 4294967295
+  m_WalkableMask: 5
   m_ObstacleAvoidanceType: 4
+--- !u!136 &3417005503821622740
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6507194866629278073}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  m_Radius: 0.5
+  m_Height: 2
+  m_Direction: 1
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &6507194867201685405
 GameObject:
   m_ObjectHideFlags: 0
@@ -305,7 +337,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6507194867201685404}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: States
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -340,7 +372,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1075628392089080799}
   - component: {fileID: 5102175228236804824}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: WalkerHostile
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -383,6 +415,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 6507194866629278069}
     m_Modifications:
+    - target: {fileID: 1072937046652483144, guid: 156ffb807b55a0a47abfc0db3ec0aff6, type: 3}
+      propertyPath: m_Layer
+      value: 8
+      objectReference: {fileID: 0}
     - target: {fileID: 2387085961047800663, guid: 156ffb807b55a0a47abfc0db3ec0aff6, type: 3}
       propertyPath: name
       value: Walker
@@ -406,6 +442,10 @@ PrefabInstance:
     - target: {fileID: 4864161134674813235, guid: 156ffb807b55a0a47abfc0db3ec0aff6, type: 3}
       propertyPath: m_Name
       value: UI
+      objectReference: {fileID: 0}
+    - target: {fileID: 4864161134674813235, guid: 156ffb807b55a0a47abfc0db3ec0aff6, type: 3}
+      propertyPath: m_Layer
+      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 5093449348634070213, guid: 156ffb807b55a0a47abfc0db3ec0aff6, type: 3}
       propertyPath: m_Pivot.x
@@ -491,6 +531,18 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6380413267042890217, guid: 156ffb807b55a0a47abfc0db3ec0aff6, type: 3}
+      propertyPath: m_Layer
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 7066180579108904233, guid: 156ffb807b55a0a47abfc0db3ec0aff6, type: 3}
+      propertyPath: m_Layer
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 7133562567370439748, guid: 156ffb807b55a0a47abfc0db3ec0aff6, type: 3}
+      propertyPath: m_Layer
+      value: 8
+      objectReference: {fileID: 0}
     - target: {fileID: 8013615745327269686, guid: 156ffb807b55a0a47abfc0db3ec0aff6, type: 3}
       propertyPath: m_AnchorMax.x
       value: 0
@@ -498,6 +550,14 @@ PrefabInstance:
     - target: {fileID: 8013615745327269686, guid: 156ffb807b55a0a47abfc0db3ec0aff6, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8676301526196788974, guid: 156ffb807b55a0a47abfc0db3ec0aff6, type: 3}
+      propertyPath: m_Layer
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 8701096926541722665, guid: 156ffb807b55a0a47abfc0db3ec0aff6, type: 3}
+      propertyPath: m_Layer
+      value: 8
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 156ffb807b55a0a47abfc0db3ec0aff6, type: 3}
