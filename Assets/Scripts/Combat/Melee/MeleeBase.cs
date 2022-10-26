@@ -19,6 +19,7 @@ namespace Combat {
         protected List<EnemyBase> enemies = new();
 
         protected void Awake() {
+            canAttack = true;
             StartCoroutine(Fire());
             StartCoroutine(AltFire());
         }
@@ -32,25 +33,31 @@ namespace Combat {
         }
 
         protected void OnTriggerEnter(Collider col) {
-            enemies.Add(GetEnemy(col));
+            var enemy = GetEnemy(col);
+            if (enemy) enemies.Add(enemy);
         }
 
         protected void OnTriggerExit(Collider col) {
-            enemies.Remove(GetEnemy(col));
+            var enemy = GetEnemy(col);
+            if (enemy) enemies.Remove(enemy);
         }
 
         protected override EnemyBase GetEnemy(Collider col) {
             var enemy = col.GetComponent<EnemyBase>();
-            return !enemy & !enemies.Contains(enemy) ? null : enemy;
+            return !enemy || enemies.Contains(enemy) ? null : enemy;
         }
         
         public override IEnumerator Fire() {
             while (true) {
+                if (enemies.Count < 1) yield return null;
                 if (isAttacking) {
                     canAttack = false;
                     for (int i = 0; i < enemies.Count; i++) {
                         if (Vector3.Distance(enemies[i].transform.position, transform.position) > attackRadius) continue;
                         Damage(enemies[i]);
+                    }
+                    foreach (var enemy in enemies) {
+                        if (!enemy) enemies.Remove(enemy);
                     }
                     yield return new WaitForSeconds(attackSpeed / attackSpeedModifier);
                     canAttack = true;
