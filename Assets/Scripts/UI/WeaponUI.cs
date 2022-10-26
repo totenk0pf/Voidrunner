@@ -10,7 +10,7 @@ using EventType = Core.Events.EventType;
 namespace UI {
     public class WeaponUI : MonoBehaviour {
         [Serializable]
-        private struct UIEntry {
+        public struct UIEntry {
             public WeaponType type;
             public RectTransform element;
         }
@@ -38,13 +38,14 @@ namespace UI {
         }
 
         private void Awake() {
-            EventDispatcher.Instance.AddListener(EventType.WeaponChangedEvent, type => ChangeActivePanel((WeaponType) type));
+            this.AddListener(EventType.WeaponChangedEvent, 
+                             type => ChangeActivePanel((WeaponType) type));
         }
 
         private void ChangeActivePanel(WeaponType type) {
             currentType = type;
             _initHeight = Transform.rect.height - Layout.spacing;
-            var segmentHeight = _initHeight / panelList.Count;
+            var segmentHeight = _initHeight / (panelList.Count);
             foreach (var item in panelList) {
                 var selectedScale = segmentHeight * activeScale / _initHeight;
                 var unselectedScale = segmentHeight * inactiveScale / _initHeight;
@@ -56,5 +57,12 @@ namespace UI {
                     .OnUpdate(() => LayoutRebuilder.ForceRebuildLayoutImmediate(Transform));
             }
         }
+
+        #if UNITY_EDITOR
+        private void OnValidate() {
+            if (!Application.isPlaying) return;
+            ChangeActivePanel(currentType);
+        }
+        #endif
     }
 }

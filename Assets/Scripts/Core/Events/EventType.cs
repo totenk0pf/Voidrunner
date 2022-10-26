@@ -4,6 +4,7 @@ namespace Core.Events {
         LogEvent,
         UIBarChangedEvent,
         OxygenChangeEvent,
+        LevelChangeEvent,
         WeaponChangedEvent,
         AugmentChangedEvent,
         AugmentDrainEvent
