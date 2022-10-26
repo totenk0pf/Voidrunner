@@ -49,15 +49,13 @@ namespace Combat {
         
         public override IEnumerator Fire() {
             while (true) {
-                if (enemies.Count < 1) yield return null;
                 if (isAttacking) {
+                    enemies.RemoveAll(x => !x);
+                    if (enemies.Count < 1) yield return null;
                     canAttack = false;
                     for (int i = 0; i < enemies.Count; i++) {
                         if (Vector3.Distance(enemies[i].transform.position, transform.position) > attackRadius) continue;
                         Damage(enemies[i]);
-                    }
-                    foreach (var enemy in enemies) {
-                        if (!enemy) enemies.Remove(enemy);
                     }
                     yield return new WaitForSeconds(attackSpeed / attackSpeedModifier);
                     canAttack = true;
