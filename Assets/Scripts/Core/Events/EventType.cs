@@ -6,6 +6,8 @@ namespace Core.Events {
         LevelChangeEvent,
         WeaponChangedEvent,
         AugmentChangedEvent,
-        AugmentDrainEvent
+        AugmentDrainEvent,
+        CurrentWeaponChangeEvent,
+        DamageEnemyEvent
     }
 }
