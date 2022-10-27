@@ -6,8 +6,6 @@ public class WalkerHostile : EnemyState
 {
     public float fastChaseSpeed;
     [SerializeField] private EnemyState _nextState;
-
-    private Vector3 target; 
     private enum HostileStyle
     {
         Slow,
@@ -17,7 +15,7 @@ public class WalkerHostile : EnemyState
     private HostileStyle chaseType;
 
     public override EnemyState RunCurrentState() {
-        Agent.SetDestination(target);
+        Agent.SetDestination(target.transform.position);
         Agent.isStopped = false;
 
         if (chaseType == HostileStyle.Slow) {
@@ -31,19 +29,5 @@ public class WalkerHostile : EnemyState
             return _nextState;
         }
         return this;
-    }
-
-    public override void OnTriggerEnter(Collider other) {
-        if (other.gameObject.layer == LayerMask.NameToLayer("Player"))
-        {
-            chaseType = (HostileStyle)Random.Range(0, 1);
-        }
-    }
-    
-    public override void OnTriggerStay(Collider other) {
-        if (other.gameObject.layer == LayerMask.NameToLayer("Player"))
-        {
-            target = other.transform.position;
-        }
     }
 }

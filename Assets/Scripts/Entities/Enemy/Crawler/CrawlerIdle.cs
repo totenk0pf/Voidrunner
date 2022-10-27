@@ -12,7 +12,6 @@ public class CrawlerIdle : EnemyState
     public float maxDelay;
 
     private bool _canWalk = true;
-    private bool _detected = false;
     [SerializeField] private EnemyState _nextState;
 
     public override EnemyState RunCurrentState() {
@@ -21,7 +20,7 @@ public class CrawlerIdle : EnemyState
             StartCoroutine(Delay(Random.Range(minDelay, maxDelay)));
         }
 
-        if (_detected) return _nextState;
+        if (detected) return _nextState;
         return this;
     }
 
@@ -40,17 +39,6 @@ public class CrawlerIdle : EnemyState
         _canWalk = false;
         yield return new WaitForSeconds(delay);
         _canWalk = true;
-    }
-
-    public override void OnTriggerEnter(Collider other) {
-        if (other.gameObject.layer == LayerMask.NameToLayer("Player"))
-        {
-            _detected = true;
-        }
-    }
-
-    public override void OnTriggerStay(Collider other) {
-
     }
 }
 

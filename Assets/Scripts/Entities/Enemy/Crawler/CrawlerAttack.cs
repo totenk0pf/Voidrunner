@@ -8,8 +8,7 @@ public class CrawlerAttack : EnemyState
 
     [SerializeField] private EnemyState _nextState;
     [SerializeField] private EnemyState _previousState;
-
-    private GameObject target;
+    
     private bool _isAttacking;
     private bool _reachedTarget = false;
 
@@ -46,17 +45,5 @@ public class CrawlerAttack : EnemyState
         yield return new WaitForSeconds(attackDelay);
 
         _isAttacking = false;
-    }
-
-
-    public override void OnTriggerEnter(Collider other) {
-        if (other.gameObject.layer == LayerMask.NameToLayer("Player"))
-        {
-            target = other.gameObject;
-        }
-    }
-
-    public override void OnTriggerStay(Collider other) {
-
     }
 }

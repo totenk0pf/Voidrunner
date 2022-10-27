@@ -5,8 +5,7 @@ using UnityEngine;
 public class WalkerAttack : EnemyState
 {
     public float attackDelay;
-
-    private GameObject target;
+    
     [SerializeField] private EnemyState _previousState;
     [SerializeField] private EnemyState _nextState;
 
@@ -34,16 +33,5 @@ public class WalkerAttack : EnemyState
         yield return new WaitForSeconds(attackDelay);
 
         _isAttacking = false;
-    }
-
-    public override void OnTriggerEnter(Collider other) {
-        if (other.gameObject.layer == LayerMask.NameToLayer("Player"))
-        {
-            target = other.gameObject;
-        }
-    }
-
-    public override void OnTriggerStay(Collider other) {
-
     }
 }

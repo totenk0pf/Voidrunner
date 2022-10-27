@@ -294,6 +294,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3cf8636c60ee6a5458311636d35954a5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  playerMask:
+    serializedVersion: 2
+    m_Bits: 8
+  target: {fileID: 0}
+  detected: 0
   attackDelay: 3
   _previousState: {fileID: 8457903045779802717}
   _nextState: {fileID: 4532645165320745301}
@@ -550,6 +555,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bd73eafaee4004b4a91cea8c33456c82, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  playerMask:
+    serializedVersion: 2
+    m_Bits: 8
+  target: {fileID: 0}
+  detected: 0
   minEnemyRange: 1
   maxEnemyRange: 4
   minDelay: 2
@@ -634,5 +644,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b1ff8c902dc0aae4180842547e233d99, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  playerMask:
+    serializedVersion: 2
+    m_Bits: 8
+  target: {fileID: 0}
+  detected: 0
   fastChaseSpeed: 5
   _nextState: {fileID: 5940769060041157936}
