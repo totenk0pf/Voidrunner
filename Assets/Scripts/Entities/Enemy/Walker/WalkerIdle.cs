@@ -13,7 +13,6 @@ public class WalkerIdle : EnemyState
     public float maxDelay;
 
     private bool _canWalk = true;
-    private bool _detected = false;
     [SerializeField] private EnemyState _nextState;
 
     public override EnemyState RunCurrentState() {
@@ -22,7 +21,7 @@ public class WalkerIdle : EnemyState
             StartCoroutine(Delay(Random.Range(minDelay, maxDelay)));
         }
 
-        if (_detected) return _nextState;
+        if (detected) return _nextState;
         return this;
     }
 
@@ -41,15 +40,5 @@ public class WalkerIdle : EnemyState
         _canWalk = false;
         yield return new WaitForSeconds(delay);
         _canWalk = true;
-    }
-
-    public override void OnTriggerEnter(Collider other) {
-        if (other.tag == "Player") {
-            _detected = true;
-        }
-    }
-
-    public override void OnTriggerStay(Collider other) {
-        
     }
 }

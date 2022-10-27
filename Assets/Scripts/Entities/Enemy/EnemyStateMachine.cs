@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class EnemyStateMachine :MonoBehaviour
@@ -30,9 +28,5 @@ public class EnemyStateMachine :MonoBehaviour
 
     private void OnTriggerEnter(Collider other) {
         _currentState.OnTriggerEnter(other);
-    }
-
-    private void OnTriggerStay(Collider other) {
-        _currentState.OnTriggerStay(other);
     }
 }

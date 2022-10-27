@@ -8,26 +8,29 @@ public class CrawlerAttack : EnemyState
 
     [SerializeField] private EnemyState _nextState;
     [SerializeField] private EnemyState _previousState;
-
-    private GameObject target;
+    
     private bool _isAttacking;
     private bool _reachedTarget = false;
 
     public override EnemyState RunCurrentState() {
         Agent.SetDestination(target.transform.position);
 
-        if (Vector3.Distance(transform.position, target.transform.position) < 2f && !_reachedTarget) {
+        if (Vector3.Distance(transform.position, target.transform.position) < 2.5f && !_reachedTarget) {
             _reachedTarget = true;
             Agent.isStopped = true;
+        }
 
+        else if (Vector3.Distance(transform.position, target.transform.position) > 2.5f && _reachedTarget)
+        {
+            _agent.isStopped = false;
+            return _previousState;
+        }
+
+        if (_reachedTarget)
+        {
             if (!_isAttacking) {
                 StartCoroutine(DamagePlayer());
             }
-        }
-
-        else if (Vector3.Distance(transform.position, target.transform.position) > 2f && _reachedTarget) {
-            _agent.isStopped = false;
-            return _previousState;
         }
 
         return this;
@@ -42,16 +45,5 @@ public class CrawlerAttack : EnemyState
         yield return new WaitForSeconds(attackDelay);
 
         _isAttacking = false;
-    }
-
-
-    public override void OnTriggerEnter(Collider other) {
-        //Chisato but shes my wife
-    }
-
-    public override void OnTriggerStay(Collider other) {
-        if (other.tag == "Player") {
-            target = other.gameObject;
-        }
     }
 }

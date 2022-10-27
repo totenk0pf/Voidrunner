@@ -8,7 +8,6 @@ public class CrawlerHostile : EnemyState
     public float maxDelayBeforeAttack;
     [SerializeField] private EnemyState _nextState; 
 
-    private Vector3 target;
     private Strafe currentStrafe = Strafe.Left;
 
     [HideInInspector] public bool _canAttack = false;
@@ -53,11 +52,11 @@ public class CrawlerHostile : EnemyState
         var offset = Vector3.zero;
 
         if (strafeDir == Strafe.Left) {
-            offset = transform.position - target;
+            offset = transform.position - target.transform.position;
         }
 
         else {
-            offset = target - transform.position;
+            offset = target.transform.position - transform.position;
         }
 
         return transform.position + Vector3.Cross(offset, Vector3.up);
@@ -66,13 +65,5 @@ public class CrawlerHostile : EnemyState
     IEnumerator StartAttack() {
         yield return new WaitForSeconds(Random.Range(minDelayBeforeAttack, maxDelayBeforeAttack));
         _canAttack = true;
-    }
-
-    public override void OnTriggerEnter(Collider other) {
-        
-    }
-
-    public override void OnTriggerStay(Collider other) {
-        if (other.tag == "Player") target = other.transform.position; 
     }
 }
