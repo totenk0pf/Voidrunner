@@ -79,6 +79,7 @@ namespace Combat {
                 rechargeDuration = aftershotDelay
             });
             yield return new WaitForSeconds(aftershotDelay);
+            this.FireEvent(EventType.WeaponRechargedEvent);
             canAttack = true;
             isAttacking = false;
             yield return null;
