@@ -10,7 +10,7 @@ public class JuggernautIdle : EnemyState
     [SerializeField] private EnemyState _nextState;
 
     public override EnemyState RunCurrentState() {
-        Agent.speed = eBase.enemySpeed;
+        Agent.speed = enemyBase.enemySpeed;
 
         if (Agent.remainingDistance <= 0.1f && _canWalk) {
             Agent.SetDestination(GetRandomWayPoint(Random.Range(minEnemyRange, maxEnemyRange)));

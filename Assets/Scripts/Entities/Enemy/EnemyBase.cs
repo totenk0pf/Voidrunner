@@ -43,6 +43,35 @@ public class EnemyBase : EntityBase {
         }
     }
 
+    public virtual void Stun(float duration) {
+        StartCoroutine(StunCoroutine(duration));
+    }
+    
+    protected virtual IEnumerator StunCoroutine(float duration) {
+        isStunned = true;
+        yield return new WaitForSeconds(duration);
+        navAgent.ResetPath();
+        isStunned = false;
+        yield return null;
+    }
+    
+    public virtual void TakeDamage(float amount) {
+        currentHp -= amount;
+        ui.UpdateBar(amount);
+    }
+
+    public virtual void TakeTickDamage(float damagePerTick, float interval, int ticks) {
+        StartCoroutine(TickDamageCoroutine(damagePerTick, interval, ticks));
+    }
+
+    protected virtual IEnumerator TickDamageCoroutine(float damagePerTick, float interval, int ticks) {
+        for (int i = 0; i < ticks; i++) {
+            TakeDamage(damagePerTick);
+            yield return new WaitForSeconds(interval);
+        }
+        yield return null;
+    }
+
     public virtual void Attack() {
         throw new System.NotImplementedException();
     }
@@ -57,10 +86,5 @@ public class EnemyBase : EntityBase {
 
     public virtual void Die() {
         Destroy(gameObject);
-    }
-
-    public virtual void TakeDamage(float amount) {
-        currentHp -= amount;
-        ui.UpdateBar(amount);
     }
 }

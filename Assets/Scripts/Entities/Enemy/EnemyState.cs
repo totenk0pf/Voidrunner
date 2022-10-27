@@ -11,11 +11,11 @@ public abstract class EnemyState : MonoBehaviour
         }
     }
 
-    protected EnemyBase _eBase;
-    protected EnemyBase eBase {
+    protected EnemyBase _enemyBase;
+    protected EnemyBase enemyBase {
         get {
-            if (!_eBase) _eBase = transform.root.GetComponent<EnemyBase>();
-            return _eBase;
+            if (!_enemyBase) _enemyBase = transform.root.GetComponent<EnemyBase>();
+            return _enemyBase;
         }
     }
 

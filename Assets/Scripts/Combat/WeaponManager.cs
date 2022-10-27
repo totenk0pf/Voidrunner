@@ -20,6 +20,7 @@ namespace Combat {
     public class WeaponManager : MonoBehaviour {
         [SerializeField] private List<WeaponEntry> weaponList;
         [SerializeField] private WeaponEntry currentWeapon;
+        [SerializeField] private WeaponType currentType;
         private bool canSwap = true;
 
         private void Awake() {
@@ -43,6 +44,11 @@ namespace Combat {
             }
             currentWeapon = weapon;
             this.FireEvent(EventType.WeaponChangedEvent, currentWeapon);
+        }
+
+        private void OnValidate() {
+            var entry = weaponList.Find(x => x.type == currentType);
+            currentWeapon = entry;
         }
     }
 }
