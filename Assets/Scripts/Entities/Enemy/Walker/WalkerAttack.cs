@@ -14,7 +14,7 @@ public class WalkerAttack : EnemyState
 
     public override EnemyState RunCurrentState() {
         //Change 2f number if changed in WalkerHostile also 
-        if (Vector3.Distance(transform.position, target.transform.position) > 2f) {
+        if (Vector3.Distance(transform.position, target.transform.position) > 1.4f) {
             return _previousState;
         }
 
@@ -37,12 +37,13 @@ public class WalkerAttack : EnemyState
     }
 
     public override void OnTriggerEnter(Collider other) {
-        
+        if (other.gameObject.layer == LayerMask.NameToLayer("Player"))
+        {
+            target = other.gameObject;
+        }
     }
 
     public override void OnTriggerStay(Collider other) {
-        if (other.tag == "Player") {
-            target = other.gameObject;
-        }
+
     }
 }

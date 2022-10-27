@@ -26,7 +26,7 @@ public class WalkerHostile : EnemyState
 
         else Agent.speed = fastChaseSpeed;
 
-        if (Agent.remainingDistance < 2f) {
+        if (Agent.remainingDistance < 1.4f) {
             Agent.isStopped = true;
             return _nextState;
         }
@@ -34,13 +34,15 @@ public class WalkerHostile : EnemyState
     }
 
     public override void OnTriggerEnter(Collider other) {
-        if (other.tag == "Player") {
+        if (other.gameObject.layer == LayerMask.NameToLayer("Player"))
+        {
             chaseType = (HostileStyle)Random.Range(0, 1);
         }
     }
-
+    
     public override void OnTriggerStay(Collider other) {
-        if (other.tag == "Player") {
+        if (other.gameObject.layer == LayerMask.NameToLayer("Player"))
+        {
             target = other.transform.position;
         }
     }

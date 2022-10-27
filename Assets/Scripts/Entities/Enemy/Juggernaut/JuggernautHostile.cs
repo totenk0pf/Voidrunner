@@ -13,7 +13,7 @@ public class JuggernautHostile : EnemyState
         Agent.isStopped = false;
         Agent.speed = fastChaseSpeed;
 
-        if (Agent.remainingDistance < 2f) {
+        if (Agent.remainingDistance < 3f) {
             Agent.isStopped = true;
             return _nextState;
         }
@@ -21,10 +21,12 @@ public class JuggernautHostile : EnemyState
     }
 
     public override void OnTriggerEnter(Collider other) {
+        
     }
 
     public override void OnTriggerStay(Collider other) {
-        if (other.tag == "Player") {
+        if (other.gameObject.layer == LayerMask.NameToLayer("Player"))
+        {
             target = other.transform.position;
         }
     }

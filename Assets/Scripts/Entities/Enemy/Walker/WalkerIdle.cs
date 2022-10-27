@@ -44,7 +44,8 @@ public class WalkerIdle : EnemyState
     }
 
     public override void OnTriggerEnter(Collider other) {
-        if (other.tag == "Player") {
+        if (other.gameObject.layer == LayerMask.NameToLayer("Player"))
+        {
             _detected = true;
         }
     }

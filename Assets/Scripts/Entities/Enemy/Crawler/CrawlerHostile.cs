@@ -73,6 +73,9 @@ public class CrawlerHostile : EnemyState
     }
 
     public override void OnTriggerStay(Collider other) {
-        if (other.tag == "Player") target = other.transform.position; 
+        if (other.gameObject.layer == LayerMask.NameToLayer("Player"))
+        {
+            target = other.transform.position;
+        }
     }
 }
