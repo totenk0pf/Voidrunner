@@ -1,7 +1,10 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using Core.Events;
 using UnityEngine;
 using Sirenix.OdinInspector;
+using UI;
+using EventType = Core.Events.EventType;
 
 namespace Combat {
     [RequireComponent(typeof(Rigidbody))]
@@ -11,14 +14,11 @@ namespace Combat {
         public float attackSpeed;
         public float attackRadius;
         public float attackSpeedModifier = 1f;
-        
-        [TitleGroup("Melee states")]
-        protected bool isAttacking;
-        protected bool canAttack;
 
         protected List<EnemyBase> enemies = new();
 
         protected void Awake() {
+            canAttack = true;
             StartCoroutine(Fire());
             StartCoroutine(AltFire());
         }
@@ -32,27 +32,37 @@ namespace Combat {
         }
 
         protected void OnTriggerEnter(Collider col) {
-            enemies.Add(GetEnemy(col));
+            var enemy = GetEnemy(col);
+            if (enemy) enemies.Add(enemy);
         }
 
         protected void OnTriggerExit(Collider col) {
-            enemies.Remove(GetEnemy(col));
+            var enemy = GetEnemy(col);
+            if (enemy) enemies.Remove(enemy);
         }
 
         protected override EnemyBase GetEnemy(Collider col) {
             var enemy = col.GetComponent<EnemyBase>();
-            return !enemy & !enemies.Contains(enemy) ? null : enemy;
+            return !enemy || enemies.Contains(enemy) ? null : enemy;
         }
         
         public override IEnumerator Fire() {
             while (true) {
                 if (isAttacking) {
+                    enemies.RemoveAll(x => !x);
+                    if (enemies.Count < 1) yield return null;
                     canAttack = false;
                     for (int i = 0; i < enemies.Count; i++) {
                         if (Vector3.Distance(enemies[i].transform.position, transform.position) > attackRadius) continue;
                         Damage(enemies[i]);
                     }
-                    yield return new WaitForSeconds(attackSpeed / attackSpeedModifier);
+                    var rechargeTime = attackSpeed / attackSpeedModifier;
+                    this.FireEvent(EventType.WeaponFiredEvent, new WeaponFireUIMsg {
+                        type = WeaponType.Melee,
+                        rechargeDuration = rechargeTime
+                    });
+                    yield return new WaitForSeconds(rechargeTime);
+                    this.FireEvent(EventType.WeaponRechargedEvent);
                     canAttack = true;
                     isAttacking = false;
                     yield return null;

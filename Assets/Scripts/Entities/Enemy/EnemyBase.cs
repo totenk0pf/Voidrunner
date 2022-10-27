@@ -1,32 +1,44 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
-public class EnemyBase : EntityBase
-{
+[Flags]
+public enum EnemyType {
+    Flesh,
+    Bone,
+    Armor
+}
+
+public class EnemyBase : EntityBase {
+    public EnemyType type;
     public float enemyDamage; 
     public float enemySpeed;
     public float enemyHP;
+    protected float currentHp;
 
+    public bool isStunned;
     private float _currentHP;
 
-    //Modify NavMeshAgent Values in Inspector
-    protected NavMeshAgent _navAgent;
+    [SerializeField] private EnemyUI ui;
+    protected NavMeshAgent navAgent;
 
     private void Start() {
-        _navAgent = GetComponent<NavMeshAgent>();
-        _navAgent.speed = enemySpeed;
+        navAgent = GetComponent<NavMeshAgent>();
+        navAgent.speed = enemySpeed;
 
-        if (!_navAgent.isOnNavMesh) {
+        if (!navAgent.isOnNavMesh) {
             Debug.LogWarning("No NavMesh is bound to Enemy");
         }
-
-        _currentHP = enemyHP;
+        currentHp = enemyHP;
+        
+        ui.healthBar.maxValue = enemyHP;
+        ui.healthBar.value = enemyHP;
     }
 
     private void Update() {
-        if (_currentHP <= 0) {
+        if (currentHp <= 0) {
             Die();
         }
     }
@@ -35,21 +47,20 @@ public class EnemyBase : EntityBase
         throw new System.NotImplementedException();
     }
 
-    //Moving that takes Transform as arguement 
     public virtual void Move(Transform destination) {
-        _navAgent.SetDestination(destination.position);
+        navAgent.SetDestination(destination.position);
     }
-
-    //Moving that takes Vector3 as arguement 
+ 
     public virtual void Move(Vector3 destination) {
-        _navAgent.SetDestination(destination);
+        navAgent.SetDestination(destination);
     }
 
     public virtual void Die() {
-        Destroy(this);
+        Destroy(gameObject);
     }
 
-    public virtual void TakeDamage(float ammount) {
-        _currentHP -= ammount;
+    public virtual void TakeDamage(float amount) {
+        currentHp -= amount;
+        ui.UpdateBar(amount);
     }
 }

@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using Core.Events;
-using Core.Patterns;
 using UnityEngine;
 using EventType = Core.Events.EventType;
 
@@ -12,46 +10,39 @@ namespace Combat {
         Ranged
     }
     
+    [Serializable]
+    public struct WeaponEntry {
+        public KeyCode keymap;
+        public WeaponType type;
+        public WeaponBase reference;
+    }
+    
     public class WeaponManager : MonoBehaviour {
-        [Serializable]
-        public struct WeaponEntry {
-            public KeyCode keymap;
-            public WeaponType type;
-            public WeaponBase reference;
-        }
-        
         [SerializeField] private List<WeaponEntry> weaponList;
-        [SerializeField] private WeaponType currentWeapon;
+        [SerializeField] private WeaponEntry currentWeapon;
+        private bool canSwap = true;
 
         private void Awake() {
             OnWeaponSwap(currentWeapon);
-            
+            this.AddListener(EventType.WeaponFiredEvent, param => canSwap = false);
+            this.AddListener(EventType.WeaponRechargedEvent, param => canSwap = true);
         }
 
         private void Update() {
+            if (!canSwap) return;
             foreach (var item in weaponList) {
                 if (Input.GetKeyDown(item.keymap)) {
-                    OnWeaponSwap(item.type);
+                    OnWeaponSwap(item);
                 }
             }
         }
 
-        private void OnWeaponSwap(WeaponType weapon)
-        {
-            WeaponBase currWeapon = null;//declaring
+        private void OnWeaponSwap(WeaponEntry weapon) {
             foreach (var item in weaponList) {
-                item.reference.gameObject.SetActive(item.type == weapon);
-                if (item.type == weapon) currWeapon = item.reference;//get current weapon base
+                item.reference.canAttack = item.type == weapon.type;
             }
             currentWeapon = weapon;
-            EventDispatcher.Instance.FireEvent(EventType.WeaponChangedEvent, currentWeapon);
-            
-            EventDispatcher.Instance.FireEvent(EventType.CurrentWeaponChangeEvent, currWeapon);//fire event
+            this.FireEvent(EventType.WeaponChangedEvent, currentWeapon);
         }
-
-        // private WeaponBase GetCurrentWeapon()
-        // {
-        //     return (from entry in weaponList where entry.type == currentWeapon select entry.reference).FirstOrDefault();
-        // }
     }
 }

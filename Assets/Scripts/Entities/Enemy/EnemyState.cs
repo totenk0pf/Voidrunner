@@ -19,7 +19,21 @@ public abstract class EnemyState : MonoBehaviour
         }
     }
 
+    public LayerMask playerMask;
+    [HideInInspector] public GameObject target;
+    [HideInInspector] public bool detected;
+
     public abstract EnemyState RunCurrentState();
-    public abstract void OnTriggerEnter(Collider other);
-    public abstract void OnTriggerStay(Collider other);
+
+    public virtual void OnTriggerEnter(Collider other) {
+        if (IsInLayerMask(other.gameObject, playerMask))
+        {
+            target = other.gameObject;
+            detected = true;
+        }
+    }
+
+    private static bool IsInLayerMask(GameObject obj, LayerMask layerMask) {
+        return (layerMask.value & (1 << obj.layer)) > 0;
+    }
 }

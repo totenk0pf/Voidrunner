@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using Core.Events;
+using Sirenix.OdinInspector;
 using Unity.VisualScripting;
 using UnityEngine;
 using EventType = Core.Events.EventType;
@@ -11,37 +12,36 @@ namespace Combat
 {
     public class WeaponEmpowerment : MonoBehaviour
     {
-        //KeyCode to activate empower
-        [Header("Empower Keys")]
-        [SerializeField] private KeyCode keyFire;
-        [SerializeField] private KeyCode keyElectric;
-        [SerializeField] private KeyCode keyAcid;
+        public enum EmpowerType
+        {
+            None,
+            Fire,       //bonus dmg to walker
+            Electric,   //stun crawler
+            Acid        //DoT juggernaut
+        }
+
+        [TitleGroup("Empower settings")]
         private EmpowerType _currentEmpowerType = EmpowerType.None;
-
-        
-        
-        [Header("Empower Attributes")]
         private WeaponBase _currentWeapon; //current weapon that's equipped != not necessarily empowered weapon
+        [SerializeField] private Dictionary<EmpowerType, KeyCode> empowerKeys = new();
+        [SerializeField] private Dictionary<EnemyType, EmpowerType> counterType = new();
         private WeaponBase _empoweredWeapon;
-        [SerializeField] private float duration;//Duration for empowerment
+        [SerializeField] private float duration; //Duration for empowerment
 
-        [Header("Fire Attributes")] 
-        [SerializeField] private List<string> fleshTags;
+        [TitleGroup("Fire")]
         [SerializeField] private float fireDamage; //extra damage against flesh
 
-        [Header("Electric Attributes")] 
-        [SerializeField] private List<string> boneTags;
+        [TitleGroup("Electric")]
         [SerializeField] private float stunDuration; //stun duration against Bone
 
-        [Header("Acid Attributes")] 
-        [SerializeField] private List<string> armorTags;
+        [TitleGroup("Acid")]
         [SerializeField] private float acidDamagePerInterval;
         [SerializeField] private float intervalNum;
         [SerializeField] private float intervalDuration;
 
         private void Awake()
         {
-            EventDispatcher.Instance.AddListener(EventType.CurrentWeaponChangeEvent, param => UpdateCurrentWeapon((WeaponBase) param));
+            EventDispatcher.Instance.AddListener(EventType.WeaponChangedEvent, param => UpdateCurrentWeapon((WeaponEntry) param));
             EventDispatcher.Instance.AddListener(EventType.DamageEnemyEvent, enemy => DealEmpowerDamage((EnemyBase) enemy));
         }
 
@@ -55,56 +55,26 @@ namespace Combat
         {
             //only deal empower damage if current weapon is empowered
             if (_currentWeapon != _empoweredWeapon) return;
-
+            if (!CanDamage(enemy)) return;
             switch (_currentEmpowerType)
             {
                 case EmpowerType.None:
                     return;
                 case EmpowerType.Fire:
-                    DealFireEmpowerDamage(enemy);
+                    enemy.TakeDamage(fireDamage);
                     break;
                 case EmpowerType.Electric:
-                    DealStunEmpowerDamage(enemy);
+                    StartCoroutine(StunRoutine(enemy));
                     break;
                 case EmpowerType.Acid:
-                    DealAcidEmpowerDamage(enemy);
+                    StartCoroutine(DOTRoutine(enemy));
                     break;
                 default:
                     throw new ArgumentOutOfRangeException();
             }
         }
 
-
-        private bool DealFireEmpowerDamage(EnemyBase enemy)
-        {
-            var canDamage = fleshTags.Any(tag => enemy.gameObject.CompareTag(tag));
-            if (!canDamage) return false;
-            
-            enemy.TakeDamage(fireDamage);
-            return true;
-        }
-
-        private bool DealStunEmpowerDamage(EnemyBase enemy)
-        {
-            var canDamage = boneTags.Any(tag => enemy.gameObject.CompareTag(tag));
-            if (!canDamage) return false;
-
-            StartCoroutine(StunRoutine(enemy));
-            return true;
-        }
-
-        private bool DealAcidEmpowerDamage(EnemyBase enemy)
-        {
-            var canDamage = armorTags.Any(tag => enemy.gameObject.CompareTag(tag));
-            if (!canDamage) return false;
-
-            StartCoroutine(DOTRoutine(enemy));
-            return true;
-        }
-
-
-
-
+        private bool CanDamage(EnemyBase enemy) => _currentEmpowerType == counterType[enemy.type];
 
         private IEnumerator StunRoutine(EnemyBase enemy)
         {
@@ -129,11 +99,10 @@ namespace Combat
 
             yield return null;
         }
-        
-        
-        private void UpdateCurrentWeapon(WeaponBase weapon)
+
+        private void UpdateCurrentWeapon(WeaponEntry weapon)
         {
-            _currentWeapon = weapon;
+            _currentWeapon = weapon.reference;
         }
         
         private IEnumerator EnableEmpowerRoutine(EmpowerType type)
@@ -150,36 +119,12 @@ namespace Combat
         private void UpdateEmpowerStatus()
         {
             if (_currentEmpowerType != EmpowerType.None) return;
-
-            if (Input.GetKeyDown(keyFire))
-            {
-                StartCoroutine(EnableEmpowerRoutine(EmpowerType.Fire));
-            }
-            if (Input.GetKeyDown(keyElectric))
-            {
-                StartCoroutine(EnableEmpowerRoutine(EmpowerType.Electric));
-            }
-            if (Input.GetKeyDown(keyAcid))
-            {
-                StartCoroutine(EnableEmpowerRoutine(EmpowerType.Acid));
+            foreach (var item in empowerKeys) {
+                if (Input.GetKeyDown(item.Value)) {
+                    StartCoroutine(EnableEmpowerRoutine(item.Key));
+                }
             }
         }
 
-
-
-        // public enum EnemyType
-        // {
-        //     Walker,
-        //     Crawler,
-        //     Juggernaut
-        // }
-
-        public enum EmpowerType
-        {
-            None,
-            Fire,       //bonus dmg to walker
-            Electric,   //stun crawler
-            Acid        //DoT juggernaut
-        }
     }
 }

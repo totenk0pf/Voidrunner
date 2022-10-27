@@ -1,11 +1,15 @@
 using System.Collections;
+using Core.Events;
 using UnityEngine;
 using Sirenix.OdinInspector;
+using UI;
+using EventType = Core.Events.EventType;
 
 namespace Combat {
     public class GunBase : WeaponBase {
         [TitleGroup("Gun settings")]
         public float preshotDelay;
+        public float aftershotDelay;
         public Transform firePoint;
         [SerializeField] private int maxAmmo;
         [SerializeField] private int maxClip;
@@ -13,7 +17,6 @@ namespace Combat {
         
         [TitleGroup("Gun states")]
         protected bool isReloading;
-        protected bool isFiring;
 
         public int currentAmmo;
         public int clipAmount;
@@ -23,11 +26,21 @@ namespace Combat {
 
         protected void Awake() {
             currentAmmo = maxAmmo;
+            clipAmount = maxClip;
+            UpdateUI();
+        }
+
+        protected void UpdateUI() {
+            this.FireEvent(EventType.RangedShotEvent, new RangedUIMsg {
+                ammo = currentAmmo,
+                clip = clipAmount
+            });
         }
 
         protected void Update() {
             if (Input.GetMouseButtonDown(0)) {
-                if (isFiring) return;
+                if (!canAttack) return;
+                if (isAttacking) return;
                 if (currentAmmo >= 1) {
                     currentAmmo--;
                     StartCoroutine(Fire());
@@ -35,6 +48,7 @@ namespace Combat {
             }
             if (Input.GetKeyDown(KeyCode.R)) {
                 if (isReloading) return;
+                if (isAttacking) return;
                 if (clipAmount >= 1) {
                     StartCoroutine(Reload());
                 }
@@ -55,19 +69,30 @@ namespace Combat {
         }
 
         public override IEnumerator Fire() {
-            isFiring = true;
+            canAttack = false;
+            isAttacking = true;
             yield return new WaitForSeconds(preshotDelay);
             Damage(GetEnemy());
-            isFiring = false;
+            UpdateUI();
+            this.FireEvent(EventType.WeaponFiredEvent, new WeaponFireUIMsg {
+                type = WeaponType.Ranged,
+                rechargeDuration = aftershotDelay
+            });
+            yield return new WaitForSeconds(aftershotDelay);
+            this.FireEvent(EventType.WeaponRechargedEvent);
+            canAttack = true;
+            isAttacking = false;
             yield return null;
         }
 
         protected IEnumerator Reload() {
             isReloading = true;
-            // yield return new WaitForSeconds(transform.GetComponentInParent<Animator>().runtimeAnimatorController.animationClips[0].length);
+            canAttack = false;
             clipAmount--;
             currentAmmo = maxAmmo;
             isReloading = false;
+            canAttack = true;
+            UpdateUI();
             yield return null;
         }
     }

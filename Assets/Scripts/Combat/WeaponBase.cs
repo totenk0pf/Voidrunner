@@ -9,6 +9,10 @@ namespace Combat
         public float damage;
         public float damageScale;
         public float damageModifier;
+        
+        public bool canAttack;
+        public bool isAttacking;
+        
         public abstract IEnumerator Fire();
         public abstract IEnumerator AltFire();
         protected abstract EnemyBase GetEnemy(Collider col = null);

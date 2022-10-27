@@ -1,14 +1,12 @@
-using System.Collections;
 using UnityEngine.AI;
 using UnityEngine;
 
-public class JuggernautIlde : EnemyState
+public class JuggernautIdle : EnemyState
 {
     public float minEnemyRange;
     public float maxEnemyRange;
 
     private bool _canWalk = true;
-    private bool _detected = false;
     [SerializeField] private EnemyState _nextState;
 
     public override EnemyState RunCurrentState() {
@@ -18,7 +16,7 @@ public class JuggernautIlde : EnemyState
             Agent.SetDestination(GetRandomWayPoint(Random.Range(minEnemyRange, maxEnemyRange)));
         }
 
-        if (_detected) return _nextState;
+        if (detected) return _nextState;
         return this;
     }
 
@@ -31,15 +29,5 @@ public class JuggernautIlde : EnemyState
         NavMesh.SamplePosition(randomDir, out hit, radius, 1);
 
         return hit.position;
-    }
-
-    public override void OnTriggerEnter(Collider other) {
-        if (other.tag == "Player") {
-            _detected = true;
-        }
-    }
-
-    public override void OnTriggerStay(Collider other) {
-
     }
 }
