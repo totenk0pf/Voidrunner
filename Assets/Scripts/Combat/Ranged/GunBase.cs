@@ -17,7 +17,6 @@ namespace Combat {
         
         [TitleGroup("Gun states")]
         protected bool isReloading;
-        protected bool isFiring;
 
         public int currentAmmo;
         public int clipAmount;
@@ -40,7 +39,8 @@ namespace Combat {
 
         protected void Update() {
             if (Input.GetMouseButtonDown(0)) {
-                if (isFiring) return;
+                if (!canAttack) return;
+                if (isAttacking) return;
                 if (currentAmmo >= 1) {
                     currentAmmo--;
                     StartCoroutine(Fire());
@@ -48,6 +48,7 @@ namespace Combat {
             }
             if (Input.GetKeyDown(KeyCode.R)) {
                 if (isReloading) return;
+                if (isAttacking) return;
                 if (clipAmount >= 1) {
                     StartCoroutine(Reload());
                 }
@@ -68,7 +69,8 @@ namespace Combat {
         }
 
         public override IEnumerator Fire() {
-            isFiring = true;
+            canAttack = false;
+            isAttacking = true;
             yield return new WaitForSeconds(preshotDelay);
             Damage(GetEnemy());
             UpdateUI();
@@ -77,16 +79,19 @@ namespace Combat {
                 rechargeDuration = aftershotDelay
             });
             yield return new WaitForSeconds(aftershotDelay);
-            isFiring = false;
+            this.FireEvent(EventType.WeaponRechargedEvent);
+            canAttack = true;
+            isAttacking = false;
             yield return null;
         }
 
         protected IEnumerator Reload() {
             isReloading = true;
-            // yield return new WaitForSeconds(transform.GetComponentInParent<Animator>().runtimeAnimatorController.animationClips[0].length);
+            canAttack = false;
             clipAmount--;
             currentAmmo = maxAmmo;
             isReloading = false;
+            canAttack = true;
             UpdateUI();
             yield return null;
         }

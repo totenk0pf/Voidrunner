@@ -20,12 +20,16 @@ namespace Combat {
         
         [SerializeField] private List<WeaponEntry> weaponList;
         [SerializeField] private WeaponType currentWeapon;
+        private bool canSwap = true;
 
         private void Awake() {
             OnWeaponSwap(currentWeapon);
+            this.AddListener(EventType.WeaponFiredEvent, param => canSwap = false);
+            this.AddListener(EventType.WeaponRechargedEvent, param => canSwap = true);
         }
 
         private void Update() {
+            if (!canSwap) return;
             foreach (var item in weaponList) {
                 if (Input.GetKeyDown(item.keymap)) {
                     OnWeaponSwap(item.type);
@@ -35,10 +39,10 @@ namespace Combat {
 
         private void OnWeaponSwap(WeaponType weapon) {
             foreach (var item in weaponList) {
-                item.reference.gameObject.SetActive(item.type == weapon);
+                item.reference.canAttack = item.type == weapon;
             }
             currentWeapon = weapon;
-            EventDispatcher.Instance.FireEvent(EventType.WeaponChangedEvent, currentWeapon);
+            this.FireEvent(EventType.WeaponChangedEvent, currentWeapon);
         }
     }
 }
