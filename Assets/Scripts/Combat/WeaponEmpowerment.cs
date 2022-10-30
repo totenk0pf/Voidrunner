@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using Core.Events;
 using Sirenix.OdinInspector;
@@ -6,18 +7,31 @@ using UnityEngine;
 using EventType = Core.Events.EventType;
 
 namespace Combat {
-    public class WeaponEmpowerment : MonoBehaviour {
-        public enum EmpowerType {
-            None,
-            Fire, //bonus dmg to walker
-            Electric, //stun crawler
-            Acid //DoT juggernaut
-        }
+    public enum EmpowerType {
+        None,
+        Fire, //bonus dmg to walker
+        Electric, //stun crawler
+        Acid //DoT juggernaut
+    }
 
-        [TitleGroup("Empower settings")] private EmpowerType _currentEmpowerType = EmpowerType.None;
+    [Serializable]
+    public struct EmpowerData {
+        public EmpowerType type;
+        public EnemyType counterType;
+        public KeyCode key;
+        public float chargeDuration;
+    }
+    
+    public class WeaponEmpowerment : MonoBehaviour {
+
+        [TitleGroup("Empower settings")] 
+        private EmpowerType _currentEmpowerType = EmpowerType.Acid;
         private WeaponBase _currentWeapon; //current weapon that's equipped != not necessarily empowered weapon
-        [SerializeField] private Dictionary<EmpowerType, KeyCode> empowerKeys = new();
-        [SerializeField] private Dictionary<EnemyType, EmpowerType> counterType = new();
+        private bool _canEmpower;
+
+        [SerializeField] private List<EmpowerData> empowerData;
+        private int _empowerIndex;
+        
         private WeaponBase _empoweredWeapon;
         [SerializeField] private float duration;
 
@@ -30,23 +44,55 @@ namespace Combat {
         [TabGroup("Acid")] [SerializeField] private float intervalDuration;
 
         private void Awake() {
+            _empowerIndex = 0;
             EventDispatcher.Instance.AddListener(EventType.WeaponChangedEvent,
                                                  param => UpdateCurrentWeapon((WeaponEntry) param));
             EventDispatcher.Instance.AddListener(EventType.DamageEnemyEvent,
                                                  enemy => DealEmpowerDamage((EnemyBase) enemy));
+            UpdateCurrentAugment();
         }
 
         private void Update() {
+            UpdateCurrentAugment();
             UpdateEmpowerStatus();
         }
 
         private void UpdateEmpowerStatus() {
             if (_currentEmpowerType != EmpowerType.None) return;
-            foreach (var item in empowerKeys) {
-                if (Input.GetKeyDown(item.Value)) {
-                    StartCoroutine(EnableEmpowerRoutine(item.Key));
+            if (!_canEmpower) return;
+            foreach (var item in empowerData) {
+                if (Input.GetKeyDown(item.key)) {
+                    StartCoroutine(EnableEmpowerRoutine(item.type));
                 }
             }
+        }
+
+        private void ResetEmpower(EmpowerData newType) {
+            StartCoroutine(ResetEmpowerRoutine(newType));
+        }
+        
+        private IEnumerator ResetEmpowerRoutine(EmpowerData newType) {
+            _canEmpower = false;
+            yield return new WaitForSeconds(newType.chargeDuration);
+            _canEmpower = true;
+            yield return null;
+        }
+
+        private void UpdateCurrentAugment() {
+            var scroll = Input.mouseScrollDelta;
+            if (scroll.y == 0) return;
+            var delta = scroll.y > 0 ? 1 : -1;
+            _empowerIndex += delta;
+            if (_empowerIndex + delta > empowerData.Count) {
+                _empowerIndex = 0;
+            } else if (_empowerIndex + delta < 0) {
+                _empowerIndex = empowerData.Count - 1;
+            }
+            var currentData = empowerData[_empowerIndex];
+            _currentEmpowerType = currentData.type;
+            this.FireEvent(EventType.AugmentChangedEvent, _currentEmpowerType);
+            this.FireEvent(EventType.AugmentChargeEvent, currentData.chargeDuration);
+            ResetEmpower(currentData);
         }
 
         private void DealEmpowerDamage(EnemyBase enemy) {
@@ -67,7 +113,7 @@ namespace Combat {
             }
         }
 
-        private bool CanDamage(EnemyBase enemy) => _currentEmpowerType == counterType[enemy.type];
+        private bool CanDamage(EnemyBase enemy) => _currentEmpowerType == empowerData.Find(x => enemy.type == x.counterType).type;
 
         private void UpdateCurrentWeapon(WeaponEntry weapon) {
             _currentWeapon = weapon.reference;
@@ -76,6 +122,7 @@ namespace Combat {
         private IEnumerator EnableEmpowerRoutine(EmpowerType type) {
             _empoweredWeapon = _currentWeapon;
             _currentEmpowerType = type;
+            this.FireEvent(EventType.AugmentDrainEvent, duration);
             yield return new WaitForSeconds(duration);
             _empoweredWeapon = null;
             _currentEmpowerType = EmpowerType.None;

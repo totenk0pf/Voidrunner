@@ -1,12 +1,13 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Combat;
 using UnityEngine;
 
 namespace UI {
     [Serializable]
     public class AugmentUIData {
-        public AugmentType type;
+        public EmpowerType type;
         public Sprite icon;
         public Color primaryColor;
         public Color secondaryColor;
@@ -18,7 +19,7 @@ namespace UI {
         public Color defaultColor;
         public Color disabledColor;
 
-        public AugmentUIData GetByType(AugmentType type) {
+        public AugmentUIData GetByType(EmpowerType type) {
             return augmentData.Find(x => x.type == type);
         }
     }

@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Combat;
 using Core.Events;
 using DG.Tweening;
 using Sirenix.OdinInspector;
@@ -10,21 +11,12 @@ using UnityEngine.UI;
 using EventType = Core.Events.EventType;
 
 namespace UI {
-    public enum AugmentType {
-        None,
-        Arc,
-        Fire,
-        Chem,
-    }
-
     public class AugmentUI : MonoBehaviour {
-        public AugmentType currentType;
-        public float drainDuration;
+        private EmpowerType _currentType;
         
         [TitleGroup("Data")]
         [SerializeField] private UIData uiData;
         [SerializeField] private Slider slider;
-        [SerializeField] private float chargeDuration;
         private AugmentUIData _augmentData;
         private AugmentUIData _noneData;
 
@@ -33,31 +25,21 @@ namespace UI {
         [SerializeField] private Image augmentBackground;
         [SerializeField] private List<Image> uiRenderers;
 
-        [Button("Update augment")]
-        private void UpdateAugment() {
-            EventDispatcher.Instance.FireEvent(EventType.AugmentChangedEvent, currentType);
+        private void Awake() {
+            _noneData = uiData.GetByType(EmpowerType.None);
+            _augmentData = uiData.GetByType(_currentType);
+            EventDispatcher.Instance.AddListener(EventType.AugmentChangedEvent, type => OnElementChange((EmpowerType) type));
+            EventDispatcher.Instance.AddListener(EventType.AugmentChargeEvent, param => Charge((float) param));
+            EventDispatcher.Instance.AddListener(EventType.AugmentDrainEvent, param => Drain((float) param));
         }
         
-        private void Awake() {
-            _noneData = uiData.GetByType(AugmentType.None);
-            _augmentData = uiData.GetByType(currentType);
-            EventDispatcher.Instance.AddListener(EventType.AugmentChangedEvent, (e) => OnElementChange((AugmentType) e));
-            EventDispatcher.Instance.AddListener(EventType.AugmentDrainEvent, (param) => Drain());
-        }
-
-        private void Update() {
-            if (Input.GetKeyDown(KeyCode.J)) {
-                EventDispatcher.Instance.FireEvent(EventType.AugmentDrainEvent);
-            }
-        }
-
         private void SetColor(AugmentUIData data, float duration) {
             augmentBackground.DOColor(data.primaryColor, duration);
             augmentSprite.DOColor(data.secondaryColor, duration);
         }
         
-        private void Charge() {
-            var anim = DOTween.To(() => slider.value, x => slider.value = x, 1f, chargeDuration).SetEase(Ease.Linear);
+        private void Charge(float duration) {
+            var anim = DOTween.To(() => slider.value, x => slider.value = x, 1f, duration).SetEase(Ease.Linear);
             anim.OnComplete(OnMaxCharge);
         }
         
@@ -65,10 +47,9 @@ namespace UI {
             SetColor(_augmentData, 0.2f);
         }
         
-        private void Drain() {
+        private void Drain(float duration) {
             SetColor(_noneData, 0.1f);
-            var anim = DOTween.To(() => slider.value, x => slider.value = x, 0f, drainDuration).SetEase(Ease.Linear);
-            anim.OnComplete(Charge);
+            var anim = DOTween.To(() => slider.value, x => slider.value = x, 0f, duration).SetEase(Ease.Linear);
         }
 
         
@@ -80,11 +61,10 @@ namespace UI {
             }
         }
         
-        private void OnElementChange(AugmentType type) {
+        private void OnElementChange(EmpowerType type) {
             _augmentData = uiData.GetByType(type);
             if (_augmentData == null) return;
             Reset();
-            Charge();
             augmentSprite.sprite = _augmentData.icon;
             foreach (var item in uiRenderers) {
                 item.color = _augmentData.primaryColor;

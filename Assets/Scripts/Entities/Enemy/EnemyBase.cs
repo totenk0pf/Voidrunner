@@ -5,6 +5,7 @@ using UnityEngine;
 using UnityEngine.AI;
 
 [Flags]
+[Serializable]
 public enum EnemyType {
     Flesh,
     Bone,

@@ -131,12 +131,25 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c9474a2653654065a561b637045b1515, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  duration: 0
-  fireDamage: 0
-  stunDuration: 0
-  acidDamagePerInterval: 0
-  intervalNum: 0
-  intervalDuration: 0
+  empowerData:
+  - type: 1
+    counterType: 0
+    key: 106
+    chargeDuration: 1
+  - type: 2
+    counterType: 1
+    key: 107
+    chargeDuration: 1
+  - type: 3
+    counterType: 2
+    key: 108
+    chargeDuration: 1
+  duration: 5
+  fireDamage: 30
+  stunDuration: 3
+  acidDamagePerInterval: 10
+  intervalNum: 4
+  intervalDuration: 0.3
 --- !u!1 &6037325518918287425
 GameObject:
   m_ObjectHideFlags: 0
@@ -1020,7 +1033,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5343456865991583229, guid: 60e86fce881ae2a44af9c058ca63706d, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 0
+      value: 155
       objectReference: {fileID: 0}
     - target: {fileID: 5343456865991583229, guid: 60e86fce881ae2a44af9c058ca63706d, type: 3}
       propertyPath: m_AnchoredPosition.y
