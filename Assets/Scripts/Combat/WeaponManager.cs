@@ -10,16 +10,17 @@ namespace Combat {
         Ranged
     }
     
+    [Serializable]
+    public struct WeaponEntry {
+        public KeyCode keymap;
+        public WeaponType type;
+        public WeaponBase reference;
+    }
+    
     public class WeaponManager : MonoBehaviour {
-        [Serializable]
-        public struct WeaponEntry {
-            public KeyCode keymap;
-            public WeaponType type;
-            public WeaponBase reference;
-        }
-        
         [SerializeField] private List<WeaponEntry> weaponList;
-        [SerializeField] private WeaponType currentWeapon;
+        [SerializeField] private WeaponEntry currentWeapon;
+        [SerializeField] private WeaponType currentType;
         private bool canSwap = true;
 
         private void Awake() {
@@ -32,17 +33,22 @@ namespace Combat {
             if (!canSwap) return;
             foreach (var item in weaponList) {
                 if (Input.GetKeyDown(item.keymap)) {
-                    OnWeaponSwap(item.type);
+                    OnWeaponSwap(item);
                 }
             }
         }
 
-        private void OnWeaponSwap(WeaponType weapon) {
+        private void OnWeaponSwap(WeaponEntry weapon) {
             foreach (var item in weaponList) {
-                item.reference.canAttack = item.type == weapon;
+                item.reference.canAttack = item.type == weapon.type;
             }
             currentWeapon = weapon;
             this.FireEvent(EventType.WeaponChangedEvent, currentWeapon);
+        }
+
+        private void OnValidate() {
+            var entry = weaponList.Find(x => x.type == currentType);
+            currentWeapon = entry;
         }
     }
 }

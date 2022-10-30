@@ -11,17 +11,17 @@ public abstract class EnemyState : MonoBehaviour
         }
     }
 
-    protected EnemyBase _eBase;
-    protected EnemyBase eBase {
+    protected EnemyBase _enemyBase;
+    protected EnemyBase enemyBase {
         get {
-            if (!_eBase) _eBase = transform.root.GetComponent<EnemyBase>();
-            return _eBase;
+            if (!_enemyBase) _enemyBase = transform.root.GetComponent<EnemyBase>();
+            return _enemyBase;
         }
     }
 
     public LayerMask playerMask;
     [HideInInspector] public GameObject target;
-    [HideInInspector] public bool detected; 
+    [HideInInspector] public bool detected;
 
     public abstract EnemyState RunCurrentState();
 
