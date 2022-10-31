@@ -3,6 +3,17 @@ namespace Core.Events {
         TestEvent = 0,
         LogEvent,
         OnItemRemove,
-        OnItemAdd
+        OnItemAdd,
+        UIBarChangedEvent,
+        OxygenChangeEvent,
+        LevelChangeEvent,
+        WeaponChangedEvent,
+        WeaponFiredEvent,
+        WeaponRechargedEvent,
+        AugmentChangedEvent,
+        AugmentChargeEvent,
+        AugmentDrainEvent,
+        DamageEnemyEvent,
+        RangedShotEvent
     }
 }

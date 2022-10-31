@@ -12,7 +12,8 @@ public class PlayerMovementController : MonoBehaviour
     {
         Normal,
         Roll,
-        Slide
+        Slide,
+        Falling
     }
     
     //max speed 
@@ -20,6 +21,14 @@ public class PlayerMovementController : MonoBehaviour
     //max accel force - max force to be applied to reach accel
 
     //shouldn't be lower than 1 unless want to slow down accel force
+    private Rigidbody _rb;
+    private Rigidbody Rb
+    {
+        get {
+            if (!_rb) _rb = GetComponent<Rigidbody>();
+            return _rb;
+        }
+    }
 
     public MovementState moveState;
 
@@ -33,15 +42,16 @@ public class PlayerMovementController : MonoBehaviour
     [SerializeField] private float maxSpeed;
 
     [Header("Movement Drag")] 
-    public bool canDrag = true;
-    public float rigidBodyDrag = 3;
-    
+    [SerializeField] private bool canDrag = true;
+    [SerializeField] private float slopeDrag = 3f;
+    [SerializeField] private float groundDrag;
+    [SerializeField] private float airDrag;
+
     [Header("Slope Handling")] 
     [SerializeField] private float slopeCastDist;
     public float maxSlopeAngle;
     private RaycastHit _slopeHit;
-
-    private Rigidbody _rb;
+    
     private Vector3 _moveDir;
 
     [Header("Roll Attributes")] 
@@ -60,18 +70,13 @@ public class PlayerMovementController : MonoBehaviour
     [SerializeField] private float slideDistance;
     
 
-    private void Awake()
-    {
-        _rb = GetComponentInChildren<PlayerHoverController>().Rigidbody;
-    }
-
     private float _horiz;
     private float _vert;
     private void FixedUpdate()
     {
         UpdateMoveDir();
         if(moveState == MovementState.Normal) UpdateStrafe();
-        if (canDrag) GivingDragOnSlope();
+        if (canDrag) ApplyDrag();
     }
 
     private void Update()
@@ -85,10 +90,10 @@ public class PlayerMovementController : MonoBehaviour
     private void UpdateStrafe()
     {
         if (OnSlope()) {
-            _rb.AddForce(UpdateDirChangeAccelTamper(_moveDir) * accelForce * _moveDir);
+            Rb.AddForce(UpdateDirChangeAccelTamper(_moveDir) * accelForce * _moveDir, ForceMode.Acceleration);
         }
         else {
-            _rb.AddForce(UpdateDirChangeAccelTamper(_moveDir) * accelForce * _moveDir);
+            Rb.AddForce(UpdateDirChangeAccelTamper(_moveDir) * accelForce * _moveDir, ForceMode.Acceleration);
         }
         
         ClampMaxSpeed();
@@ -98,18 +103,18 @@ public class PlayerMovementController : MonoBehaviour
     {
         if (OnSlope())
         {
-            if (_rb.velocity.magnitude > maxSpeed)
-                _rb.velocity = _rb.velocity.normalized * maxSpeed;
+            if (Rb.velocity.magnitude > maxSpeed)
+                Rb.velocity = Rb.velocity.normalized * maxSpeed;
         }
         else
         {
-            Vector3 rbVel = _rb.velocity;
+            Vector3 rbVel = Rb.velocity;
             var relVel = new Vector3(rbVel.x, 0, rbVel.z);
 
             if (relVel.magnitude > maxSpeed)
             {
                 relVel = Vector3.ClampMagnitude(rbVel, maxSpeed);
-                _rb.velocity = new Vector3(relVel.x, _rb.velocity.y, relVel.z);
+                Rb.velocity = new Vector3(relVel.x, Rb.velocity.y, relVel.z);
             }
         }
     }
@@ -122,7 +127,7 @@ public class PlayerMovementController : MonoBehaviour
     {
         if (!allowAccelTamper) return accelRate;
         
-        var rbVel = _rb.velocity.normalized;//rb dir
+        var rbVel = Rb.velocity.normalized;//rb dir
         var moveDir = dir.normalized;//input dir
 
         float accelDir = Vector3.Dot(rbVel, moveDir);
@@ -143,27 +148,27 @@ public class PlayerMovementController : MonoBehaviour
         return false;
     }
 
-    private void GivingDragOnSlope()
+    private void ApplyDrag()
     {
         if (!OnSlope()) {
-            _rb.drag = 0;
-            _rb.useGravity = true;
+            Rb.drag = groundDrag;
+            Rb.useGravity = true;
             return;
         }
         
-        float value = Vector3.Dot(_rb.velocity.normalized, Vector3.up);
+        float value = Vector3.Dot(Rb.velocity.normalized, Vector3.up);
         //going down
         if (value < 0) { 
-            _rb.drag = rigidBodyDrag;
-            _rb.useGravity = false;
+            Rb.drag = slopeDrag;
+            Rb.useGravity = false;
         }
         else {
-            _rb.drag = 0;
-            _rb.useGravity = true;
+            Rb.drag = groundDrag;
+            Rb.useGravity = true;
         }
 
-        if (_rb.velocity.magnitude < 0.3f)
-            _rb.useGravity = true;
+        if (Rb.velocity.magnitude < 0.3f)
+            Rb.useGravity = true;
 
     }
 
@@ -194,7 +199,7 @@ public class PlayerMovementController : MonoBehaviour
 
         moveState = MovementState.Roll;
         
-        _rb.velocity = Vector3.zero;
+        Rb.velocity = Vector3.zero;
         Vector3 dest = transform.position + (moveDir) * rollDistance;
         Vector3 rollAxis = Vector3.Cross(moveDir, playerVisualProto.up);
         
@@ -226,10 +231,10 @@ public class PlayerMovementController : MonoBehaviour
     
     private void ActionSlide(Vector3 moveDir)
     {
-        if (Mathf.Abs(_rb.velocity.magnitude - maxSpeed) > 0.5f || moveState != MovementState.Normal) { return; }
+        if (Mathf.Abs(Rb.velocity.magnitude - maxSpeed) > 0.5f || moveState != MovementState.Normal) { return; }
 
         moveState = MovementState.Slide;
-        //var velMagCache = _rb.velocity.magnitude;
+        //var velMagCache = Rb.velocity.magnitude;
         Vector3 dest = transform.position + moveDir * slideDistance;
         Vector3 pointAxis = moveDir;
 
