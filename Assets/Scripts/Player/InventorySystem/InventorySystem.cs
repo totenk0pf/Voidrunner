@@ -6,7 +6,7 @@ using Core.Events;
 
 public class InventorySystem : MonoBehaviour
 {
-    private Dictionary<InventoryItemData, InventoryItem> _itemDict;
+    private Dictionary<ItemData, InventoryItem> _itemDict;
     public List<InventoryItem> Inventory;
     public float currentWeight;
     public float maxWeight;
@@ -16,11 +16,11 @@ public class InventorySystem : MonoBehaviour
     private void Awake()
     {
         Inventory = new List<InventoryItem>();
-        _itemDict = new Dictionary<InventoryItemData, InventoryItem>();
-        EventDispatcher.Instance.AddListener(Core.Events.EventType.OnItemAdd, (data) => Add((InventoryItemData) data));
+        _itemDict = new Dictionary<ItemData, InventoryItem>();
+        EventDispatcher.Instance.AddListener(Core.Events.EventType.OnItemAdd, (data) => Add((ItemData) data));
     }
 
-    public void Add(InventoryItemData data)
+    public void Add(ItemData data)
     {
         if(currentWeight + data.weight > maxWeight)
         {
@@ -44,7 +44,7 @@ public class InventorySystem : MonoBehaviour
         currentWeight += data.weight;
     }
 
-    public void Remove(InventoryItemData data)
+    public void Remove(ItemData data)
     {
         if (_itemDict.TryGetValue(data, out InventoryItem value))
         {
@@ -59,7 +59,7 @@ public class InventorySystem : MonoBehaviour
         }
     }
 
-    public InventoryItem Get(InventoryItemData data)
+    public InventoryItem Get(ItemData data)
     {
         return _itemDict.TryGetValue(data, out InventoryItem value) ? value : null;
     }
@@ -77,11 +77,11 @@ public class InventorySystem : MonoBehaviour
 [Serializable]
 public class InventoryItem
 {
-    public InventoryItemData Data;
+    public ItemData Data;
     public int ItemCount;
     public float totalWeight;
 
-    public InventoryItem(InventoryItemData source)
+    public InventoryItem(ItemData source)
     {
         Data = source;
         AddItem();

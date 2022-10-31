@@ -5,7 +5,7 @@ using Core.Events;
 
 public class ItemBase : MonoBehaviour,IItems
 {
-    public InventoryItemData itemRef;
+    public ItemData itemRef;
 
     public void OnPickup()
     {
