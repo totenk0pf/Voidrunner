@@ -1,23 +1,25 @@
 using System;
 using Core.Events;
 using UnityEngine;
+using EventType = Core.Events.EventType;
 
 namespace Items {
     public class WorldItem : MonoBehaviour, IItems {
         public ItemData itemRef;
-        public int itemCount;
+        public int itemCount = 1;
         [SerializeField] private MeshFilter filter;
         [SerializeField] private MeshRenderer renderer;
 
-        public virtual void OnPickup(InventorySystem inventory) {
-            inventory.Add(itemRef, itemCount);
+        public virtual void OnPickup() {
+            this.FireEvent(EventType.OnItemAdd, new PickupMsg {
+                data = itemRef,
+                count = itemCount
+            });
+            Destroy(gameObject);
         }
 
         protected void OnTriggerEnter(Collider col) {
-            var x = col.transform.GetComponent<InventorySystem>();
-            if (!x) return;
-            OnPickup(x);
-            EventDispatcher.Instance.FireEvent(Core.Events.EventType.OnItemAdd, itemRef);
+            OnPickup();
         }
 
         private void OnValidate() {

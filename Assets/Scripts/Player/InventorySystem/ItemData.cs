@@ -2,14 +2,15 @@
 using System;
 using Items;
 using Sirenix.OdinInspector;
+using Sirenix.Serialization;
 
 [CreateAssetMenu(menuName = "Inventory/Item Data")]
 [Serializable]
-public class ItemData : ScriptableObject
+public class ItemData : SerializedScriptableObject
 {
     [TitleGroup("Item")]
     public SerializableGuid id;
-    [ShowInInspector] public ItemBehaviour behaviour;
+    public IItemBehaviour behaviour;
 
     [TitleGroup("Display")]
     public string itemName;
