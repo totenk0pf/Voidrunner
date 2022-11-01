@@ -37,8 +37,14 @@ namespace Particle
         
         private void Start()
         {
+            //Unity's Pool system already created a dynamic array behind the scene with "initialPoolSize" as starting array size,
+            //and will resize up to every (initialPoolSize + n * resize#) until it reaches "maxPoolSize"
             InitPool(particlePrefab, initialPoolSize, maxPoolSize);
             
+            //There's no need for this initialization of game objects, (This for loop can be get rid of)
+            //because Pool.Get() will create new game objects if there's none or not enough
+            //just doing this at start so it doesn't have to instantiate a fuck ton at some point in game
+            //(like shotgun blast with tons of raycast points to spawn particle could be expensive?, maybe)
             for (var i = 0; i < initialPoolSize; i++)
             {
                 var obj = CreateSetup();
