@@ -12,6 +12,7 @@ namespace Core.Events {
         AugmentChargeEvent,
         AugmentDrainEvent,
         DamageEnemyEvent,
-        RangedShotEvent
+        RangedShotEvent,
+        SpawnParticleEvent
     }
 }
