@@ -2,6 +2,8 @@ namespace Core.Events {
     public enum EventType {
         TestEvent = 0,
         LogEvent,
+        OnItemRemove,
+        OnItemAdd,
         UIBarChangedEvent,
         OxygenChangeEvent,
         LevelChangeEvent,

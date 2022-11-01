@@ -53,6 +53,12 @@ namespace Core.Events {
         }
     }
 
+    // WorldItem.cs : FireEvent(EventType.OnItemPickup, new object[] {ConsumableA, 2})
+
+    // InventorySystem.cs :
+    // AddListener(EventType.OnItemPickup, PickupCallback);
+    // void PickupCallback(ItemType type, int itemCount)
+
     /// <summary>
     /// Extensions to help with calling event-related methods.
     /// </summary>
