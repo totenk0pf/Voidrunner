@@ -1,12 +1,10 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class JuggernautAttack : EnemyState
 {
     public float attackDelay;
-
-    private GameObject target;
+    
     [SerializeField] private EnemyState _previousState;
     [SerializeField] private EnemyState _nextState;
 
@@ -14,7 +12,7 @@ public class JuggernautAttack : EnemyState
 
     public override EnemyState RunCurrentState() {
         //Change 2f number if changed in WalkerHostile also 
-        if (Vector3.Distance(transform.position, target.transform.position) > 2f) {
+        if (Vector3.Distance(transform.position, target.transform.position) > 3f) {
             return _previousState;
         }
 
@@ -29,20 +27,10 @@ public class JuggernautAttack : EnemyState
         _isAttacking = true;
 
         var oxygenComp = target.GetComponent<Oxygen>();
-        oxygenComp.ReducePermanentOxygen(eBase.enemyDamage);
+        oxygenComp.ReducePermanentOxygen(enemyBase.enemyDamage);
 
         yield return new WaitForSeconds(attackDelay);
 
         _isAttacking = false;
-    }
-
-    public override void OnTriggerEnter(Collider other) {
-
-    }
-
-    public override void OnTriggerStay(Collider other) {
-        if (other.tag == "Player") {
-            target = other.gameObject;
-        }
     }
 }

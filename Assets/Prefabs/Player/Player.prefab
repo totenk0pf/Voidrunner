@@ -47,6 +47,8 @@ MonoBehaviour:
   damage: 100
   damageScale: 1
   damageModifier: 1
+  canAttack: 0
+  isAttacking: 0
   preshotDelay: 0.2
   aftershotDelay: 0.6
   firePoint: {fileID: 6037325520643900592}
@@ -68,6 +70,7 @@ GameObject:
   m_Component:
   - component: {fileID: 298141708695055172}
   - component: {fileID: 5502601102066641784}
+  - component: {fileID: 2617546210943878228}
   m_Layer: 7
   m_Name: _WeaponHolder
   m_TagString: Player
@@ -111,7 +114,42 @@ MonoBehaviour:
   - keymap: 50
     type: 1
     reference: {fileID: 9172188407077185864}
-  currentWeapon: 0
+  currentWeapon:
+    keymap: 49
+    type: 0
+    reference: {fileID: 4575592630711051230}
+  currentType: 0
+--- !u!114 &2617546210943878228
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5938129123654007952}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c9474a2653654065a561b637045b1515, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  empowerData:
+  - type: 1
+    counterType: 0
+    key: 106
+    chargeDuration: 1
+  - type: 2
+    counterType: 1
+    key: 107
+    chargeDuration: 1
+  - type: 3
+    counterType: 2
+    key: 108
+    chargeDuration: 1
+  duration: 5
+  fireDamage: 30
+  stunDuration: 3
+  acidDamagePerInterval: 10
+  intervalNum: 4
+  intervalDuration: 0.3
 --- !u!1 &6037325518918287425
 GameObject:
   m_ObjectHideFlags: 0
@@ -503,6 +541,7 @@ GameObject:
   - component: {fileID: 6037325520723149430}
   - component: {fileID: 6037325520723149432}
   - component: {fileID: 7445117665404585877}
+  - component: {fileID: 1707386347828123312}
   m_Layer: 3
   m_Name: Player
   m_TagString: Player
@@ -627,6 +666,20 @@ MonoBehaviour:
   totalOxygen: 0
   currentOxygen: 0
   oxygenRatio: 0
+--- !u!114 &1707386347828123312
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6037325520723149425}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 828e834aa59b1ee449673da61969ec91, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  inventory: []
+  maxWeight: 20
 --- !u!1 &8371405675199406494
 GameObject:
   m_ObjectHideFlags: 0
@@ -705,6 +758,8 @@ MonoBehaviour:
   damage: 40
   damageScale: 1
   damageModifier: 1
+  canAttack: 0
+  isAttacking: 0
   attackSpeed: 1
   attackRadius: 3
   attackSpeedModifier: 2

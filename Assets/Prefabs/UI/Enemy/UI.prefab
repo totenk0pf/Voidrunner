@@ -233,7 +233,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0.08, y: -0.08}
-  m_SizeDelta: {x: 0.5, y: 0.15}
+  m_SizeDelta: {x: 0.84, y: 0.15}
   m_Pivot: {x: 0, y: 0}
 --- !u!222 &8605139639955111817
 CanvasRenderer:
@@ -454,8 +454,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: ENEMY
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: f3bb79e02422fdd4c9e94798a92d8edd, type: 2}
-  m_sharedMaterial: {fileID: 3453862392067703978, guid: f3bb79e02422fdd4c9e94798a92d8edd, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: a404f2a0bc22b1c4d88dca5b1bfd8494, type: 2}
+  m_sharedMaterial: {fileID: 3453862392067703978, guid: a404f2a0bc22b1c4d88dca5b1bfd8494, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []

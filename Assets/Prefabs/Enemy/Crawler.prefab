@@ -151,7 +151,6 @@ Transform:
   m_Children:
   - {fileID: 1201171836157435108}
   - {fileID: 5391198621835813079}
-  - {fileID: 7716879696716670261}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -198,7 +197,7 @@ NavMeshAgent:
   m_Acceleration: 10
   avoidancePriority: 50
   m_AngularSpeed: 120
-  m_StoppingDistance: 3
+  m_StoppingDistance: 2
   m_AutoTraverseOffMeshLink: 1
   m_AutoBraking: 1
   m_AutoRepath: 1
@@ -298,6 +297,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 56883d5be2dadb54096d97ecba836c2a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  playerMask:
+    serializedVersion: 2
+    m_Bits: 8
+  target: {fileID: 0}
+  detected: 0
   minEnemyRange: 2
   maxEnemyRange: 5
   minDelay: 1
@@ -546,6 +550,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 378d0f5ec61285745913ac9f20fb6364, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  playerMask:
+    serializedVersion: 2
+    m_Bits: 8
+  target: {fileID: 0}
+  detected: 0
   attackDelay: 3
   _nextState: {fileID: 6190139054101900234}
   _previousState: {fileID: 7730673155142160387}
@@ -633,6 +642,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3244941b91365e24cbe7c3e66c28947d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  playerMask:
+    serializedVersion: 2
+    m_Bits: 8
+  target: {fileID: 0}
+  detected: 0
   minDelayBeforeAttack: 5
   maxDelayBeforeAttack: 10
   _nextState: {fileID: 7629700308955140397}

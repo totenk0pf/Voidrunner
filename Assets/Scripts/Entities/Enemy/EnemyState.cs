@@ -11,15 +11,29 @@ public abstract class EnemyState : MonoBehaviour
         }
     }
 
-    protected EnemyBase _eBase;
-    protected EnemyBase eBase {
+    protected EnemyBase _enemyBase;
+    protected EnemyBase enemyBase {
         get {
-            if (!_eBase) _eBase = transform.root.GetComponent<EnemyBase>();
-            return _eBase;
+            if (!_enemyBase) _enemyBase = transform.root.GetComponent<EnemyBase>();
+            return _enemyBase;
         }
     }
 
+    public LayerMask playerMask;
+    [HideInInspector] public GameObject target;
+    [HideInInspector] public bool detected;
+
     public abstract EnemyState RunCurrentState();
-    public abstract void OnTriggerEnter(Collider other);
-    public abstract void OnTriggerStay(Collider other);
+
+    public virtual void OnTriggerEnter(Collider other) {
+        if (IsInLayerMask(other.gameObject, playerMask))
+        {
+            target = other.gameObject;
+            detected = true;
+        }
+    }
+
+    private static bool IsInLayerMask(GameObject obj, LayerMask layerMask) {
+        return (layerMask.value & (1 << obj.layer)) > 0;
+    }
 }
