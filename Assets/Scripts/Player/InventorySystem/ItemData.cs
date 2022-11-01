@@ -1,12 +1,15 @@
 ﻿using UnityEngine;
 using System;
+using Items;
 using Sirenix.OdinInspector;
 
 [CreateAssetMenu(menuName = "Inventory/Item Data")]
+[Serializable]
 public class ItemData : ScriptableObject
 {
     [TitleGroup("Item")]
     public SerializableGuid id;
+    [ShowInInspector] public ItemBehaviour behaviour;
 
     [TitleGroup("Display")]
     public string itemName;

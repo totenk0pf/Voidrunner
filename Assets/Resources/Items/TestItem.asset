@@ -12,9 +12,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 38f3b6c5c6324812ae80291b7c089e37, type: 3}
   m_Name: TestItem
   m_EditorClassIdentifier: 
-  displayName: 
-  icon: {fileID: 0}
-  model: {fileID: 0}
-  material: {fileID: 0}
-  weight: 0
-  canDrop: 0
+  id:
+    serializedGuid: 8b42f6cf-2d3a-4988-b1a0-1e9395752eaf
+  itemName: Test
+  itemDescription: This is a test item.
+  icon: {fileID: 21300000, guid: 90392f83277f8154dbfc727f5f164258, type: 3}
+  model: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+  material: {fileID: 2100000, guid: d5a2b70d1304dee4a9234a44a5db81dd, type: 2}
+  weight: 0.1
+  canDrop: 1
