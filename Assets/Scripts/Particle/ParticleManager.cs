@@ -48,7 +48,6 @@ namespace Particle
             for (var i = 0; i < initialPoolSize; i++)
             {
                 var obj = CreateSetup();
-                obj.transform.parent = transform;
                 Release(obj);
             }
         }
@@ -102,7 +101,6 @@ namespace Particle
            
            return obj;
        }
-       
        
        #endregion
     }
