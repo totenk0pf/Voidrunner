@@ -1,11 +1,10 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using System;
 using Core.Events;
 using Sirenix.OdinInspector;
+using EventType = Core.Events.EventType;
 
-public struct PickupMsg {
+public struct ItemMsg {
     public ItemData data;
     public int count;
 }
@@ -18,7 +17,7 @@ public class InventorySystem : MonoBehaviour {
 
     private void Awake() {
         inventory = new List<InventoryItem>();
-        this.AddListener(Core.Events.EventType.OnItemAdd, (data) => Add((PickupMsg) data));
+        this.AddListener(EventType.OnItemAdd, (data) => Add((ItemMsg) data));
     }
 
     private void Update() {
@@ -29,9 +28,9 @@ public class InventorySystem : MonoBehaviour {
         }
     }
 
-    public void Add(PickupMsg pickupMsg) {
-        var data = pickupMsg.data;
-        var count = pickupMsg.count;
+    public void Add(ItemMsg itemMsg) {
+        var data = itemMsg.data;
+        var count = itemMsg.count;
         if (_currentWeight + data.weight * count > maxWeight) return;
         var item = inventory.Find(x => x.data == data);
         if (item != null) {
@@ -60,5 +59,9 @@ public class InventorySystem : MonoBehaviour {
     private void UseItem(InventoryItem item) {
         item.data.behaviour.Execute(this);
         Remove(item.data);
+        this.FireEvent(EventType.OnItemRemove, new ItemMsg {
+            data = item.data,
+            count = -1
+        });
     }
 }
