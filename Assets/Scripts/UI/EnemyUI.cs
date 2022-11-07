@@ -16,6 +16,7 @@ public class EnemyUI : MonoBehaviour
     private void Awake() {
         nameText.text = name;
         _cam          = Camera.main;
+        healthBar.maxValue = 1;
         LayoutRebuilder.ForceRebuildLayoutImmediate(GetComponent<RectTransform>());
     }
 
