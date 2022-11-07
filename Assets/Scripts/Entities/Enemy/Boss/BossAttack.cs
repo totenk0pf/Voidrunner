@@ -1,54 +1,46 @@
 using System.Collections;
 using System.Collections.Generic;
-using UnityEngine;
 using Core.Logging;
+using UnityEngine;
+using Sirenix.OdinInspector;
 using Random = UnityEngine.Random;
 
 namespace Entities.Enemy.Boss {
-    public enum AttackState {
-        Swing,
-        Slam,
-        Stomp,
-        Lunge
-    }
-    
+
     public class BossAttack : EnemyState
     {
-        public float attackDelay;
+        [TitleGroup("Attack settings")]
     
         [SerializeField] private EnemyState previousState;
         [SerializeField] private EnemyState nextState;
 
-        private readonly List<AttackState> _attackSets = new() 
-            { AttackState.Swing, AttackState.Slam, AttackState.Stomp, AttackState.Lunge};
+        [TitleGroup("Attack sets")]
+        [SerializeField] private BossAnimData animData;
 
-        private bool _isAttacking;
+        public bool isAttacking;
 
         public override EnemyState RunCurrentState() {
             //Change 2f number if changed in WalkerHostile also 
-            if (Vector3.Distance(transform.position, target.transform.position) > 4f) {
+            if (Vector3.Distance(transform.position, target.transform.position) > 4f & !isAttacking) {
                 return previousState;
             }
-
-            if (!_isAttacking) {
-                StartCoroutine(DamagePlayer());
-            }
-
+            if (!isAttacking) StartCoroutine(StartAttack());
             return this;
         }
 
-        IEnumerator DamagePlayer(){
-            _isAttacking = true;
-            
-            var randomAttack = Random.Range(0, _attackSets.Count);
-            var triggerName = _attackSets[randomAttack].ToString();
+        public IEnumerator StartAttack() {
+            isAttacking = true;
+            var randomAttack = Random.Range(0, animData.attackAnim.Count);
+            var attack = animData.attackAnim[randomAttack];
+            TriggerAnim(attack);
+            yield return new WaitForSeconds(animator.GetCurrentAnimatorClipInfo(0)[0].clip.length);
+            NCLogger.Log($"{animator.GetCurrentAnimatorClipInfo(0)[0].clip.name}: {animator.GetCurrentAnimatorClipInfo(0)[0].clip.length}");
+            isAttacking = false;
+        }
 
+        public void DealDamage() {
             var oxygenComp = target.GetComponent<Oxygen>();
             oxygenComp.ReducePermanentOxygen(enemyBase.enemyDamage);
-
-            yield return new WaitForSeconds(attackDelay);
-
-            _isAttacking = false;
         }
     }
 }

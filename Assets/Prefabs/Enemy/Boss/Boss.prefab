@@ -278,6 +278,14 @@ PrefabInstance:
       propertyPath: m_ConstrainProportionsScale
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 5622202323511500600, guid: 156ffb807b55a0a47abfc0db3ec0aff6, type: 3}
+      propertyPath: m_fontAsset
+      value: 
+      objectReference: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+    - target: {fileID: 5622202323511500600, guid: 156ffb807b55a0a47abfc0db3ec0aff6, type: 3}
+      propertyPath: m_sharedMaterial
+      value: 
+      objectReference: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
     - target: {fileID: 6380413267042890217, guid: 156ffb807b55a0a47abfc0db3ec0aff6, type: 3}
       propertyPath: m_Layer
       value: 8
@@ -300,7 +308,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8476158406067641753, guid: 156ffb807b55a0a47abfc0db3ec0aff6, type: 3}
       propertyPath: m_SizeDelta.x
-      value: 0.5
+      value: 0.84
       objectReference: {fileID: 0}
     - target: {fileID: 8676301526196788974, guid: 156ffb807b55a0a47abfc0db3ec0aff6, type: 3}
       propertyPath: m_Layer
@@ -430,6 +438,7 @@ MonoBehaviour:
   minDelay: 1
   maxDelay: 3
   nextState: {fileID: 7873832152667788965}
+  animData: {fileID: 11400000, guid: cafe48fb1f5fbb24b890a7888187fee2, type: 2}
 --- !u!1001 &5618508730012397455
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -503,6 +512,24 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 8d7e7052195e5a746a81c713e000d87e, type: 3}
+--- !u!1 &4699957260571169502 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: 8d7e7052195e5a746a81c713e000d87e, type: 3}
+  m_PrefabInstance: {fileID: 5618508730012397455}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &8584167276587924012
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4699957260571169502}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2abb1c9892db4605988db616dcf088e8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  attackState: {fileID: 3355693686212738447}
 --- !u!4 &5364432116495714404 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 8d7e7052195e5a746a81c713e000d87e, type: 3}
@@ -610,6 +637,7 @@ MonoBehaviour:
   target: {fileID: 0}
   detected: 0
   nextState: {fileID: 3355693686212738447}
+  animData: {fileID: 11400000, guid: cafe48fb1f5fbb24b890a7888187fee2, type: 2}
 --- !u!1001 &7783623369663564890
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -702,6 +730,7 @@ MonoBehaviour:
     m_Bits: 8
   target: {fileID: 0}
   detected: 0
-  attackDelay: 3
   previousState: {fileID: 7873832152667788965}
   nextState: {fileID: 0}
+  animData: {fileID: 11400000, guid: cafe48fb1f5fbb24b890a7888187fee2, type: 2}
+  isAttacking: 0
