@@ -15,9 +15,14 @@ namespace UI {
         public InventoryItemUI uiRef;
         public int count;
     }
+
+    public struct InventoryUIMsg {
+        public bool state;
+    }
     
     public class InventoryUI : SerializedMonoBehaviour {
         [SerializeField] private List<ItemUIData> itemList;
+        [SerializeField] private ItemManager manager;
 
         [TitleGroup("Item list")]
         [SerializeField] private GameObject itemPrefab;
@@ -32,9 +37,10 @@ namespace UI {
         [SerializeField] private TextMeshProUGUI itemDesc;
 
         private void Awake() {
-            this.AddListener(EventType.OnItemAdd, msg => UpdateItem((ItemMsg) msg));
-            this.AddListener(EventType.OnItemRemove, msg => UpdateItem((ItemMsg) msg));
-            foreach (var item in ItemManager.Instance.itemList) {
+            this.AddListener(EventType.ItemAddEvent, msg => UpdateItem((ItemMsg) msg));
+            this.AddListener(EventType.ItemRemoveEvent, msg => UpdateItem((ItemMsg) msg));
+            this.AddListener(EventType.InventoryUIEvent, msg => ShowInventoryUI((InventoryUIMsg) msg));
+            foreach (var item in manager.itemList) {
                 var obj = Instantiate(itemPrefab, itemParent).GetComponent<InventoryItemUI>();
                 itemList.Add(new ItemUIData {
                     data = item,
@@ -46,6 +52,7 @@ namespace UI {
                 obj.weightText.text = item.weight.ToString();
                 obj.gameObject.SetActive(false);
             }
+            gameObject.SetActive(false);
         }
 
         private void UpdateItem(ItemMsg msg) {
@@ -53,7 +60,12 @@ namespace UI {
             if (item.data == null) return;
             var ui = item.uiRef;
             item.count += msg.count;
+            item.uiRef.gameObject.SetActive(item.count > 0);
             ui.countText.text = $"x{item.count:D2}";
+        }
+
+        private void ShowInventoryUI(InventoryUIMsg msg) {
+            gameObject.SetActive(msg.state);
         }
     }
 }

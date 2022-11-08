@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Core.Events;
 using Sirenix.OdinInspector;
+using UI;
 using EventType = Core.Events.EventType;
 
 public struct ItemMsg {
@@ -14,10 +15,11 @@ public class InventorySystem : MonoBehaviour {
     private InventoryItem _activeItem;
     private float _currentWeight;
     [SerializeField] private float maxWeight;
+    private bool isUIActive = false;
 
     private void Awake() {
         inventory = new List<InventoryItem>();
-        this.AddListener(EventType.OnItemAdd, (data) => Add((ItemMsg) data));
+        this.AddListener(EventType.ItemAddEvent, (data) => Add((ItemMsg) data));
     }
 
     private void Update() {
@@ -26,6 +28,16 @@ public class InventorySystem : MonoBehaviour {
             _activeItem = inventory[0];
             UseItem(_activeItem);
         }
+        if (Input.GetKeyDown(KeyCode.Tab)) {
+            UpdateUI();
+        }
+    }
+
+    public void UpdateUI() {
+        this.FireEvent(EventType.InventoryUIEvent, new InventoryUIMsg {
+            state = !isUIActive
+        });
+        isUIActive = !isUIActive;
     }
 
     public void Add(ItemMsg itemMsg) {
@@ -59,7 +71,7 @@ public class InventorySystem : MonoBehaviour {
     private void UseItem(InventoryItem item) {
         item.data.behaviour.Execute(this);
         Remove(item.data);
-        this.FireEvent(EventType.OnItemRemove, new ItemMsg {
+        this.FireEvent(EventType.ItemRemoveEvent, new ItemMsg {
             data = item.data,
             count = -1
         });

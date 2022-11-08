@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Core.Events;
 using Sirenix.OdinInspector;
+using UI;
 using UnityEngine;
 using EventType = Core.Events.EventType;
 
@@ -28,6 +29,7 @@ namespace Combat {
         private EmpowerType _currentEmpowerType = EmpowerType.Acid;
         private WeaponBase _currentWeapon; //current weapon that's equipped != not necessarily empowered weapon
         private bool _canEmpower;
+        private bool _canChangeEmpower;
 
         [SerializeField] private List<EmpowerData> empowerData;
         private int _empowerIndex;
@@ -49,6 +51,7 @@ namespace Combat {
                                                  param => UpdateCurrentWeapon((WeaponEntry) param));
             EventDispatcher.Instance.AddListener(EventType.DamageEnemyEvent,
                                                  enemy => DealEmpowerDamage((EnemyBase) enemy));
+            EventDispatcher.Instance.AddListener(EventType.InventoryUIEvent, msg => OnInventoryUIEvent((InventoryUIMsg) msg));
             UpdateCurrentAugment();
         }
 
@@ -72,13 +75,16 @@ namespace Combat {
         }
         
         private IEnumerator ResetEmpowerRoutine(EmpowerData newType) {
-            _canEmpower = false;
+            _canEmpower       = false;
+            _canChangeEmpower = false;
             yield return new WaitForSeconds(newType.chargeDuration);
-            _canEmpower = true;
+            _canEmpower       = true;
+            _canChangeEmpower = true;
             yield return null;
         }
 
         private void UpdateCurrentAugment() {
+            if (!_canChangeEmpower) return;
             var scroll = Input.mouseScrollDelta;
             if (scroll.y == 0) return;
             var delta = scroll.y > 0 ? 1 : -1;
@@ -111,6 +117,10 @@ namespace Combat {
                     enemy.TakeTickDamage(acidDamagePerInterval, intervalDuration, intervalNum);
                     break;
             }
+        }
+
+        private void OnInventoryUIEvent(InventoryUIMsg msg) {
+            _canChangeEmpower = msg.state;
         }
 
         private bool CanDamage(EnemyBase enemy) => _currentEmpowerType == empowerData.Find(x => enemy.type == x.counterType).type;

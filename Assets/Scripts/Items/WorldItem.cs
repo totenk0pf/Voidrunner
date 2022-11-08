@@ -11,7 +11,7 @@ namespace Items {
         [SerializeField] private MeshRenderer renderer;
 
         public virtual void OnPickup() {
-            this.FireEvent(EventType.OnItemAdd, new ItemMsg {
+            this.FireEvent(EventType.ItemAddEvent, new ItemMsg {
                 data = itemRef,
                 count = itemCount
             });

@@ -7,7 +7,8 @@ using Sirenix.OdinInspector;
 using UnityEngine;
 
 namespace Items {
-    public class ItemManager : Singleton<ItemManager> {
+    [CreateAssetMenu(fileName = "ItemManager", menuName = "Inventory/Item Manager", order = 1)]
+    public class ItemManager : ScriptableObject {
         [TitleGroup("Items")]
         [ShowInInspector] public List<ItemData> itemList;
 
@@ -36,11 +37,6 @@ namespace Items {
             } catch (Exception e) {
                 NCLogger.Log(e.Message, LogLevel.ERROR);
             }
-        }
-
-        private void OnValidate() {
-            LoadItems();
-            ValidateItems();
         }
     }
 }
