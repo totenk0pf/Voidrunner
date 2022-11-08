@@ -5,6 +5,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using Sirenix.OdinInspector;
+using StaticClass;
 
 public abstract class EnemyState : MonoBehaviour
 {
@@ -41,17 +42,13 @@ public abstract class EnemyState : MonoBehaviour
     public abstract EnemyState RunCurrentState();
 
     public virtual void OnTriggerEnter(Collider other) {
-        if (IsInLayerMask(other.gameObject, playerMask))
+        if (CheckLayerMask.IsInLayerMask(other.gameObject, playerMask))
         {
             target = other.gameObject;
             detected = true;
         }
     }
-
-    protected static bool IsInLayerMask(GameObject obj, LayerMask layerMask) {
-        return (layerMask.value & (1 << obj.layer)) > 0;
-    }
-
+    
     protected void TriggerAnim(AnimParam param) {
         switch (param.type) {
             case AnimatorControllerParameterType.Bool:
@@ -61,5 +58,10 @@ public abstract class EnemyState : MonoBehaviour
                 animator.SetTrigger(param.name);
                 break;
         }
+    }
+
+    public virtual void DealDamage(){
+        var oxygenComp = target.GetComponent<Oxygen>();
+        oxygenComp.ReducePermanentOxygen(enemyBase.enemyDamage);
     }
 }

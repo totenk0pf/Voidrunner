@@ -12,7 +12,7 @@ namespace Entities.Enemy.Boss {
             Agent.SetDestination(target.transform.position);
             Agent.isStopped = false;
 
-            if (!(Agent.remainingDistance < 4f)) return this;
+            if (!(Agent.remainingDistance < 3.2f)) return this;
             
             TriggerAnim(animData.hostileAnim);
             Agent.isStopped = true;

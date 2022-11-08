@@ -21,7 +21,7 @@ namespace Entities.Enemy.Boss {
 
         public override EnemyState RunCurrentState() {
             //Change 2f number if changed in WalkerHostile also 
-            if (Vector3.Distance(transform.position, target.transform.position) > 4f & !isAttacking) {
+            if (Vector3.Distance(transform.position, target.transform.position) > 3.2f & !isAttacking) {
                 return previousState;
             }
             if (!isAttacking) StartCoroutine(StartAttack());
@@ -34,13 +34,7 @@ namespace Entities.Enemy.Boss {
             var attack = animData.attackAnim[randomAttack];
             TriggerAnim(attack);
             yield return new WaitForSeconds(animator.GetCurrentAnimatorClipInfo(0)[0].clip.length);
-            NCLogger.Log($"{animator.GetCurrentAnimatorClipInfo(0)[0].clip.name}: {animator.GetCurrentAnimatorClipInfo(0)[0].clip.length}");
             isAttacking = false;
-        }
-
-        public void DealDamage() {
-            var oxygenComp = target.GetComponent<Oxygen>();
-            oxygenComp.ReducePermanentOxygen(enemyBase.enemyDamage);
         }
     }
 }
