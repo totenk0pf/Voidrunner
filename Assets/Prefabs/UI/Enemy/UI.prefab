@@ -103,7 +103,7 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4864161134674813235}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -191,7 +191,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   healthBar: {fileID: 8627564199236930948}
-  animTime: 0.15
+  animTime: 0
   name: 
   nameText: {fileID: 5622202323511500600}
 --- !u!1 &6380413267042890217
@@ -233,7 +233,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0.08, y: -0.08}
-  m_SizeDelta: {x: 0.84, y: 0.15}
+  m_SizeDelta: {x: 0.5, y: 0.15}
   m_Pivot: {x: 0, y: 0}
 --- !u!222 &8605139639955111817
 CanvasRenderer:
