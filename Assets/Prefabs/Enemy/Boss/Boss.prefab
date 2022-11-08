@@ -146,6 +146,14 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 5173689491316041475}
     m_Modifications:
+    - target: {fileID: 1072937046652483144, guid: 156ffb807b55a0a47abfc0db3ec0aff6, type: 3}
+      propertyPath: m_Layer
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 2387085961047800663, guid: 156ffb807b55a0a47abfc0db3ec0aff6, type: 3}
+      propertyPath: name
+      value: Andrew Tate
+      objectReference: {fileID: 0}
     - target: {fileID: 4268977109600893350, guid: 156ffb807b55a0a47abfc0db3ec0aff6, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
@@ -165,6 +173,10 @@ PrefabInstance:
     - target: {fileID: 4864161134674813235, guid: 156ffb807b55a0a47abfc0db3ec0aff6, type: 3}
       propertyPath: m_Name
       value: UI
+      objectReference: {fileID: 0}
+    - target: {fileID: 4864161134674813235, guid: 156ffb807b55a0a47abfc0db3ec0aff6, type: 3}
+      propertyPath: m_Layer
+      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 5093449348634070213, guid: 156ffb807b55a0a47abfc0db3ec0aff6, type: 3}
       propertyPath: m_Pivot.x
@@ -201,6 +213,18 @@ PrefabInstance:
     - target: {fileID: 5093449348634070213, guid: 156ffb807b55a0a47abfc0db3ec0aff6, type: 3}
       propertyPath: m_SizeDelta.y
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5093449348634070213, guid: 156ffb807b55a0a47abfc0db3ec0aff6, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 5093449348634070213, guid: 156ffb807b55a0a47abfc0db3ec0aff6, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 5093449348634070213, guid: 156ffb807b55a0a47abfc0db3ec0aff6, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 5093449348634070213, guid: 156ffb807b55a0a47abfc0db3ec0aff6, type: 3}
       propertyPath: m_LocalPosition.x
@@ -250,6 +274,30 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5093449348634070213, guid: 156ffb807b55a0a47abfc0db3ec0aff6, type: 3}
+      propertyPath: m_ConstrainProportionsScale
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5622202323511500600, guid: 156ffb807b55a0a47abfc0db3ec0aff6, type: 3}
+      propertyPath: m_fontAsset
+      value: 
+      objectReference: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+    - target: {fileID: 5622202323511500600, guid: 156ffb807b55a0a47abfc0db3ec0aff6, type: 3}
+      propertyPath: m_sharedMaterial
+      value: 
+      objectReference: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+    - target: {fileID: 6380413267042890217, guid: 156ffb807b55a0a47abfc0db3ec0aff6, type: 3}
+      propertyPath: m_Layer
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 7066180579108904233, guid: 156ffb807b55a0a47abfc0db3ec0aff6, type: 3}
+      propertyPath: m_Layer
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 7133562567370439748, guid: 156ffb807b55a0a47abfc0db3ec0aff6, type: 3}
+      propertyPath: m_Layer
+      value: 8
+      objectReference: {fileID: 0}
     - target: {fileID: 8013615745327269686, guid: 156ffb807b55a0a47abfc0db3ec0aff6, type: 3}
       propertyPath: m_AnchorMax.x
       value: 0
@@ -257,6 +305,18 @@ PrefabInstance:
     - target: {fileID: 8013615745327269686, guid: 156ffb807b55a0a47abfc0db3ec0aff6, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8476158406067641753, guid: 156ffb807b55a0a47abfc0db3ec0aff6, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 0.84
+      objectReference: {fileID: 0}
+    - target: {fileID: 8676301526196788974, guid: 156ffb807b55a0a47abfc0db3ec0aff6, type: 3}
+      propertyPath: m_Layer
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 8701096926541722665, guid: 156ffb807b55a0a47abfc0db3ec0aff6, type: 3}
+      propertyPath: m_Layer
+      value: 8
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 156ffb807b55a0a47abfc0db3ec0aff6, type: 3}
@@ -430,41 +490,9 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: -7657966619581158213, guid: 8d7e7052195e5a746a81c713e000d87e, type: 3}
-      propertyPath: m_Name
-      value: Spine
-      objectReference: {fileID: 0}
-    - target: {fileID: -6170625038081293824, guid: 8d7e7052195e5a746a81c713e000d87e, type: 3}
-      propertyPath: m_Name
-      value: LeftLeg
-      objectReference: {fileID: 0}
-    - target: {fileID: -5568371526223589888, guid: 8d7e7052195e5a746a81c713e000d87e, type: 3}
-      propertyPath: m_Name
-      value: Body
-      objectReference: {fileID: 0}
-    - target: {fileID: -4332706925441422008, guid: 8d7e7052195e5a746a81c713e000d87e, type: 3}
-      propertyPath: m_Name
-      value: RightLeg
-      objectReference: {fileID: 0}
-    - target: {fileID: -3086436065929644917, guid: 8d7e7052195e5a746a81c713e000d87e, type: 3}
-      propertyPath: m_Name
-      value: RightUpLeg
-      objectReference: {fileID: 0}
-    - target: {fileID: -203856693384778745, guid: 8d7e7052195e5a746a81c713e000d87e, type: 3}
-      propertyPath: m_Name
-      value: Spine1
-      objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 8d7e7052195e5a746a81c713e000d87e, type: 3}
       propertyPath: m_Name
-      value: Model
-      objectReference: {fileID: 0}
-    - target: {fileID: 1082271958561512970, guid: 8d7e7052195e5a746a81c713e000d87e, type: 3}
-      propertyPath: m_Name
-      value: Hips
-      objectReference: {fileID: 0}
-    - target: {fileID: 3135921509060577837, guid: 8d7e7052195e5a746a81c713e000d87e, type: 3}
-      propertyPath: m_Name
-      value: LeftUpLeg
+      value: proto_default
       objectReference: {fileID: 0}
     - target: {fileID: 5074512353664290214, guid: 8d7e7052195e5a746a81c713e000d87e, type: 3}
       propertyPath: m_Materials.Array.data[0]
