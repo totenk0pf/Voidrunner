@@ -2909,13 +2909,17 @@ MonoBehaviour:
     PrefabModifications: []
     SerializationNodes: []
   itemList: []
+  enabledItemList: []
   manager: {fileID: 11400000, guid: 52e54c071ec406540abfd0ca1a93212c, type: 2}
+  defaultItem: {fileID: 11400000, guid: d01e8adaa4ce50a4383306198b06462a, type: 2}
   itemPrefab: {fileID: 1651988235284262622, guid: aea1b2ed0c53bab4ca7db3ded1ff1eb5, type: 3}
   itemParent: {fileID: 5217297421327691555}
+  itemLayout: {fileID: 5286318078096820899}
   weightSlider: {fileID: 6777317081207621771}
   weightText: {fileID: 7264508751662661648}
   itemName: {fileID: 994367080169828400}
   itemDesc: {fileID: 7941589242243397054}
+  scrollDuration: 0
 --- !u!1 &6715792336747268221
 GameObject:
   m_ObjectHideFlags: 0

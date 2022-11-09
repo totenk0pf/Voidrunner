@@ -849,7 +849,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 828e834aa59b1ee449673da61969ec91, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  serializationData:
+    SerializedFormat: 2
+    SerializedBytes: 
+    ReferencedUnityObjects: []
+    SerializedBytesString: 
+    Prefab: {fileID: 0}
+    PrefabModificationsReferencedUnityObjects: []
+    PrefabModifications: []
+    SerializationNodes: []
   inventory: []
+  defaultItem: {fileID: 11400000, guid: d01e8adaa4ce50a4383306198b06462a, type: 2}
   maxWeight: 20
 --- !u!1 &8371405675199406494
 GameObject:
@@ -1841,7 +1851,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5343456865991583229, guid: 60e86fce881ae2a44af9c058ca63706d, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 155
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5343456865991583229, guid: 60e86fce881ae2a44af9c058ca63706d, type: 3}
       propertyPath: m_AnchoredPosition.y

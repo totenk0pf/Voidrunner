@@ -10,10 +10,10 @@ public struct ItemMsg {
     public int count;
 }
 
-public class InventorySystem : MonoBehaviour {
+public class InventorySystem : SerializedMonoBehaviour {
     [ReadOnly] public List<InventoryItem> inventory;
     private InventoryItem _activeItem;
-    private InventoryItem _defaultItem;
+    [SerializeField] private ItemData defaultItem;
     private float _currentWeight;
     [SerializeField] private float maxWeight;
     private bool isUIActive;
@@ -21,15 +21,18 @@ public class InventorySystem : MonoBehaviour {
     private void Awake() {
         isUIActive = false;
         inventory  = new List<InventoryItem>();
-        this.AddListener(EventType.ItemAddEvent, (data) => Add((ItemMsg) data));
+        this.AddListener(EventType.ItemAddEvent, data => Add((ItemMsg) data));
+        this.AddListener(EventType.ItemPickEvent, data => Pick((ItemData) data));
         Add(new ItemMsg {
-            data = _defaultItem.data,
+            data = defaultItem,
             count = 1
         });
-        _activeItem = _defaultItem;
+        _activeItem = inventory.Find(x => x.data == defaultItem);
         this.FireEvent(EventType.InventoryUpdateEvent, new InventoryUpdateMsg {
             currentWeight = _currentWeight,
-            
+            maxWeight = maxWeight,
+            activeItem = _activeItem,
+            itemOnly = false
         });
     }
 
@@ -48,6 +51,10 @@ public class InventorySystem : MonoBehaviour {
             state = !isUIActive
         });
         isUIActive = !isUIActive;
+    }
+
+    public void Pick(ItemData data) {
+        _activeItem = inventory.Find(x => x.data == data);
     }
 
     public void Add(ItemMsg itemMsg) {
