@@ -13,19 +13,29 @@ public struct ItemMsg {
 public class InventorySystem : MonoBehaviour {
     [ReadOnly] public List<InventoryItem> inventory;
     private InventoryItem _activeItem;
+    private InventoryItem _defaultItem;
     private float _currentWeight;
     [SerializeField] private float maxWeight;
-    private bool isUIActive = false;
+    private bool isUIActive;
 
     private void Awake() {
-        inventory = new List<InventoryItem>();
+        isUIActive = false;
+        inventory  = new List<InventoryItem>();
         this.AddListener(EventType.ItemAddEvent, (data) => Add((ItemMsg) data));
+        Add(new ItemMsg {
+            data = _defaultItem.data,
+            count = 1
+        });
+        _activeItem = _defaultItem;
+        this.FireEvent(EventType.InventoryUpdateEvent, new InventoryUpdateMsg {
+            currentWeight = _currentWeight,
+            
+        });
     }
 
     private void Update() {
         if (Input.GetKeyDown(KeyCode.E)) {
             if (inventory.Count < 1) return;
-            _activeItem = inventory[0];
             UseItem(_activeItem);
         }
         if (Input.GetKeyDown(KeyCode.Tab)) {
@@ -34,7 +44,7 @@ public class InventorySystem : MonoBehaviour {
     }
 
     public void UpdateUI() {
-        this.FireEvent(EventType.InventoryUIEvent, new InventoryUIMsg {
+        this.FireEvent(EventType.InventoryToggleEvent, new InventoryToggleMsg {
             state = !isUIActive
         });
         isUIActive = !isUIActive;

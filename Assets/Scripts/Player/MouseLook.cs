@@ -18,10 +18,10 @@ public class MouseLook : MonoBehaviour {
         _transform = transform;
         _camera = Camera.main;
         Cursor.lockState = CursorLockMode.Locked;
-        this.AddListener(EventType.InventoryUIEvent, msg => OnInventoryUIEvent((InventoryUIMsg) msg));
+        this.AddListener(EventType.InventoryToggleEvent, msg => OnInventoryUIEvent((InventoryToggleMsg) msg));
     }
 
-    private void OnInventoryUIEvent(InventoryUIMsg msg) {
+    private void OnInventoryUIEvent(InventoryToggleMsg msg) {
         _canLook = msg.state;
     }
 

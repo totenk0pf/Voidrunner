@@ -14,8 +14,8 @@ namespace Core {
         [ShowInInspector] [ReadOnly] private float _currentScale;
 
         private void Awake() {
-            this.AddListener(EventType.InventoryUIEvent, msg => {
-                var x = (InventoryUIMsg) msg;
+            this.AddListener(EventType.InventoryToggleEvent, msg => {
+                var x = (InventoryToggleMsg) msg;
                 ModifyTimescale(x.state ? TimescaleType.Slow : TimescaleType.Default);
             });
         }
