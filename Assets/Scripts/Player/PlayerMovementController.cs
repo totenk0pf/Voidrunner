@@ -41,6 +41,14 @@ public class PlayerMovementController : MonoBehaviour
     [SerializeField] private float accelForce;
     [SerializeField] private float maxSpeed;
 
+    // private bool _canGravity = true;
+    // // private float _groundAcceleration = 9.8f;
+    // // private float _gravityScale = 1f;
+    // [Header("Custom Gravity")] 
+    // [SerializeField] private float gravityAcceleration;
+    // [SerializeField] private float gravityScale;
+    
+    
     [Header("Movement Drag")] 
     [SerializeField] private bool canDrag = true;
     [SerializeField] private float slopeDrag = 3f;
@@ -72,11 +80,19 @@ public class PlayerMovementController : MonoBehaviour
 
     private float _horiz;
     private float _vert;
+
+    private void Awake()
+    {
+        // _canGravity = true;
+        Rb. = false;
+    }
+    
     private void FixedUpdate()
     {
         UpdateMoveDir();
         if(moveState == MovementState.Normal) UpdateStrafe();
         if (canDrag) ApplyDrag();
+        // if(_canGravity) CustomGravity();
     }
 
     private void Update()
@@ -267,6 +283,12 @@ public class PlayerMovementController : MonoBehaviour
 
     }
 
+    // private void CustomGravity()
+    // {
+    //     Vector3 gravityVector = -gravityAcceleration * gravityScale * Vector3.up;
+    //     Rb.AddForce(gravityVector, ForceMode.Acceleration);
+    // }
+    
     private void OnDrawGizmosSelected()
     {
         Gizmos.color = Color.blue;

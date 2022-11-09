@@ -7466,7 +7466,15 @@ MonoBehaviour:
   ignoreLayer:
     serializedVersion: 2
     m_Bits: 168
-  currentGrappleCollider: {fileID: 0}
+  grappleHaltOffsetZ: 1.3
+  grappleSpeed: 5
+  enemyLayer:
+    serializedVersion: 2
+    m_Bits: 256
+  grapplePointLayer:
+    serializedVersion: 2
+    m_Bits: 512
+  currGrappleObj: {fileID: 0}
 --- !u!222 &7590110150993114791
 CanvasRenderer:
   m_ObjectHideFlags: 0
