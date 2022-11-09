@@ -3439,7 +3439,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 155, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &3097869792323892498
@@ -7111,6 +7111,8 @@ MonoBehaviour:
   accelRate: 2
   accelForce: 12
   maxSpeed: 6
+  gravityAcceleration: 9.8
+  gravityScale: 1
   canDrag: 1
   slopeDrag: 3
   groundDrag: 3
@@ -7120,12 +7122,12 @@ MonoBehaviour:
   toggleProtoRoll: 1
   rollAngleProto: 2.5
   rollKey: 306
-  rollDistance: 3
+  rollDistance: 7.5
   rollTime: 0.5
   toggleProtoSlide: 1
   slideKey: 304
   slideTime: 0.35
-  slideDistance: 3
+  slideDistance: 10
 --- !u!136 &6037325520463240827
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -7467,7 +7469,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 168
   grappleHaltOffsetZ: 1.3
-  grappleSpeed: 5
+  grappleSpeed: 20
   enemyLayer:
     serializedVersion: 2
     m_Bits: 256
