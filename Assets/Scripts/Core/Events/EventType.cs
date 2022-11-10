@@ -10,6 +10,8 @@ namespace Core.Events {
         WeaponRechargedEvent,
         AugmentChangedEvent,
         AugmentDrainEvent,
-        RangedShotEvent
+        RangedShotEvent,
+        GetMovementStateEvent,
+        SetMovementStateEvent
     }
 }

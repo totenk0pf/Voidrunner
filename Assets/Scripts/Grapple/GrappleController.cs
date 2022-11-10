@@ -1,10 +1,13 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Core.Events;
 using Core.Logging;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.ProBuilder;
 using UnityEngine.Serialization;
+using EventType = Core.Events.EventType;
 
 namespace Grapple
 {
@@ -42,16 +45,20 @@ namespace Grapple
         private Dictionary<LayerMask, GrappleType> _grappleCondition;
         private Vector3 GrappleHaltPosition => transform.position + transform.forward * grappleHaltOffsetZ;
         
+        
         private Vector3 _castOrigin;
         private Camera _mainCam;
         private Vector3 _collisionPos;
         private LineRenderer _lineRenderer;
         private RaycastHit _currentGrappleHit;
+        private PlayerMovementController.MovementState _moveState;
         [Space]
         public GameObject currGrappleObj;
 
         private void Awake()
         {
+            EventDispatcher.Instance.AddListener(EventType.SetMovementStateEvent, param => UpdateMoveState((PlayerMovementController.MovementState) param));
+            
             if (!GetComponent<LineRenderer>()) transform.AddComponent<LineRenderer>();
             _lineRenderer = GetComponent<LineRenderer>();
             
@@ -81,6 +88,9 @@ namespace Grapple
 
         private bool CastToGetGrappleLocation()
         {
+            EventDispatcher.Instance.FireEvent(EventType.GetMovementStateEvent);
+            if (_moveState != PlayerMovementController.MovementState.Normal) return false;
+            
             var lookDir = _mainCam.transform.forward;
             _castOrigin = UpdateCastOrigin();
 
@@ -99,7 +109,9 @@ namespace Grapple
             for (var i = 0; i < results.Length; i++) {
                 if (!IsInGrappleMask(results[i].collider.gameObject.layer)) 
                     continue;
-
+                if (IsObjectBehindPlayer(results[i].collider.transform))
+                    continue;
+                
                 hit = results[i];
                 checkIndex = i;
                 break;
@@ -148,6 +160,7 @@ namespace Grapple
                 case GrappleType.EnemyToPlayer:
                     break;
                 case GrappleType.PlayerToPoint:
+                    EventDispatcher.Instance.FireEvent(EventType.SetMovementStateEvent, PlayerMovementController.MovementState.Grappling);
                     StartCoroutine(PlayerToPointRoutine());
                     return true;
                 default:
@@ -163,25 +176,35 @@ namespace Grapple
             var dist = Vector3.Distance(_currentGrappleHit.point, GrappleHaltPosition);
             var dir = (_currentGrappleHit.point - GrappleHaltPosition).normalized;
             var endPos = startPos + (dist * dir);
-
-
+            
             for (float i = 0.0f; i < 1.0f; i += (grappleSpeed * Time.deltaTime) / dist) {
                 transform.position = Vector3.Lerp(startPos, endPos, i);
                 yield return null;
             }
-
+            
+            EventDispatcher.Instance.FireEvent(EventType.SetMovementStateEvent, PlayerMovementController.MovementState.Normal);
             _currentGrappleHit = new RaycastHit();
             yield return null;
         }
-        
-        
-        
-        
+
+
+
+        private void UpdateMoveState(PlayerMovementController.MovementState currState) {
+            _moveState = currState;
+        }
         
         private bool IsInGrappleMask(int layer) {
             return grappleLayer == (grappleLayer | (1 << layer));
         }
 
+        private bool IsObjectBehindPlayer(Transform objectT)
+        {
+            var forward = transform.TransformDirection(Vector3.forward);
+            var toOther = objectT.position - transform.position;
+
+            return Vector3.Dot(forward, toOther) < 0;
+        }
+        
         private GrappleType GetGrappleType(int layer)
         {
             foreach(var (layerMask, type) in _grappleCondition) {
@@ -190,7 +213,9 @@ namespace Grapple
 
             return GrappleType.None;
         }
-
+        
+        
+        
         
         private Vector3 UpdateCastOrigin() {
             return _mainCam.transform.position;

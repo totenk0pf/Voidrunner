@@ -7112,7 +7112,11 @@ MonoBehaviour:
   accelForce: 12
   maxSpeed: 6
   gravityAcceleration: 9.8
-  gravityScale: 1
+  gravityScale: 3
+  ignoreMask:
+    serializedVersion: 2
+    m_Bits: 168
+  groundCastDist: 1.2
   canDrag: 1
   slopeDrag: 3
   groundDrag: 3

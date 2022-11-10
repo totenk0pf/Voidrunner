@@ -1,10 +1,12 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Core.Events;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.Serialization;
+using EventType = Core.Events.EventType;
 
 public class PlayerMovementController : MonoBehaviour
 {
@@ -13,7 +15,8 @@ public class PlayerMovementController : MonoBehaviour
         Normal,
         Roll,
         Slide,
-        Falling
+        Falling,
+        Grappling
     }
     
     //max speed 
@@ -30,7 +33,7 @@ public class PlayerMovementController : MonoBehaviour
         }
     }
 
-    public MovementState moveState;
+    [SerializeField] private MovementState moveState;
 
     [SerializeField] private Transform playerVisualProto;
     
@@ -41,13 +44,12 @@ public class PlayerMovementController : MonoBehaviour
     [SerializeField] private float accelForce;
     [SerializeField] private float maxSpeed;
 
-    // private bool _canGravity = true;
-    // // private float _groundAcceleration = 9.8f;
-    // // private float _gravityScale = 1f;
-    // [Header("Custom Gravity")] 
-    // [SerializeField] private float gravityAcceleration;
-    // [SerializeField] private float gravityScale;
-    
+    private bool _canGravity = true;
+    [Header("Custom Gravity and Ground Check")] 
+    [SerializeField] private float gravityAcceleration;
+    [SerializeField] private float gravityScale;
+    [SerializeField] private LayerMask ignoreMask;
+    [SerializeField] private float groundCastDist;
     
     [Header("Movement Drag")] 
     [SerializeField] private bool canDrag = true;
@@ -83,8 +85,11 @@ public class PlayerMovementController : MonoBehaviour
 
     private void Awake()
     {
-        // _canGravity = true;
-        Rb. = false;
+        EventDispatcher.Instance.AddListener(EventType.GetMovementStateEvent, param => GetMovementState());
+        EventDispatcher.Instance.AddListener(EventType.SetMovementStateEvent, param => UpdateMovementState((MovementState) param));
+        
+        _canGravity = true;
+        Rb.useGravity = false;
     }
     
     private void FixedUpdate()
@@ -92,7 +97,7 @@ public class PlayerMovementController : MonoBehaviour
         UpdateMoveDir();
         if(moveState == MovementState.Normal) UpdateStrafe();
         if (canDrag) ApplyDrag();
-        // if(_canGravity) CustomGravity();
+        if(_canGravity) CustomGravity();
     }
 
     private void Update()
@@ -102,6 +107,7 @@ public class PlayerMovementController : MonoBehaviour
         if(Input.GetKeyDown(slideKey)) ActionSlide(_moveDir);
     }
 
+    #region Movement Base
 
     private void UpdateStrafe()
     {
@@ -156,8 +162,10 @@ public class PlayerMovementController : MonoBehaviour
 
     private bool OnSlope()
     {
-        if (Physics.Raycast(transform.position, Vector3.down, out _slopeHit, slopeCastDist))
+        if (Physics.Raycast(transform.position, Vector3.down, out _slopeHit, slopeCastDist, ~ignoreMask))
         {
+            if (_slopeHit.collider.isTrigger) return false;
+            
             float angle = Vector3.Angle(Vector3.up, _slopeHit.normal);
             return angle < maxSlopeAngle && angle != 0;
         }
@@ -168,7 +176,8 @@ public class PlayerMovementController : MonoBehaviour
     {
         if (!OnSlope()) {
             Rb.drag = groundDrag;
-            Rb.useGravity = true;
+            _canGravity = true;
+            //Rb.useGravity = true;
             return;
         }
         
@@ -176,15 +185,18 @@ public class PlayerMovementController : MonoBehaviour
         //going down
         if (value < 0) { 
             Rb.drag = slopeDrag;
-            Rb.useGravity = false;
+            _canGravity = false;
+            //Rb.useGravity = false;
         }
         else {
             Rb.drag = groundDrag;
-            Rb.useGravity = true;
+            _canGravity = true;
+            //Rb.useGravity = true;
         }
 
         if (Rb.velocity.magnitude < 0.3f)
-            Rb.useGravity = true;
+            _canGravity = true;
+            //Rb.useGravity = true;
 
     }
 
@@ -201,6 +213,9 @@ public class PlayerMovementController : MonoBehaviour
 
         return _moveDir;
     }
+    #endregion
+    
+    #region Movement Abilities
     
     /// <summary>
     /// Roll the character
@@ -282,17 +297,37 @@ public class PlayerMovementController : MonoBehaviour
         moveState = MovementState.Normal;
 
     }
+    #endregion
+    private bool IsOnGround()
+    {
+        if (!Physics.Raycast(transform.position, -Vector3.up, out var hit, groundCastDist, ~ignoreMask)) return false;
+        return !hit.collider.isTrigger;
+    }
 
-    // private void CustomGravity()
-    // {
-    //     Vector3 gravityVector = -gravityAcceleration * gravityScale * Vector3.up;
-    //     Rb.AddForce(gravityVector, ForceMode.Acceleration);
-    // }
+    private void CustomGravity()
+    {
+        var gravityVector = IsOnGround() ? 
+            (-9.8f * 1 * Vector3.up) : 
+            (-gravityAcceleration * gravityScale * Vector3.up);
+        
+        Rb.AddForce(gravityVector, ForceMode.Acceleration);
+    }
+
+    private void GetMovementState() {
+        EventDispatcher.Instance.FireEvent(EventType.SetMovementStateEvent, moveState);
+    }
+
+    private void UpdateMovementState(MovementState state)
+    {
+        moveState = state;
+    }
     
     private void OnDrawGizmosSelected()
     {
         Gizmos.color = Color.blue;
         Gizmos.DrawRay(transform.position, _moveDir * 3);
+        Gizmos.color = Color.red;
+        Gizmos.DrawRay(transform.position, groundCastDist * Vector3.down);
     }
 }
 
