@@ -22,13 +22,20 @@ namespace Entities.Enemy.Boss {
         public bool canAttack = true;
 
         public override EnemyState RunCurrentState() {
-            if (!isAttacking) {
-                StartCoroutine(StartAttack());
+            if (Agent.enabled) {
+                Agent.SetDestination(target.transform.position);
             }
+            
             //Change 2f number if changed in WalkerHostile also 
-            if (Vector3.Distance(transform.position, target.transform.position) > 3.2f && !isAttacking) {
+            if (GetPathRemainingDistance(Agent) > 4f && GetPathRemainingDistance(Agent) > -1 && !isAttacking) {
+                Debug.Log("Condition Met");
                 return previousState;
             }
+            if (!isAttacking) {
+                TriggerAnim(animData.hostileAnim);
+                StartCoroutine(StartAttack());
+            }
+            
             return this;
         }
 
@@ -36,9 +43,12 @@ namespace Entities.Enemy.Boss {
             isAttacking = true;
             var randomAttack = Random.Range(0, animData.attackAnim.Count);
             var attack = animData.attackAnim[randomAttack];
+            Agent.enabled = false;
             TriggerAnim(attack);
             yield return new WaitForSeconds(animator.GetCurrentAnimatorClipInfo(0)[0].clip.length);
             isAttacking = false;
+            Agent.enabled = true;
+            Agent.ResetPath();
         }
     }
 }

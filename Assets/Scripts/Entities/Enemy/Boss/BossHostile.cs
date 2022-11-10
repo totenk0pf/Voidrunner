@@ -1,6 +1,7 @@
 using System;
 using Core.Logging;
 using UnityEngine;
+using UnityEngine.AI;
 using UnityEngine.Serialization;
 
 namespace Entities.Enemy.Boss {
@@ -12,15 +13,16 @@ namespace Entities.Enemy.Boss {
         public override EnemyState RunCurrentState() {
             if (!animator.GetBool(animData.hostileAnim.name)) TriggerAnim(animData.hostileAnim);
             Agent.SetDestination(target.transform.position);
-
-            NCLogger.Log($"{Agent.remainingDistance} remaining, stopping before {Agent.stoppingDistance}");
+  
+            if (GetPathRemainingDistance(Agent) < 4f && GetPathRemainingDistance(Agent) > -1) {
+                Agent.isStopped = true;
+                return nextState;
+            }
             
-            if (Agent.pathPending & (Agent.remainingDistance > Agent.stoppingDistance)) return this;
-            
-            TriggerAnim(animData.hostileAnim);
-            return nextState;
+            Agent.isStopped = false;
+            return this;
         }
-
+ 
         private void OnDrawGizmos() {
             Gizmos.color = Color.red;
             Gizmos.DrawWireSphere(Agent.destination, 0.5f);
