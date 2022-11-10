@@ -1,3 +1,4 @@
+using System;
 using Entities.Enemy;
 using UnityEngine;
 using UnityEngine.AI;
@@ -48,7 +49,15 @@ public abstract class EnemyState : MonoBehaviour
             detected = true;
         }
     }
-    
+
+    public virtual void OnTriggerExit(Collider other) {
+        if (CheckLayerMask.IsInLayerMask(other.gameObject, playerMask))
+        {
+            // target = null;
+            detected = false;
+        }
+    }
+
     protected void TriggerAnim(AnimParam param) {
         switch (param.type) {
             case AnimatorControllerParameterType.Bool:

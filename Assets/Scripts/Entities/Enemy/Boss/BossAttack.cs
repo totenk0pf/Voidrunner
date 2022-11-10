@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Core.Logging;
 using UnityEngine;
 using Sirenix.OdinInspector;
+using UnityEngine.ProBuilder.MeshOperations;
 using Random = UnityEngine.Random;
 
 namespace Entities.Enemy.Boss {
@@ -18,13 +19,16 @@ namespace Entities.Enemy.Boss {
         [SerializeField] private BossAnimData animData;
 
         public bool isAttacking;
+        public bool canAttack = true;
 
         public override EnemyState RunCurrentState() {
+            if (!isAttacking) {
+                StartCoroutine(StartAttack());
+            }
             //Change 2f number if changed in WalkerHostile also 
-            if (Vector3.Distance(transform.position, target.transform.position) > 3.2f & !isAttacking) {
+            if (Vector3.Distance(transform.position, target.transform.position) > 3.2f && !isAttacking) {
                 return previousState;
             }
-            if (!isAttacking) StartCoroutine(StartAttack());
             return this;
         }
 

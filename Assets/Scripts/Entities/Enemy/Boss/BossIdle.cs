@@ -18,14 +18,16 @@ namespace Entities.Enemy.Boss {
         [SerializeField] private BossAnimData animData;
 
         public override EnemyState RunCurrentState(){
-            if (!animator.GetBool(animData.idleAnim.name)) TriggerAnim(animData.idleAnim);
-            if (Agent.remainingDistance <= 0.1f && _canWalk) {
+            if (animator.GetBool(animData.idleAnim.name)) TriggerAnim(animData.idleAnim);
+            
+            if (!Agent.pathPending && _canWalk) {
                 Agent.SetDestination(GetRandomWayPoint(Random.Range(minEnemyRange, maxEnemyRange)));
                 StartCoroutine(Delay(Random.Range(minDelay, maxDelay)));
             }
 
-            if (detected) {
+            if (!Agent.pathPending && detected) {
                 TriggerAnim(animData.idleAnim);
+                Agent.ResetPath();
                 return nextState;
             }
             return this;

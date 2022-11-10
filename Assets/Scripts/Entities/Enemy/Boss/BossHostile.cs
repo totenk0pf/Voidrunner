@@ -1,3 +1,5 @@
+using System;
+using Core.Logging;
 using UnityEngine;
 using UnityEngine.Serialization;
 
@@ -10,13 +12,18 @@ namespace Entities.Enemy.Boss {
         public override EnemyState RunCurrentState() {
             if (!animator.GetBool(animData.hostileAnim.name)) TriggerAnim(animData.hostileAnim);
             Agent.SetDestination(target.transform.position);
-            Agent.isStopped = false;
 
-            if (!(Agent.remainingDistance < 3.2f)) return this;
+            NCLogger.Log($"{Agent.remainingDistance} remaining, stopping before {Agent.stoppingDistance}");
+            
+            if (Agent.pathPending & (Agent.remainingDistance > Agent.stoppingDistance)) return this;
             
             TriggerAnim(animData.hostileAnim);
-            Agent.isStopped = true;
             return nextState;
+        }
+
+        private void OnDrawGizmos() {
+            Gizmos.color = Color.red;
+            Gizmos.DrawWireSphere(Agent.destination, 0.5f);
         }
     }
 }
