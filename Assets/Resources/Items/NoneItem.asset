@@ -22,15 +22,18 @@ MonoBehaviour:
     PrefabModifications: []
     SerializationNodes:
     - Name: behaviour
-      Entry: 6
+      Entry: 7
+      Data: 0|Items.Behaviour.EmptyItemBehaviour, Assembly-CSharp
+    - Name: 
+      Entry: 8
       Data: 
   id:
-    serializedGuid: 00000000-0000-0000-0000-000000000000
-  itemName: 
-  itemDescription: 
-  icon: {fileID: 0}
+    serializedGuid: 87b229f9-6105-470c-8937-a7ca94a13548
+  itemName: None
+  itemDescription: No information available.
+  icon: {fileID: 21300000, guid: 90392f83277f8154dbfc727f5f164258, type: 3}
   model: {fileID: 0}
   material: {fileID: 0}
   weight: 0
   canDrop: 0
-  isInfinite: 0
+  isInfinite: 1
