@@ -29,6 +29,7 @@ namespace Entities.Enemy.Boss {
                 _canChangeState = false;
                 return previousState;
             }
+            
             if (!_isDelayed && !_canAttack) {
                 StartCoroutine(StartAttack());
             }
@@ -50,7 +51,7 @@ namespace Entities.Enemy.Boss {
             
             _canAttack = true;
             isAttacking = false;
-            
+
             var dist = Vector3.Distance(transform.position, target.transform.position);
             if (dist > 2f && !isAttacking)
             {
@@ -59,6 +60,14 @@ namespace Entities.Enemy.Boss {
                 _canChangeState = true;
                 _canAttack = false;
             }
+
+            else yield return DelayAttack();
+        }
+
+        public IEnumerator DelayAttack()
+        {
+            yield return new WaitForSeconds(0.2f);
+            yield return StartCoroutine(StartAttack());
         }
     }
 }
