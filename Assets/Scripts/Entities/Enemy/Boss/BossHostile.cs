@@ -14,7 +14,9 @@ namespace Entities.Enemy.Boss {
             if (!animator.GetBool(animData.hostileAnim.name)) TriggerAnim(animData.hostileAnim);
             Agent.SetDestination(target.transform.position);
   
-            if (GetPathRemainingDistance(Agent) < 4f && GetPathRemainingDistance(Agent) > -1) {
+            if (GetPathRemainingDistance(Agent) < 4f && GetPathRemainingDistance(Agent) > -1)
+            {
+                TriggerAnim(animData.hostileAnim);
                 Agent.isStopped = true;
                 return nextState;
             }

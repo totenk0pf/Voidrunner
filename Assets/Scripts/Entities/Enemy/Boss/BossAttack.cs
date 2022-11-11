@@ -19,36 +19,46 @@ namespace Entities.Enemy.Boss {
         [SerializeField] private BossAnimData animData;
 
         public bool isAttacking;
-        public bool canAttack = true;
+        private bool _canChangeState;
+        private bool _canAttack;
+        private bool _isDelayed;
 
         public override EnemyState RunCurrentState() {
-            if (Agent.enabled) {
-                Agent.SetDestination(target.transform.position);
-            }
-            
-            //Change 2f number if changed in WalkerHostile also 
-            if (GetPathRemainingDistance(Agent) > 4f && GetPathRemainingDistance(Agent) > -1 && !isAttacking) {
-                Debug.Log("Condition Met");
+            if (_canChangeState)
+            {
+                _canChangeState = false;
                 return previousState;
             }
-            if (!isAttacking) {
-                TriggerAnim(animData.hostileAnim);
+            if (!_isDelayed && !_canAttack) {
                 StartCoroutine(StartAttack());
             }
-            
             return this;
         }
 
-        public IEnumerator StartAttack() {
+        public IEnumerator StartAttack()
+        {
+            _canAttack = false;
             isAttacking = true;
+            
             var randomAttack = Random.Range(0, animData.attackAnim.Count);
             var attack = animData.attackAnim[randomAttack];
+            
             Agent.enabled = false;
+            
             TriggerAnim(attack);
-            yield return new WaitForSeconds(animator.GetCurrentAnimatorClipInfo(0)[0].clip.length);
+            yield return new WaitUntil(() => animator.GetCurrentAnimatorStateInfo(0).normalizedTime >= 0.95f);
+            
+            _canAttack = true;
             isAttacking = false;
-            Agent.enabled = true;
-            Agent.ResetPath();
+            
+            var dist = Vector3.Distance(transform.position, target.transform.position);
+            if (dist > 2f && !isAttacking)
+            {
+                Agent.enabled = true;
+                Agent.ResetPath();
+                _canChangeState = true;
+                _canAttack = false;
+            }
         }
     }
 }
