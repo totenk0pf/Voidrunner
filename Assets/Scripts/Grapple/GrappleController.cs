@@ -5,6 +5,7 @@ using Core.Events;
 using Core.Logging;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.AI;
 using UnityEngine.ProBuilder;
 using UnityEngine.Serialization;
 using EventType = Core.Events.EventType;
@@ -165,7 +166,7 @@ namespace Grapple
                     EventDispatcher.Instance.FireEvent(EventType.RequestIsOnGroundEvent);
                     if (!_isOnGround) return false;
                     EventDispatcher.Instance.FireEvent(EventType.SetMovementStateEvent, PlayerMovementController.MovementState.Grappling);
-                    StartCoroutine(EnemyToPlayerRoutine());
+                    StartCoroutine(EnemyToPlayerRoutine(enemy));
                     break;
                 case GrappleType.PlayerToPoint:
                     EventDispatcher.Instance.FireEvent(EventType.SetMovementStateEvent, PlayerMovementController.MovementState.Grappling);
@@ -178,14 +179,19 @@ namespace Grapple
             return false;
         }
 
-        private IEnumerator EnemyToPlayerRoutine() {
+        private IEnumerator EnemyToPlayerRoutine(EnemyBase enemy) {
             var startPos = _currentGrappleHit.point;
             var dist = Vector3.Distance( _currentGrappleHit.point, GrappleHaltPosition);
             var dir = (GrappleHaltPosition - _currentGrappleHit.point).normalized;
             var endPos = startPos + (dist * dir);
 
+            var agent = enemy.GetComponent<NavMeshAgent>();
+            var stateMachine = enemy.GetComponent<EnemyStateMachine>();
+            
             _lr.enabled = true;
             _lr.SetPosition(0, GrappleHaltPosition);
+            agent.enabled = false;
+            stateMachine.enabled = false;
             
             for (var i = 0.0f; i < 1.0f; i += (grappleSpeed * Time.deltaTime) / dist) {
                 _lr.SetPosition(1, _currentGrappleHit.transform.position);
@@ -196,6 +202,9 @@ namespace Grapple
             EventDispatcher.Instance.FireEvent(EventType.SetMovementStateEvent, PlayerMovementController.MovementState.Normal);
             _currentGrappleHit = new RaycastHit();
             _lr.enabled = false;
+            
+            stateMachine.enabled = false;
+            agent.enabled = false;
             
             yield return null;
         }
