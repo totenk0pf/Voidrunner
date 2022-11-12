@@ -15,7 +15,6 @@ public class PlayerMovementController : MonoBehaviour
         Normal,
         Roll,
         Slide,
-        Falling,
         Grappling
     }
     
@@ -82,11 +81,13 @@ public class PlayerMovementController : MonoBehaviour
 
     private float _horiz;
     private float _vert;
+    private bool _isGrounded;
 
     private void Awake()
     {
         EventDispatcher.Instance.AddListener(EventType.GetMovementStateEvent, param => GetMovementState());
         EventDispatcher.Instance.AddListener(EventType.SetMovementStateEvent, param => UpdateMovementState((MovementState) param));
+        EventDispatcher.Instance.AddListener(EventType.RequestIsOnGroundEvent, param => EventDispatcher.Instance.FireEvent(EventType.ReceiveIsOnGroundEvent, _isGrounded));
         
         _canGravity = true;
         Rb.useGravity = false;
@@ -300,8 +301,18 @@ public class PlayerMovementController : MonoBehaviour
     #endregion
     private bool IsOnGround()
     {
-        if (!Physics.Raycast(transform.position, -Vector3.up, out var hit, groundCastDist, ~ignoreMask)) return false;
-        return !hit.collider.isTrigger;
+        bool val;
+        if (!Physics.Raycast(transform.position, -Vector3.up, out var hit, groundCastDist, ~ignoreMask))
+        {
+            val = false;
+            _isGrounded = val;
+            return val;
+        }
+        val = !hit.collider.isTrigger;
+
+        
+        _isGrounded = val;
+        return val;
     }
 
     private void CustomGravity()
@@ -320,6 +331,9 @@ public class PlayerMovementController : MonoBehaviour
     private void UpdateMovementState(MovementState state)
     {
         moveState = state;
+        if (state == MovementState.Grappling) {
+            _rb.velocity = Vector3.zero;
+        }
     }
     
     private void OnDrawGizmosSelected()

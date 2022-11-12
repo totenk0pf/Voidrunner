@@ -12,6 +12,8 @@ namespace Core.Events {
         AugmentDrainEvent,
         RangedShotEvent,
         GetMovementStateEvent,
-        SetMovementStateEvent
+        SetMovementStateEvent,
+        RequestIsOnGroundEvent,
+        ReceiveIsOnGroundEvent
     }
 }
