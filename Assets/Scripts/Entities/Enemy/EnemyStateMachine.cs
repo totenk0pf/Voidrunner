@@ -1,3 +1,4 @@
+using System;
 using Core.Logging;
 using UnityEngine;
 
@@ -36,4 +37,8 @@ public class EnemyStateMachine :MonoBehaviour
     private void OnTriggerEnter(Collider other) {
         _currentState.OnTriggerEnter(other);
     }
+
+    private void OnTriggerExit(Collider other) {
+        _currentState.OnTriggerExit(other);
+    }   
 }
