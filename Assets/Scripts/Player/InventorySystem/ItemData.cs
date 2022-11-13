@@ -2,7 +2,6 @@
 using System;
 using Items;
 using Sirenix.OdinInspector;
-using Sirenix.Serialization;
 
 [CreateAssetMenu(menuName = "Inventory/Item Data")]
 [Serializable]
@@ -24,4 +23,5 @@ public class ItemData : SerializedScriptableObject
     [TitleGroup("Inventory")]
     public float weight;
     public bool canDrop;
+    public bool isInfinite;
 }

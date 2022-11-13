@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Combat;
 using Core.Events;
 using DG.Tweening;
+using Sirenix.OdinInspector;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -33,8 +34,11 @@ namespace UI {
         private WeaponType currentType;
         [SerializeField] private float activeScale;
         [SerializeField] private float inactiveScale;
-        [SerializeField] private float transitionTime;
         private float _initHeight;
+
+        [TitleGroup("Tween settings")] 
+        [SerializeField] private Ease easeType;
+        [SerializeField] private float transitionTime;
         
         private VerticalLayoutGroup _layout;
         private VerticalLayoutGroup Layout {
@@ -70,7 +74,7 @@ namespace UI {
                                          new Vector3(selectedScale, selectedScale, 1) : 
                                          new Vector3(unselectedScale, unselectedScale, 1), 
                                      transitionTime)
-                    .SetEase(Ease.InOutCubic)
+                    .SetEase(easeType)
                     .OnUpdate(() => LayoutRebuilder.ForceRebuildLayoutImmediate(Transform));
                 item.rechargeSlider.gameObject.SetActive(isCurrent);
             }

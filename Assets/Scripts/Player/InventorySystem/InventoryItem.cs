@@ -6,18 +6,21 @@ public class InventoryItem {
     public int itemCount;
     public float totalWeight;
 
-    public InventoryItem(ItemData source) {
-        data = source;
-        AddItem();
+    public InventoryItem(ItemData source, int count = 1) {
+        data      = source;
+        itemCount = count;
     }
 
     public void AddItem() {
+        if (data.isInfinite) return;
         itemCount++;
         totalWeight += data.weight;
     }
 
     public void RemoveItem() {
+        if (data.isInfinite) return;
+        if (itemCount <= 0) return;
         itemCount--;
-        totalWeight = itemCount <= 0 ? 0 : totalWeight - data.weight;
+        totalWeight -= data.weight;
     }
 }

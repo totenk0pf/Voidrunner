@@ -1,4 +1,3 @@
-using System;
 using Core.Events;
 using UnityEngine;
 using EventType = Core.Events.EventType;
@@ -6,14 +5,12 @@ using EventType = Core.Events.EventType;
 namespace Items {
     public class WorldItem : MonoBehaviour, IItems {
         public ItemData itemRef;
-        public int itemCount = 1;
         [SerializeField] private MeshFilter filter;
         [SerializeField] private MeshRenderer renderer;
 
         public virtual void OnPickup() {
-            this.FireEvent(EventType.OnItemAdd, new PickupMsg {
-                data = itemRef,
-                count = itemCount
+            this.FireEvent(EventType.ItemAddEvent, new ItemMsg {
+                data = itemRef
             });
             Destroy(gameObject);
         }
