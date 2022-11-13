@@ -12,7 +12,7 @@ using EventType = Core.Events.EventType;
 
 namespace UI {
     [Serializable]
-    public struct ItemUIData {
+    public class ItemUIData {
         public ItemData data;
         public InventoryItemUI uiRef;
         public int count;
@@ -30,14 +30,16 @@ namespace UI {
     }
     
     public class InventoryUI : SerializedMonoBehaviour {
-        [SerializeField] private List<ItemUIData> itemList;
-        [SerializeField] private List<ItemUIData> enabledItemList;
+        [ReadOnly] [SerializeField] private List<ItemUIData> itemList;
+        [ReadOnly] [SerializeField] private List<ItemUIData> enabledItemList;
         [SerializeField] private ItemManager manager;
         [SerializeField] private ItemData defaultItem;
         private ItemUIData _activeItem;
         private ItemUIData _hoveredItem;
         private int _activeIndex;
         private int _hoveredIndex;
+        private bool _itemSelected;
+        private bool _canMoveList;
 
         [TitleGroup("Item list")]
         [SerializeField] private GameObject itemPrefab;
@@ -58,11 +60,12 @@ namespace UI {
 
         [TitleGroup("Tween settings")] 
         [SerializeField] private float scrollDuration;
+        [SerializeField] private Ease easeType;
 
 
         private void Awake() {
-            this.AddListener(EventType.ItemAddEvent, msg => UpdateItem((ItemMsg) msg));
-            this.AddListener(EventType.ItemRemoveEvent, msg => UpdateItem((ItemMsg) msg));
+            this.AddListener(EventType.ItemAddEvent, msg => UpdateItem((ItemMsg) msg, true));
+            this.AddListener(EventType.ItemRemoveEvent, msg => UpdateItem((ItemMsg) msg, false));
             this.AddListener(EventType.InventoryToggleEvent, msg => ShowInventoryUI((InventoryToggleMsg) msg));
             this.AddListener(EventType.InventoryUpdateEvent, msg => UpdateInventoryUI((InventoryUpdateMsg) msg));
             
@@ -71,11 +74,9 @@ namespace UI {
                 itemList.Add(new ItemUIData {
                     data = item,
                     uiRef = obj,
-                    count = 1
+                    count = 0
                 });
-                obj.countText.text = "x00";
-                obj.nameText.text = item.itemName.Substring(0, 4);
-                obj.weightText.text = item.weight.ToString();
+                obj.UpdateUI(item, 0);
                 itemParent.GetComponent<RectTransform>().SetAsFirstSibling();
                 obj.gameObject.SetActive(false);
             }
@@ -83,30 +84,51 @@ namespace UI {
             var defaultUIItem = itemList.Find(x => x.data == defaultItem);
             defaultUIItem.uiRef.gameObject.SetActive(true);
             _activeItem = defaultUIItem;
+            this.FireEvent(EventType.InventoryHUDEvent, new InventoryHUDMsg {
+                data  = _activeItem.data,
+                count = _activeItem.count
+            });
             enabledItemList.Add(defaultUIItem);
             
             _activeIndex = 0;
             layoutSpace = itemLayout.spacing;
             prefabHeight = itemPrefab.GetComponent<RectTransform>().rect.height;
-            
+
+            _canMoveList = true;
             gameObject.SetActive(false);
         }
 
         private void Update() { 
             MoveItemList();
-            if (Input.GetMouseButtonDown(0)) {
+            if (Input.GetMouseButtonDown(0) && _canMoveList) {
                 ChooseItem();
                 this.FireEvent(EventType.InventoryToggleEvent, new InventoryToggleMsg{state = false});
             }
         }
 
-        private void UpdateItem(ItemMsg msg) {
-            var item =  itemList.Find(x => x.data == msg.data);
+        private void UpdateItem(ItemMsg msg, bool add) {
+            var item = itemList.Find(x => x.data == msg.data);
             if (item.data == null) return;
             var ui = item.uiRef;
-            item.count += msg.count;
-            item.uiRef.gameObject.SetActive(item.count > 0);
-            if (item.count > 0) enabledItemList.Add(itemList.Find(x => x.data == msg.data));
+            item.count = add ? item.count += 1 : item.count -= 1;
+            ui.gameObject.SetActive(item.count > 0);
+            if (item.count > 0) {
+                if (!enabledItemList.Contains(item)) enabledItemList.Add(itemList.Find(x => x.data == msg.data));
+            } else {
+                enabledItemList.Remove(itemList.Find(x => x.data == msg.data));
+                _activeIndex--;
+                _activeItem              =  enabledItemList[_activeIndex];
+                _hoveredIndex            =  _activeIndex;
+                _hoveredItem             =  _activeItem;
+                this.FireEvent(EventType.ItemPickEvent, new ItemMsg {
+                    data = _activeItem.data
+                });
+                this.FireEvent(EventType.InventoryHUDEvent, new InventoryHUDMsg {
+                    data  = _activeItem.data,
+                    count = _activeItem.count
+                });
+                itemParent.localPosition += new Vector3(0f, layoutSpace + prefabHeight, 0f);
+            }
             ui.countText.text = $"x{item.count:D2}";
             enabledItemList = enabledItemList.OrderBy(x => {
                 return itemList.IndexOf(itemList.Find(y => y.data == x.data));
@@ -114,18 +136,27 @@ namespace UI {
         }
 
         private void ChooseItem() {
-            this.FireEvent(EventType.ItemPickEvent, _hoveredItem.data);
             _activeItem = _hoveredItem;
             _activeIndex = _hoveredIndex;
+            this.FireEvent(EventType.ItemPickEvent, new ItemMsg {
+                data  = _activeItem.data
+            });
+            this.FireEvent(EventType.InventoryHUDEvent, new InventoryHUDMsg {
+                data = _activeItem.data,
+                count = _activeItem.count
+            });
+            _itemSelected = true;
         }
 
         private void ShowInventoryUI(InventoryToggleMsg msg) {
+            if (!_itemSelected) {
+                var delta = _hoveredIndex - _activeIndex;
+                itemParent.localPosition += new Vector3(0f, delta * (layoutSpace + prefabHeight), 0f);
+            } else {
+                _itemSelected = false;
+            }
             _hoveredIndex = _activeIndex;
             _hoveredItem = _activeItem;
-            UpdateInventoryUI(new InventoryUpdateMsg {
-                activeItem = new InventoryItem(_activeItem.data),
-                itemOnly = true
-            });
             gameObject.SetActive(msg.state);
         }
 
@@ -139,6 +170,7 @@ namespace UI {
         }
 
         private void MoveItemList() {
+            if (!_canMoveList) return;
             var scroll = Input.mouseScrollDelta;
             if (scroll.y == 0) return;
             var dist = layoutSpace + prefabHeight;
@@ -147,7 +179,12 @@ namespace UI {
             if (_hoveredIndex - delta < 0 || _hoveredIndex - delta > enabledItemList.Count - 1) return;
             _hoveredIndex            -= delta;
             _hoveredItem = enabledItemList[_hoveredIndex];
-            itemParent.DOLocalMove(itemParent.transform.localPosition + new Vector3(0f, delta * dist, 0f), scrollDuration, true).SetEase(Ease.InOutExpo);
+            itemParent.DOLocalMove(itemParent.transform.localPosition + new Vector3(0f, delta * dist, 0f),
+                                   scrollDuration,
+                                   true)
+                .SetEase(easeType)
+                .OnPlay(() => _canMoveList = false)
+                .OnComplete(() => _canMoveList = true);
             UpdateInventoryUI(new InventoryUpdateMsg {
                 activeItem = new InventoryItem(enabledItemList[_hoveredIndex].data),
                 itemOnly = true

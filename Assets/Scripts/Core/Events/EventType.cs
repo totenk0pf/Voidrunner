@@ -5,6 +5,7 @@ namespace Core.Events {
         ItemRemoveEvent,
         ItemAddEvent,
         ItemPickEvent,
+        InventoryHUDEvent,
         InventoryToggleEvent,
         InventoryUpdateEvent,
         UIBarChangedEvent,

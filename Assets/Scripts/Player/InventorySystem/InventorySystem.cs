@@ -7,7 +7,6 @@ using EventType = Core.Events.EventType;
 
 public struct ItemMsg {
     public ItemData data;
-    public int count;
 }
 
 public class InventorySystem : SerializedMonoBehaviour {
@@ -16,59 +15,67 @@ public class InventorySystem : SerializedMonoBehaviour {
     [SerializeField] private ItemData defaultItem;
     private float _currentWeight;
     [SerializeField] private float maxWeight;
-    private bool isUIActive;
+    private bool _isUIActive;
+    private bool _canUseItem;
 
     private void Awake() {
-        isUIActive = false;
-        inventory  = new List<InventoryItem>();
+        _isUIActive = false;
+        _canUseItem = true;
+        inventory   = new List<InventoryItem>();
         this.AddListener(EventType.ItemAddEvent, data => Add((ItemMsg) data));
-        this.AddListener(EventType.ItemPickEvent, data => Pick((ItemData) data));
+        this.AddListener(EventType.ItemPickEvent, data => Pick((ItemMsg) data));
         Add(new ItemMsg {
-            data = defaultItem,
-            count = 1
+            data  = defaultItem
         });
         _activeItem = inventory.Find(x => x.data == defaultItem);
         this.FireEvent(EventType.InventoryUpdateEvent, new InventoryUpdateMsg {
             currentWeight = _currentWeight,
-            maxWeight = maxWeight,
-            activeItem = _activeItem,
-            itemOnly = false
+            maxWeight     = maxWeight,
+            activeItem    = _activeItem,
+            itemOnly      = false
         });
+        this.AddListener(EventType.InventoryToggleEvent, msg => UpdateUI((InventoryToggleMsg) msg));
     }
 
     private void Update() {
         if (Input.GetKeyDown(KeyCode.E)) {
-            if (inventory.Count < 1) return;
+            if (!_canUseItem) return;
             UseItem(_activeItem);
         }
+
         if (Input.GetKeyDown(KeyCode.Tab)) {
-            UpdateUI();
+            this.FireEvent(EventType.InventoryToggleEvent, new InventoryToggleMsg {
+                state = !_isUIActive
+            });
+            this.FireEvent(EventType.InventoryUpdateEvent, new InventoryUpdateMsg {
+                currentWeight = _currentWeight,
+                maxWeight     = maxWeight,
+                activeItem    = _activeItem,
+                itemOnly      = false
+            });
         }
     }
 
-    public void UpdateUI() {
-        this.FireEvent(EventType.InventoryToggleEvent, new InventoryToggleMsg {
-            state = !isUIActive
-        });
-        isUIActive = !isUIActive;
+    public void UpdateUI(InventoryToggleMsg msg) {
+        _isUIActive = msg.state;
+        _canUseItem = !msg.state;
     }
 
-    public void Pick(ItemData data) {
-        _activeItem = inventory.Find(x => x.data == data);
+    public void Pick(ItemMsg msg) {
+        _activeItem = inventory.Find(x => x.data == msg.data);
     }
 
     public void Add(ItemMsg itemMsg) {
         var data = itemMsg.data;
-        var count = itemMsg.count;
-        if (_currentWeight + data.weight * count > maxWeight) return;
+        if (_currentWeight + data.weight > maxWeight) return;
         var item = inventory.Find(x => x.data == data);
         if (item != null) {
             item.AddItem();
         } else {
-            var newItem = new InventoryItem(data); 
+            var newItem = new InventoryItem(data);
             inventory.Add(newItem);
-            _currentWeight += data.weight;
         }
+        _currentWeight += data.weight;
     }
 
     public void Remove(ItemData data) {
@@ -86,11 +93,16 @@ public class InventorySystem : SerializedMonoBehaviour {
     }
 
     private void UseItem(InventoryItem item) {
+        if (item.itemCount <= 0) return;
         item.data.behaviour.Execute(this);
+        if (item.data.isInfinite) return;
         Remove(item.data);
         this.FireEvent(EventType.ItemRemoveEvent, new ItemMsg {
-            data = item.data,
-            count = -1
+            data  = item.data
+        });
+        this.FireEvent(EventType.InventoryHUDEvent, new InventoryHUDMsg {
+            count = _activeItem.itemCount,
+            countOnly = true
         });
     }
 }

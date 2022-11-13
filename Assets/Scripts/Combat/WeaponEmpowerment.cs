@@ -56,6 +56,7 @@ namespace Combat {
         }
 
         private void Update() {
+            if (!_canChangeEmpower) return;
             UpdateCurrentAugment();
             UpdateEmpowerStatus();
         }
@@ -84,7 +85,6 @@ namespace Combat {
         }
 
         private void UpdateCurrentAugment() {
-            if (!_canChangeEmpower) return;
             var scroll = Input.mouseScrollDelta;
             if (scroll.y == 0) return;
             var delta = scroll.y > 0 ? 1 : -1;
@@ -120,7 +120,7 @@ namespace Combat {
         }
 
         private void OnInventoryUIEvent(InventoryToggleMsg msg) {
-            _canChangeEmpower = msg.state;
+            _canChangeEmpower = !msg.state;
         }
 
         private bool CanDamage(EnemyBase enemy) => _currentEmpowerType == empowerData.Find(x => enemy.type == x.counterType).type;

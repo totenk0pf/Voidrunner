@@ -78,7 +78,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   itemRef: {fileID: 11400000, guid: fbc4f28fdcc814c4d8b3e94cde49eb0f, type: 2}
-  itemCount: 1
   filter: {fileID: 4867136567029789311}
   renderer: {fileID: 4867136567029789308}
 --- !u!1 &4867136566934548116
