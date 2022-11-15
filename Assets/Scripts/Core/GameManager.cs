@@ -6,6 +6,7 @@ using DG.Tweening;
 using Sirenix.OdinInspector;
 using UI;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using EventType = Core.Events.EventType;
 
 namespace Core {
@@ -32,6 +33,18 @@ namespace Core {
                 targetScale,
                 data.scaleModTime).SetUpdate(true).SetEase(Ease.OutExpo);
             _currentScale = targetScale;
+        }
+
+        public void Quit() {
+            Application.Quit();
+        }
+
+        public void ToggleSettings() {
+            
+        }
+
+        public void StartGame() {
+            SceneManager.LoadScene(1, LoadSceneMode.Single);
         }
     }
 }
