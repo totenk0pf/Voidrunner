@@ -21,9 +21,9 @@ namespace Core.Patterns {
                         var instances = FindObjectsOfType<T>();
                         if (instances.Length > 1) {
                             NCLogger.Log("More than one instance of singleton found in scene!", LogLevel.WARNING);
+                            _instance = instances[0];
+                            DontDestroyOnLoad(_instance);
                         }
-                        _instance = instances[0];
-                        DontDestroyOnLoad(_instance);
                     }
 
                     if (_instance == null) {
@@ -31,6 +31,7 @@ namespace Core.Patterns {
                         _instance = new GameObject($"{typeof(T)} (singleton)").AddComponent<T>();
                         DontDestroyOnLoad(_instance);
                     }
+                    
                     return _instance; 
                 }
             }
