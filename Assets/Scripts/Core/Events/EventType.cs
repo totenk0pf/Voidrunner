@@ -18,6 +18,10 @@ namespace Core.Events {
         AugmentChargeEvent,
         AugmentDrainEvent,
         DamageEnemyEvent,
-        RangedShotEvent
+        RangedShotEvent,
+        GetMovementStateEvent,
+        SetMovementStateEvent,
+        RequestIsOnGroundEvent,
+        ReceiveIsOnGroundEvent
     }
 }

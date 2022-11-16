@@ -25,6 +25,8 @@ public class EnemyBase : EntityBase {
     [SerializeField] private EnemyUI ui;
     protected NavMeshAgent navAgent;
 
+    public bool canPull;
+
     private void Start() {
         navAgent = GetComponent<NavMeshAgent>();
         navAgent.speed = enemySpeed;
