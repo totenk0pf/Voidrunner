@@ -25,6 +25,8 @@ public class EnemyBase : EntityBase {
     [SerializeField] private EnemyUI ui;
     protected NavMeshAgent navAgent;
 
+    public bool canPull;
+
     private void Start() {
         navAgent = GetComponent<NavMeshAgent>();
         navAgent.speed = enemySpeed;
@@ -33,9 +35,6 @@ public class EnemyBase : EntityBase {
             Debug.LogWarning("No NavMesh is bound to Enemy");
         }
         currentHp = enemyHP;
-        
-        ui.healthBar.maxValue = enemyHP;
-        ui.healthBar.value = enemyHP;
     }
 
     private void Update() {
@@ -58,7 +57,8 @@ public class EnemyBase : EntityBase {
     
     public virtual void TakeDamage(float amount) {
         currentHp -= amount;
-        ui.UpdateBar(amount);
+        var scaledValue = currentHp / enemyHP;
+        ui.UpdateBar(scaledValue);
     }
 
     public virtual void TakeTickDamage(float damagePerTick, float interval, int ticks) {

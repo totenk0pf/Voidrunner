@@ -15,8 +15,10 @@ TagManager:
   - EnemyDetection
   - WeaponDetection
   - Enemy
-  - 
-  - 
+  - WorldItem
+  - Environment
+  - MenuRaycast
+  - Grapple
   - 
   - 
   - 

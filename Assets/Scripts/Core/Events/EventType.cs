@@ -2,6 +2,12 @@ namespace Core.Events {
     public enum EventType {
         TestEvent = 0,
         LogEvent,
+        ItemRemoveEvent,
+        ItemAddEvent,
+        ItemPickEvent,
+        InventoryHUDEvent,
+        InventoryToggleEvent,
+        InventoryUpdateEvent,
         UIBarChangedEvent,
         OxygenChangeEvent,
         LevelChangeEvent,
@@ -13,6 +19,9 @@ namespace Core.Events {
         AugmentDrainEvent,
         DamageEnemyEvent,
         RangedShotEvent,
-        SpawnParticleEvent
+        GetMovementStateEvent,
+        SetMovementStateEvent,
+        RequestIsOnGroundEvent,
+        ReceiveIsOnGroundEvent
     }
 }
