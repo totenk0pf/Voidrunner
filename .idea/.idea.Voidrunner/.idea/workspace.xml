@@ -2,16 +2,9 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="76b6dd0e-26ee-4d57-bbcb-028796191047" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/Assets/Scripts/Particle/ParticlePool.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Scripts/Particle/ParticlePool.cs.meta" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/.idea.Voidrunner/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.Voidrunner/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/Particle/ParticleBloodRed.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Prefabs/Particle/ParticleBloodRed.prefab" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Scenes/SampleScene.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scenes/SampleScene.unity" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Core/Patterns/PoolBase.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Core/Patterns/PoolBase.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Scripts/Particle/ParticleManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Particle/ParticleManager.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Particle/ParticleManagerData/PMData-AlwaysLoaded.asset" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Particle/ParticleManagerData/PMData-AlwaysLoaded.asset" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Scripts/Particle/ParticleManagerData/PMData-SceneBased-SampleScene.asset" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Particle/ParticleManagerData/PMData-SceneBased-SampleScene.asset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Particle/ParticleManagerData/ParticleManagerData.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Particle/ParticleManagerData/ParticleManagerData.cs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -85,7 +78,7 @@
       <workItem from="1668657065622" duration="6938000" />
       <workItem from="1669091880639" duration="16380000" />
       <workItem from="1669131423807" duration="6310000" />
-      <workItem from="1669138286237" duration="3749000" />
+      <workItem from="1669138286237" duration="10168000" />
     </task>
     <servers />
   </component>
@@ -124,19 +117,6 @@
             </endOffsets>
           </properties>
           <option name="timeStamp" value="2" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="DotNet Breakpoints">
-          <url>file://$PROJECT_DIR$/Assets/Scripts/Particle/ParticleManager.cs</url>
-          <line>63</line>
-          <properties documentPath="E:\_School Projects\Voidrunner\Assets\Scripts\Particle\ParticleManager.cs" initialLine="63" containingFunctionPresentation="method 'Start'">
-            <startOffsets>
-              <option value="2488" />
-            </startOffsets>
-            <endOffsets>
-              <option value="2535" />
-            </endOffsets>
-          </properties>
-          <option name="timeStamp" value="4" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>

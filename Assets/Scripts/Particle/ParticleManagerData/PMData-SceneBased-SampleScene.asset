@@ -12,4 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0076c34584e548c680a333e7fa77f9a6, type: 3}
   m_Name: PMData-SceneBased-SampleScene
   m_EditorClassIdentifier: 
-  particleList: []
+  particleList:
+  - tagName: DA BLUE METH
+    prefab: {fileID: 8470634110270536629, guid: fb735973434af5a4f981735431b043d0, type: 3}
+    initialPoolSize: 10
+    maxPoolSize: 50
+    particleEventType: 25
