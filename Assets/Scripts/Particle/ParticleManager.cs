@@ -15,20 +15,15 @@ namespace Particle
         public Vector3 position;
     }
     
-    public class ParticleManager : PoolBase<ParticleTest>
+    public class ParticleManager : MonoBehaviour
     {
         
-        [SerializeField] private ParticleTest particlePrefab;
+        //[SerializeField] private ParticleBloodRed particlePrefab;
         //private ParticleTest particlePrefab;
         
         [SerializeField] private int initialPoolSize = 10;
         [SerializeField] private int maxPoolSize = 50;
 
-        [Header("Particle Attributes")] 
-        [SerializeField] private float duration = 1;
-        [SerializeField] private ParticleSystem.MinMaxCurve startLifetime = 1;
-        [SerializeField] private bool canLoop = false;
-        
         private void Awake()
         {
             EventDispatcher.Instance.AddListener(EventType.SpawnParticleEvent, param => SpawnParticle((ParticleInitData) param));
@@ -39,7 +34,7 @@ namespace Particle
         {
             //Unity's Pool system already created a dynamic array behind the scene with "initialPoolSize" as starting array size,
             //and will resize up to every (initialPoolSize + n * resize#) until it reaches "maxPoolSize"
-            InitPool(particlePrefab, initialPoolSize, maxPoolSize);
+            //InitPool(particlePrefab, initialPoolSize, maxPoolSize);
             
             //There's no need for this initialization of game objects, (This for loop can be get rid of)
             //because Pool.Get() will create new game objects if there's none or not enough
@@ -50,6 +45,7 @@ namespace Particle
                 var obj = CreateSetup();
                 Release(obj);
             }
+
         }
 
         private void Update()
@@ -84,23 +80,23 @@ namespace Particle
 
        #region Overrides
 
-       protected override ParticleTest CreateSetup()
-       {
-           //instantiate and set parent to manager
-           var obj = Instantiate(particlePrefab, transform, true);
-
-           var particle = obj.GetComponent<ParticleTest>();
-
-           var ps = particle.ParticleSystem;
-           ps.Stop(true, ParticleSystemStopBehavior.StopEmittingAndClear);
-
-           var main = ps.main;
-           main.duration = duration;
-           main.startLifetime = startLifetime;
-           main.loop = canLoop;
-           
-           return obj;
-       }
+       // protected override ParticleBloodRed CreateSetup()
+       // {
+       //     //instantiate and set parent to manager
+       //     var obj = Instantiate(particlePrefab, transform, true);
+       //
+       //     var particle = obj.GetComponent<ParticleBloodRed>();
+       //
+       //     var ps = particle.ParticleSystem;
+       //     ps.Stop(true, ParticleSystemStopBehavior.StopEmittingAndClear);
+       //
+       //     var main = ps.main;
+       //     main.duration = duration;
+       //     main.startLifetime = startLifetime;
+       //     main.loop = canLoop;
+       //     
+       //     return obj;
+       // }
        
        #endregion
     }

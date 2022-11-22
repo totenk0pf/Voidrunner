@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 2603264017827695111}
   - component: {fileID: 2603264017827695110}
   m_Layer: 0
-  m_Name: ParticleTest
+  m_Name: ParticleBloodRed
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

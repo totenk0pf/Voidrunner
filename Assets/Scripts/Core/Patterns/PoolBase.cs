@@ -1,4 +1,5 @@
 using System;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Pool;
 
@@ -8,11 +9,12 @@ namespace Core.Patterns {
     /// Derive from this class, call InitPool and you can Get and Release
     /// </summary>
     /// <typeparam name="T">A MonoBehaviour object you'd like to perform pooling on.</typeparam>
-    public abstract class PoolBase<T> : MonoBehaviour where T : MonoBehaviour 
+    public class PoolBase<T> : MonoBehaviour where T : MonoBehaviour 
     {
         private T _prefab;
         private ObjectPool<T> _pool;
-    
+        private Transform _parent;
+        
         private ObjectPool<T> Pool {
             get {
                 if (_pool == null) throw new InvalidOperationException("You need to call InitPool before using it.");
@@ -21,7 +23,10 @@ namespace Core.Patterns {
             set => _pool = value;
         }
     
-        protected void InitPool(T prefab, int initial = 10, int max = 20, bool collectionChecks = false) {
+        public void InitPool(T prefab, Transform parent, int initial = 10, int max = 20, bool collectionChecks = false)
+        {
+            _parent = !parent ? parent : transform.parent;
+            
             _prefab = prefab;
             Pool = new ObjectPool<T>(
                 CreateSetup,
@@ -34,7 +39,7 @@ namespace Core.Patterns {
         }
     
         #region Overrides
-        protected virtual T CreateSetup() => Instantiate(_prefab);
+        protected virtual T CreateSetup() => Instantiate(_prefab, _parent);
         protected virtual void GetSetup(T obj) => obj.gameObject.SetActive(true);
         protected virtual void ReleaseSetup(T obj) => obj.gameObject.SetActive(false);
         protected virtual void DestroySetup(T obj) => Destroy(obj);
@@ -45,5 +50,21 @@ namespace Core.Patterns {
         public void Release(T obj) => Pool.Release(obj);
         #endregion
     }
+
+    // public class PoolBase<T> : MonoBehaviour where T : MonoBehaviour
+    // {
+    //     
+    //     
+    //     protected void InitPool(T prefab, int initial = 10, int max = 20, bool collectionChecks = false) {
+    //         ObjectPool<>Pool = new ObjectPool<T>(
+    //                 CreateSetup,
+    //                 GetSetup,
+    //                 ReleaseSetup,
+    //                 DestroySetup,
+    //                 collectionChecks,
+    //                 initial,
+    //                 max);
+    //         }
+    // }
 }
 
