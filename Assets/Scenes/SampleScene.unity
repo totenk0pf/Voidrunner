@@ -449,64 +449,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 21400990ee1246488252874b9eeeb496, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  particlePrefab: {fileID: 2603264017827695112, guid: 53cb2c4aa6256f04e9fae883c4a58539, type: 3}
-  initialPoolSize: 10
-  maxPoolSize: 50
-  duration: 1
-  startLifetime:
-    m_Mode: 0
-    m_CurveMultiplier: 1
-    m_CurveMin:
-      serializedVersion: 2
-      m_Curve:
-      - serializedVersion: 3
-        time: 0
-        value: 1
-        inSlope: 0
-        outSlope: 0
-        tangentMode: 0
-        weightedMode: 0
-        inWeight: 0
-        outWeight: 0
-      - serializedVersion: 3
-        time: 0.9958191
-        value: 1.0254669
-        inSlope: 0
-        outSlope: 0
-        tangentMode: 0
-        weightedMode: 0
-        inWeight: 0
-        outWeight: 0
-      m_PreInfinity: 2
-      m_PostInfinity: 2
-      m_RotationOrder: 4
-    m_CurveMax:
-      serializedVersion: 2
-      m_Curve:
-      - serializedVersion: 3
-        time: 0
-        value: 1
-        inSlope: 0
-        outSlope: 0
-        tangentMode: 0
-        weightedMode: 0
-        inWeight: 0
-        outWeight: 0
-      - serializedVersion: 3
-        time: 1
-        value: 1
-        inSlope: 0
-        outSlope: 0
-        tangentMode: 0
-        weightedMode: 0
-        inWeight: 0
-        outWeight: 0
-      m_PreInfinity: 2
-      m_PostInfinity: 2
-      m_RotationOrder: 4
-    m_ConstantMin: 0
-    m_ConstantMax: 1
-  canLoop: 0
+  alwaysLoadedParticleData: {fileID: 11400000, guid: a3c15f8927f6c3e46b0759c723940e0c, type: 2}
+  sceneBasedParticleData: {fileID: 11400000, guid: ef0297f9958c70743980395434818ac7, type: 2}
 --- !u!4 &1107637209
 Transform:
   m_ObjectHideFlags: 0

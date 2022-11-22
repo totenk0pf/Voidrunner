@@ -2,27 +2,24 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="76b6dd0e-26ee-4d57-bbcb-028796191047" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/Assets/Scripts/Particle/ParticleClasses/IParticleCore.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Scripts/Particle/ParticleClasses/IParticleCore.cs.meta" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Scripts/Particle/ParticleClasses/ParticleBase.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Scripts/Particle/ParticleClasses/ParticleBase.cs.meta" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Scripts/Particle/ParticleData/ParticleData.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Scripts/Particle/ParticleData/ParticleData.cs.meta" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Scripts/Particle/ParticleManagerData/ParticleManagerData.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Scripts/Particle/ParticleManagerData/ParticleManagerData.cs.meta" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/Particle/ParticleTest.prefab" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/Particle/ParticleTest.prefab.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Core/Events/EventType.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Core/Events/EventType.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Scripts/Particle/ParticlePool.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Scripts/Particle/ParticlePool.cs.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/.idea.Voidrunner/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.Voidrunner/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/Particle/ParticleBloodRed.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Prefabs/Particle/ParticleBloodRed.prefab" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scenes/SampleScene.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scenes/SampleScene.unity" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Scripts/Core/Patterns/PoolBase.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Core/Patterns/PoolBase.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Scripts/Particle/ParticleManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Particle/ParticleManager.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Particle/ParticleTest.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Particle/ParticleTest.cs.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/ProjectSettings/ShaderGraphSettings.asset" beforeDir="false" afterPath="$PROJECT_DIR$/ProjectSettings/ShaderGraphSettings.asset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Particle/ParticleManagerData/PMData-AlwaysLoaded.asset" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Particle/ParticleManagerData/PMData-AlwaysLoaded.asset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Particle/ParticleManagerData/PMData-SceneBased-SampleScene.asset" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Particle/ParticleManagerData/PMData-SceneBased-SampleScene.asset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Particle/ParticleManagerData/ParticleManagerData.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Particle/ParticleManagerData/ParticleManagerData.cs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="MarkdownSettingsMigration">
     <option name="stateVersion" value="1" />
@@ -38,6 +35,7 @@
     &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
     &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
     &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
+    &quot;rider.run.widget.enabled.cache&quot;: &quot;false&quot;,
     &quot;settings.editor.selected.configurable&quot;: &quot;editor.preferences.fonts.default&quot;,
     &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
@@ -61,10 +59,10 @@
       </option>
       <method v="2" />
     </configuration>
-    <configuration name="Attach to Unity Editor" type="UNITY_DEBUG_RUN_CONFIGURATION" factoryName="Unity Debug" show_console_on_std_err="false" show_console_on_std_out="false" port="50000" address="localhost">
+    <configuration name="Attach to Unity Editor" type="UNITY_DEBUG_RUN_CONFIGURATION" factoryName="Unity Debug" show_console_on_std_err="false" show_console_on_std_out="false" port="50000" address="localhost" ignored-value-for-modified-check="18588">
       <option name="allowRunningInParallel" value="false" />
       <option name="listenPortForConnections" value="false" />
-      <option name="pid" />
+      <option name="pid" value="18588" />
       <option name="projectPathOnTarget" />
       <option name="selectedOptions">
         <list />
@@ -86,6 +84,8 @@
       <workItem from="1668052329756" duration="15671000" />
       <workItem from="1668657065622" duration="6938000" />
       <workItem from="1669091880639" duration="16380000" />
+      <workItem from="1669131423807" duration="6310000" />
+      <workItem from="1669138286237" duration="3749000" />
     </task>
     <servers />
   </component>
@@ -108,6 +108,38 @@
   </component>
   <component name="VcsManagerConfiguration">
     <option name="CLEAR_INITIAL_COMMIT_MESSAGE" value="true" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="DotNet Breakpoints">
+          <url>file://$PROJECT_DIR$/Assets/Scripts/Grapple/GrappleController.cs</url>
+          <line>68</line>
+          <properties documentPath="E:\_School Projects\Voidrunner\Assets\Scripts\Grapple\GrappleController.cs" initialLine="68" containingFunctionPresentation="method 'Awake'">
+            <startOffsets>
+              <option value="2410" />
+            </startOffsets>
+            <endOffsets>
+              <option value="2445" />
+            </endOffsets>
+          </properties>
+          <option name="timeStamp" value="2" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="DotNet Breakpoints">
+          <url>file://$PROJECT_DIR$/Assets/Scripts/Particle/ParticleManager.cs</url>
+          <line>63</line>
+          <properties documentPath="E:\_School Projects\Voidrunner\Assets\Scripts\Particle\ParticleManager.cs" initialLine="63" containingFunctionPresentation="method 'Start'">
+            <startOffsets>
+              <option value="2488" />
+            </startOffsets>
+            <endOffsets>
+              <option value="2535" />
+            </endOffsets>
+          </properties>
+          <option name="timeStamp" value="4" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />

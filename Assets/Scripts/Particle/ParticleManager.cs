@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using Core.Events;
 using UnityEngine;
 using Core.Patterns;
+using Unity.VisualScripting;
 using EventType = Core.Events.EventType;
 
 namespace Particle
@@ -14,19 +16,32 @@ namespace Particle
         public Vector3 normal;
         public Vector3 position;
     }
+
+    public struct ParticleType
+    {
+        public ParticleInitData InitData;
+        public ParticlePool pool;
+    }
     
     public class ParticleManager : MonoBehaviour
     {
+        [SerializeField] private ParticleManagerData alwaysLoadedParticleData;
+        [SerializeField] private ParticleManagerData sceneBasedParticleData;
+
+        //[SerializeField] private ParticlePool poolPrefab;
         
-        //[SerializeField] private ParticleBloodRed particlePrefab;
-        //private ParticleTest particlePrefab;
-        
-        [SerializeField] private int initialPoolSize = 10;
-        [SerializeField] private int maxPoolSize = 50;
+        private List<ParticleEntity> _particleList = new List<ParticleEntity>();
+        private List<ParticlePool> _poolList = new List<ParticlePool>();
 
         private void Awake()
         {
-            EventDispatcher.Instance.AddListener(EventType.SpawnParticleEvent, param => SpawnParticle((ParticleInitData) param));
+            _particleList = _particleList.Concat(alwaysLoadedParticleData.particleList)
+                .Concat(sceneBasedParticleData.particleList)
+                .ToList();
+
+            EventDispatcher.Instance.AddListener(EventType.SpawnParticleREDEvent, param => SpawnParticle((ParticleType) param));
+            EventDispatcher.Instance.AddListener(EventType.SpawnParticleGREENEvent, param => SpawnParticle((ParticleType) param));
+            EventDispatcher.Instance.AddListener(EventType.SpawnParticleBLUEEvent, param => SpawnParticle((ParticleType) param));
         }
         
         
@@ -40,12 +55,32 @@ namespace Particle
             //because Pool.Get() will create new game objects if there's none or not enough
             //just doing this at start so it doesn't have to instantiate a fuck ton at some point in game
             //(like shotgun blast with tons of raycast points to spawn particle could be expensive?, maybe)
-            for (var i = 0; i < initialPoolSize; i++)
-            {
-                var obj = CreateSetup();
-                Release(obj);
-            }
+            // for (var i = 0; i < initialPoolSize; i++)
+            // {
+            //     var obj = CreateSetup();
+            //     Release(obj);
+            // }
 
+            foreach (var entity in _particleList)
+            {
+                GameObject poolGO = new GameObject();
+                poolGO.transform.parent = transform;
+                poolGO.name = $"Pool {entity.prefab.name}";
+                //poolGO.tag = entity.tagName
+                var pool = poolGO.AddComponent<ParticlePool>();
+                
+                pool.particleEventType = entity.particleEventType;
+                _poolList.Add(pool);
+                
+                pool.InitPool(entity.prefab, poolGO.transform, entity.initialPoolSize, entity.maxPoolSize);
+                for (var i = 0; i < entity.initialPoolSize; i++) {
+                    var obj = pool.CreateSetup();
+                    obj.transform.parent = poolGO.transform;
+                    pool.Release(obj);
+                    
+                }
+                
+            }
         }
 
         private void Update()
@@ -56,26 +91,61 @@ namespace Particle
         //TODO: this is for testing, move this elsewhere if needed, use event dispatcher.
         private void TestFireRayCast()
         {
+            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+            RaycastHit hit;
+            
             if (Input.GetMouseButtonDown(0))
             {
-                Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-                RaycastHit hit;
                 if (Physics.Raycast(ray, out hit, Mathf.Infinity))
                 {
-                    ParticleInitData data = new ParticleInitData() {
-                        normal = hit.normal,
-                        position = hit.point
-                    };
-                    
-                    EventDispatcher.Instance.FireEvent(EventType.SpawnParticleEvent, data);
+                    var type = GetParticlePool(hit, EventType.SpawnParticleREDEvent);
+                    EventDispatcher.Instance.FireEvent(EventType.SpawnParticleREDEvent, type);
+                }
+            }
+            
+            if (Input.GetMouseButtonDown(1))
+            {
+                if (Physics.Raycast(ray, out hit, Mathf.Infinity))
+                {
+                    var type = GetParticlePool(hit, EventType.SpawnParticleGREENEvent);
+                    EventDispatcher.Instance.FireEvent(EventType.SpawnParticleGREENEvent, type);
+                }
+            }
+            
+            if (Input.GetMouseButtonDown(2))
+            {
+                if (Physics.Raycast(ray, out hit, Mathf.Infinity))
+                {
+                    var type = GetParticlePool(hit, EventType.SpawnParticleBLUEEvent);
+                    EventDispatcher.Instance.FireEvent(EventType.SpawnParticleBLUEEvent, type);
                 }
             }
         }
-        
-        private void SpawnParticle(ParticleInitData data)
+
+        public ParticleType GetParticlePool(RaycastHit hit, EventType type)
         {
-            var particle = Get();
-            particle.Init(data, Release);
+            ParticleInitData data = new ParticleInitData() {
+                normal = hit.normal,
+                position = hit.point
+            };
+            
+            ParticlePool particlePool = new ParticlePool();
+            foreach (var pool in _poolList.Where(pool => pool.particleEventType == type)) {
+                particlePool = pool;
+            }
+            
+            ParticleType particleType = new ParticleType() {
+                InitData = data,
+                pool = particlePool
+            };
+
+            return particleType;
+        }
+        
+        private void SpawnParticle(ParticleType data)
+        {
+            var particle = data.pool.Get();
+            particle.Init(data.InitData, data.pool.Release);
         }
 
        #region Overrides

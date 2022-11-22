@@ -12,4 +12,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0076c34584e548c680a333e7fa77f9a6, type: 3}
   m_Name: PMData-SceneBased-SampleScene
   m_EditorClassIdentifier: 
-  particleToSpawnList: []
+  particleList: []

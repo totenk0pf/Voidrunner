@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 2603264017827695111}
   - component: {fileID: 2603264017827695110}
   m_Layer: 0
-  m_Name: ParticleBloodRed
+  m_Name: ParticleBloodBlue
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -46,7 +46,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fe023a6f1bb64b0bb12092549a8d6c97, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  particleData: {fileID: 11400000, guid: e70814cffab5fa04992738905870abef, type: 2}
+  particleData: {fileID: 11400000, guid: ada81042a0b206541a39a1f7ebee5afc, type: 2}
 --- !u!198 &2603264017827695111
 ParticleSystem:
   m_ObjectHideFlags: 0
@@ -237,7 +237,7 @@ ParticleSystem:
       serializedVersion: 2
       minMaxState: 0
       minColor: {r: 1, g: 1, b: 1, a: 1}
-      maxColor: {r: 1, g: 0, b: 0, a: 1}
+      maxColor: {r: 0, g: 0.5425916, b: 1, a: 1}
       maxGradient:
         serializedVersion: 2
         key0: {r: 1, g: 1, b: 1, a: 1}
@@ -4129,7 +4129,7 @@ ParticleSystem:
       serializedVersion: 2
       minMaxState: 0
       minColor: {r: 1, g: 1, b: 1, a: 1}
-      maxColor: {r: 0.9716981, g: 0, b: 0, a: 1}
+      maxColor: {r: 0, g: 0.9289781, b: 0.972549, a: 1}
       maxGradient:
         serializedVersion: 2
         key0: {r: 1, g: 1, b: 1, a: 1}

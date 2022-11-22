@@ -18,7 +18,7 @@ namespace Particle
         public ParticleData particleData;
     
     
-        protected virtual void Awake()
+        protected virtual void Start()
         {
             var main = ParticleSystem.main;
             main.duration = particleData.duration;

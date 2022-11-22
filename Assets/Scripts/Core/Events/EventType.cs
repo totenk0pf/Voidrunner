@@ -23,6 +23,8 @@ namespace Core.Events {
         SetMovementStateEvent,
         RequestIsOnGroundEvent,
         ReceiveIsOnGroundEvent,
-        SpawnParticleEvent
+        SpawnParticleREDEvent,
+        SpawnParticleGREENEvent,
+        SpawnParticleBLUEEvent
     }
 }
