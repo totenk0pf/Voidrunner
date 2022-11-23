@@ -20,6 +20,8 @@ namespace Particle
     
         protected virtual void Start()
         {
+            ParticleSystem.Stop(true, ParticleSystemStopBehavior.StopEmittingAndClear);
+            
             var main = ParticleSystem.main;
             main.duration = particleData.duration;
             main.startLifetime = particleData.startLifeTime;

@@ -57,6 +57,7 @@ namespace Particle
                 var pool = poolGO.AddComponent<ParticlePool>();
                 
                 pool.particleEventType = entity.particleEventType;
+                pool.prefab = entity.prefab;
                 _poolList.Add(pool);
                 
                 pool.InitPool(entity.prefab, poolGO.transform, entity.initialPoolSize, entity.maxPoolSize);
@@ -79,35 +80,26 @@ namespace Particle
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
             RaycastHit hit;
             
-            if (Input.GetMouseButtonDown(0))
-            {
-                if (Physics.Raycast(ray, out hit, Mathf.Infinity))
-                {
-                    var type = GetParticlePool(hit, EventType.SpawnParticleREDEvent);
-                    EventDispatcher.Instance.FireEvent(EventType.SpawnParticleREDEvent, type);
+            if (Input.GetMouseButtonDown(0)) {
+                if (Physics.Raycast(ray, out hit, Mathf.Infinity)) {
+                    ActivateParticleFromPool(hit, EventType.SpawnParticleREDEvent);
                 }
             }
             
-            if (Input.GetMouseButtonDown(1))
-            {
-                if (Physics.Raycast(ray, out hit, Mathf.Infinity))
-                {
-                    var type = GetParticlePool(hit, EventType.SpawnParticleGREENEvent);
-                    EventDispatcher.Instance.FireEvent(EventType.SpawnParticleGREENEvent, type);
+            if (Input.GetMouseButtonDown(1)) {
+                if (Physics.Raycast(ray, out hit, Mathf.Infinity)) {
+                    ActivateParticleFromPool(hit, EventType.SpawnParticleGREENEvent);
                 }
             }
             
-            if (Input.GetMouseButtonDown(2))
-            {
-                if (Physics.Raycast(ray, out hit, Mathf.Infinity))
-                {
-                    var type = GetParticlePool(hit, EventType.SpawnParticleBLUEEvent);
-                    EventDispatcher.Instance.FireEvent(EventType.SpawnParticleBLUEEvent, type);
+            if (Input.GetMouseButtonDown(2)) {
+                if (Physics.Raycast(ray, out hit, Mathf.Infinity)) {
+                    ActivateParticleFromPool(hit, EventType.SpawnParticleBLUEEvent);
                 }
             }
         }
 
-        public ParticleType GetParticlePool(RaycastHit hit, EventType type)
+        public void ActivateParticleFromPool(RaycastHit hit, EventType type)
         {
             ParticleInitData data = new ParticleInitData() {
                 normal = hit.normal,
@@ -118,13 +110,15 @@ namespace Particle
             foreach (var pool in _poolList.Where(pool => pool.particleEventType == type)) {
                 particlePool = pool;
             }
+
+            if (!particlePool) return;
             
             ParticleType particleType = new ParticleType() {
                 InitData = data,
                 pool = particlePool
             };
-
-            return particleType;
+            
+            EventDispatcher.Instance.FireEvent(type, particleType);
         }
         
         private void SpawnParticle(ParticleType data)
