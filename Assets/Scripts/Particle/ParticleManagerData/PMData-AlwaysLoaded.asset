@@ -15,11 +15,11 @@ MonoBehaviour:
   particleList:
   - tagName: Da Green Particle
     prefab: {fileID: 8470634110270536629, guid: f359251bdce62a3448eaa7b16779a833, type: 3}
-    initialPoolSize: 10
+    initialPoolSize: 5
     maxPoolSize: 50
     particleEventType: 24
   - tagName: Da Red Particle
     prefab: {fileID: 8470634110270536629, guid: 53cb2c4aa6256f04e9fae883c4a58539, type: 3}
-    initialPoolSize: 10
+    initialPoolSize: 5
     maxPoolSize: 50
     particleEventType: 23
