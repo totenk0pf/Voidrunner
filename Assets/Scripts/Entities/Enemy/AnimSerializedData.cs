@@ -6,8 +6,8 @@ using Sirenix.OdinInspector;
 using UnityEngine;
 
 namespace Entities.Enemy {
-    [CreateAssetMenu(fileName = "BossAnimData", menuName = "Enemies/BossAnimData", order = 0)]
-    public class BossAnimData : SerializedScriptableObject {
+    [CreateAssetMenu(fileName = "SerializedAnimData", menuName = "Enemies/SerializedAnimData", order = 0)]
+    public class AnimSerializedData : SerializedScriptableObject {
         public EnemyAnimData data;
         
         [ValueDropdown("GetAnimData", IsUniqueList = true, ExpandAllMenuItems = true, HideChildProperties = true)] [ShowInInspector]
