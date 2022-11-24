@@ -12,7 +12,7 @@ namespace Entities.Enemy.Boss {
     
         public override EnemyState RunCurrentState() {
             if (!animator.GetBool(animData.hostileAnim.name)) TriggerAnim(animData.hostileAnim);
-            Agent.SetDestination(target.transform.position);
+            if (Agent.enabled) Agent.SetDestination(target.transform.position);
   
             if (GetPathRemainingDistance(Agent) < 3f && GetPathRemainingDistance(Agent) > -1)
             {
