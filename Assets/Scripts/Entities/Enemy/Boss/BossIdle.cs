@@ -15,7 +15,7 @@ namespace Entities.Enemy.Boss {
 
         private bool _canWalk = true;
         [SerializeField] private EnemyState nextState;
-        [SerializeField] private BossAnimData animData;
+        [SerializeField] private AnimSerializedData animData;
 
         public override EnemyState RunCurrentState(){
             if (animator.GetBool(animData.idleAnim.name)) TriggerAnim(animData.idleAnim);

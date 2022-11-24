@@ -8,7 +8,7 @@ namespace Entities.Enemy.Boss {
     public class BossHostile : EnemyState
     {
         [SerializeField] private EnemyState nextState;
-        [SerializeField] private BossAnimData animData;
+        [SerializeField] private AnimSerializedData animData;
     
         public override EnemyState RunCurrentState() {
             if (!animator.GetBool(animData.hostileAnim.name)) TriggerAnim(animData.hostileAnim);

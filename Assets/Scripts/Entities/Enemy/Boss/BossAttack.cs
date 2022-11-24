@@ -16,7 +16,7 @@ namespace Entities.Enemy.Boss {
         [SerializeField] private EnemyState nextState;
 
         [TitleGroup("Attack sets")]
-        [SerializeField] private BossAnimData animData;
+        [SerializeField] private AnimSerializedData animData;
 
         public bool isAttacking;
         private bool _canChangeState;
