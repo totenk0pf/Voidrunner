@@ -39,9 +39,9 @@ namespace Particle
                 .Concat(sceneBasedParticleData.particleList)
                 .ToList();
 
-            EventDispatcher.Instance.AddListener(EventType.SpawnParticleREDEvent, param => SpawnParticle((ParticleType) param));
-            EventDispatcher.Instance.AddListener(EventType.SpawnParticleGREENEvent, param => SpawnParticle((ParticleType) param));
-            EventDispatcher.Instance.AddListener(EventType.SpawnParticleBLUEEvent, param => SpawnParticle((ParticleType) param));
+            foreach(var particle in _particleList){
+                 EventDispatcher.Instance.AddListener(particle.particleEventType, param => SpawnParticle((ParticleType) param));
+            }
         }
         
         

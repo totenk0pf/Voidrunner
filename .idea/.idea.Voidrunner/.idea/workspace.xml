@@ -3,9 +3,7 @@
   <component name="ChangeListManager">
     <list default="true" id="76b6dd0e-26ee-4d57-bbcb-028796191047" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/.idea.Voidrunner/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.Voidrunner/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Particle/ParticleClasses/ParticleBase.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Particle/ParticleClasses/ParticleBase.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Scripts/Particle/ParticleManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Particle/ParticleManager.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Particle/ParticlePool.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Particle/ParticlePool.cs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -23,17 +21,16 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;Discover.Launch.Via.Unity&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
-    &quot;rider.run.widget.enabled.cache&quot;: &quot;false&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;editor.preferences.fonts.default&quot;,
-    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "Discover.Launch.Via.Unity": "true",
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "WebServerToolWindowFactoryState": "false",
+    "settings.editor.selected.configurable": "editor.preferences.fonts.default",
+    "vue.rearranger.settings.migration": "true"
   }
-}</component>
+}]]></component>
   <component name="RunManager" selected="Attach to Unity Editor.Attach to Unity Editor">
     <configuration name="UnitTests (batch mode)" type="RunUnityExe" factoryName="Unity Executable">
       <option name="EXE_PATH" value="C:\Program Files\Unity\Hub\Editor\2021.3.10f1\Editor\Unity.exe" />
@@ -81,6 +78,7 @@
       <workItem from="1669131423807" duration="6310000" />
       <workItem from="1669138286237" duration="10168000" />
       <workItem from="1669184896000" duration="1943000" />
+      <workItem from="1669617898195" duration="608000" />
     </task>
     <servers />
   </component>
@@ -110,14 +108,7 @@
         <line-breakpoint enabled="true" type="DotNet Breakpoints">
           <url>file://$PROJECT_DIR$/Assets/Scripts/Grapple/GrappleController.cs</url>
           <line>68</line>
-          <properties documentPath="E:\_School Projects\Voidrunner\Assets\Scripts\Grapple\GrappleController.cs" initialLine="68" containingFunctionPresentation="method 'Awake'">
-            <startOffsets>
-              <option value="2410" />
-            </startOffsets>
-            <endOffsets>
-              <option value="2445" />
-            </endOffsets>
-          </properties>
+          <properties documentPath="E:\_School Projects\Voidrunner\Assets\Scripts\Grapple\GrappleController.cs" initialLine="68" containingFunctionPresentation="method 'Awake'" />
           <option name="timeStamp" value="2" />
         </line-breakpoint>
       </breakpoints>
