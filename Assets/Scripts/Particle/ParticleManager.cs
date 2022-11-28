@@ -28,8 +28,6 @@ namespace Particle
         [SerializeField] private ParticleManagerData alwaysLoadedParticleData;
         [SerializeField] private ParticleManagerData sceneBasedParticleData;
 
-        //[SerializeField] private ParticlePool poolPrefab;
-        
         private List<ParticleEntity> _particleList = new List<ParticleEntity>();
         private List<ParticlePool> _poolList = new List<ParticlePool>();
 
@@ -47,7 +45,6 @@ namespace Particle
         
         private void Start()
         {
-            
             foreach (var entity in _particleList)
             {
                 GameObject poolGO = new GameObject();
@@ -56,8 +53,7 @@ namespace Particle
                 //poolGO.tag = entity.tagName
                 var pool = poolGO.AddComponent<ParticlePool>();
                 
-                pool.particleEventType = entity.particleEventType;
-                pool.prefab = entity.prefab;
+                pool.OnPoolSpawn(entity.prefab, entity.particleEventType);
                 _poolList.Add(pool);
                 
                 pool.InitPool(entity.prefab, poolGO.transform, entity.initialPoolSize, entity.maxPoolSize);
@@ -107,7 +103,7 @@ namespace Particle
             };
             
             ParticlePool particlePool = new ParticlePool();
-            foreach (var pool in _poolList.Where(pool => pool.particleEventType == type)) {
+            foreach (var pool in _poolList.Where(pool => pool.ParticleEventType == type)) {
                 particlePool = pool;
             }
 
