@@ -580,7 +580,7 @@ MonoBehaviour:
   accelRate: 2
   accelForce: 12
   maxSpeed: 6
-  gravityAcceleration: 9.8
+  gravityAcceleration: 15
   gravityScale: 3
   ignoreMask:
     serializedVersion: 2
@@ -668,6 +668,11 @@ MonoBehaviour:
   grapplePointLayer:
     serializedVersion: 2
     m_Bits: 512
+  gravityDampDuration: 0.3
+  momentumForce: 2500
+  forceMode: 5
+  enemyMomentumForce: 300
+  enemyForceMode: 5
   currGrappleObj: {fileID: 0}
 --- !u!120 &166455798467986143
 LineRenderer:
