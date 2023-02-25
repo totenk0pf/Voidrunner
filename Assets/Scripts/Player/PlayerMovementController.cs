@@ -335,6 +335,21 @@ public class PlayerMovementController : MonoBehaviour
             _rb.velocity = Vector3.zero;
         }
     }
+
+    public IEnumerator GravityDampRoutine(float dampDuration) {
+        if (dampDuration > 0) {
+            var originalScale = gravityScale;
+            var currentTime = 0f;
+            gravityScale = 0;
+            while (currentTime < dampDuration || gravityScale < originalScale) {
+                gravityScale = (currentTime/dampDuration) * originalScale;
+                currentTime += Time.deltaTime;
+                yield return null;
+            }
+            gravityScale = originalScale;
+            yield return null;  
+        }
+    }
     
     private void OnDrawGizmosSelected()
     {
