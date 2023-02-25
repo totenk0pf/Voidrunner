@@ -10,9 +10,29 @@ public class EnemyBase : EntityBase
 
     [SerializeField] private EnemyUI ui;
     protected NavMeshAgent navAgent;
-
+    protected EnemyStateMachine stateMachine;
     public bool canPull;
-
+    
+    #region Public Getters / Caching
+    public NavMeshAgent NavMeshAgent {
+        get {
+            if (!navAgent) {
+                navAgent = GetComponent<NavMeshAgent>();
+            }
+            return navAgent;
+        }
+    }
+    
+    public EnemyStateMachine StateMachine {
+        get {
+            if (!stateMachine) {
+                stateMachine = GetComponent<EnemyStateMachine>();
+            }
+            return stateMachine;
+        }
+    }
+    #endregion
+    
     private void Start() {
         navAgent = GetComponent<NavMeshAgent>();
         navAgent.speed = enemySpeed;
