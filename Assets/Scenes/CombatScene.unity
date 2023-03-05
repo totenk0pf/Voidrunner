@@ -607,33 +607,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 23841b4e2e723e3429b020874452424d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  MeleeAnimator: {fileID: 1832417757}
-  GunAnimator: {fileID: 0}
   MeleeSequence:
-  - order: 0
-    nextSeqInputWindow: 0.5
-    damage: 3
-    knockBackForce: 5
-    collider: {fileID: 2126311276}
-    canDamageMod: 0
-    damageScale: 1
-    damageModifier: 0
-  - order: 1
-    nextSeqInputWindow: 0.5
-    damage: 5
-    knockBackForce: 7
-    collider: {fileID: 1360719209}
-    canDamageMod: 0
-    damageScale: 1
-    damageModifier: 0
-  - order: 2
-    nextSeqInputWindow: 0.5
-    damage: 8
-    knockBackForce: 15
-    collider: {fileID: 1355184682}
-    canDamageMod: 0
-    damageScale: 1
-    damageModifier: 0
+  - {fileID: 0}
 --- !u!1 &401802031
 GameObject:
   m_ObjectHideFlags: 0
@@ -1932,33 +1907,11 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 4506998659982204686, guid: 4a0c4bc19096b374dbe26b4ccebbed4f, type: 3}
   m_PrefabInstance: {fileID: 138738095}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &1355184682 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 3132274422633817715, guid: 4a0c4bc19096b374dbe26b4ccebbed4f, type: 3}
-  m_PrefabInstance: {fileID: 138738095}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 57f3c3ce675f98f419da1c99a502f1c9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!4 &1360719208 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4506998659982204686, guid: 4a0c4bc19096b374dbe26b4ccebbed4f, type: 3}
   m_PrefabInstance: {fileID: 505121684}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &1360719209 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 3132274422633817715, guid: 4a0c4bc19096b374dbe26b4ccebbed4f, type: 3}
-  m_PrefabInstance: {fileID: 505121684}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 57f3c3ce675f98f419da1c99a502f1c9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &1427078139
 GameObject:
   m_ObjectHideFlags: 0
@@ -2629,6 +2582,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1832417758}
   - component: {fileID: 1832417757}
+  - component: {fileID: 1832417759}
   m_Layer: 0
   m_Name: MeleeRoot
   m_TagString: Untagged
@@ -2672,6 +2626,18 @@ Transform:
   m_Father: {fileID: 1018792963}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: -72, y: 182.971, z: -77.101}
+--- !u!114 &1832417759
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1832417756}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 169ad991ef1d6794c824733dda8bf1f1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1863100503
 GameObject:
   m_ObjectHideFlags: 0
@@ -3473,17 +3439,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 4506998659982204686, guid: 4a0c4bc19096b374dbe26b4ccebbed4f, type: 3}
   m_PrefabInstance: {fileID: 9094343974118047426}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &2126311276 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 3132274422633817715, guid: 4a0c4bc19096b374dbe26b4ccebbed4f, type: 3}
-  m_PrefabInstance: {fileID: 9094343974118047426}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 57f3c3ce675f98f419da1c99a502f1c9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1001 &9094343974118047426
 PrefabInstance:
   m_ObjectHideFlags: 0
