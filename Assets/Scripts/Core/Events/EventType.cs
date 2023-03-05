@@ -14,6 +14,10 @@ namespace Core.Events {
         GetMovementStateEvent,
         SetMovementStateEvent,
         RequestIsOnGroundEvent,
-        ReceiveIsOnGroundEvent
+        ReceiveIsOnGroundEvent,
+        //Animation Combat Events
+        MeleeAttackBeginEvent,
+        MeleeAttackEndEvent,
+        EnemyDamageEvent,
     }
 }
