@@ -1,13 +1,29 @@
 using System;
+<<<<<<< HEAD
+=======
+using System.Collections;
+using System.Collections.Generic;
+>>>>>>> c9f1fe8cad10044d48d8fb74e790012081e956ad
 using UnityEngine;
 using UnityEngine.AI;
 
-public class EnemyBase : EntityBase
-{
+[Flags]
+[Serializable]
+public enum EnemyType {
+    Flesh,
+    Bone,
+    Armor
+}
+
+public class EnemyBase : EntityBase {
+    public EnemyType type;
     public float enemyDamage; 
     public float enemySpeed;
     public float enemyHP;
     protected float currentHp;
+
+    public bool isStunned;
+    private float _currentHP;
 
     [SerializeField] private EnemyUI ui;
     protected NavMeshAgent navAgent;
@@ -57,11 +73,7 @@ public class EnemyBase : EntityBase
         if (!NavMeshAgent.isOnNavMesh) {
             Debug.LogWarning("No NavMesh is bound to Enemy");
         }
-
         currentHp = enemyHP;
-        
-        ui.healthBar.maxValue = enemyHP;
-        ui.healthBar.value = enemyHP;
     }
 
     private void Update() {
@@ -77,6 +89,7 @@ public class EnemyBase : EntityBase
             EnablePathfinding();
         }
     }
+<<<<<<< HEAD
     public virtual void EnablePathfinding() {
         if (CanPull && IsGrounded && (!StateMachine || !NavMeshAgent)) {
             StateMachine.enabled = true;
@@ -94,6 +107,37 @@ public class EnemyBase : EntityBase
     public virtual void OnGrappled() {
         _canPull = false;
         DisablePathfinding();
+=======
+
+    public virtual void Stun(float duration) {
+        StartCoroutine(StunCoroutine(duration));
+    }
+    
+    protected virtual IEnumerator StunCoroutine(float duration) {
+        isStunned = true;
+        yield return new WaitForSeconds(duration);
+        navAgent.ResetPath();
+        isStunned = false;
+        yield return null;
+    }
+    
+    public virtual void TakeDamage(float amount) {
+        currentHp -= amount;
+        var scaledValue = currentHp / enemyHP;
+        ui.UpdateBar(scaledValue);
+    }
+
+    public virtual void TakeTickDamage(float damagePerTick, float interval, int ticks) {
+        StartCoroutine(TickDamageCoroutine(damagePerTick, interval, ticks));
+    }
+
+    protected virtual IEnumerator TickDamageCoroutine(float damagePerTick, float interval, int ticks) {
+        for (int i = 0; i < ticks; i++) {
+            TakeDamage(damagePerTick);
+            yield return new WaitForSeconds(interval);
+        }
+        yield return null;
+>>>>>>> c9f1fe8cad10044d48d8fb74e790012081e956ad
     }
 
     public virtual void OnRelease() {
@@ -117,6 +161,7 @@ public class EnemyBase : EntityBase
             Destroy(gameObject);
         }
     }
+<<<<<<< HEAD
 
     public virtual void TakeDamage(float amount) {
         currentHp -= amount;
@@ -127,4 +172,6 @@ public class EnemyBase : EntityBase
         Gizmos.color = Color.green;
         Gizmos.DrawLine(transform.position, transform.position + Vector3.down * checkDist);
     }
+=======
+>>>>>>> c9f1fe8cad10044d48d8fb74e790012081e956ad
 }

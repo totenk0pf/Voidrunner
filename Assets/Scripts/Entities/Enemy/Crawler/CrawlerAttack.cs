@@ -40,7 +40,7 @@ public class CrawlerAttack : EnemyState
         _isAttacking = true;
 
         var oxygenComp = target.GetComponent<Oxygen>();
-        oxygenComp.ReducePermanentOxygen(eBase.enemyDamage);
+        oxygenComp.ReducePermanentOxygen(enemyBase.enemyDamage);
 
         yield return new WaitForSeconds(attackDelay);
 

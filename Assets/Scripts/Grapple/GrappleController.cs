@@ -3,39 +3,47 @@ using System.Collections;
 using System.Collections.Generic;
 using Core.Events;
 using Core.Logging;
+using Sirenix.OdinInspector;
 using Unity.VisualScripting;
 using UnityEngine;
 using EventType = Core.Events.EventType;
 
-namespace Grapple
-{
+namespace Grapple {
     [Serializable]
-    public enum GrappleType
-    {
+    public enum GrappleType {
         None,
         PlayerToPoint,
         EnemyToPlayer
     }
-    
+
     //[RequireComponent(typeof(LineRenderer))]
+<<<<<<< HEAD
     [RequireComponent(typeof(PlayerMovementController))]
     public class GrappleController : MonoBehaviour
     {
         [Space]
+=======
+    public class GrappleController : MonoBehaviour {
+>>>>>>> c9f1fe8cad10044d48d8fb74e790012081e956ad
         [SerializeField] private KeyCode grappleKey;
 
-        [Header("Grapple Attributes")] 
-        [SerializeField] private float range;
+        [TitleGroup("Distance settings")] [SerializeField]
+        private float range;
+
         [SerializeField] private float radius;
         [SerializeField] private float maxAngleAA = 5f;
-        [Space]
-        [SerializeField] private LayerMask grappleLayer;
+
+        [TitleGroup("Layer settings")] [SerializeField]
+        private LayerMask grappleLayer;
+
         [SerializeField] private LayerMask ignoreLayer;
-        [Space] 
-        [SerializeField] private float grappleHaltOffsetZ;
+
+        [TitleGroup("Grapple settings")] [SerializeField]
+        private float grappleHaltOffsetZ;
+
         [SerializeField] private float grappleSpeed = 5f;
-        [Space] 
         [SerializeField] private float distIgnoreCheck = 1;
+<<<<<<< HEAD
         [Header("Grapple Enemy Attributes")]
         [SerializeField] private LayerMask enemyLayer;
         [Space]
@@ -58,6 +66,18 @@ namespace Grapple
             }
         }
         
+=======
+
+        [Header("Grapple Enemy Attributes")] [SerializeField]
+        private LayerMask enemyLayer;
+
+        [Space] [Header("Grapple Point Attributes")] [SerializeField]
+        private LayerMask grapplePointLayer;
+
+        private Dictionary<LayerMask, GrappleType> _grappleCondition;
+        private Vector3 GrappleHaltPosition => transform.position + transform.forward * grappleHaltOffsetZ;
+
+>>>>>>> c9f1fe8cad10044d48d8fb74e790012081e956ad
         private Vector3 _castOrigin;
         private Camera _mainCam;
         private Vector3 _collisionPos;
@@ -70,18 +90,22 @@ namespace Grapple
         private IEnumerator _playerToPointRoutine;
         private EnemyBase _currentGrappledEnemy;
         private Vector3 PlayerHeightOffset => new Vector3(0, 1, 0) * transform.localScale.y;
-        [Space]
-        public GameObject currGrappleObj;
 
-        private void Awake()
-        {
-            EventDispatcher.Instance.AddListener(EventType.SetMovementStateEvent, param => UpdateMoveState((PlayerMovementController.MovementState) param));
-            EventDispatcher.Instance.AddListener(EventType.ReceiveIsOnGroundEvent, param => UpdateIsOnGround((bool)param));
-            
+        [ReadOnly] public GameObject currGrappleObj;
+
+        private void Awake() {
+            this.AddListener(EventType.SetMovementStateEvent,
+                             param => UpdateMoveState((PlayerMovementController.MovementState) param));
+            this.AddListener(EventType.ReceiveIsOnGroundEvent, param => UpdateIsOnGround((bool) param));
+
             if (!GetComponent<LineRenderer>()) transform.AddComponent<LineRenderer>();
             _lr = GetComponent<LineRenderer>();
+<<<<<<< HEAD
             _controller = GetComponent<PlayerMovementController>();
             
+=======
+
+>>>>>>> c9f1fe8cad10044d48d8fb74e790012081e956ad
             _grappleCondition = new Dictionary<LayerMask, GrappleType>() {
                 {enemyLayer, GrappleType.EnemyToPlayer},
                 {grappleLayer, GrappleType.PlayerToPoint}
@@ -98,12 +122,13 @@ namespace Grapple
 
             _lr.enabled = false;
         }
-        
-        
+
+
         // Update is called once per frame
         private void Update() {
-            if(_currentGrappleHit.collider) currGrappleObj = _currentGrappleHit.collider.gameObject;
+            if (_currentGrappleHit.collider) currGrappleObj = _currentGrappleHit.collider.gameObject;
             if (Input.GetKeyDown(grappleKey)) {
+<<<<<<< HEAD
                 if (_moveState != PlayerMovementController.MovementState.Grappling) {
                     if(!CastToGetGrappleLocation()) return;
                     Grapple();
@@ -113,72 +138,84 @@ namespace Grapple
                     //cancel grappling TODO: When cancel grappling on any object, have them keep momentum to them.
                     CancelGrapple();
                 }
+=======
+                if (!CastToGetGrappleLocation()) return;
+                Grapple();
+>>>>>>> c9f1fe8cad10044d48d8fb74e790012081e956ad
             }
         }
 
         private bool CastToGetGrappleLocation() {
-            EventDispatcher.Instance.FireEvent(EventType.GetMovementStateEvent);
+            this.FireEvent(EventType.GetMovementStateEvent);
             if (_moveState != PlayerMovementController.MovementState.Normal) return false;
-            
+
             var lookDir = _mainCam.transform.forward;
             _castOrigin = UpdateCastOrigin();
 
-            var results = Physics.CapsuleCastAll(_castOrigin, _castOrigin, radius, lookDir, range, ~ignoreLayer);
+            var results = Physics.CapsuleCastAll(_castOrigin, 
+                                                 _castOrigin, 
+                                                 radius, 
+                                                 lookDir, 
+                                                 range, 
+                                                 ~ignoreLayer);
             if (results.Length <= 0) {
                 _collisionPos = Vector3.zero;
                 return false;
             }
-            
+
             //Sort by distance, from closest to furthest
             Array.Sort(results, (hit1, hit2) => hit1.distance.CompareTo(hit2.distance));
 
             var hit = new RaycastHit();
             var checkIndex = 0;
-            
-            for (var i = 0; i < results.Length; i++) {
-                if (!IsInGrappleMask(results[i].collider.gameObject.layer)) 
-                    continue;
-                if (!IsObjectAvailable(results[i]))
-                    continue;
 
-                hit = results[i];
+            for (var i = 0; i < results.Length; i++) {
+                if (!IsInGrappleMask(results[i].collider.gameObject.layer)) continue;
+                if (!IsObjectAvailable(results[i])) continue;
+
+                hit        = results[i];
                 checkIndex = i;
                 break;
             }
+
             if (!hit.collider) return false;
             var tuple = GetHitPointAimAssisted(hit, checkIndex, lookDir);
 
             _collisionPos = tuple.Item1 ? tuple.Item2 : Vector3.zero;
-            
+
             return tuple.Item1;
         }
-        
+
         private Tuple<bool, Vector3> GetHitPointAimAssisted(RaycastHit hit1, int checkIndex, Vector3 lookDir) {
             var tupleSuccess = new Tuple<bool, Vector3>(true, hit1.point);
             var tupleFail = new Tuple<bool, Vector3>(false, Vector3.zero);
             var hit2 = new RaycastHit();
-            _currentGrappleHit = hit1; 
-            
+            _currentGrappleHit = hit1;
+
             //if grapple point is closest -> success
             if (checkIndex == 0) return tupleSuccess;
 
             //secondary raycast to make sure the grapple point is in field of vision
-            if (!Physics.Linecast(_castOrigin, hit1.collider.transform.position, out hit2, ~ignoreLayer)) return tupleFail;
-            if(hit2.collider) if(!IsInGrappleMask(hit2.collider.gameObject.layer)) return tupleFail;
+            if (!Physics.Linecast(_castOrigin, hit1.collider.transform.position, out hit2, ~ignoreLayer))
+                return tupleFail;
+            if (hit2.collider)
+                if (!IsInGrappleMask(hit2.collider.gameObject.layer))
+                    return tupleFail;
 
             //angle between cam.fwd and direction(cam to hit1.point)
             var angle = Vector3.Angle(hit1.point - _castOrigin, _mainCam.transform.forward);
             //return based on angle
             if (!(angle <= maxAngleAA)) return tupleFail;
-            _currentGrappleHit = hit2; 
+            _currentGrappleHit = hit2;
             return hit2.collider == hit1.collider ? tupleSuccess : tupleFail;
         }
 
-        private bool Grapple() { 
+        private bool Grapple() {
             if (!_currentGrappleHit.collider) return false;
             var type = GetGrappleType(_currentGrappleHit.collider.gameObject.layer);
             if (type == GrappleType.None) return false;
 
+<<<<<<< HEAD
             StopAllCoroutines();
             switch (type)
             {
@@ -195,6 +232,20 @@ namespace Grapple
                     EventDispatcher.Instance.FireEvent(EventType.SetMovementStateEvent, PlayerMovementController.MovementState.Grappling);
                     _playerToPointRoutine = PlayerToPointRoutine();
                     StartCoroutine(_playerToPointRoutine);
+=======
+            switch (type) {
+                case GrappleType.EnemyToPlayer:
+                    var enemy = _currentGrappleHit.collider.GetComponent<EnemyBase>();
+                    if (!enemy.canPull) return false;
+                    this.FireEvent(EventType.RequestIsOnGroundEvent);
+                    if (!_isOnGround) return false;
+                    this.FireEvent(EventType.SetMovementStateEvent, PlayerMovementController.MovementState.Grappling);
+                    StartCoroutine(EnemyToPlayerRoutine(enemy));
+                    break;
+                case GrappleType.PlayerToPoint:
+                    this.FireEvent(EventType.SetMovementStateEvent, PlayerMovementController.MovementState.Grappling);
+                    StartCoroutine(PlayerToPointRoutine());
+>>>>>>> c9f1fe8cad10044d48d8fb74e790012081e956ad
                     return true;
                 default:
                     return false;
@@ -249,15 +300,25 @@ namespace Grapple
         #region Grapple Routines
         private IEnumerator EnemyToPlayerRoutine() {
             var startPos = _currentGrappleHit.point;
-            var dist = Vector3.Distance( _currentGrappleHit.point, GrappleHaltPosition);
+            var dist = Vector3.Distance(_currentGrappleHit.point, GrappleHaltPosition);
             var dir = (GrappleHaltPosition - _currentGrappleHit.point).normalized;
             var endPos = startPos + (dist * dir);
 
+<<<<<<< HEAD
             if(!_currentGrappledEnemy) NCLogger.Log($"_currentGrappledEnemy Null Object Exception", LogLevel.ERROR);
             _currentGrappledEnemy.OnGrappled();
             
             _lr.enabled = true;
             _lr.SetPosition(0, GrappleHaltPosition);
+=======
+            var agent = enemy.GetComponent<NavMeshAgent>();
+            var stateMachine = enemy.GetComponent<EnemyStateMachine>();
+
+            _lr.enabled = true;
+            _lr.SetPosition(0, GrappleHaltPosition);
+            agent.enabled        = false;
+            stateMachine.enabled = false;
+>>>>>>> c9f1fe8cad10044d48d8fb74e790012081e956ad
 
             for (var i = 0.0f; i < 1.0f; i += (grappleSpeed * Time.deltaTime) / dist) {
                 _lr.SetPosition(1, _currentGrappleHit.transform.position);
@@ -265,35 +326,56 @@ namespace Grapple
                 yield return null;
             }
 
+<<<<<<< HEAD
             ResetGrapple_EnemyToPlayer();
+=======
+            this.FireEvent(EventType.SetMovementStateEvent, PlayerMovementController.MovementState.Normal);
+            _currentGrappleHit = new RaycastHit();
+            _lr.enabled        = false;
+
+            stateMachine.enabled = false;
+            agent.enabled        = false;
+
+>>>>>>> c9f1fe8cad10044d48d8fb74e790012081e956ad
             yield return null;
         }
 
         private IEnumerator PlayerToPointRoutine() {
             var startPos = transform.position;
-            var dist = Vector3.Distance( _currentGrappleHit.point, GrappleHaltPosition);
-            var dir = ( _currentGrappleHit.point - GrappleHaltPosition).normalized;
+            var dist = Vector3.Distance(_currentGrappleHit.point, GrappleHaltPosition);
+            var dir = (_currentGrappleHit.point - GrappleHaltPosition).normalized;
             var endPos = startPos + (dist * dir);
-            
+
             _lr.enabled = true;
             _lr.SetPosition(1, _currentGrappleHit.transform.position);
-            
+
             for (var i = 0.0f; i < 1.0f; i += (grappleSpeed * Time.deltaTime) / dist) {
                 _lr.SetPosition(0, GrappleHaltPosition);
                 transform.position = Vector3.Lerp(startPos, endPos, i);
                 yield return null;
             }
 
+<<<<<<< HEAD
             ResetGrapple_PlayerToPoint();
+=======
+            this.FireEvent(EventType.SetMovementStateEvent, PlayerMovementController.MovementState.Normal);
+            _currentGrappleHit = new RaycastHit();
+            _lr.enabled        = false;
+
+>>>>>>> c9f1fe8cad10044d48d8fb74e790012081e956ad
             yield return null;
         }
         #endregion
 
+<<<<<<< HEAD
         #region Helper Function
+=======
+
+>>>>>>> c9f1fe8cad10044d48d8fb74e790012081e956ad
         private void UpdateMoveState(PlayerMovementController.MovementState currState) {
             _moveState = currState;
         }
-        
+
         private bool IsInGrappleMask(int layer) {
             return grappleLayer == (grappleLayer | (1 << layer));
         }
@@ -303,7 +385,7 @@ namespace Grapple
             var forward = transform.TransformDirection(Vector3.forward);
             var toOther = hitTemp.collider.transform.position - transform.position;
             if (Vector3.Dot(forward, toOther) < 0) return false;
-            
+
             //Checking if grapple is at suitable angle to grab
             var angle = Vector3.Angle(hitTemp.point - _castOrigin, _mainCam.transform.forward);
             if (!(angle <= maxAngleAA)) return false;
@@ -314,9 +396,9 @@ namespace Grapple
 
             return true;
         }
-        
+
         private GrappleType GetGrappleType(int layer) {
-            foreach(var (layerMask, type) in _grappleCondition) {
+            foreach (var (layerMask, type) in _grappleCondition) {
                 if (layerMask == (layerMask | (1 << layer))) return type;
             }
 
@@ -327,13 +409,16 @@ namespace Grapple
             return _mainCam.transform.position;
         }
 
-        private void UpdateIsOnGround(bool isOnGround)
-        {
+        private void UpdateIsOnGround(bool isOnGround) {
             _isOnGround = isOnGround;
         }
+<<<<<<< HEAD
         #endregion
         
         #region Gizmos
+=======
+
+>>>>>>> c9f1fe8cad10044d48d8fb74e790012081e956ad
         private void OnDrawGizmosSelected() {
             Gizmos.color = Color.green;
             Gizmos.DrawWireSphere(Camera.main.transform.position, radius);
@@ -344,6 +429,4 @@ namespace Grapple
         }
         #endregion
     }
-
 }
-    

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Combat;
 using Core.Events;
 using DG.Tweening;
+using Sirenix.OdinInspector;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -33,8 +34,11 @@ namespace UI {
         private WeaponType currentType;
         [SerializeField] private float activeScale;
         [SerializeField] private float inactiveScale;
-        [SerializeField] private float transitionTime;
         private float _initHeight;
+
+        [TitleGroup("Tween settings")] 
+        [SerializeField] private Ease easeType;
+        [SerializeField] private float transitionTime;
         
         private VerticalLayoutGroup _layout;
         private VerticalLayoutGroup Layout {
@@ -53,13 +57,22 @@ namespace UI {
 
         private void Awake() {
             this.AddListener(EventType.WeaponChangedEvent, 
+<<<<<<< HEAD
                              entry => ChangeActivePanel((WeaponManager.WeaponEntry) entry));
+=======
+                             entry => ChangeActivePanel((WeaponEntry) entry));
+>>>>>>> c9f1fe8cad10044d48d8fb74e790012081e956ad
             this.AddListener(EventType.RangedShotEvent, data => UpdateRangedUI((RangedUIMsg) data));
             this.AddListener(EventType.WeaponFiredEvent, data => UpdateChargeUI((WeaponFireUIMsg) data));
         }
 
+<<<<<<< HEAD
         private void ChangeActivePanel(WeaponManager.WeaponEntry entry) {
             currentType = entry.Type;
+=======
+        private void ChangeActivePanel(WeaponEntry entry) {
+            currentType = entry.type;
+>>>>>>> c9f1fe8cad10044d48d8fb74e790012081e956ad
             _initHeight = Transform.rect.height - Layout.spacing;
             var segmentHeight = _initHeight / (panelList.Count);
             foreach (var item in panelList) {
@@ -70,7 +83,7 @@ namespace UI {
                                          new Vector3(selectedScale, selectedScale, 1) : 
                                          new Vector3(unselectedScale, unselectedScale, 1), 
                                      transitionTime)
-                    .SetEase(Ease.InOutCubic)
+                    .SetEase(easeType)
                     .OnUpdate(() => LayoutRebuilder.ForceRebuildLayoutImmediate(Transform));
                 item.rechargeSlider.gameObject.SetActive(isCurrent);
             }

@@ -1,12 +1,21 @@
+using System;
+using Core.Logging;
 using UnityEngine;
 
 public class EnemyStateMachine :MonoBehaviour
 {
     [SerializeField] private EnemyState _currentState;
+    private EnemyBase _enemyBase;
+    private EnemyBase enemyBase {
+        get {
+            if (!_enemyBase) _enemyBase = GetComponent<EnemyBase>();
+            return _enemyBase;
+        }
+    }
 
-    private void Start() {
+    private void Awake() {
         if (_currentState == null) {
-            Debug.LogWarning("No entry state in " + this);
+            NCLogger.Log($"Initial state not set.", LogLevel.ERROR);
         }
     }
 
@@ -15,8 +24,7 @@ public class EnemyStateMachine :MonoBehaviour
     }
 
     private void RunStateMachine() {
-        EnemyState nextState = _currentState.RunCurrentState();
-
+        EnemyState nextState = enemyBase.isStunned ? _currentState : _currentState.RunCurrentState();
         if (nextState != null) {
             SwitchState(nextState);
         }
@@ -29,4 +37,8 @@ public class EnemyStateMachine :MonoBehaviour
     private void OnTriggerEnter(Collider other) {
         _currentState.OnTriggerEnter(other);
     }
+
+    private void OnTriggerExit(Collider other) {
+        _currentState.OnTriggerExit(other);
+    }   
 }
