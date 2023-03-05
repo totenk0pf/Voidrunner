@@ -39,10 +39,6 @@ namespace Core {
             Application.Quit();
         }
 
-        public void ToggleSettings() {
-            
-        }
-
         public void StartGame() {
             SceneManager.LoadScene(1, LoadSceneMode.Single);
         }
