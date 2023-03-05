@@ -12,10 +12,14 @@ namespace Combat {
     
     public class WeaponManager : MonoBehaviour {
         [Serializable]
-        public struct WeaponEntry {
-            public KeyCode keymap;
-            public WeaponType type;
-            public WeaponBase reference;
+        public class WeaponEntry {
+            [SerializeField] private KeyCode keymap;
+            [SerializeField] private WeaponType type;
+            [SerializeField] private WeaponBase reference;
+
+            public KeyCode KeyMap => keymap;
+            public WeaponType Type => type;
+            public WeaponBase Reference => reference;
         }
         
         [SerializeField] private List<WeaponEntry> weaponList;
@@ -31,18 +35,24 @@ namespace Combat {
         private void Update() {
             if (!canSwap) return;
             foreach (var item in weaponList) {
-                if (Input.GetKeyDown(item.keymap)) {
-                    OnWeaponSwap(item.type);
+                if (Input.GetKeyDown(item.KeyMap)) {
+                    OnWeaponSwap(item.Type);
                 }
             }
         }
 
-        private void OnWeaponSwap(WeaponType weapon) {
+        private void OnWeaponSwap(WeaponType weapon)
+        {
+            WeaponEntry entry = null;
             foreach (var item in weaponList) {
-                item.reference.canAttack = item.type == weapon;
+                if (item.Type != weapon) continue;
+                
+                item.Reference.canAttack = true;
+                entry = item;
+                break;
             }
             currentWeapon = weapon;
-            this.FireEvent(EventType.WeaponChangedEvent, currentWeapon);
+            this.FireEvent(EventType.WeaponChangedEvent, entry);
         }
     }
 }
