@@ -1,9 +1,11 @@
 using System;
 using TMPro;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace UI.MainMenu {
     public class MainMenuTooltip : MonoBehaviour {
+        public bool disabled;
         [SerializeField] private TextMeshProUGUI titleText;
         [SerializeField] private TextMeshProUGUI descText;
         [SerializeField] private GameObject tooltip;
@@ -33,10 +35,14 @@ namespace UI.MainMenu {
                 if (!_currentItem) return;
                 UpdateTooltip(true, _currentItem.title, _currentItem.desc);
             } else {
+                _currentItem = null;
                 UpdateTooltip(false);
             }
-            if (Input.GetMouseButtonDown(0) && _currentItem) {
-                _currentItem.action.Invoke();
+            if (disabled) return;
+            if (!(Input.GetMouseButtonDown(0) && _currentItem)) return;
+            disabled = _currentItem.disableOnClick;
+            foreach (var i in _currentItem.action) {
+                i.Invoke();
             }
         }
     }
