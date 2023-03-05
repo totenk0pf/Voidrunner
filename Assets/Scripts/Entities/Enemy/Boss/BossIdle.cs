@@ -4,7 +4,7 @@ using UnityEngine.AI;
 using UnityEngine.Serialization;
 
 namespace Entities.Enemy.Boss {
-    public class BossIdle : EnemyState
+    public class BossIdle : BossState
     {
         public float minEnemyRange;
         public float maxEnemyRange;

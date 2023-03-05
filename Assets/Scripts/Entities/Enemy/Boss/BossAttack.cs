@@ -8,7 +8,7 @@ using Random = UnityEngine.Random;
 
 namespace Entities.Enemy.Boss {
 
-    public class BossAttack : EnemyState
+    public class BossAttack : BossState
     {
         [TitleGroup("Attack settings")]
     
