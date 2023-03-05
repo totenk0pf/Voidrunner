@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 4fbc56399ede4471a58f96992e62225d, type: 3}
-  m_Name: EnemyAnimData
+  m_Name: JuggAnimData
   m_EditorClassIdentifier: 
   serializationData:
     SerializedFormat: 2
@@ -23,21 +23,12 @@ MonoBehaviour:
     SerializationNodes: []
   animParams:
   - type: 4
-    name: isIdle
-    hash: 2098831385
-  - type: 4
     name: isWalking
     hash: -830007593
   - type: 9
-    name: attackSwipeL
-    hash: 1365363773
+    name: Spin
+    hash: -1304917071
   - type: 9
-    name: attackSwipeR
-    hash: -1418792610
-  - type: 9
-    name: attackSlam
-    hash: -1037458567
-  - type: 9
-    name: attackStomp
-    hash: 875506928
-  controller: {fileID: 9100000, guid: 50be432f9380e5642b8fa12f9b6351e9, type: 2}
+    name: Slam
+    hash: -153875945
+  controller: {fileID: 9100000, guid: 97bd86f533ca331438ed13edece5f680, type: 2}

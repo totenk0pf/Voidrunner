@@ -1,5 +1,7 @@
+using Entities.Enemy;
 using UnityEngine.AI;
 using UnityEngine;
+using System.Collections;
 
 public class JuggernautIdle : EnemyState
 {
@@ -8,15 +10,21 @@ public class JuggernautIdle : EnemyState
 
     private bool _canWalk = true;
     [SerializeField] private EnemyState _nextState;
+    [SerializeField] private AnimSerializedData animData;
 
-    public override EnemyState RunCurrentState() {
-        Agent.speed = enemyBase.enemySpeed;
-
-        if (Agent.remainingDistance <= 0.1f && _canWalk) {
+    public override EnemyState RunCurrentState(){
+        if (animator.GetBool(animData.idleAnim.name)) TriggerAnim(animData.idleAnim);
+            
+        if (!Agent.pathPending && _canWalk) {
             Agent.SetDestination(GetRandomWayPoint(Random.Range(minEnemyRange, maxEnemyRange)));
+            StartCoroutine(Delay(Random.Range(3f, 6f)));
         }
 
-        if (detected) return _nextState;
+        if (!Agent.pathPending && detected) {
+            TriggerAnim(animData.hostileAnim);
+            Agent.ResetPath();
+            return _nextState;
+        }
         return this;
     }
 
@@ -25,9 +33,14 @@ public class JuggernautIdle : EnemyState
         var randomDir = Random.insideUnitSphere * radius;
         randomDir += transform.position;
 
-        NavMeshHit hit;
-        NavMesh.SamplePosition(randomDir, out hit, radius, 1);
+        NavMesh.SamplePosition(randomDir, out var hit, radius, 1);
 
         return hit.position;
+    }
+
+    private IEnumerator Delay(float delay) {
+        _canWalk = false;
+        yield return new WaitForSeconds(delay);
+        _canWalk = true;
     }
 }

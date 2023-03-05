@@ -5,16 +5,16 @@ using UnityEngine.AI;
 using UnityEngine.Serialization;
 
 namespace Entities.Enemy.Boss {
-    public class BossHostile : EnemyState
+    public class BossHostile : BossState
     {
         [SerializeField] private EnemyState nextState;
-        [SerializeField] private BossAnimData animData;
+        [SerializeField] private AnimSerializedData animData;
     
         public override EnemyState RunCurrentState() {
             if (!animator.GetBool(animData.hostileAnim.name)) TriggerAnim(animData.hostileAnim);
-            Agent.SetDestination(target.transform.position);
+            if (Agent.enabled) Agent.SetDestination(target.transform.position);
   
-            if (GetPathRemainingDistance(Agent) < 3f && GetPathRemainingDistance(Agent) > -1)
+            if (GetPathRemainingDistance(Agent) < 3f && GetPathRemainingDistance(Agent) > -1 && detected)
             {
                 TriggerAnim(animData.hostileAnim);
                 Agent.isStopped = true;

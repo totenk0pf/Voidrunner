@@ -1,11 +1,7 @@
-using System;
 using Entities.Enemy;
+using Sirenix.OdinInspector;
 using UnityEngine;
 using UnityEngine.AI;
-using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
-using Sirenix.OdinInspector;
 using StaticClass;
 
 public abstract class EnemyState : MonoBehaviour
@@ -37,8 +33,8 @@ public abstract class EnemyState : MonoBehaviour
 
     public LayerMask playerMask;
 
-    [HideInInspector] public GameObject target;
-    [HideInInspector] public bool detected;
+    [ReadOnly] public GameObject target;
+    [ReadOnly] public bool detected;
 
     public abstract EnemyState RunCurrentState();
 
@@ -80,13 +76,13 @@ public abstract class EnemyState : MonoBehaviour
             navMeshAgent.pathStatus == NavMeshPathStatus.PathInvalid ||
             navMeshAgent.path.corners.Length == 0)
             return -1f;
-
+    
         float distance = 0.0f;
         for (int i = 0; i < navMeshAgent.path.corners.Length - 1; ++i)
         {
             distance += Vector3.Distance(navMeshAgent.path.corners[i], navMeshAgent.path.corners[i + 1]);
         }
-
+    
         return distance;
     }
 }
