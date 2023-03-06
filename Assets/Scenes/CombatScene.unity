@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.18028378, g: 0.22571412, b: 0.30692285, a: 1}
+  m_IndirectSpecularColor: {r: 0.18028305, g: 0.22571313, b: 0.3069213, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -324,7 +324,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3097869793565122420, guid: 12deb3e0214d891dbb950efb235efcdf, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 150
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3097869793565122420, guid: 12deb3e0214d891dbb950efb235efcdf, type: 3}
       propertyPath: m_AnchoredPosition.y
@@ -488,6 +488,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1018792963}
     m_Modifications:
+    - target: {fileID: 3132274422633817715, guid: 4a0c4bc19096b374dbe26b4ccebbed4f, type: 3}
+      propertyPath: order
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 4506998659982204686, guid: 4a0c4bc19096b374dbe26b4ccebbed4f, type: 3}
       propertyPath: m_RootOrder
       value: 3
@@ -607,8 +611,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 23841b4e2e723e3429b020874452424d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  MeleeSequence:
-  - {fileID: 0}
+  MeleeSequence: {fileID: 0}
 --- !u!1 &401802031
 GameObject:
   m_ObjectHideFlags: 0
@@ -698,6 +701,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1018792963}
     m_Modifications:
+    - target: {fileID: 3132274422633817715, guid: 4a0c4bc19096b374dbe26b4ccebbed4f, type: 3}
+      propertyPath: order
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 4506998659982204686, guid: 4a0c4bc19096b374dbe26b4ccebbed4f, type: 3}
       propertyPath: m_RootOrder
       value: 2
@@ -1953,8 +1960,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: ENEMY
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: f3bb79e02422fdd4c9e94798a92d8edd, type: 2}
-  m_sharedMaterial: {fileID: 3453862392067703978, guid: f3bb79e02422fdd4c9e94798a92d8edd, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -2545,9 +2552,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bea0c9710358ed14b8aa1e421e4b5088, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  type: 0
   enemyDamage: 10
   enemySpeed: 1.2
   enemyHP: 100
+  isStunned: 0
   ui: {fileID: 1972640979}
   IsGrounded: 0
   checkDist: 1.05
@@ -2677,7 +2686,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0.08, y: -0.08}
-  m_SizeDelta: {x: 0.5, y: 0.15}
+  m_SizeDelta: {x: 0.84, y: 0.15}
   m_Pivot: {x: 0, y: 0}
 --- !u!114 &1863100505
 MonoBehaviour:
@@ -3446,6 +3455,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1018792963}
     m_Modifications:
+    - target: {fileID: 3132274422633817715, guid: 4a0c4bc19096b374dbe26b4ccebbed4f, type: 3}
+      propertyPath: order
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 4506998659982204686, guid: 4a0c4bc19096b374dbe26b4ccebbed4f, type: 3}
       propertyPath: m_RootOrder
       value: 1

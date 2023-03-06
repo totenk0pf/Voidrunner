@@ -10,6 +10,14 @@ public class MeleeAnimator : MonoBehaviour, ICombatAnimator
 {
     private Animator _animator;
 
+    private void Awake() {
+        this.AddListener(EventType.PlayMeleeAttackEvent, clip => PlayAnimation((string)clip));
+    }
+
+    public void PlayAnimation(string clipStr) {
+        GetAnimator().Play(clipStr);
+    }
+    
     #region Melee Animation Event Functions
 
     public void OnAnimationStart() {

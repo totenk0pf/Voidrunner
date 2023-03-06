@@ -10,6 +10,14 @@ public class RangedAnimator : MonoBehaviour, ICombatAnimator
 {
     private Animator _animator;
     
+    private void Awake() {
+        this.AddListener(EventType.PlayRangedAttackEvent, clip => PlayAnimation((string)clip));
+    }
+    
+    public void PlayAnimation(string clipStr) {
+        GetAnimator().Play(clipStr);
+    }
+    
     #region Ranged Animation Event Functions
 
     public void OnAnimationStart() {

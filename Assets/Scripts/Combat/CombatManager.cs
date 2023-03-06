@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using Combat;
 using Core.Events;
 using Core.Logging;
@@ -15,36 +16,38 @@ public enum MeleeOrder {
     Third = 2
 }
 
-
 [Serializable]
-public class MeleeSequenceNode : SerializedScriptableObject{
-    private Dictionary<MeleeOrder, string> order;
+public class MeleeSequenceAttribute {
+    [SerializeField] private string animClipStr;
+    //the last combo's window will be the last combo's frame hold time.
+    //After it ends, next combo string can be played
     [SerializeField] private float nextSeqInputWindow;
     [SerializeField] private float damage;
     [SerializeField] private float knockBackForce;
-    [SerializeField] private MeleeCollider collider;
+    [ReadOnly] public MeleeCollider collider;
     public bool canDamageMod;
     [ShowIf("canDamageMod")] public float damageScale = 1;
     [ShowIf("canDamageMod")] public float damageModifier = 0;
 
     //Getters
-    public Dictionary<MeleeOrder, string> Order => order;
     public float NextSeqInputWindow => nextSeqInputWindow;
     public float Damage => damage;
     public float KnockBackForce => knockBackForce;
-    public MeleeCollider Collider => collider;
-} 
+    public string AnimClipStr => animClipStr;
+    
+    public void EnableCollider() {
+        collider.ResetEnemiesList();
+        collider.gameObject.SetActive(true);
+    }
+    
+    public void DisableCollider() {
+        collider.ResetEnemiesList();
+        collider.gameObject.SetActive(false);
+    }
+}
 
 public class CombatManager : MonoBehaviour {
-    private readonly string MELEE_SEQUENCE_1 = "MeleeCombo1";
-    private readonly string MELEE_SEQUENCE_2 = "MeleeCombo2";
-    private readonly string MELEE_SEQUENCE_3 = "MeleeCombo3";
-    private readonly string IDLE = "Idle";
-    
-    private ICombatAnimator MeleeAnimator;
-    private ICombatAnimator GunAnimator;
-
-    [SerializeField] private List<MeleeSequenceNode> MeleeSequence;
+    [SerializeField] private MeleeSequenceData MeleeSequence;
 
     private MeleeOrder _curMeleeOrder;
     private WeaponType _curWeaponType;
@@ -61,10 +64,13 @@ public class CombatManager : MonoBehaviour {
         this.AddListener(EventType.MeleeAttackEndEvent, param => OnMeleeAttackEnd());
         
         
-        // add a listener to cancel animation of attack on movement
+        // add a listener to cancel animation of attack on movement=
+        if(!MeleeSequence) NCLogger.Log($"Missing Melee Sequence Data", LogLevel.ERROR);
+
+        AssignCollidersData();
+        if(!MeleeSequence.ValidateColliders()) NCLogger.Log($"Collider Validation Failed", LogLevel.ERROR);
         
-        // if(!MeleeAnimator) NCLogger.Log($"Missing Animator Reference - MeleeAnimator", LogLevel.WARNING);
-        // if(!GunAnimator) NCLogger.Log($"Missing Animator Reference - GunAnimator", LogLevel.WARNING);
+        
     }
 
     private void Start() {
@@ -83,13 +89,18 @@ public class CombatManager : MonoBehaviour {
         if (_curWeaponType != WeaponType.Melee || !Input.GetMouseButtonDown(0)) return;
         _canAttack = false;
         _isAttacking = true;
+
+        if (_curMeleeOrder != _curMeleeOrder.Last()) {
+            MeleeSequence.OrderToAttributes[_curMeleeOrder.Next()].EnableCollider();
+        }
+
+        var attribute = MeleeSequence.OrderToAttributes[_curMeleeOrder];
         
         switch (_curMeleeOrder) {
             case MeleeOrder.None:
-                
-                //do attack
-                //hold that last frame of attack for "nextSeqInputWindow" time (ROUTINE)
                 //event for Melee animator to play animation in its own class
+                this.FireEvent(EventType.PlayMeleeAttackEvent, attribute.AnimClipStr);
+                //hold that last frame of attack for "nextSeqInputWindow" time (ROUTINE)
                 _curMeleeOrder = _curMeleeOrder.Next();
                 break;
             case MeleeOrder.First:
@@ -121,7 +132,7 @@ public class CombatManager : MonoBehaviour {
             yield break;
         }
         
-        var windowTime = Time.time + MeleeSequence[(int)_curMeleeOrder].NextSeqInputWindow;
+        var windowTime = Time.time + MeleeSequence.OrderToAttributes[_curMeleeOrder].NextSeqInputWindow;
         _isInWindow = true;
         while (Time.time > windowTime) {
             _isInWindow = false;
@@ -141,6 +152,15 @@ public class CombatManager : MonoBehaviour {
     {
         _canAttack = true;
         _isAttacking = false;
+    }
+
+    private void AssignCollidersData() {
+        var colList = GetComponentsInChildren<MeleeCollider>();
+        foreach (var col in colList) {
+            foreach (var order in MeleeSequence.OrderToAttributes.Keys.Where(order => col.Order == order)) {
+                MeleeSequence.OrderToAttributes[order].collider = col;
+            }
+        }
     }
    
 }
