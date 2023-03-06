@@ -19,49 +19,55 @@ namespace Entities.Enemy.Boss {
         [SerializeField] private AnimSerializedData animData;
 
         public bool isAttacking;
-        private bool _canChangeState;
-        private bool _canAttack;
-        private bool _isDelayed;
+        public bool canAttack = true;
 
         public override EnemyState RunCurrentState() {
-            if (_canChangeState)
+            if (Vector3.Distance(transform.position, target.transform.position) > 2.4f && !isAttacking)
             {
-                _canChangeState = false;
+                Agent.enabled = true;
+                Agent.ResetPath();
+                canAttack = false;
                 return previousState;
             }
             
-            if (!_isDelayed && !_canAttack) {
+            if (canAttack) {
                 StartCoroutine(StartAttack());
             }
+            
             return this;
         }
 
         public IEnumerator StartAttack()
         {
-            _canAttack = false;
+            canAttack = false;
             isAttacking = true;
             
-            var randomAttack = Random.Range(0, animData.attackAnim.Count);
-            var attack = animData.attackAnim[randomAttack];
-            
-            Agent.enabled = false;
-            
-            TriggerAnim(attack);
-            yield return new WaitUntil(() => animator.GetCurrentAnimatorStateInfo(0).normalizedTime >= 0.95f);
-            
-            _canAttack = true;
-            isAttacking = false;
-
-            var dist = Vector3.Distance(transform.position, target.transform.position);
-            if (dist > 2f && !isAttacking)
+            //Chance to grab
+            //AnimData index 4 is grab attack
+            if (Random.Range(0, 1) == 1)
             {
-                Agent.enabled = true;
-                Agent.ResetPath();
-                _canChangeState = true;
-                _canAttack = false;
+                TriggerAnim(animData.attackAnim[animData.attackAnim.Count]);
             }
 
-            else yield return DelayAttack();
+            else
+            {
+                TriggerAnim(animData.attackAnim[Random.Range(0, animData.attackAnim.Count - 1)]);
+            }
+            
+            Agent.enabled = false;
+            yield return new WaitUntil(() => animator.GetCurrentAnimatorStateInfo(0).normalizedTime >= 0.95f);
+
+            if (Vector3.Distance(transform.position, target.transform.position) > 2.4f)
+            {
+                isAttacking = false;
+                StopCoroutine(StartAttack());
+                yield return null;
+            }
+
+            else
+            {
+                yield return DelayAttack();
+            }
         }
 
         public IEnumerator DelayAttack()

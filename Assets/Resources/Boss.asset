@@ -38,8 +38,8 @@ MonoBehaviour:
     name: attackSwipeR
     hash: -1418792610
   - type: 9
-    name: attackSlam
-    hash: -1037458567
-  - type: 9
     name: attackStomp
     hash: 875506928
+  - type: 9
+    name: attackSlam
+    hash: -1037458567

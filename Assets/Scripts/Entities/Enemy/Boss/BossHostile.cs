@@ -7,7 +7,7 @@ using UnityEngine.Serialization;
 namespace Entities.Enemy.Boss {
     public class BossHostile : BossState
     {
-        [SerializeField] private EnemyState nextState;
+        [SerializeField] private BossAttack nextState;
         [SerializeField] private AnimSerializedData animData;
     
         public override EnemyState RunCurrentState() {
@@ -18,6 +18,7 @@ namespace Entities.Enemy.Boss {
             {
                 TriggerAnim(animData.hostileAnim);
                 Agent.isStopped = true;
+                nextState.canAttack = true;
                 return nextState;
             }
             

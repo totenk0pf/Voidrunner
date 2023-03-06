@@ -123,7 +123,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _grabHitbox: {fileID: 1276097645}
   _grabPoint: {fileID: 301505574}
-  _attackState: {fileID: 0}
+  _attackState: {fileID: 8040179586084284091}
 --- !u!1 &1276097644
 GameObject:
   m_ObjectHideFlags: 0
@@ -247,7 +247,7 @@ MonoBehaviour:
   playerLayer:
     serializedVersion: 2
     m_Bits: 8
-  _attackState: {fileID: 0}
+  _attackState: {fileID: 8040179586084284091}
 --- !u!1 &3472281234452551273
 GameObject:
   m_ObjectHideFlags: 0
@@ -309,7 +309,7 @@ MonoBehaviour:
   playerLayer:
     serializedVersion: 2
     m_Bits: 8
-  _attackState: {fileID: 0}
+  _attackState: {fileID: 8040179586084284091}
 --- !u!1 &5173689491316041483
 GameObject:
   m_ObjectHideFlags: 0
@@ -510,7 +510,7 @@ MonoBehaviour:
   playerLayer:
     serializedVersion: 2
     m_Bits: 8
-  _attackState: {fileID: 0}
+  _attackState: {fileID: 8040179586084284091}
 --- !u!1001 &583960001144318668
 PrefabInstance:
   m_ObjectHideFlags: 0
