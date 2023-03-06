@@ -15,10 +15,6 @@ public enum MeleeOrder {
     Third = 2
 }
 
-public class MeleeState : UnitySerializedDictionary<KeyCode, List<GameObject>>
-{
-    
-}
 
 [Serializable]
 public class MeleeSequenceNode : SerializedScriptableObject{

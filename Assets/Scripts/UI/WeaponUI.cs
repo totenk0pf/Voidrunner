@@ -56,23 +56,15 @@ namespace UI {
         }
 
         private void Awake() {
-            this.AddListener(EventType.WeaponChangedEvent, 
-<<<<<<< HEAD
-                             entry => ChangeActivePanel((WeaponManager.WeaponEntry) entry));
-=======
-                             entry => ChangeActivePanel((WeaponEntry) entry));
->>>>>>> c9f1fe8cad10044d48d8fb74e790012081e956ad
+            this.AddListener(EventType.WeaponChangedEvent,
+                entry => ChangeActivePanel((WeaponManager.WeaponEntry) entry));
+
             this.AddListener(EventType.RangedShotEvent, data => UpdateRangedUI((RangedUIMsg) data));
             this.AddListener(EventType.WeaponFiredEvent, data => UpdateChargeUI((WeaponFireUIMsg) data));
         }
-
-<<<<<<< HEAD
+        
         private void ChangeActivePanel(WeaponManager.WeaponEntry entry) {
             currentType = entry.Type;
-=======
-        private void ChangeActivePanel(WeaponEntry entry) {
-            currentType = entry.type;
->>>>>>> c9f1fe8cad10044d48d8fb74e790012081e956ad
             _initHeight = Transform.rect.height - Layout.spacing;
             var segmentHeight = _initHeight / (panelList.Count);
             foreach (var item in panelList) {
