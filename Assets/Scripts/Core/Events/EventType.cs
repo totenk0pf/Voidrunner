@@ -24,11 +24,12 @@ namespace Core.Events {
         RequestIsOnGroundEvent,
         ReceiveIsOnGroundEvent,
         //Animation Play Events
+        PlayAnimationEvent,
         PlayMeleeAttackEvent,
         PlayRangedAttackEvent,
         //Animation Combat Events
         MeleeAttackBeginEvent,
         MeleeAttackEndEvent,
-        EnemyDamageEvent,
+        EnemyDamageEvent, //duplicate of DamageEnemyEvent (testing purposes, may update later)
     }
 }

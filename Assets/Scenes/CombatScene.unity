@@ -611,7 +611,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 23841b4e2e723e3429b020874452424d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  MeleeSequence: {fileID: 0}
+  MeleeSequence: {fileID: 11400000, guid: 547072da3b9b3482dba78e7aaab8264f, type: 2}
 --- !u!1 &401802031
 GameObject:
   m_ObjectHideFlags: 0

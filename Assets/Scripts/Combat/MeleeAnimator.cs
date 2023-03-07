@@ -9,11 +9,17 @@ using EventType = Core.Events.EventType;
 public class MeleeAnimator : MonoBehaviour, ICombatAnimator
 {
     private Animator _animator;
+    private float _damage;
 
     private void Awake() {
-        this.AddListener(EventType.PlayMeleeAttackEvent, clip => PlayAnimation((string)clip));
+        this.AddListener(EventType.PlayMeleeAttackEvent, animData => UpdateAnimAttribute((MeleeAnimData)animData));
     }
 
+    private void UpdateAnimAttribute(MeleeAnimData data) {
+        _damage = data.damage;
+        PlayAnimation(data.clipStr);
+    }
+    
     public void PlayAnimation(string clipStr) {
         GetAnimator().Play(clipStr);
     }
@@ -29,7 +35,8 @@ public class MeleeAnimator : MonoBehaviour, ICombatAnimator
     }
 
     public void ApplyDamageOnFrame() {
-        this.FireEvent(EventType.EnemyDamageEvent);
+        //TODO: Implement melee order's collider to damage correct enemies
+        this.FireEvent(EventType.EnemyDamageEvent, _damage);//maybe accompany with enemy instance being damaged?
     }
     #endregion
     

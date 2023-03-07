@@ -22,5 +22,145 @@ MonoBehaviour:
     PrefabModifications: []
     SerializationNodes:
     - Name: orderToAttributes
+      Entry: 7
+      Data: 0|System.Collections.Generic.Dictionary`2[[MeleeOrder, Assembly-CSharp],[MeleeSequenceAttribute,
+        Assembly-CSharp]], mscorlib
+    - Name: comparer
+      Entry: 7
+      Data: 1|System.Collections.Generic.EnumEqualityComparer`1[[MeleeOrder, Assembly-CSharp]],
+        mscorlib
+    - Name: 
+      Entry: 12
+      Data: 0
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 12
+      Data: 3
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 3
+      Data: 0
+    - Name: $v
+      Entry: 7
+      Data: 2|MeleeSequenceAttribute, Assembly-CSharp
+    - Name: animClipStr
+      Entry: 1
+      Data: MeleeCombo1
+    - Name: nextSeqInputWindow
+      Entry: 4
+      Data: 0.3
+    - Name: damage
+      Entry: 4
+      Data: 5
+    - Name: knockBackForce
+      Entry: 4
+      Data: 10
+    - Name: collider
       Entry: 6
+      Data: 
+    - Name: canDamageMod
+      Entry: 5
+      Data: false
+    - Name: damageScale
+      Entry: 4
+      Data: 1
+    - Name: damageModifier
+      Entry: 4
+      Data: 0
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 3
+      Data: 1
+    - Name: $v
+      Entry: 7
+      Data: 3|MeleeSequenceAttribute, Assembly-CSharp
+    - Name: animClipStr
+      Entry: 1
+      Data: MeleeCombo2
+    - Name: nextSeqInputWindow
+      Entry: 4
+      Data: 0.3
+    - Name: damage
+      Entry: 4
+      Data: 8
+    - Name: knockBackForce
+      Entry: 4
+      Data: 20
+    - Name: collider
+      Entry: 6
+      Data: 
+    - Name: canDamageMod
+      Entry: 5
+      Data: false
+    - Name: damageScale
+      Entry: 4
+      Data: 1
+    - Name: damageModifier
+      Entry: 4
+      Data: 0
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 3
+      Data: 2
+    - Name: $v
+      Entry: 7
+      Data: 4|MeleeSequenceAttribute, Assembly-CSharp
+    - Name: animClipStr
+      Entry: 1
+      Data: MeleeCombo3
+    - Name: nextSeqInputWindow
+      Entry: 4
+      Data: 1
+    - Name: damage
+      Entry: 4
+      Data: 12
+    - Name: knockBackForce
+      Entry: 4
+      Data: 30
+    - Name: collider
+      Entry: 6
+      Data: 
+    - Name: canDamageMod
+      Entry: 5
+      Data: false
+    - Name: damageScale
+      Entry: 4
+      Data: 1
+    - Name: damageModifier
+      Entry: 4
+      Data: 0
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
       Data: 

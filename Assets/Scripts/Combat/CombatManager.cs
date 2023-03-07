@@ -7,13 +7,23 @@ using Core.Events;
 using Core.Logging;
 using JetBrains.Annotations;
 using Sirenix.OdinInspector;
+using Unity.VisualScripting;
 using UnityEngine;
 using EventType = Core.Events.EventType;
 public enum MeleeOrder {
-    None = -1,
     First = 0, 
     Second = 1,
     Third = 2
+}
+
+public struct MeleeAnimData {
+    public readonly string clipStr;
+    public readonly float damage;
+
+    public MeleeAnimData(string clipStr, float damage) {
+        this.clipStr = clipStr;
+        this.damage = damage;
+    }
 }
 
 [Serializable]
@@ -31,7 +41,7 @@ public class MeleeSequenceAttribute {
 
     //Getters
     public float NextSeqInputWindow => nextSeqInputWindow;
-    public float Damage => damage;
+    public float Damage => canDamageMod ? (damage + damageModifier) * damageScale : damage;
     public float KnockBackForce => knockBackForce;
     public string AnimClipStr => animClipStr;
     
@@ -53,9 +63,14 @@ public class CombatManager : MonoBehaviour {
     private WeaponType _curWeaponType;
     private WeaponBase _curWeaponRef;
 
-    private bool _canAttack;
-    private bool _isAttacking;
-    private bool _isInWindow;
+    private bool _canAttack = true;
+    private bool _isAttacking = false;
+    private bool _isInWindow = false;
+
+    private float _nextSeqTime;
+   // private IEnumerator _windowRoutine;
+    
+    private void IncrementMeleeOrder() => _curMeleeOrder = _curMeleeOrder.Next();
 
     private void Awake()
     {
@@ -64,17 +79,18 @@ public class CombatManager : MonoBehaviour {
         this.AddListener(EventType.MeleeAttackEndEvent, param => OnMeleeAttackEnd());
         
         
-        // add a listener to cancel animation of attack on movement=
+        //TODO: add a listener to cancel animation of attack on movement (movement, gun) -> StopAllCoroutines()
         if(!MeleeSequence) NCLogger.Log($"Missing Melee Sequence Data", LogLevel.ERROR);
 
         AssignCollidersData();
         if(!MeleeSequence.ValidateColliders()) NCLogger.Log($"Collider Validation Failed", LogLevel.ERROR);
-        
-        
     }
 
     private void Start() {
-        _curMeleeOrder = MeleeOrder.None;
+        _curMeleeOrder = MeleeOrder.First;
+        _canAttack = true;
+        _isAttacking = false;
+        _isInWindow = false;
     }
 
     private void Update() {
@@ -82,38 +98,22 @@ public class CombatManager : MonoBehaviour {
             MeleeAttackUpdate();
             RangedAttackUpdate();
         }
-
     }
     
     private void MeleeAttackUpdate() {
         if (_curWeaponType != WeaponType.Melee || !Input.GetMouseButtonDown(0)) return;
         _canAttack = false;
-        _isAttacking = true;
-
-        if (_curMeleeOrder != _curMeleeOrder.Last()) {
-            MeleeSequence.OrderToAttributes[_curMeleeOrder.Next()].EnableCollider();
-        }
+        _isAttacking = true; 
+        _isInWindow = false;
+        
+        MeleeSequence.OrderToAttributes[_curMeleeOrder.Next()].EnableCollider();
+        
+        //StopAllCoroutines here due to spamming melee -> multiple instances of coroutine
+        //StopCoroutine(thisRoutine) would not stop all coroutines of same "thisRoutine" method
+        StopAllCoroutines();
 
         var attribute = MeleeSequence.OrderToAttributes[_curMeleeOrder];
-        
-        switch (_curMeleeOrder) {
-            case MeleeOrder.None:
-                //event for Melee animator to play animation in its own class
-                this.FireEvent(EventType.PlayMeleeAttackEvent, attribute.AnimClipStr);
-                //hold that last frame of attack for "nextSeqInputWindow" time (ROUTINE)
-                _curMeleeOrder = _curMeleeOrder.Next();
-                break;
-            case MeleeOrder.First:
-                break;
-            case MeleeOrder.Second:
-                break;
-            case MeleeOrder.Third:
-                break;
-            default://Somehow other cases
-                throw new EntryPointNotFoundException($"MeleeOrder not recognized");
-                break;
-        }
-        
+        this.FireEvent(EventType.PlayMeleeAttackEvent, new MeleeAnimData(attribute.AnimClipStr, attribute.Damage));
     }
 
     private void RangedAttackUpdate() {
@@ -125,40 +125,58 @@ public class CombatManager : MonoBehaviour {
         _curWeaponRef = entry.Reference;
     }
 
+    /// <summary>
+    /// Routine To Hold the Last frame of Attack Animation for x amount of time
+    /// Indicating the Input Window for Next Combo Chain.
+    /// </summary>
+    /// <returns></returns>
     private IEnumerator WaitForInputWindowRoutine()
     {
-        if (_curMeleeOrder == MeleeOrder.None) {
-            NCLogger.Log($"can't enter wait routine - Invalid Melee Order", LogLevel.WARNING);
-            yield break;
-        }
-        
-        var windowTime = Time.time + MeleeSequence.OrderToAttributes[_curMeleeOrder].NextSeqInputWindow;
-        _isInWindow = true;
-        while (Time.time > windowTime) {
+        Debug.Log($"in window");
+        var curTime = Time.time;
+        _nextSeqTime = Time.time + MeleeSequence.OrderToAttributes[_curMeleeOrder].NextSeqInputWindow;
+
+        IncrementMeleeOrder();
+        if (_curMeleeOrder == MeleeOrder.First) {
             _isInWindow = false;
-            windowTime += Time.deltaTime;
+            _canAttack = false;
+        }else {
+            _isInWindow = true;
         }
         
+        while (curTime < _nextSeqTime) {
+            curTime += Time.deltaTime;
+            yield return null;
+        }
+        
+        //When exceeds window input time - reset combo chain
+        _canAttack = true;
+        _isInWindow = false;
+        _curMeleeOrder = MeleeOrder.First;
+        this.FireEvent(EventType.PlayMeleeAttackEvent, new MeleeAnimData("Idle", 0));
         yield return null;
     }
 
-    private void OnMeleeAttackBegin()
-    {
-        _canAttack = false;
-        _isAttacking = true;
+    private void OnMeleeAttackBegin() {
+        ;
     }
 
-    private void OnMeleeAttackEnd()
-    {
+    private void OnMeleeAttackEnd() {
+        Debug.Log("Anim end");
         _canAttack = true;
         _isAttacking = false;
+        StartCoroutine(WaitForInputWindowRoutine());
     }
 
     private void AssignCollidersData() {
         var colList = GetComponentsInChildren<MeleeCollider>();
         foreach (var col in colList) {
-            foreach (var order in MeleeSequence.OrderToAttributes.Keys.Where(order => col.Order == order)) {
-                MeleeSequence.OrderToAttributes[order].collider = col;
+            foreach (var order in MeleeSequence.OrderToAttributes.Keys) {
+                if (col.Order == order) {
+                    var seqCol = MeleeSequence.OrderToAttributes[order].collider;
+                    if(seqCol) NCLogger.Log($"Collider at {seqCol.gameObject.name} is assigned, ", LogLevel.WARNING);
+                    MeleeSequence.OrderToAttributes[order].collider = col;
+                }
             }
         }
     }

@@ -17,6 +17,6 @@ public static class Extensions
         if (!typeof(T).IsEnum) throw new ArgumentException(String.Format("Argument {0} is not an Enum", typeof(T).FullName));
 
         T[] Arr = (T[])Enum.GetValues(src.GetType());
-        return Arr[Arr.Length];            
+        return Arr[Arr.Length-1];            
     }
 }

@@ -7,14 +7,9 @@ using UnityEngine;
 public class MeleeCollider : MonoBehaviour
 {
     public List<EnemyBase> Enemies { get; } = new ();
-    [SerializeField] MeleeOrder order = MeleeOrder.None;
+    [SerializeField] MeleeOrder order;
 
-    public MeleeOrder Order {
-        get {
-            if(order == MeleeOrder.None)NCLogger.Log($"Melee Collider Cannot have Order: NONE", LogLevel.WARNING);
-            return order;
-        }
-    }
+    public MeleeOrder Order => order;
 
     public void ResetEnemiesList() {
         Enemies.Clear();
