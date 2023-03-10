@@ -392,7 +392,7 @@ NavMeshAgent:
   m_Speed: 2
   m_Acceleration: 5
   avoidancePriority: 50
-  m_AngularSpeed: 120
+  m_AngularSpeed: 320
   m_StoppingDistance: 1
   m_AutoTraverseOffMeshLink: 1
   m_AutoBraking: 1
@@ -1099,3 +1099,4 @@ MonoBehaviour:
   nextState: {fileID: 0}
   animData: {fileID: 11400000, guid: 880a0da178da5324cbc62008f8c90c23, type: 2}
   isAttacking: 0
+  canAttack: 1

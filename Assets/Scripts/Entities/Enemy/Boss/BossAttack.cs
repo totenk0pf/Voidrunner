@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Core.Logging;
 using UnityEngine;
 using Sirenix.OdinInspector;
+using StaticClass;
 using UnityEngine.ProBuilder.MeshOperations;
 using Random = UnityEngine.Random;
 
@@ -18,13 +19,13 @@ namespace Entities.Enemy.Boss {
         [TitleGroup("Attack sets")]
         [SerializeField] private AnimSerializedData animData;
 
-        public bool isAttacking;
         public bool canAttack = true;
+        public bool canSwitchState = true;
+        public bool isAttacking = true;
 
         public override EnemyState RunCurrentState() {
-            if (Vector3.Distance(transform.position, target.transform.position) > 2.4f && !isAttacking)
+            if (canSwitchState && !isAttacking)
             {
-                Agent.enabled = true;
                 Agent.ResetPath();
                 canAttack = false;
                 return previousState;
@@ -41,7 +42,7 @@ namespace Entities.Enemy.Boss {
         {
             canAttack = false;
             isAttacking = true;
-            
+
             //Chance to grab
             //AnimData index 4 is grab attack
             if (Random.Range(0, 1) == 1)
@@ -54,26 +55,28 @@ namespace Entities.Enemy.Boss {
                 TriggerAnim(animData.attackAnim[Random.Range(0, animData.attackAnim.Count - 1)]);
             }
             
-            Agent.enabled = false;
             yield return new WaitUntil(() => animator.GetCurrentAnimatorStateInfo(0).normalizedTime >= 0.95f);
+            isAttacking = false;
+            yield return DelayAttack();
+        }
 
-            if (Vector3.Distance(transform.position, target.transform.position) > 2.4f)
-            {
-                isAttacking = false;
+        public IEnumerator DelayAttack() {
+            yield return new WaitForSeconds(0.2f);
+            yield return StartCoroutine(StartAttack());
+        }
+
+        public override void OnTriggerExit(Collider other) {
+            if (CheckLayerMask.IsInLayerMask(other.gameObject, playerMask)) {
+                canSwitchState = true;
                 StopCoroutine(StartAttack());
-                yield return null;
-            }
-
-            else
-            {
-                yield return DelayAttack();
             }
         }
 
-        public IEnumerator DelayAttack()
-        {
-            yield return new WaitForSeconds(0.2f);
-            yield return StartCoroutine(StartAttack());
+        public override void OnTriggerEnter(Collider other) {
+            if (CheckLayerMask.IsInLayerMask(other.gameObject, playerMask)) {
+                canSwitchState = false;
+                target = other.gameObject;
+            }
         }
     }
 }
