@@ -7,8 +7,11 @@ namespace Core.Events {
         LevelChangeEvent,
         WeaponChangedEvent,
         WeaponFiredEvent,
+        WeaponRechargedEvent,
         AugmentChangedEvent,
+        AugmentChargeEvent,
         AugmentDrainEvent,
+        DamageEnemyEvent,
         RangedShotEvent
     }
 }

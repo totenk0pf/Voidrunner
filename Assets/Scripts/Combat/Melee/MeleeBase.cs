@@ -14,10 +14,6 @@ namespace Combat {
         public float attackSpeed;
         public float attackRadius;
         public float attackSpeedModifier = 1f;
-        
-        [TitleGroup("Melee states")]
-        protected bool isAttacking;
-        protected bool canAttack;
 
         protected List<EnemyBase> enemies = new();
 
@@ -52,15 +48,13 @@ namespace Combat {
         
         public override IEnumerator Fire() {
             while (true) {
-                if (enemies.Count < 1) yield return null;
                 if (isAttacking) {
+                    enemies.RemoveAll(x => !x);
+                    if (enemies.Count < 1) yield return null;
                     canAttack = false;
                     for (int i = 0; i < enemies.Count; i++) {
                         if (Vector3.Distance(enemies[i].transform.position, transform.position) > attackRadius) continue;
                         Damage(enemies[i]);
-                    }
-                    foreach (var enemy in enemies) {
-                        if (!enemy) enemies.Remove(enemy);
                     }
                     var rechargeTime = attackSpeed / attackSpeedModifier;
                     this.FireEvent(EventType.WeaponFiredEvent, new WeaponFireUIMsg {
@@ -68,6 +62,7 @@ namespace Combat {
                         rechargeDuration = rechargeTime
                     });
                     yield return new WaitForSeconds(rechargeTime);
+                    this.FireEvent(EventType.WeaponRechargedEvent);
                     canAttack = true;
                     isAttacking = false;
                     yield return null;

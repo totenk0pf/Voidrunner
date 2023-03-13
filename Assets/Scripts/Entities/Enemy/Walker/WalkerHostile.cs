@@ -19,7 +19,7 @@ public class WalkerHostile : EnemyState
         Agent.isStopped = false;
 
         if (chaseType == HostileStyle.Slow) {
-            Agent.speed = eBase.enemySpeed;
+            Agent.speed = enemyBase.enemySpeed;
         }
 
         else Agent.speed = fastChaseSpeed;
