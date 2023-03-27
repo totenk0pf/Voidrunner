@@ -23,11 +23,14 @@ namespace Core.Events {
         SetMovementStateEvent,
         RequestIsOnGroundEvent,
         ReceiveIsOnGroundEvent,
-        //Animation Play Events
+        //Animation Events
         PlayAnimationEvent,
         PlayMeleeAttackEvent,
+        ResumeMovementEvent, //resume movement after melee window
+        StopMovementEvent, //stop movement on melee atk
         PlayRangedAttackEvent,
-        //Animation Combat Events
+        CancelMeleeAttackEvent,
+        //Animation Clips Combat Events
         MeleeAttackBeginEvent,
         MeleeAttackEndEvent,
         EnemyDamageEvent, //duplicate of DamageEnemyEvent (testing purposes, may update later)

@@ -77,9 +77,8 @@ public class CombatManager : MonoBehaviour {
         this.AddListener(EventType.WeaponChangedEvent, param => UpdateCurrentWeapon((WeaponManager.WeaponEntry) param));
         this.AddListener(EventType.MeleeAttackBeginEvent, param => OnMeleeAttackBegin());
         this.AddListener(EventType.MeleeAttackEndEvent, param => OnMeleeAttackEnd());
+        this.AddListener(EventType.CancelMeleeAttackEvent, param => ResetChain());
         
-        
-        //TODO: add a listener to cancel animation of attack on movement (movement, gun) -> StopAllCoroutines()
         if(!MeleeSequence) NCLogger.Log($"Missing Melee Sequence Data", LogLevel.ERROR);
 
         AssignCollidersData();
@@ -114,6 +113,7 @@ public class CombatManager : MonoBehaviour {
 
         var attribute = MeleeSequence.OrderToAttributes[_curMeleeOrder];
         this.FireEvent(EventType.PlayMeleeAttackEvent, new MeleeAnimData(attribute.AnimClipStr, attribute.Damage));
+        this.FireEvent(EventType.StopMovementEvent);
     }
 
     private void RangedAttackUpdate() {
@@ -150,10 +150,7 @@ public class CombatManager : MonoBehaviour {
         }
         
         //When exceeds window input time - reset combo chain
-        _canAttack = true;
-        _isInWindow = false;
-        _curMeleeOrder = MeleeOrder.First;
-        this.FireEvent(EventType.PlayMeleeAttackEvent, new MeleeAnimData("Idle", 0));
+        ResetChain();
         yield return null;
     }
 
@@ -167,7 +164,18 @@ public class CombatManager : MonoBehaviour {
         _isAttacking = false;
         StartCoroutine(WaitForInputWindowRoutine());
     }
-
+    
+    private void ResetChain()
+    {
+        _canAttack = true;
+        _isAttacking = false;
+        _isInWindow = false;
+        _curMeleeOrder = MeleeOrder.First;
+        StopAllCoroutines();
+        this.FireEvent(EventType.PlayMeleeAttackEvent, new MeleeAnimData("Idle", 0));
+        this.FireEvent(EventType.ResumeMovementEvent);
+    }
+    
     private void AssignCollidersData() {
         var colList = GetComponentsInChildren<MeleeCollider>();
         foreach (var col in colList) {

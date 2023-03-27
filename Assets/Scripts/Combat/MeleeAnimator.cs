@@ -19,6 +19,7 @@ public class MeleeAnimator : MonoBehaviour, ICombatAnimator
         _damage = data.damage;
         PlayAnimation(data.clipStr);
     }
+
     
     public void PlayAnimation(string clipStr) {
         GetAnimator().Play(clipStr);

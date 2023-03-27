@@ -77,12 +77,15 @@ public class PlayerMovementController : MonoBehaviour
     private float _horiz;
     private float _vert;
     private bool _isGrounded;
+    private bool _canMove;
 
     private void Awake()
     {
         EventDispatcher.Instance.AddListener(EventType.GetMovementStateEvent, param => GetMovementState());
         EventDispatcher.Instance.AddListener(EventType.SetMovementStateEvent, param => UpdateMovementState((MovementState) param));
         EventDispatcher.Instance.AddListener(EventType.RequestIsOnGroundEvent, param => EventDispatcher.Instance.FireEvent(EventType.ReceiveIsOnGroundEvent, _isGrounded));
+        this.AddListener(EventType.StopMovementEvent, param => ToggleMovement(false));
+        this.AddListener(EventType.ResumeMovementEvent, param => ToggleMovement(true));
         
         _inputToDirDict = new Dictionary<KeyCode, float>() {
             {KeyCode.W, 0},
@@ -90,20 +93,28 @@ public class PlayerMovementController : MonoBehaviour
             {KeyCode.A, -90},
             {KeyCode.D, 90}
         };
+        _canMove = true;
         _canGravity = true;
         Rb.useGravity = false;
     }
     
     private void FixedUpdate()
     {
-        UpdateMoveDir();
-        if(moveState == MovementState.Normal) UpdateStrafe();
+        if (_canMove) {
+            UpdateMoveDir();
+            if(moveState == MovementState.Normal) UpdateStrafe();
+        }
         if (canDrag) ApplyDrag();
         if(_canGravity) CustomGravity();
     }
 
     private void Update()
     {
+        foreach (var input in _inputToDirDict.Keys.Where(Input.GetKeyDown)) {
+            _canMove = true;
+            this.FireEvent(EventType.CancelMeleeAttackEvent);
+        }
+        
         foreach (var input in _inputToDirDict.Keys.Where(Input.GetKey)) {
             _dodgeDir = Quaternion.AngleAxis(_inputToDirDict[input], Vector3.up) * transform.forward;
             break;
@@ -112,6 +123,11 @@ public class PlayerMovementController : MonoBehaviour
     }
 
     #region Movement Base
+
+    private void ToggleMovement(bool canMove) {
+        _canMove = canMove;
+    }
+    
     private void UpdateStrafe()
     {
         if (OnSlope()) {
@@ -306,7 +322,8 @@ public class PlayerMovementController : MonoBehaviour
     private void ActionDodge(Vector3 moveDir)
     {
         if (Rb.velocity.magnitude == 0 || moveState != MovementState.Normal) { return; }
-    
+        
+        this.FireEvent(EventType.CancelMeleeAttackEvent);
         moveState = MovementState.Dodge;
         //var velMagCache = Rb.velocity.magnitude;
         Vector3 dest = transform.position + moveDir * dodgeDistance;
