@@ -318,9 +318,9 @@ public class PlayerMovementController : MonoBehaviour
     
     private IEnumerator LerpDodgeRoutine(Vector3 dest, Vector3 rollAxis)
     {
-        NCLogger.Log($"Dir: {_dodgeDir}", LogLevel.INFO);
+        //NCLogger.Log($"Dir: {_dodgeDir}", LogLevel.INFO);
         var startPos = transform.position;
-        var rbVel = Rb.velocity;
+        var velMag = Rb.velocity.magnitude;
         float time = 0;
     
         if (toggleProtoDodge && moveState == MovementState.Dodge) {
@@ -337,7 +337,7 @@ public class PlayerMovementController : MonoBehaviour
         transform.position = dest;
         playerVisualProto.up = Vector3.up;
         moveState = MovementState.Normal;
-        Rb.velocity = rbVel;
+        Rb.velocity = velMag * Rb.velocity.normalized;
     }
     #endregion
     
