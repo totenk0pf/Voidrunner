@@ -15,7 +15,10 @@ MonoBehaviour:
   serializationData:
     SerializedFormat: 2
     SerializedBytes: 
-    ReferencedUnityObjects: []
+    ReferencedUnityObjects:
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
     SerializedBytesString: 
     Prefab: {fileID: 0}
     PrefabModificationsReferencedUnityObjects: []
@@ -55,7 +58,7 @@ MonoBehaviour:
       Data: MeleeCombo1
     - Name: nextSeqInputWindow
       Entry: 4
-      Data: 0.3
+      Data: 0.5
     - Name: damage
       Entry: 4
       Data: 5
@@ -63,8 +66,8 @@ MonoBehaviour:
       Entry: 4
       Data: 10
     - Name: collider
-      Entry: 6
-      Data: 
+      Entry: 10
+      Data: 0
     - Name: canDamageMod
       Entry: 5
       Data: false
@@ -94,16 +97,16 @@ MonoBehaviour:
       Data: MeleeCombo2
     - Name: nextSeqInputWindow
       Entry: 4
-      Data: 0.3
+      Data: 0.5
     - Name: damage
       Entry: 4
-      Data: 8
+      Data: 10
     - Name: knockBackForce
       Entry: 4
-      Data: 20
+      Data: 15
     - Name: collider
-      Entry: 6
-      Data: 
+      Entry: 10
+      Data: 1
     - Name: canDamageMod
       Entry: 5
       Data: false
@@ -133,16 +136,16 @@ MonoBehaviour:
       Data: MeleeCombo3
     - Name: nextSeqInputWindow
       Entry: 4
-      Data: 1
+      Data: 2
     - Name: damage
       Entry: 4
-      Data: 12
+      Data: 15
     - Name: knockBackForce
       Entry: 4
       Data: 30
     - Name: collider
-      Entry: 6
-      Data: 
+      Entry: 10
+      Data: 2
     - Name: canDamageMod
       Entry: 5
       Data: false

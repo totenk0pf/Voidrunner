@@ -17,14 +17,10 @@ namespace Grapple {
     }
 
     //[RequireComponent(typeof(LineRenderer))]
-<<<<<<< HEAD
     [RequireComponent(typeof(PlayerMovementController))]
     public class GrappleController : MonoBehaviour
     {
         [Space]
-=======
-    public class GrappleController : MonoBehaviour {
->>>>>>> c9f1fe8cad10044d48d8fb74e790012081e956ad
         [SerializeField] private KeyCode grappleKey;
 
         [TitleGroup("Distance settings")] [SerializeField]
@@ -43,7 +39,6 @@ namespace Grapple {
 
         [SerializeField] private float grappleSpeed = 5f;
         [SerializeField] private float distIgnoreCheck = 1;
-<<<<<<< HEAD
         [Header("Grapple Enemy Attributes")]
         [SerializeField] private LayerMask enemyLayer;
         [Space]
@@ -66,18 +61,6 @@ namespace Grapple {
             }
         }
         
-=======
-
-        [Header("Grapple Enemy Attributes")] [SerializeField]
-        private LayerMask enemyLayer;
-
-        [Space] [Header("Grapple Point Attributes")] [SerializeField]
-        private LayerMask grapplePointLayer;
-
-        private Dictionary<LayerMask, GrappleType> _grappleCondition;
-        private Vector3 GrappleHaltPosition => transform.position + transform.forward * grappleHaltOffsetZ;
-
->>>>>>> c9f1fe8cad10044d48d8fb74e790012081e956ad
         private Vector3 _castOrigin;
         private Camera _mainCam;
         private Vector3 _collisionPos;
@@ -100,12 +83,8 @@ namespace Grapple {
 
             if (!GetComponent<LineRenderer>()) transform.AddComponent<LineRenderer>();
             _lr = GetComponent<LineRenderer>();
-<<<<<<< HEAD
             _controller = GetComponent<PlayerMovementController>();
-            
-=======
 
->>>>>>> c9f1fe8cad10044d48d8fb74e790012081e956ad
             _grappleCondition = new Dictionary<LayerMask, GrappleType>() {
                 {enemyLayer, GrappleType.EnemyToPlayer},
                 {grappleLayer, GrappleType.PlayerToPoint}
@@ -128,7 +107,6 @@ namespace Grapple {
         private void Update() {
             if (_currentGrappleHit.collider) currGrappleObj = _currentGrappleHit.collider.gameObject;
             if (Input.GetKeyDown(grappleKey)) {
-<<<<<<< HEAD
                 if (_moveState != PlayerMovementController.MovementState.Grappling) {
                     if(!CastToGetGrappleLocation()) return;
                     Grapple();
@@ -138,10 +116,8 @@ namespace Grapple {
                     //cancel grappling TODO: When cancel grappling on any object, have them keep momentum to them.
                     CancelGrapple();
                 }
-=======
                 if (!CastToGetGrappleLocation()) return;
                 Grapple();
->>>>>>> c9f1fe8cad10044d48d8fb74e790012081e956ad
             }
         }
 
@@ -214,8 +190,7 @@ namespace Grapple {
             if (!_currentGrappleHit.collider) return false;
             var type = GetGrappleType(_currentGrappleHit.collider.gameObject.layer);
             if (type == GrappleType.None) return false;
-
-<<<<<<< HEAD
+            
             StopAllCoroutines();
             switch (type)
             {
@@ -232,20 +207,6 @@ namespace Grapple {
                     EventDispatcher.Instance.FireEvent(EventType.SetMovementStateEvent, PlayerMovementController.MovementState.Grappling);
                     _playerToPointRoutine = PlayerToPointRoutine();
                     StartCoroutine(_playerToPointRoutine);
-=======
-            switch (type) {
-                case GrappleType.EnemyToPlayer:
-                    var enemy = _currentGrappleHit.collider.GetComponent<EnemyBase>();
-                    if (!enemy.canPull) return false;
-                    this.FireEvent(EventType.RequestIsOnGroundEvent);
-                    if (!_isOnGround) return false;
-                    this.FireEvent(EventType.SetMovementStateEvent, PlayerMovementController.MovementState.Grappling);
-                    StartCoroutine(EnemyToPlayerRoutine(enemy));
-                    break;
-                case GrappleType.PlayerToPoint:
-                    this.FireEvent(EventType.SetMovementStateEvent, PlayerMovementController.MovementState.Grappling);
-                    StartCoroutine(PlayerToPointRoutine());
->>>>>>> c9f1fe8cad10044d48d8fb74e790012081e956ad
                     return true;
                 default:
                     return false;
@@ -303,40 +264,22 @@ namespace Grapple {
             var dist = Vector3.Distance(_currentGrappleHit.point, GrappleHaltPosition);
             var dir = (GrappleHaltPosition - _currentGrappleHit.point).normalized;
             var endPos = startPos + (dist * dir);
-
-<<<<<<< HEAD
+            
             if(!_currentGrappledEnemy) NCLogger.Log($"_currentGrappledEnemy Null Object Exception", LogLevel.ERROR);
             _currentGrappledEnemy.OnGrappled();
             
             _lr.enabled = true;
             _lr.SetPosition(0, GrappleHaltPosition);
-=======
-            var agent = enemy.GetComponent<NavMeshAgent>();
-            var stateMachine = enemy.GetComponent<EnemyStateMachine>();
 
-            _lr.enabled = true;
-            _lr.SetPosition(0, GrappleHaltPosition);
-            agent.enabled        = false;
-            stateMachine.enabled = false;
->>>>>>> c9f1fe8cad10044d48d8fb74e790012081e956ad
 
             for (var i = 0.0f; i < 1.0f; i += (grappleSpeed * Time.deltaTime) / dist) {
                 _lr.SetPosition(1, _currentGrappleHit.transform.position);
                 _currentGrappleHit.collider.transform.position = Vector3.Lerp(startPos, endPos, i);
                 yield return null;
             }
-
-<<<<<<< HEAD
+            
             ResetGrapple_EnemyToPlayer();
-=======
-            this.FireEvent(EventType.SetMovementStateEvent, PlayerMovementController.MovementState.Normal);
-            _currentGrappleHit = new RaycastHit();
-            _lr.enabled        = false;
 
-            stateMachine.enabled = false;
-            agent.enabled        = false;
-
->>>>>>> c9f1fe8cad10044d48d8fb74e790012081e956ad
             yield return null;
         }
 
@@ -354,24 +297,16 @@ namespace Grapple {
                 transform.position = Vector3.Lerp(startPos, endPos, i);
                 yield return null;
             }
-
-<<<<<<< HEAD
+            
             ResetGrapple_PlayerToPoint();
-=======
-            this.FireEvent(EventType.SetMovementStateEvent, PlayerMovementController.MovementState.Normal);
-            _currentGrappleHit = new RaycastHit();
-            _lr.enabled        = false;
 
->>>>>>> c9f1fe8cad10044d48d8fb74e790012081e956ad
             yield return null;
         }
         #endregion
 
-<<<<<<< HEAD
-        #region Helper Function
-=======
 
->>>>>>> c9f1fe8cad10044d48d8fb74e790012081e956ad
+        #region Helper Function
+
         private void UpdateMoveState(PlayerMovementController.MovementState currState) {
             _moveState = currState;
         }
@@ -412,13 +347,10 @@ namespace Grapple {
         private void UpdateIsOnGround(bool isOnGround) {
             _isOnGround = isOnGround;
         }
-<<<<<<< HEAD
+
         #endregion
         
         #region Gizmos
-=======
-
->>>>>>> c9f1fe8cad10044d48d8fb74e790012081e956ad
         private void OnDrawGizmosSelected() {
             Gizmos.color = Color.green;
             Gizmos.DrawWireSphere(Camera.main.transform.position, radius);

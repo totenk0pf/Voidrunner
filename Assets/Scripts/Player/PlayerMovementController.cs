@@ -1,7 +1,9 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using Core.Events;
+using Core.Logging;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -13,8 +15,7 @@ public class PlayerMovementController : MonoBehaviour
     public enum MovementState
     {
         Normal,
-        Roll,
-        Slide,
+        Dodge,
         Grappling
     }
     
@@ -62,23 +63,17 @@ public class PlayerMovementController : MonoBehaviour
     private RaycastHit _slopeHit;
     
     private Vector3 _moveDir;
-
-    [Header("Roll Attributes")] 
-    public bool toggleProtoRoll = true;
-    public float rollAngleProto = 10;
-    [Space]
-    [SerializeField]  private KeyCode rollKey;
-    [SerializeField] private float rollDistance;
-    [SerializeField] private float rollTime;
-
-    [Header("Slide Attributes")] 
-    public bool toggleProtoSlide = true;
-    [Space]
-    [SerializeField] private KeyCode slideKey;
-    [SerializeField] private float slideTime;
-    [SerializeField] private float slideDistance;
     
+    [Header("Dodge Attributes")] 
+    public bool toggleProtoDodge = true;
+    [Space]
+    [SerializeField] private KeyCode dodgeKey;
+    [SerializeField] private float dodgeTime;
+    [SerializeField] private float dodgeDistance;
 
+    
+    private Dictionary<KeyCode, float> _inputToDirDict;
+    private Vector3 _dodgeDir;
     private float _horiz;
     private float _vert;
     private bool _isGrounded;
@@ -89,6 +84,12 @@ public class PlayerMovementController : MonoBehaviour
         EventDispatcher.Instance.AddListener(EventType.SetMovementStateEvent, param => UpdateMovementState((MovementState) param));
         EventDispatcher.Instance.AddListener(EventType.RequestIsOnGroundEvent, param => EventDispatcher.Instance.FireEvent(EventType.ReceiveIsOnGroundEvent, _isGrounded));
         
+        _inputToDirDict = new Dictionary<KeyCode, float>() {
+            {KeyCode.W, 0},
+            {KeyCode.S, 180},
+            {KeyCode.A, -90},
+            {KeyCode.D, 90}
+        };
         _canGravity = true;
         Rb.useGravity = false;
     }
@@ -103,13 +104,14 @@ public class PlayerMovementController : MonoBehaviour
 
     private void Update()
     {
-        
-        if(Input.GetKeyDown(rollKey)) ActionRoll(_moveDir);
-        if(Input.GetKeyDown(slideKey)) ActionSlide(_moveDir);
+        foreach (var input in _inputToDirDict.Keys.Where(Input.GetKey)) {
+            _dodgeDir = Quaternion.AngleAxis(_inputToDirDict[input], Vector3.up) * transform.forward;
+            break;
+        }
+        if(Input.GetKeyDown(dodgeKey)) ActionDodge(_dodgeDir);
     }
 
     #region Movement Base
-
     private void UpdateStrafe()
     {
         if (OnSlope()) {
@@ -216,7 +218,7 @@ public class PlayerMovementController : MonoBehaviour
     }
     #endregion
     
-    #region Movement Abilities
+    #region Movement Abilities (Outdated)
     
     /// <summary>
     /// Roll the character
@@ -224,70 +226,109 @@ public class PlayerMovementController : MonoBehaviour
     /// - roll visual towards said point
     /// </summary>
     /// <param name="moveDir"> normalized input direction vector </param>
-    private void ActionRoll(Vector3 moveDir)
-    {
-        //check for movement and prevent roll stack
-        if (moveDir.magnitude == 0 || moveState != MovementState.Normal) { return; }
-
-        moveState = MovementState.Roll;
-        
-        Rb.velocity = Vector3.zero;
-        Vector3 dest = transform.position + (moveDir) * rollDistance;
-        Vector3 rollAxis = Vector3.Cross(moveDir, playerVisualProto.up);
-        
-        StartCoroutine(LerpRollRoutine(dest, rollAxis));
-    }
+    // private void ActionRoll(Vector3 moveDir)
+    // {
+    //     //check for movement and prevent roll stack
+    //     if (moveDir.magnitude == 0 || moveState != MovementState.Normal) { return; }
+    //
+    //     moveState = MovementState.Roll;
+    //     
+    //     Rb.velocity = Vector3.zero;
+    //     Vector3 dest = transform.position + (moveDir) * rollDistance;
+    //     Vector3 rollAxis = Vector3.Cross(moveDir, playerVisualProto.up);
+    //     
+    //     StartCoroutine(LerpRollRoutine(dest, rollAxis));
+    // }
+    //
+    // private IEnumerator LerpRollRoutine(Vector3 dest, Vector3 rollAxis)
+    // {
+    //     var startPos = transform.position;
+    //     float time = 0;
+    //     
+    //     while (time < rollTime)
+    //     {
+    //         transform.position = Vector3.Lerp(startPos, dest, time / rollTime);
+    //         time += Time.deltaTime;
+    //         
+    //         if(toggleProtoRoll && moveState == MovementState.Roll)
+    //             playerVisualProto.RotateAround(transform.position, rollAxis, rollAngleProto);
+    //         
+    //         
+    //         yield return null;
+    //     }
+    //     
+    //     transform.position = dest;
+    //     playerVisualProto.up = Vector3.up;
+    //     moveState = MovementState.Normal;
+    // }
+    //
+    //
+    // private void ActionSlide(Vector3 moveDir)
+    // {
+    //     if (Mathf.Abs(Rb.velocity.magnitude - maxSpeed) > 0.5f || moveState != MovementState.Normal) { return; }
+    //
+    //     moveState = MovementState.Slide;
+    //     //var velMagCache = Rb.velocity.magnitude;
+    //     Vector3 dest = transform.position + moveDir * slideDistance;
+    //     Vector3 pointAxis = moveDir;
+    //
+    //     StartCoroutine(LerpSlideRoutine(dest, pointAxis));
+    //
+    // }
+    //
+    //
+    // private IEnumerator LerpSlideRoutine(Vector3 dest, Vector3 pointAxis)
+    // {
+    //     var startPos = transform.position;
+    //     float time = 0;
+    //
+    //     if (toggleProtoSlide && moveState == MovementState.Slide)
+    //     {
+    //         playerVisualProto.up = -pointAxis;
+    //     }
+    //     
+    //     while (time < slideTime)
+    //     {
+    //         transform.position = Vector3.Lerp(startPos, dest, time / slideTime);
+    //         time += Time.deltaTime;
+    //         
+    //         yield return null;
+    //     }
+    //     
+    //     transform.position = dest;
+    //     playerVisualProto.up = Vector3.up;
+    //     moveState = MovementState.Normal;
+    //
+    // }
+    #endregion
     
-    private IEnumerator LerpRollRoutine(Vector3 dest, Vector3 rollAxis)
+    #region Movement Abilities
+    private void ActionDodge(Vector3 moveDir)
     {
-        var startPos = transform.position;
-        float time = 0;
-        
-        while (time < rollTime)
-        {
-            transform.position = Vector3.Lerp(startPos, dest, time / rollTime);
-            time += Time.deltaTime;
-            
-            if(toggleProtoRoll && moveState == MovementState.Roll)
-                playerVisualProto.RotateAround(transform.position, rollAxis, rollAngleProto);
-            
-            
-            yield return null;
-        }
-        
-        transform.position = dest;
-        playerVisualProto.up = Vector3.up;
-        moveState = MovementState.Normal;
-    }
+        if (Rb.velocity.magnitude == 0 || moveState != MovementState.Normal) { return; }
     
-    
-    private void ActionSlide(Vector3 moveDir)
-    {
-        if (Mathf.Abs(Rb.velocity.magnitude - maxSpeed) > 0.5f || moveState != MovementState.Normal) { return; }
-
-        moveState = MovementState.Slide;
+        moveState = MovementState.Dodge;
         //var velMagCache = Rb.velocity.magnitude;
-        Vector3 dest = transform.position + moveDir * slideDistance;
-        Vector3 pointAxis = moveDir;
-
-        StartCoroutine(LerpSlideRoutine(dest, pointAxis));
-
-    }
-
+        Vector3 dest = transform.position + moveDir * dodgeDistance;
+        Vector3 rollAxis = Vector3.Cross(moveDir, playerVisualProto.up);
     
-    private IEnumerator LerpSlideRoutine(Vector3 dest, Vector3 pointAxis)
+        StartCoroutine(LerpDodgeRoutine(dest, rollAxis));
+    }
+    
+    
+    private IEnumerator LerpDodgeRoutine(Vector3 dest, Vector3 rollAxis)
     {
+        NCLogger.Log($"Dir: {_dodgeDir}", LogLevel.INFO);
         var startPos = transform.position;
+        var rbVel = Rb.velocity;
         float time = 0;
-
-        if (toggleProtoSlide && moveState == MovementState.Slide)
-        {
-            playerVisualProto.up = -pointAxis;
+    
+        if (toggleProtoDodge && moveState == MovementState.Dodge) {
+            playerVisualProto.Rotate(rollAxis, -30f, Space.Self);
         }
         
-        while (time < slideTime)
-        {
-            transform.position = Vector3.Lerp(startPos, dest, time / slideTime);
+        while (time < dodgeTime) {
+            transform.position = Vector3.Lerp(startPos, dest, time / dodgeTime);
             time += Time.deltaTime;
             
             yield return null;
@@ -296,9 +337,10 @@ public class PlayerMovementController : MonoBehaviour
         transform.position = dest;
         playerVisualProto.up = Vector3.up;
         moveState = MovementState.Normal;
-
+        Rb.velocity = rbVel;
     }
     #endregion
+    
     private bool IsOnGround()
     {
         bool val;
@@ -355,6 +397,8 @@ public class PlayerMovementController : MonoBehaviour
     {
         Gizmos.color = Color.blue;
         Gizmos.DrawRay(transform.position, _moveDir * 3);
+        Gizmos.color = Color.green;
+        Gizmos.DrawRay(transform.position, _dodgeDir * 5);
         Gizmos.color = Color.red;
         Gizmos.DrawRay(transform.position, groundCastDist * Vector3.down);
     }

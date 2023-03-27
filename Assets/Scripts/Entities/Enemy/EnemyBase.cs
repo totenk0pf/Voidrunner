@@ -1,9 +1,6 @@
 using System;
-<<<<<<< HEAD
-=======
 using System.Collections;
 using System.Collections.Generic;
->>>>>>> c9f1fe8cad10044d48d8fb74e790012081e956ad
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -89,7 +86,6 @@ public class EnemyBase : EntityBase {
             EnablePathfinding();
         }
     }
-<<<<<<< HEAD
     public virtual void EnablePathfinding() {
         if (CanPull && IsGrounded && (!StateMachine || !NavMeshAgent)) {
             StateMachine.enabled = true;
@@ -107,7 +103,7 @@ public class EnemyBase : EntityBase {
     public virtual void OnGrappled() {
         _canPull = false;
         DisablePathfinding();
-=======
+    }
 
     public virtual void Stun(float duration) {
         StartCoroutine(StunCoroutine(duration));
@@ -137,7 +133,6 @@ public class EnemyBase : EntityBase {
             yield return new WaitForSeconds(interval);
         }
         yield return null;
->>>>>>> c9f1fe8cad10044d48d8fb74e790012081e956ad
     }
 
     public virtual void OnRelease() {
@@ -161,17 +156,9 @@ public class EnemyBase : EntityBase {
             Destroy(gameObject);
         }
     }
-<<<<<<< HEAD
-
-    public virtual void TakeDamage(float amount) {
-        currentHp -= amount;
-        ui.UpdateBar(amount);
-    }
-
+    
     private void OnDrawGizmos() {
         Gizmos.color = Color.green;
         Gizmos.DrawLine(transform.position, transform.position + Vector3.down * checkDist);
     }
-=======
->>>>>>> c9f1fe8cad10044d48d8fb74e790012081e956ad
 }
