@@ -10,6 +10,7 @@ using Sirenix.OdinInspector;
 using Unity.VisualScripting;
 using UnityEngine;
 using EventType = Core.Events.EventType;
+
 public enum MeleeOrder {
     First = 0, 
     Second = 1,
@@ -19,10 +20,13 @@ public enum MeleeOrder {
 public struct MeleeAnimData {
     public readonly string clipStr;
     public readonly float damage;
-
-    public MeleeAnimData(string clipStr, float damage) {
+    public readonly float attackSpeedModifier;
+    public readonly MeleeCollider collider;
+    public MeleeAnimData(string clipStr, float damage, MeleeCollider collider, float speed = 1) {
         this.clipStr = clipStr;
         this.damage = damage;
+        this.collider = collider;
+        this.attackSpeedModifier = speed;
     }
 }
 
@@ -38,7 +42,8 @@ public class MeleeSequenceAttribute {
     public bool canDamageMod;
     [ShowIf("canDamageMod")] public float damageScale = 1;
     [ShowIf("canDamageMod")] public float damageModifier = 0;
-
+    [ShowIf("canDamageMod")] public float attackSpeedModifier = 1;
+    
     //Getters
     public float NextSeqInputWindow => nextSeqInputWindow;
     public float Damage => canDamageMod ? (damage + damageModifier) * damageScale : damage;
@@ -57,18 +62,18 @@ public class MeleeSequenceAttribute {
 }
 
 public class CombatManager : MonoBehaviour {
+    [TitleGroup("Melee settings")]
     [SerializeField] private MeleeSequenceData MeleeSequence;
-
-    private MeleeOrder _curMeleeOrder;
-    private WeaponType _curWeaponType;
-    private WeaponBase _curWeaponRef;
-
-    private bool _canAttack = true;
-    private bool _isAttacking = false;
-    private bool _isInWindow = false;
-
-    private float _nextSeqTime;
-   // private IEnumerator _windowRoutine;
+    [ReadOnly] private MeleeOrder _curMeleeOrder;
+    [ReadOnly] private bool _isInWindow = false;
+    [ReadOnly] private float _nextSeqTime;
+    
+    [TitleGroup("General settings")]
+    [ReadOnly] private WeaponType _curWeaponType;
+    [ReadOnly] private WeaponBase _curWeaponRef;
+    [Space]
+    //[ReadOnly] private bool _isAttacking = false;
+    [ReadOnly] private PlayerMovementController.MovementState _moveState;
     
     private void IncrementMeleeOrder() => _curMeleeOrder = _curMeleeOrder.Next();
 
@@ -78,6 +83,10 @@ public class CombatManager : MonoBehaviour {
         this.AddListener(EventType.MeleeAttackBeginEvent, param => OnMeleeAttackBegin());
         this.AddListener(EventType.MeleeAttackEndEvent, param => OnMeleeAttackEnd());
         this.AddListener(EventType.CancelMeleeAttackEvent, param => ResetChain());
+        this.AddListener(EventType.SetMovementStateEvent, state => _moveState = (PlayerMovementController.MovementState) state);
+        this.AddListener(EventType.WeaponMeleeFiredEvent, param => MeleeAttackUpdate());
+        this.AddListener(EventType.WeaponRangedFiredEvent, param => RangedAttackUpdate());
+        
         
         if(!MeleeSequence) NCLogger.Log($"Missing Melee Sequence Data", LogLevel.ERROR);
 
@@ -86,23 +95,28 @@ public class CombatManager : MonoBehaviour {
     }
 
     private void Start() {
+        if(!_curWeaponRef) NCLogger.Log($"_curWeaponRef = {_curWeaponRef}", LogLevel.ERROR);
+        
         _curMeleeOrder = MeleeOrder.First;
-        _canAttack = true;
-        _isAttacking = false;
+        _curWeaponRef.isAttacking = false;
         _isInWindow = false;
+        
+        this.FireEvent(EventType.UpdateCombatModifiersEvent, MeleeSequence);
     }
 
     private void Update() {
-        if (_canAttack && !_isAttacking) {
+        if (_curWeaponRef.canAttack && !_curWeaponRef.isAttacking) {
             MeleeAttackUpdate();
             RangedAttackUpdate();
         }
     }
     
     private void MeleeAttackUpdate() {
+        if (!_curWeaponRef.canAttack || _curWeaponRef.isAttacking) return;
         if (_curWeaponType != WeaponType.Melee || !Input.GetMouseButtonDown(0)) return;
-        _canAttack = false;
-        _isAttacking = true; 
+        if (_moveState != PlayerMovementController.MovementState.Normal) return;
+        _curWeaponRef.canAttack = false;
+        _curWeaponRef.isAttacking = true; 
         _isInWindow = false;
         
         MeleeSequence.OrderToAttributes[_curMeleeOrder.Next()].EnableCollider();
@@ -112,12 +126,15 @@ public class CombatManager : MonoBehaviour {
         StopAllCoroutines();
 
         var attribute = MeleeSequence.OrderToAttributes[_curMeleeOrder];
-        this.FireEvent(EventType.PlayMeleeAttackEvent, new MeleeAnimData(attribute.AnimClipStr, attribute.Damage));
+        this.FireEvent(EventType.PlayMeleeAttackEvent, 
+            new MeleeAnimData(attribute.AnimClipStr, attribute.Damage, attribute.collider, attribute.attackSpeedModifier));
         this.FireEvent(EventType.StopMovementEvent);
     }
 
     private void RangedAttackUpdate() {
+        if (!_curWeaponRef.canAttack || _curWeaponRef.isAttacking) return;
         if (_curWeaponType != WeaponType.Ranged || !Input.GetMouseButtonDown(0)) return;
+        if (_moveState != PlayerMovementController.MovementState.Normal) return;
     }
     
     private void UpdateCurrentWeapon(WeaponManager.WeaponEntry entry) {
@@ -139,7 +156,7 @@ public class CombatManager : MonoBehaviour {
         IncrementMeleeOrder();
         if (_curMeleeOrder == MeleeOrder.First) {
             _isInWindow = false;
-            _canAttack = false;
+            _curWeaponRef.canAttack = false;
         }else {
             _isInWindow = true;
         }
@@ -160,19 +177,20 @@ public class CombatManager : MonoBehaviour {
 
     private void OnMeleeAttackEnd() {
         Debug.Log("Anim end");
-        _canAttack = true;
-        _isAttacking = false;
+        _curWeaponRef.canAttack = true;
+        _curWeaponRef.isAttacking = false;
         StartCoroutine(WaitForInputWindowRoutine());
     }
     
     private void ResetChain()
     {
-        _canAttack = true;
-        _isAttacking = false;
+        _curWeaponRef.canAttack = true;
+        _curWeaponRef.isAttacking = false;
         _isInWindow = false;
         _curMeleeOrder = MeleeOrder.First;
         StopAllCoroutines();
-        this.FireEvent(EventType.PlayMeleeAttackEvent, new MeleeAnimData("Idle", 0));
+        //TODO: Replace this down the line with "PlayAnimationEvent", not "PlayMeleeAttackEvent"
+        this.FireEvent(EventType.PlayMeleeAttackEvent, new MeleeAnimData("Idle", 0, null));
         this.FireEvent(EventType.ResumeMovementEvent);
     }
     

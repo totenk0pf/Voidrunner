@@ -12,17 +12,23 @@ namespace Core.Events {
         OxygenChangeEvent,
         LevelChangeEvent,
         WeaponChangedEvent,
-        WeaponFiredEvent,
         WeaponRechargedEvent,
         AugmentChangedEvent,
         AugmentChargeEvent,
         AugmentDrainEvent,
-        DamageEnemyEvent,
-        RangedShotEvent,
+        EmpowerDamageEnemyEvent,
         GetMovementStateEvent,
         SetMovementStateEvent,
         RequestIsOnGroundEvent,
         ReceiveIsOnGroundEvent,
+        //Weapon Attack/Activation Events
+        WeaponFiredEvent, //common for melee & ranged
+        WeaponMeleeFiredEvent, //only for melee
+        WeaponRangedFiredEvent, //only for ranged
+        //Modifiers Events
+        RefreshModifiersEvent,
+        UpdateCombatModifiersEvent,
+        UpdateOxygenModifiersEvent,
         //Animation Events
         PlayAnimationEvent,
         PlayMeleeAttackEvent,

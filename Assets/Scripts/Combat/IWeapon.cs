@@ -2,6 +2,6 @@ using System.Collections;
 
 public interface IWeapon
 {
-    IEnumerator Fire();
-    IEnumerator AltFire();
+    // IEnumerator Fire();
+    // IEnumerator AltFire();
 }

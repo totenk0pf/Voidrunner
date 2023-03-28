@@ -59,7 +59,7 @@ namespace UI {
             this.AddListener(EventType.WeaponChangedEvent,
                 entry => ChangeActivePanel((WeaponManager.WeaponEntry) entry));
 
-            this.AddListener(EventType.RangedShotEvent, data => UpdateRangedUI((RangedUIMsg) data));
+            this.AddListener(EventType.WeaponRangedFiredEvent, data => UpdateRangedUI((RangedUIMsg) data));
             this.AddListener(EventType.WeaponFiredEvent, data => UpdateChargeUI((WeaponFireUIMsg) data));
         }
         

@@ -49,7 +49,7 @@ namespace Combat {
             _empowerIndex = 0;
             EventDispatcher.Instance.AddListener(EventType.WeaponChangedEvent,
                                                  param => UpdateCurrentWeapon((WeaponEntry) param));
-            EventDispatcher.Instance.AddListener(EventType.DamageEnemyEvent,
+            EventDispatcher.Instance.AddListener(EventType.EmpowerDamageEnemyEvent,
                                                  enemy => DealEmpowerDamage((EnemyBase) enemy));
             EventDispatcher.Instance.AddListener(EventType.InventoryToggleEvent, msg => OnInventoryUIEvent((InventoryToggleMsg) msg));
             UpdateCurrentAugment();

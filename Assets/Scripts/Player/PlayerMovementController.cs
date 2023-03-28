@@ -81,9 +81,9 @@ public class PlayerMovementController : MonoBehaviour
 
     private void Awake()
     {
-        EventDispatcher.Instance.AddListener(EventType.GetMovementStateEvent, param => GetMovementState());
-        EventDispatcher.Instance.AddListener(EventType.SetMovementStateEvent, param => UpdateMovementState((MovementState) param));
-        EventDispatcher.Instance.AddListener(EventType.RequestIsOnGroundEvent, param => EventDispatcher.Instance.FireEvent(EventType.ReceiveIsOnGroundEvent, _isGrounded));
+        this.AddListener(EventType.GetMovementStateEvent, param => GetMovementState());
+        this.AddListener(EventType.SetMovementStateEvent, param => UpdateMovementState((MovementState) param));
+        this.AddListener(EventType.RequestIsOnGroundEvent, param => EventDispatcher.Instance.FireEvent(EventType.ReceiveIsOnGroundEvent, _isGrounded));
         this.AddListener(EventType.StopMovementEvent, param => ToggleMovement(false));
         this.AddListener(EventType.ResumeMovementEvent, param => ToggleMovement(true));
         

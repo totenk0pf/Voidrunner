@@ -26,7 +26,6 @@ public class MeleeAnimator : MonoBehaviour, ICombatAnimator
     }
     
     #region Melee Animation Event Functions
-
     public void OnAnimationStart() {
         this.FireEvent(EventType.MeleeAttackBeginEvent, GetAnimator());
     }
