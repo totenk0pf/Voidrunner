@@ -1,5 +1,6 @@
 using System.Collections;
 using Core.Events;
+using Core.Logging;
 using UnityEngine;
 using Sirenix.OdinInspector;
 using UI;
@@ -7,14 +8,15 @@ using EventType = Core.Events.EventType;
 
 namespace Combat {
     public class GunBase : WeaponBase {
-        [TitleGroup("Gun settings")]
-        public float preshotDelay;
-        public float aftershotDelay;
+        // [TitleGroup("Gun settings")]
+        // public float preshotDelay;
+        // public float aftershotDelay;
+        // [SerializeField] private int maxAmmo;
+        // [SerializeField] private int maxClip;
+        // [SerializeField] private LayerMask raycastMask;
+
+        [ReadOnly] protected RangedAttribute attribute; 
         public Transform firePoint;
-        [SerializeField] private int maxAmmo;
-        [SerializeField] private int maxClip;
-        [SerializeField] private LayerMask raycastMask;
-        
         [TitleGroup("Gun states")]
         protected bool isReloading;
 
@@ -25,11 +27,20 @@ namespace Combat {
         [SerializeField] protected Animator animator;
 
         protected void Awake() {
-            currentAmmo = maxAmmo;
-            clipAmount = maxClip;
-            UpdateUI();
+            this.AddListener(EventType.RefreshRangedAttributesEvent, param => UpdateAttribute((RangedAttribute)param));
+            
+            if(currentAmmo == 0 || clipAmount == 0)
+                NCLogger.Log($"Did not receive refreshAttribute at Awake", LogLevel.ERROR);
         }
 
+        protected void UpdateAttribute(RangedAttribute attribute) {
+            this.attribute = attribute;
+            
+            currentAmmo = this.attribute.MaxAmmo;
+            clipAmount = this.attribute.MaxClip;
+            UpdateUI();
+        }
+        
         protected void UpdateUI() {
             this.FireEvent(EventType.WeaponPostRangedFiredEvent, new RangedUIMsg {
                 ammo = currentAmmo,

@@ -21,6 +21,8 @@ namespace Core.Events {
         SetMovementStateEvent,
         RequestIsOnGroundEvent,
         ReceiveIsOnGroundEvent,
+        //Weapon Init Events
+        RefreshRangedAttributesEvent,
         //Weapon Attack/Activation Events
         WeaponFiredEvent, //common for melee & ranged
         WeaponMeleeFiredEvent, //only for melee

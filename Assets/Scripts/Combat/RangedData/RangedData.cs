@@ -1,12 +1,10 @@
 using UnityEngine;
 
-namespace Combat.RangedData
+namespace Combat
 {
     [CreateAssetMenu(fileName = "RangedData", menuName = "Player/RangedData", order = 0)]
     public class RangedData : ScriptableObject
-    {
-        [SerializeField] private float preshotDelay;
-        [SerializeField] private float aftershotDelay;
-        
+    { 
+        [SerializeField] private RangedAttribute RangedAttribute;
     }
 }

@@ -86,7 +86,28 @@ public class MeleeSequenceAttribute {
     }
 }
 
-public class CombatManager : MonoBehaviour {
+[Serializable]
+public class RangedAttribute
+{
+    [SerializeField] private float preshotDelay;
+    [SerializeField] private float aftershotDelay;
+
+    [SerializeField] private int maxAmmo;
+    [SerializeField] private int maxClip;
+    [SerializeField] private LayerMask raycastMask;
+
+    public float PreshotDelay => preshotDelay;
+    public float AftershotDelay => aftershotDelay;
+    public int MaxAmmo => maxAmmo;
+    public int MaxClip => maxClip;
+    public LayerMask RaycastMask => raycastMask;
+}
+
+public class CombatManager : MonoBehaviour
+{
+    [TitleGroup("Ranged Settings")] 
+    [SerializeField] private RangedData RangedData;
+    
     [TitleGroup("Melee settings")]
     [SerializeField] private MeleeSequenceData MeleeSequence;
     [ReadOnly] private MeleeOrder _curMeleeOrder;
@@ -102,8 +123,7 @@ public class CombatManager : MonoBehaviour {
     
     private void IncrementMeleeOrder() => _curMeleeOrder = _curMeleeOrder.Next();
 
-    private void Awake()
-    {
+    private void Awake() {
         this.AddListener(EventType.WeaponChangedEvent, param => UpdateCurrentWeapon((WeaponManager.WeaponEntry) param));
         this.AddListener(EventType.MeleeAttackBeginEvent, param => OnMeleeAttackBegin());
         this.AddListener(EventType.MeleeAttackEndEvent, param => OnMeleeAttackEnd());
