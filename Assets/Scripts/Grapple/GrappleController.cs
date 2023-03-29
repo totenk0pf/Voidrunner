@@ -217,7 +217,9 @@ namespace Grapple {
 
         private void CancelGrapple()
         {
+            NCLogger.Log($"'cancel");
             if (_playerToPointRoutine != null) {
+                NCLogger.Log($"'cancel1");
                 StopCoroutine(_playerToPointRoutine);
                 ResetGrapple_PlayerToPoint(isCanceled: true);
             }
@@ -247,11 +249,12 @@ namespace Grapple {
         private void ResetGrapple_PlayerToPoint(bool isCanceled = false)
         {
             if (isCanceled) {
+                NCLogger.Log($"'cancel2");
                 var dir = (_currentGrappleHit.point - transform.position).normalized;
                 StartCoroutine(_controller.GravityDampRoutine(gravityDampDuration));
                 Rigidbody.AddForce(dir*momentumForce, forceMode);
             }
-            
+            NCLogger.Log($"'cancel3");
             EventDispatcher.Instance.FireEvent(EventType.SetMovementStateEvent, PlayerMovementController.MovementState.Normal);
             _currentGrappleHit = new RaycastHit();
             _lr.enabled = false;
