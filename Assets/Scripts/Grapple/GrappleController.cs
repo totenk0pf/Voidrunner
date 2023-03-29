@@ -251,10 +251,16 @@ namespace Grapple {
             if (isCanceled) {
                 NCLogger.Log($"'cancel2");
                 var dir = (_currentGrappleHit.point - transform.position).normalized;
-                StartCoroutine(_controller.GravityDampRoutine(gravityDampDuration));
                 Rigidbody.AddForce(dir*momentumForce, forceMode);
             }
             NCLogger.Log($"'cancel3");
+            else //TODO: This is hardcoded, fix this later.
+            {
+                Rigidbody.AddForce(Vector3.up*momentumForce/3, forceMode);
+            }
+            //damping fall velocity
+            StartCoroutine(_controller.GravityDampRoutine(gravityDampDuration));
+            
             EventDispatcher.Instance.FireEvent(EventType.SetMovementStateEvent, PlayerMovementController.MovementState.Normal);
             _currentGrappleHit = new RaycastHit();
             _lr.enabled = false;
@@ -268,6 +274,8 @@ namespace Grapple {
             var dir = (GrappleHaltPosition - _currentGrappleHit.point).normalized;
             var endPos = startPos + (dist * dir);
             
+
+            var endPos = startPos + (dist * dir);
             if(!_currentGrappledEnemy) NCLogger.Log($"_currentGrappledEnemy Null Object Exception", LogLevel.ERROR);
             _currentGrappledEnemy.OnGrappled();
             
