@@ -79,9 +79,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0a24c4496aa6360499c011ce1925517e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  damage: 100
-  damageScale: 1
-  damageModifier: 1
   canAttack: 0
   isAttacking: 0
   preshotDelay: 0.2
@@ -900,7 +897,7 @@ CapsuleCollider:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6506544875450666556}
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_Enabled: 1
   m_Radius: 0.5
   m_Height: 2
@@ -1047,14 +1044,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bd040185ec8c285409b659df6727bea9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  damage: 40
-  damageScale: 1
-  damageModifier: 1
   canAttack: 0
   isAttacking: 0
-  attackSpeed: 1
-  attackRadius: 3
-  attackSpeedModifier: 2
 --- !u!1 &9064512858836528851
 GameObject:
   m_ObjectHideFlags: 0

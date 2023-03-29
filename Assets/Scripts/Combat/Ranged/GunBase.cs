@@ -31,7 +31,7 @@ namespace Combat {
         }
 
         protected void UpdateUI() {
-            this.FireEvent(EventType.WeaponRangedFiredEvent, new RangedUIMsg {
+            this.FireEvent(EventType.WeaponPostRangedFiredEvent, new RangedUIMsg {
                 ammo = currentAmmo,
                 clip = clipAmount
             });

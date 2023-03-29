@@ -25,6 +25,7 @@ namespace Core.Events {
         WeaponFiredEvent, //common for melee & ranged
         WeaponMeleeFiredEvent, //only for melee
         WeaponRangedFiredEvent, //only for ranged
+        WeaponPostRangedFiredEvent, //only for ranged (UI/UX handle)
         //Modifiers Events
         RefreshModifiersEvent,
         UpdateCombatModifiersEvent,

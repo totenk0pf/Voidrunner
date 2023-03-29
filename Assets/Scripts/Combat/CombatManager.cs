@@ -17,19 +17,6 @@ public enum MeleeOrder {
     Third = 2
 }
 
-public struct MeleeAnimData {
-    public readonly string clipStr;
-    public readonly float damage;
-    public readonly float attackSpeedModifier;
-    public readonly MeleeCollider collider;
-    public MeleeAnimData(string clipStr, float damage, MeleeCollider collider, float speed = 1) {
-        this.clipStr = clipStr;
-        this.damage = damage;
-        this.collider = collider;
-        this.attackSpeedModifier = speed;
-    }
-}
-
 [Serializable]
 public class MeleeSequenceAttribute {
     [SerializeField] private string animClipStr;
@@ -40,15 +27,30 @@ public class MeleeSequenceAttribute {
     [SerializeField] private float knockBackForce;
     [ReadOnly] public MeleeCollider collider;
     public bool canDamageMod;
-    [ShowIf("canDamageMod")] public float damageScale = 1;
-    [ShowIf("canDamageMod")] public float damageModifier = 0;
-    [ShowIf("canDamageMod")] public float attackSpeedModifier = 1;
+    [ShowIf("canDamageMod")] [SerializeField] private float damageScale = 1;
+    [ShowIf("canDamageMod")] [SerializeField] private float damageModifier = 0;
+    [ShowIf("canDamageMod")] [SerializeField] private float attackSpeedModifier = 1;
     
     //Getters
     public float NextSeqInputWindow => nextSeqInputWindow;
     public float Damage => canDamageMod ? (damage + damageModifier) * damageScale : damage;
     public float KnockBackForce => knockBackForce;
     public string AnimClipStr => animClipStr;
+
+    public float AtkSpdModifier {
+        get => canDamageMod ? attackSpeedModifier : ReturnFloatWithLog(1);
+        set => attackSpeedModifier = value;
+    }
+
+    public float DmgModifer {
+        get => canDamageMod ? damageModifier : ReturnFloatWithLog(0);
+        set => damageModifier = value;
+    }
+
+    public float DmgScale {
+        get => canDamageMod ? damageScale : ReturnFloatWithLog(1);
+        set => damageScale = value;
+    }
     
     public void EnableCollider() {
         collider.ResetEnemiesList();
@@ -58,6 +60,29 @@ public class MeleeSequenceAttribute {
     public void DisableCollider() {
         collider.ResetEnemiesList();
         collider.gameObject.SetActive(false);
+    }
+
+    public float ReturnFloatWithLog(float val) {
+        NCLogger.Log($"Damage Mod is {canDamageMod}, make sure you're not getting a default value", LogLevel.WARNING);
+        return val;
+    }
+    
+    public MeleeSequenceAttribute Clone() {
+        return new MeleeSequenceAttribute(animClipStr, nextSeqInputWindow, damage, knockBackForce, collider,
+            canDamageMod, damageScale, damageModifier, attackSpeedModifier);
+    }
+    
+    public MeleeSequenceAttribute(string clipStr, float seqInputWin, float dmg, float knockForce, MeleeCollider col,
+        bool dmgMod = false, float dmgScale = 1, float dmgModifier = 0, float dmgSpeed = 1) {
+        animClipStr = clipStr;
+        nextSeqInputWindow = seqInputWin;
+        damage = dmg;
+        knockBackForce = knockForce;
+        collider = col;
+        canDamageMod = dmgMod;
+        damageScale = dmgScale;
+        damageModifier = dmgScale;
+        attackSpeedModifier = dmgSpeed;
     }
 }
 
@@ -104,30 +129,22 @@ public class CombatManager : MonoBehaviour {
         this.FireEvent(EventType.UpdateCombatModifiersEvent, MeleeSequence);
     }
 
-    private void Update() {
-        if (_curWeaponRef.canAttack && !_curWeaponRef.isAttacking) {
-            MeleeAttackUpdate();
-            RangedAttackUpdate();
-        }
-    }
-    
     private void MeleeAttackUpdate() {
         if (!_curWeaponRef.canAttack || _curWeaponRef.isAttacking) return;
         if (_curWeaponType != WeaponType.Melee || !Input.GetMouseButtonDown(0)) return;
         if (_moveState != PlayerMovementController.MovementState.Normal) return;
+        
         _curWeaponRef.canAttack = false;
         _curWeaponRef.isAttacking = true; 
         _isInWindow = false;
-        
-        MeleeSequence.OrderToAttributes[_curMeleeOrder.Next()].EnableCollider();
-        
+
+        MeleeSequence.EnableIsolatedCollider(_curMeleeOrder);
+
         //StopAllCoroutines here due to spamming melee -> multiple instances of coroutine
         //StopCoroutine(thisRoutine) would not stop all coroutines of same "thisRoutine" method
         StopAllCoroutines();
-
-        var attribute = MeleeSequence.OrderToAttributes[_curMeleeOrder];
-        this.FireEvent(EventType.PlayMeleeAttackEvent, 
-            new MeleeAnimData(attribute.AnimClipStr, attribute.Damage, attribute.collider, attribute.attackSpeedModifier));
+        //Clone so that it would not edit in SO data
+        this.FireEvent(EventType.PlayMeleeAttackEvent, MeleeSequence.OrderToAttributes[_curMeleeOrder].Clone());
         this.FireEvent(EventType.StopMovementEvent);
     }
 
@@ -176,21 +193,20 @@ public class CombatManager : MonoBehaviour {
     }
 
     private void OnMeleeAttackEnd() {
-        Debug.Log("Anim end");
         _curWeaponRef.canAttack = true;
         _curWeaponRef.isAttacking = false;
+        MeleeSequence.DisableAllColliders();
         StartCoroutine(WaitForInputWindowRoutine());
     }
     
-    private void ResetChain()
-    {
+    private void ResetChain() {
         _curWeaponRef.canAttack = true;
         _curWeaponRef.isAttacking = false;
         _isInWindow = false;
         _curMeleeOrder = MeleeOrder.First;
         StopAllCoroutines();
         //TODO: Replace this down the line with "PlayAnimationEvent", not "PlayMeleeAttackEvent"
-        this.FireEvent(EventType.PlayMeleeAttackEvent, new MeleeAnimData("Idle", 0, null));
+        this.FireEvent(EventType.PlayMeleeAttackEvent, new MeleeSequenceAttribute("Idle", 0, 0, 0, null));
         this.FireEvent(EventType.ResumeMovementEvent);
     }
     

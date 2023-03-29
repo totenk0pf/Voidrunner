@@ -47,10 +47,11 @@ public class PlayerStats : MonoBehaviour
 
     private void UpdateCombatModifiers(MeleeSequenceData meleeData)
     {
+        //Modifying in SO
         foreach (var seq in meleeData.OrderToAttributes.Values) {
-            seq.damageScale = 1; //Default 1 haven't implemented damage scaling yet
-            seq.damageModifier = seq.damageScale * level;
-            seq.attackSpeedModifier = dexterity;
+            seq.DmgScale = 1; //Default 1 haven't implemented damage scaling yet
+            seq.DmgModifer = seq.DmgScale * level;
+            seq.AtkSpdModifier = dexterity;
         }
         //Combat Modifiers
         //meleeBase.damageScale = 1; //Default 1 haven't implemented damage scaling yet

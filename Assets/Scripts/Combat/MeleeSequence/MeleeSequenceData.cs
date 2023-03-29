@@ -13,6 +13,22 @@ namespace Combat
         [SerializeField] private Dictionary<MeleeOrder, MeleeSequenceAttribute> orderToAttributes;
         public Dictionary<MeleeOrder, MeleeSequenceAttribute> OrderToAttributes => orderToAttributes;
 
+        public void EnableIsolatedCollider(MeleeOrder key) {
+            foreach (var kvp in orderToAttributes) {
+                if (kvp.Key == key) {
+                    orderToAttributes[kvp.Key].EnableCollider();
+                } else {
+                    orderToAttributes[kvp.Key].DisableCollider();
+                }
+            }
+        }
+
+        public void DisableAllColliders() {
+            foreach (var key in orderToAttributes.Keys) {
+                orderToAttributes[key].DisableCollider();
+            }
+        }
+        
         public bool ValidateColliders() {
             var result = true;
             foreach (var order in orderToAttributes.Keys) {

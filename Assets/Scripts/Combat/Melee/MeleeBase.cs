@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using Core.Events;
+using Core.Logging;
 using UnityEngine;
 using Sirenix.OdinInspector;
 using UI;
@@ -18,6 +19,7 @@ namespace Combat {
         // protected List<EnemyBase> enemies = new();
         
         protected void Awake() {
+            this.AddListener(EventType.EnemyDamageEvent, dmgData => ApplyDamageOnEnemy((MeleeSequenceAttribute) dmgData));
             canAttack = true;
             // StartCoroutine(Fire());
             // StartCoroutine(AltFire());
@@ -30,6 +32,23 @@ namespace Combat {
             }
         }
 
+        protected void ApplyDamageOnEnemy(MeleeSequenceAttribute dmgData) {
+            var enemies = dmgData.collider.Enemies;
+            foreach (var enemy in enemies) {
+                if (enemies.Count < 1) return;
+                Damage(enemy, dmgData.Damage);
+                NCLogger.Log($"dmg: {dmgData.Damage}");
+                
+                this.FireEvent(EventType.WeaponFiredEvent, new WeaponFireUIMsg {
+                        type = WeaponType.Melee,
+                        rechargeDuration = dmgData.AtkSpdModifier //default value
+                });
+                //waiting for recharge time is handled in CombatManager
+                this.FireEvent(EventType.WeaponRechargedEvent);
+                //resetting atk attributes is handled in CombatManager
+            }
+        }
+        
         // protected void OnTriggerEnter(Collider col) {
         //     var enemy = GetEnemy(col);
         //     if (enemy) enemies.Add(enemy);
