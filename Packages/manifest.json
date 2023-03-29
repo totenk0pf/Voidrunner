@@ -1,6 +1,5 @@
 {
   "dependencies": {
-    "com.psydack.uimgui": "https://github.com/psydack/uimgui.git",
     "com.unity.2d.sprite": "1.0.0",
     "com.unity.burst": "1.6.6",
     "com.unity.cinemachine": "2.8.9",
