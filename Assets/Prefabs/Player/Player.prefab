@@ -81,14 +81,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   canAttack: 0
   isAttacking: 0
-  preshotDelay: 0.2
-  aftershotDelay: 0.6
   firePoint: {fileID: 6037325520643900592}
-  maxAmmo: 1
-  maxClip: 10
-  raycastMask:
-    serializedVersion: 2
-    m_Bits: 311
   currentAmmo: 0
   clipAmount: 0
   animator: {fileID: 0}
@@ -1091,7 +1084,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 23841b4e2e723e3429b020874452424d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  RangedData: {fileID: 11400000, guid: 25f7fbfde7e904beb8725147e74ca5b9, type: 2}
   MeleeSequence: {fileID: 11400000, guid: 547072da3b9b3482dba78e7aaab8264f, type: 2}
+  meleeVisual: {fileID: 0}
+  rangedVisual: {fileID: 0}
 --- !u!1001 &3622856747884645184
 PrefabInstance:
   m_ObjectHideFlags: 0

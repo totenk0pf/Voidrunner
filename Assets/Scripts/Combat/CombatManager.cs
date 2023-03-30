@@ -63,7 +63,7 @@ public class MeleeSequenceAttribute {
     }
 
     public float ReturnFloatWithLog(float val) {
-        NCLogger.Log($"Damage Mod is {canDamageMod}, make sure you're not getting a default value", LogLevel.WARNING);
+        if(canDamageMod) NCLogger.Log($"Damage Mod: {canDamageMod}, make sure you're not getting a default value", LogLevel.WARNING);
         return val;
     }
     
