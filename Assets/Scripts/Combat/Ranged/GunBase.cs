@@ -29,6 +29,10 @@ namespace Combat {
         protected void Awake() {
             this.AddListener(EventType.RefreshRangedAttributesEvent, param => UpdateAttribute((RangedAttribute)param));
             
+        }
+
+        protected IEnumerator Start() {
+            yield return new WaitForSeconds(.5f); //skip X seconds to queue checking after init steps
             if(currentAmmo == 0 || clipAmount == 0)
                 NCLogger.Log($"Did not receive refreshAttribute at Awake", LogLevel.ERROR);
         }

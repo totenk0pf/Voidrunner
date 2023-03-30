@@ -7,7 +7,7 @@ using UnityEngine;
 using EventType = Core.Events.EventType;
 
 [RequireComponent(typeof(Animator))]
-public class MeleeAnimator : MonoBehaviour, ICombatAnimator
+public class PlayerAnimator : MonoBehaviour, IInteractiveAnimator, ICombatAnimator
 {
     private Animator _animator;
     private MeleeSequenceAttribute _meleeAnimData;
@@ -22,14 +22,8 @@ public class MeleeAnimator : MonoBehaviour, ICombatAnimator
         //editing the clone -> NOT affect SO data
         _meleeAnimData.AtkSpdModifier = GetClipLength(data.AnimClipStr);
     }
-
     
-    public void PlayAnimation(string clipStr) {
-        GetAnimator().speed = _meleeAnimData.AtkSpdModifier;
-        GetAnimator().Play(clipStr);
-    }
-    
-    #region Melee Animation Event Functions
+    #region IInteractiveAnimator
     public void OnAnimationStart() {
         this.FireEvent(EventType.MeleeAttackBeginEvent, GetAnimator());
     }
@@ -37,7 +31,9 @@ public class MeleeAnimator : MonoBehaviour, ICombatAnimator
     public void OnAnimationEnd() {
         this.FireEvent(EventType.MeleeAttackEndEvent, GetAnimator());
     }
-
+    #endregion
+    
+    #region ICombatAnimator
     public void ApplyDamageOnFrame() {
         //TODO: Implement melee order's collider to damage correct enemies
         if(_meleeAnimData != null)
@@ -46,12 +42,19 @@ public class MeleeAnimator : MonoBehaviour, ICombatAnimator
             NCLogger.Log($"no melee anim data - animData: {_meleeAnimData}");
     }
     #endregion
+ 
+    #region IAnimator
+    public void PlayAnimation(string clipStr) {
+        GetAnimator().speed = _meleeAnimData.AtkSpdModifier;
+        GetAnimator().Play(clipStr);
+    }
     
     public Animator GetAnimator() {
         if (!_animator) _animator = GetComponent<Animator>();
         return _animator;
     }
-
+    #endregion
+    
     private float GetClipLength(string name) {
         AnimationClip[] clips = GetAnimator().runtimeAnimatorController.animationClips;
         foreach (var clip in clips) {

@@ -3,10 +3,14 @@ using UnityEngine;
 
 namespace Combat
 {
-    public interface ICombatAnimator : IAnimator
+    public interface IInteractiveAnimator : IAnimator
     {
         public void OnAnimationStart();
         public void OnAnimationEnd();
+    }
+
+    public interface ICombatAnimator
+    {
         public void ApplyDamageOnFrame();
     }
 }

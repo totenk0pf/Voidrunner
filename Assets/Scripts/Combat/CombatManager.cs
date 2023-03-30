@@ -115,11 +115,13 @@ public class CombatManager : MonoBehaviour
     [ReadOnly] private float _nextSeqTime;
     
     [TitleGroup("General settings")]
+    [SerializeField] private GameObject meleeVisual;
+    [SerializeField] private GameObject rangedVisual;
     [ReadOnly] private WeaponType _curWeaponType;
     [ReadOnly] private WeaponBase _curWeaponRef;
     [Space]
-    //[ReadOnly] private bool _isAttacking = false;
     [ReadOnly] private PlayerMovementController.MovementState _moveState;
+
     
     private void IncrementMeleeOrder() => _curMeleeOrder = _curMeleeOrder.Next();
 
@@ -131,10 +133,13 @@ public class CombatManager : MonoBehaviour
         this.AddListener(EventType.SetMovementStateEvent, state => _moveState = (PlayerMovementController.MovementState) state);
         this.AddListener(EventType.WeaponMeleeFiredEvent, param => MeleeAttackUpdate());
         this.AddListener(EventType.WeaponRangedFiredEvent, param => RangedAttackUpdate());
-        
-        
-        if(!MeleeSequence) NCLogger.Log($"Missing Melee Sequence Data", LogLevel.ERROR);
 
+        if(!MeleeSequence) NCLogger.Log($"Missing Melee Sequence Data", LogLevel.ERROR);
+        if(!RangedData) NCLogger.Log($"Missing Ranged Data", LogLevel.ERROR);
+
+        if (!meleeVisual) NCLogger.Log($"Missing MeleeVisual", LogLevel.ERROR);
+        if (!rangedVisual) NCLogger.Log($"Missing RangedVisual", LogLevel.ERROR);
+            
         AssignCollidersData();
         if(!MeleeSequence.ValidateColliders()) NCLogger.Log($"Collider Validation Failed", LogLevel.ERROR);
     }
@@ -146,6 +151,7 @@ public class CombatManager : MonoBehaviour
         _curWeaponRef.isAttacking = false;
         _isInWindow = false;
         
+        this.FireEvent(EventType.RefreshRangedAttributesEvent, RangedData.Attribute);
         this.FireEvent(EventType.UpdateCombatModifiersEvent, MeleeSequence);
     }
 

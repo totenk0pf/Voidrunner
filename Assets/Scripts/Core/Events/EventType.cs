@@ -1,4 +1,8 @@
 namespace Core.Events {
+    //TODO: Divide enum by category (ItemEventType, AnimEventType,...) -> Point of enum is to be clear,-
+    //TODO: -making a single enum with too many types would nullify the point of an enum in the first place.
+    //TODO: Give each enum a value, so that when comparing enum value, it doesn't get misconstrued
+    //TODO: Reason for doing this cuz a senior walked by my screen and told me to do this. 
     public enum EventType {
         TestEvent = 0,
         LogEvent,

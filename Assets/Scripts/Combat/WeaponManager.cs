@@ -70,10 +70,8 @@ namespace Combat {
         //     }
         // }
 
-        private void OnWeaponSwap(WeaponEntry weapon)
-        {
-            foreach (var item in weaponList)
-            {
+        private void OnWeaponSwap(WeaponEntry weapon) {
+            foreach (var item in weaponList) {
                 item.Reference.canAttack = item.Type == weapon.Type;
             }
 
