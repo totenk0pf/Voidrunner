@@ -12,11 +12,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7ce8110fc22c4eccba0e6a24503c9b47, type: 3}
   m_Name: RangedData
   m_EditorClassIdentifier: 
-  RangedAttribute:
-    preshotDelay: 0
-    aftershotDelay: 0
-    maxAmmo: 0
-    maxClip: 0
+  rangedAttribute:
+    preshotDelay: 0.2
+    aftershotDelay: 0.6
+    maxAmmo: 20
+    maxClip: 1
     raycastMask:
       serializedVersion: 2
-      m_Bits: 0
+      m_Bits: 256

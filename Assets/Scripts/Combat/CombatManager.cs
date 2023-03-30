@@ -114,9 +114,10 @@ public class CombatManager : MonoBehaviour
     [ReadOnly] private bool _isInWindow = false;
     [ReadOnly] private float _nextSeqTime;
     
-    [TitleGroup("General settings")]
+    [TitleGroup("Prototype visual settings")]
     [SerializeField] private GameObject meleeVisual;
     [SerializeField] private GameObject rangedVisual;
+    [TitleGroup("General settings")]
     [ReadOnly] private WeaponType _curWeaponType;
     [ReadOnly] private WeaponBase _curWeaponRef;
     [Space]
