@@ -253,7 +253,6 @@ namespace Grapple {
                 var dir = (_currentGrappleHit.point - transform.position).normalized;
                 Rigidbody.AddForce(dir*momentumForce, forceMode);
             }
-            NCLogger.Log($"'cancel3");
             else //TODO: This is hardcoded, fix this later.
             {
                 Rigidbody.AddForce(Vector3.up*momentumForce/3, forceMode);
@@ -272,10 +271,8 @@ namespace Grapple {
             var startPos = _currentGrappleHit.point;
             var dist = Vector3.Distance(_currentGrappleHit.point, GrappleHaltPosition);
             var dir = (GrappleHaltPosition - _currentGrappleHit.point).normalized;
-            var endPos = startPos + (dist * dir);
+            var endPos = startPos + dist * dir;
             
-
-            var endPos = startPos + (dist * dir);
             if(!_currentGrappledEnemy) NCLogger.Log($"_currentGrappledEnemy Null Object Exception", LogLevel.ERROR);
             _currentGrappledEnemy.OnGrappled();
             
