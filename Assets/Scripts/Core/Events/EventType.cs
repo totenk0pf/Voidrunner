@@ -21,6 +21,8 @@ namespace Core.Events {
         SetMovementStateEvent,
         RequestIsOnGroundEvent,
         ReceiveIsOnGroundEvent,
+        //Grapple Based Events
+        CancelGrappleEvent,
         //Weapon Init Events
         RefreshRangedAttributesEvent,
         //Weapon Attack/Activation Events
