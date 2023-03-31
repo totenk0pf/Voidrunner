@@ -1518,7 +1518,7 @@ MonoBehaviour:
   RangedData: {fileID: 11400000, guid: 25f7fbfde7e904beb8725147e74ca5b9, type: 2}
   MeleeSequence: {fileID: 11400000, guid: 547072da3b9b3482dba78e7aaab8264f, type: 2}
   meleeVisual: {fileID: 8025604099400858489}
-  rangedVisual: {fileID: 0}
+  rangedVisual: {fileID: 5503401047932254697}
 --- !u!1001 &3622856747884645184
 PrefabInstance:
   m_ObjectHideFlags: 0

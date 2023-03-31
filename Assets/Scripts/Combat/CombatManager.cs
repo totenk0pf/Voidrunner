@@ -127,14 +127,18 @@ public class CombatManager : MonoBehaviour
     private void IncrementMeleeOrder() => _curMeleeOrder = _curMeleeOrder.Next();
 
     private void Awake() {
+        //Weapon Switch
         this.AddListener(EventType.WeaponChangedEvent, param => UpdateCurrentWeapon((WeaponManager.WeaponEntry) param));
+        //Melee Combo Related
         this.AddListener(EventType.MeleeAttackBeginEvent, param => OnMeleeAttackBegin());
         this.AddListener(EventType.MeleeAttackEndEvent, param => OnMeleeAttackEnd());
         this.AddListener(EventType.CancelMeleeAttackEvent, param => ResetChain());
-        this.AddListener(EventType.SetMovementStateEvent, state => _moveState = (PlayerMovementController.MovementState) state);
         this.AddListener(EventType.WeaponMeleeFiredEvent, param => MeleeAttackUpdate());
+        //Ranged Related
         this.AddListener(EventType.WeaponRangedFiredEvent, param => RangedAttackUpdate());
-
+        //Movement State
+        this.AddListener(EventType.SetMovementStateEvent, state => _moveState = (PlayerMovementController.MovementState) state);
+        
         if(!MeleeSequence) NCLogger.Log($"Missing Melee Sequence Data", LogLevel.ERROR);
         if(!RangedData) NCLogger.Log($"Missing Ranged Data", LogLevel.ERROR);
 
@@ -184,6 +188,10 @@ public class CombatManager : MonoBehaviour
     private void UpdateCurrentWeapon(WeaponManager.WeaponEntry entry) {
         _curWeaponType = entry.Type;
         _curWeaponRef = entry.Reference;
+        
+        //Toggle Prototype Visuals TODO: Remove when actual model is available
+        meleeVisual.SetActive(_curWeaponType == WeaponType.Melee);
+        rangedVisual.SetActive(_curWeaponType == WeaponType.Ranged);
     }
 
     /// <summary>
