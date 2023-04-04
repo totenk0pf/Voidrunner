@@ -18,7 +18,7 @@ public enum MeleeOrder {
 }
 
 [Serializable]
-public class MeleeSequenceAttribute {
+public class MeleeSequenceAttribute : IAnimDataConvertable {
     [SerializeField] private string animClipStr;
     //the last combo's window will be the last combo's frame hold time.
     //After it ends, next combo string can be played
@@ -67,9 +67,8 @@ public class MeleeSequenceAttribute {
         return val;
     }
     
-    public MeleeSequenceAttribute Clone() {
-        return new MeleeSequenceAttribute(animClipStr, nextSeqInputWindow, damage, knockBackForce, collider,
-            canDamageMod, damageScale, damageModifier, attackSpeedModifier);
+    public AnimData CloneToAnimData() {
+        return new AnimData(animClipStr, Damage, AtkSpdModifier, collider.Enemies);
     }
     
     public MeleeSequenceAttribute(string clipStr, float seqInputWin, float dmg, float knockForce, MeleeCollider col,
@@ -87,8 +86,9 @@ public class MeleeSequenceAttribute {
 }
 
 [Serializable]
-public class RangedAttribute
+public class RangedAttribute : IAnimDataConvertable
 {
+    [SerializeField] private string fireTriggerStr;
     [SerializeField] private float preshotDelay;
     [SerializeField] private float aftershotDelay;
 
@@ -96,11 +96,19 @@ public class RangedAttribute
     [SerializeField] private int maxClip;
     [SerializeField] private LayerMask raycastMask;
 
+    public bool canDamageMod;
+    [ShowIf("canDamageMod")] [SerializeField] private float attackSpeed;
+    public string TriggerStr => fireTriggerStr;
     public float PreshotDelay => preshotDelay;
     public float AftershotDelay => aftershotDelay;
     public int MaxAmmo => maxAmmo;
     public int MaxClip => maxClip;
     public LayerMask RaycastMask => raycastMask;
+    public float AtkSpd => canDamageMod ? attackSpeed : 1;
+    public AnimData CloneToAnimData()
+    {
+        throw new NotImplementedException();
+    }
 }
 
 public class CombatManager : MonoBehaviour
@@ -119,7 +127,7 @@ public class CombatManager : MonoBehaviour
     [ReadOnly] private WeaponBase _curWeaponRef;
     [Space]
     [ReadOnly] private PlayerMovementController.MovementState _moveState;
-
+    [ReadOnly] [SerializeField] private PlayerAnimator _playerAnimator;
     
     private void IncrementMeleeOrder() => _curMeleeOrder = _curMeleeOrder.Next();
 
@@ -127,14 +135,17 @@ public class CombatManager : MonoBehaviour
         //Weapon Switch
         this.AddListener(EventType.WeaponChangedEvent, param => UpdateCurrentWeapon((WeaponManager.WeaponEntry) param));
         //Melee Combo Related
-        this.AddListener(EventType.MeleeAttackBeginEvent, param => OnMeleeAttackBegin());
-        this.AddListener(EventType.MeleeAttackEndEvent, param => OnMeleeAttackEnd());
+        this.AddListener(EventType.AttackBeginEvent, param => OnAttackBegin());
+        this.AddListener(EventType.OnInputWindowHold, param => OnInputWindowHold());
+        this.AddListener(EventType.AttackEndEvent, param => OnAttackEnd());
         this.AddListener(EventType.CancelMeleeAttackEvent, param => ResetChain());
         this.AddListener(EventType.WeaponMeleeFiredEvent, param => MeleeAttackUpdate());
         //Ranged Related
         this.AddListener(EventType.WeaponRangedFiredEvent, param => RangedAttackUpdate());
         //Movement State
         this.AddListener(EventType.SetMovementStateEvent, state => _moveState = (PlayerMovementController.MovementState) state);
+        //Receive Refs
+        this.AddListener(EventType.ReceivePlayerAnimatorEvent, animator => _playerAnimator = (PlayerAnimator) animator);
         
         if(!MeleeSequence) NCLogger.Log($"Missing Melee Sequence Data", LogLevel.ERROR);
         if(!RangedData) NCLogger.Log($"Missing Ranged Data", LogLevel.ERROR);
@@ -152,6 +163,7 @@ public class CombatManager : MonoBehaviour
         
         this.FireEvent(EventType.RefreshRangedAttributesEvent, RangedData.Attribute);
         this.FireEvent(EventType.UpdateCombatModifiersEvent, MeleeSequence);
+        this.FireEvent(EventType.RequestPlayerAnimatorEvent);
     }
 
     private void MeleeAttackUpdate() {
@@ -168,8 +180,8 @@ public class CombatManager : MonoBehaviour
         //StopAllCoroutines here due to spamming melee -> multiple instances of coroutine
         //StopCoroutine(thisRoutine) would not stop all coroutines of same "thisRoutine" method
         StopAllCoroutines();
-        //Clone so that it would not edit in SO data
-        this.FireEvent(EventType.PlayMeleeAttackEvent, MeleeSequence.OrderToAttributes[_curMeleeOrder].Clone());
+        //Clone -> not edit in SO data
+        this.FireEvent(EventType.PlayAttackEvent, MeleeSequence.OrderToAttributes[_curMeleeOrder].CloneToAnimData());
         this.FireEvent(EventType.StopMovementEvent);
     }
 
@@ -189,12 +201,15 @@ public class CombatManager : MonoBehaviour
     /// Indicating the Input Window for Next Combo Chain.
     /// </summary>
     /// <returns></returns>
-    private IEnumerator WaitForInputWindowRoutine()
-    {
-        Debug.Log($"in window");
+    private IEnumerator WaitForInputWindowRoutine() {
         var curTime = Time.time;
         _nextSeqTime = Time.time + MeleeSequence.OrderToAttributes[_curMeleeOrder].NextSeqInputWindow;
-
+        
+        _playerAnimator.ResetTrigger(MeleeSequence.OrderToAttributes[_curMeleeOrder.Previous()].AnimClipStr);
+        _playerAnimator.GetAnimator().speed = _curMeleeOrder == MeleeOrder.Third ? 1 : 0.01f;
+        
+        NCLogger.Log($"anim speed: { _playerAnimator.GetAnimator().speed}");
+        
         IncrementMeleeOrder();
         if (_curMeleeOrder == MeleeOrder.First) {
             _isInWindow = false;
@@ -209,19 +224,33 @@ public class CombatManager : MonoBehaviour
         }
         
         //When exceeds window input time - reset combo chain
+        _playerAnimator.GetAnimator().speed = 1;
         ResetChain();
         yield return null;
     }
 
-    private void OnMeleeAttackBegin() {
-        ;
+    private void OnAttackBegin() {
+        if (_curWeaponType == WeaponType.Melee)
+        {
+        } else {
+            ;
+        }
     }
 
-    private void OnMeleeAttackEnd() {
-        _curWeaponRef.canAttack = true;
-        _curWeaponRef.isAttacking = false;
-        MeleeSequence.DisableAllColliders();
-        StartCoroutine(WaitForInputWindowRoutine());
+    private void OnInputWindowHold()
+    {
+        if (_curWeaponType == WeaponType.Melee) {
+            _curWeaponRef.canAttack = true;
+             _curWeaponRef.isAttacking = false;
+            MeleeSequence.DisableAllColliders();
+            StartCoroutine(WaitForInputWindowRoutine());
+        } else {
+            ;
+        }
+    }
+
+    private void OnAttackEnd() {
+      
     }
     
     private void ResetChain() {
@@ -231,7 +260,7 @@ public class CombatManager : MonoBehaviour
         _curMeleeOrder = MeleeOrder.First;
         StopAllCoroutines();
         //TODO: Replace this down the line with "PlayAnimationEvent", not "PlayMeleeAttackEvent"
-        this.FireEvent(EventType.PlayMeleeAttackEvent, new MeleeSequenceAttribute("Idle", 0, 0, 0, null));
+        this.FireEvent(EventType.PlayAttackEvent, new AnimData("Idle", 0, 0, null));
         this.FireEvent(EventType.ResumeMovementEvent);
     }
     

@@ -6,24 +6,19 @@
   <component name="ChangeListManager">
     <list default="true" id="1f89fcac-8ef0-4509-830b-c916bb1f72c2" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/.idea.Voidrunner/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.Voidrunner/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/AnimationClips/MeleeCombo1.anim" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/AnimationClips/MeleeCombo1.anim.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/AnimationClips/MeleeCombo2.anim" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/AnimationClips/MeleeCombo2.anim.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/AnimationClips/MeleeCombo3.anim" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/AnimationClips/MeleeCombo3.anim.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/AnimationClips/MeleeIdle.anim" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/AnimationClips/MeleeIdle.anim.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Animator/Prototype_MeleeAnimator.controller" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Animator/Prototype_MeleeAnimator.controller.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Materials/Prototype/Orange/Orange_04.mat" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Materials/Prototype/Orange/Orange_04.mat" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/Player/Player.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Prefabs/Player/Player.prefab" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/AnimationClips/MeleeAtk1.anim" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/AnimationClips/MeleeAtk1.anim" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/AnimationClips/MeleeAtk2.anim" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/AnimationClips/MeleeAtk2.anim" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/AnimationClips/MeleeAtk3.anim" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/AnimationClips/MeleeAtk3.anim" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Animator/GunTestAnimator.controller" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Animator/GunTestAnimator.controller" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Scenes/CombatScene.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scenes/CombatScene.unity" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Scripts/Combat/CombatManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Combat/CombatManager.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Combat/IInteractiveAnimator.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Combat/IInteractiveAnimator.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Combat/Melee/MeleeBase.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Combat/Melee/MeleeBase.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Combat/MeleeData/MeleeSequenceData.asset" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Combat/MeleeData/MeleeSequenceData.asset" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Scripts/Combat/PlayerAnimator.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Combat/PlayerAnimator.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Player/PlayerAnimator.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Player/PlayerAnimator.cs.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/ProjectSettings/Packages/com.unity.probuilder/Settings.json" beforeDir="false" afterPath="$PROJECT_DIR$/ProjectSettings/Packages/com.unity.probuilder/Settings.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Combat/RangedData/RangedData.asset" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Combat/RangedData/RangedData.asset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Core/Events/EventType.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Core/Events/EventType.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Extensions/Extensions.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Extensions/Extensions.cs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -103,7 +98,7 @@
       <workItem from="1677313882845" duration="21097000" />
       <workItem from="1677894032469" duration="36516000" />
       <workItem from="1680188579957" duration="4301000" />
-      <workItem from="1680581625475" duration="1731000" />
+      <workItem from="1680581625475" duration="17606000" />
     </task>
     <servers />
   </component>

@@ -12,5 +12,11 @@ namespace Combat
     public interface ICombatAnimator
     {
         public void ApplyDamageOnFrame();
+        public void HoldAnimationOnFrame();
+    }
+    
+    public interface IAnimDataConvertable
+    {
+        public AnimData CloneToAnimData();
     }
 }

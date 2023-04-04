@@ -40,14 +40,17 @@ namespace Core.Events {
         UpdateOxygenModifiersEvent,
         //Animation Events
         PlayAnimationEvent,
-        PlayMeleeAttackEvent,
+        PlayAttackEvent,
         ResumeMovementEvent, //resume movement after melee window
         StopMovementEvent, //stop movement on melee atk
-        PlayRangedAttackEvent,
         CancelMeleeAttackEvent,
         //Animation Clips Combat Events
-        MeleeAttackBeginEvent,
-        MeleeAttackEndEvent,
+        AttackBeginEvent,
+        OnInputWindowHold,
+        AttackEndEvent,
         EnemyDamageEvent, //duplicate of DamageEnemyEvent (testing purposes, may update later)
+        //Player Animator Init Events
+        RequestPlayerAnimatorEvent,
+        ReceivePlayerAnimatorEvent,
     }
 }

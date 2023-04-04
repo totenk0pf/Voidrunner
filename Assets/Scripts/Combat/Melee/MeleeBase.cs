@@ -19,7 +19,7 @@ namespace Combat {
         // protected List<EnemyBase> enemies = new();
         
         protected void Awake() {
-            this.AddListener(EventType.EnemyDamageEvent, dmgData => ApplyDamageOnEnemy((MeleeSequenceAttribute) dmgData));
+            this.AddListener(EventType.EnemyDamageEvent, dmgData => ApplyDamageOnEnemy((AnimData) dmgData));
             canAttack = true;
             // StartCoroutine(Fire());
             // StartCoroutine(AltFire());
@@ -32,8 +32,8 @@ namespace Combat {
             }
         }
 
-        protected void ApplyDamageOnEnemy(MeleeSequenceAttribute dmgData) {
-            var enemies = dmgData.collider.Enemies;
+        protected void ApplyDamageOnEnemy(AnimData dmgData) {
+            var enemies = dmgData.Enemies;
             foreach (var enemy in enemies) {
                 if (enemies.Count < 1) return;
                 Damage(enemy, dmgData.Damage);
@@ -41,7 +41,7 @@ namespace Combat {
                 
                 this.FireEvent(EventType.WeaponFiredEvent, new WeaponFireUIMsg {
                         type = WeaponType.Melee,
-                        rechargeDuration = dmgData.AtkSpdModifier //default value
+                        rechargeDuration = dmgData.animDuration //default value
                 });
                 //waiting for recharge time is handled in CombatManager
                 this.FireEvent(EventType.WeaponRechargedEvent);
