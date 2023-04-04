@@ -46,7 +46,7 @@ public class PlayerAnimator : MonoBehaviour, IInteractiveAnimator, ICombatAnimat
     #region IAnimator
     public void PlayAnimation(string clipStr) {
         GetAnimator().speed = _meleeAnimData.AtkSpdModifier;
-        GetAnimator().Play(clipStr);
+        GetAnimator().SetTrigger(clipStr);
     }
     
     public Animator GetAnimator() {

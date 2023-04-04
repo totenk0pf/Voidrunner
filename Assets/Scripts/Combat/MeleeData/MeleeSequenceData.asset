@@ -55,7 +55,7 @@ MonoBehaviour:
       Data: 2|MeleeSequenceAttribute, Assembly-CSharp
     - Name: animClipStr
       Entry: 1
-      Data: MeleeCombo1
+      Data: Attack1
     - Name: nextSeqInputWindow
       Entry: 4
       Data: 0.5
@@ -77,6 +77,9 @@ MonoBehaviour:
     - Name: damageModifier
       Entry: 4
       Data: 0
+    - Name: attackSpeedModifier
+      Entry: 4
+      Data: 0
     - Name: 
       Entry: 8
       Data: 
@@ -94,7 +97,7 @@ MonoBehaviour:
       Data: 3|MeleeSequenceAttribute, Assembly-CSharp
     - Name: animClipStr
       Entry: 1
-      Data: MeleeCombo2
+      Data: Attack2
     - Name: nextSeqInputWindow
       Entry: 4
       Data: 0.5
@@ -116,6 +119,9 @@ MonoBehaviour:
     - Name: damageModifier
       Entry: 4
       Data: 0
+    - Name: attackSpeedModifier
+      Entry: 4
+      Data: 0
     - Name: 
       Entry: 8
       Data: 
@@ -133,7 +139,7 @@ MonoBehaviour:
       Data: 4|MeleeSequenceAttribute, Assembly-CSharp
     - Name: animClipStr
       Entry: 1
-      Data: MeleeCombo3
+      Data: Attack3
     - Name: nextSeqInputWindow
       Entry: 4
       Data: 2
@@ -153,6 +159,9 @@ MonoBehaviour:
       Entry: 4
       Data: 1
     - Name: damageModifier
+      Entry: 4
+      Data: 0
+    - Name: attackSpeedModifier
       Entry: 4
       Data: 0
     - Name: 

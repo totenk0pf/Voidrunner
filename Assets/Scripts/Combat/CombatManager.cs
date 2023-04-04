@@ -114,9 +114,6 @@ public class CombatManager : MonoBehaviour
     [ReadOnly] private bool _isInWindow = false;
     [ReadOnly] private float _nextSeqTime;
     
-    [TitleGroup("Prototype visual settings")]
-    [SerializeField] private GameObject meleeVisual;
-    [SerializeField] private GameObject rangedVisual;
     [TitleGroup("General settings")]
     [ReadOnly] private WeaponType _curWeaponType;
     [ReadOnly] private WeaponBase _curWeaponRef;
@@ -142,9 +139,6 @@ public class CombatManager : MonoBehaviour
         if(!MeleeSequence) NCLogger.Log($"Missing Melee Sequence Data", LogLevel.ERROR);
         if(!RangedData) NCLogger.Log($"Missing Ranged Data", LogLevel.ERROR);
 
-        if (!meleeVisual) NCLogger.Log($"Missing MeleeVisual", LogLevel.ERROR);
-        if (!rangedVisual) NCLogger.Log($"Missing RangedVisual", LogLevel.ERROR);
-            
         AssignCollidersData();
         if(!MeleeSequence.ValidateColliders()) NCLogger.Log($"Collider Validation Failed", LogLevel.ERROR);
     }
@@ -188,10 +182,6 @@ public class CombatManager : MonoBehaviour
     private void UpdateCurrentWeapon(WeaponManager.WeaponEntry entry) {
         _curWeaponType = entry.Type;
         _curWeaponRef = entry.Reference;
-        
-        //Toggle Prototype Visuals TODO: Remove when actual model is available
-        meleeVisual.SetActive(_curWeaponType == WeaponType.Melee);
-        rangedVisual.SetActive(_curWeaponType == WeaponType.Ranged);
     }
 
     /// <summary>
