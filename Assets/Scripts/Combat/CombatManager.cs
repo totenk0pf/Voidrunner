@@ -206,9 +206,6 @@ public class CombatManager : MonoBehaviour
         _nextSeqTime = Time.time + MeleeSequence.OrderToAttributes[_curMeleeOrder].NextSeqInputWindow;
         
         _playerAnimator.ResetTrigger(MeleeSequence.OrderToAttributes[_curMeleeOrder.Previous()].AnimClipStr);
-        _playerAnimator.GetAnimator().speed = _curMeleeOrder == MeleeOrder.Third ? 1 : 0.01f;
-        
-        NCLogger.Log($"anim speed: { _playerAnimator.GetAnimator().speed}");
         
         IncrementMeleeOrder();
         if (_curMeleeOrder == MeleeOrder.First) {
@@ -224,7 +221,6 @@ public class CombatManager : MonoBehaviour
         }
         
         //When exceeds window input time - reset combo chain
-        _playerAnimator.GetAnimator().speed = 1;
         ResetChain();
         yield return null;
     }
@@ -243,6 +239,10 @@ public class CombatManager : MonoBehaviour
             _curWeaponRef.canAttack = true;
              _curWeaponRef.isAttacking = false;
             MeleeSequence.DisableAllColliders();
+            
+            if (_curMeleeOrder == MeleeOrder.Third) { _playerAnimator.ResumeAnimator(); } 
+            else { _playerAnimator.PauseAnimator(); }
+            
             StartCoroutine(WaitForInputWindowRoutine());
         } else {
             ;
@@ -258,9 +258,10 @@ public class CombatManager : MonoBehaviour
         _curWeaponRef.isAttacking = false;
         _isInWindow = false;
         _curMeleeOrder = MeleeOrder.First;
+        _playerAnimator.ResumeAnimator();
         StopAllCoroutines();
         //TODO: Replace this down the line with "PlayAnimationEvent", not "PlayMeleeAttackEvent"
-        this.FireEvent(EventType.PlayAttackEvent, new AnimData("Idle", 0, 0, null));
+        this.FireEvent(EventType.PlayAttackEvent, new AnimData("Idle", 0, 1, null));
         this.FireEvent(EventType.ResumeMovementEvent);
     }
     

@@ -6,19 +6,8 @@
   <component name="ChangeListManager">
     <list default="true" id="1f89fcac-8ef0-4509-830b-c916bb1f72c2" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/.idea.Voidrunner/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.Voidrunner/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/AnimationClips/MeleeAtk1.anim" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/AnimationClips/MeleeAtk1.anim" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/AnimationClips/MeleeAtk2.anim" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/AnimationClips/MeleeAtk2.anim" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/AnimationClips/MeleeAtk3.anim" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/AnimationClips/MeleeAtk3.anim" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Animator/GunTestAnimator.controller" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Animator/GunTestAnimator.controller" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scenes/CombatScene.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scenes/CombatScene.unity" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Scripts/Combat/CombatManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Combat/CombatManager.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Combat/IInteractiveAnimator.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Combat/IInteractiveAnimator.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Combat/Melee/MeleeBase.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Combat/Melee/MeleeBase.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Combat/MeleeData/MeleeSequenceData.asset" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Combat/MeleeData/MeleeSequenceData.asset" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Scripts/Combat/PlayerAnimator.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Combat/PlayerAnimator.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Combat/RangedData/RangedData.asset" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Combat/RangedData/RangedData.asset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Core/Events/EventType.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Core/Events/EventType.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Extensions/Extensions.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Extensions/Extensions.cs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -30,6 +19,7 @@
   </component>
   <component name="HighlightingSettingsPerFile">
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/77d87730a7884c42b26aed6b1a0dbc46ca00/88/38a6eb57/NavMeshAgent.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/88d854ea2c91426ebc464f01cd71aa85157a00/94/c91700ac/MonoBehaviour.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/3ea01e77be99618395f448b16bd7cc2bd4248bd9e5d8474964b2d97f39c5d74/System.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/Extensions/Extensions.cs" root0="FORCE_HIGHLIGHTING" />
   </component>
@@ -75,10 +65,10 @@
       </option>
       <method v="2" />
     </configuration>
-    <configuration name="Attach to Unity Editor" type="UNITY_DEBUG_RUN_CONFIGURATION" factoryName="Unity Debug" show_console_on_std_err="false" show_console_on_std_out="false" port="50000" address="localhost">
+    <configuration name="Attach to Unity Editor" type="UNITY_DEBUG_RUN_CONFIGURATION" factoryName="Unity Debug" show_console_on_std_err="false" show_console_on_std_out="false" port="50000" address="localhost" ignored-value-for-modified-check="9160">
       <option name="allowRunningInParallel" value="false" />
       <option name="listenPortForConnections" value="false" />
-      <option name="pid" />
+      <option name="pid" value="9160" />
       <option name="projectPathOnTarget" />
       <option name="selectedOptions">
         <list />
@@ -98,7 +88,8 @@
       <workItem from="1677313882845" duration="21097000" />
       <workItem from="1677894032469" duration="36516000" />
       <workItem from="1680188579957" duration="4301000" />
-      <workItem from="1680581625475" duration="17606000" />
+      <workItem from="1680581625475" duration="18202000" />
+      <workItem from="1680666071365" duration="3781000" />
     </task>
     <servers />
   </component>
@@ -138,5 +129,12 @@
   </component>
   <component name="VcsManagerConfiguration">
     <option name="CLEAR_INITIAL_COMMIT_MESSAGE" value="true" />
+  </component>
+  <component name="XDebuggerManager">
+    <pin-to-top-manager>
+      <pinned-members>
+        <PinnedItemInfo parentTag="Type#UnityEngine.Animator" memberName="speed" />
+      </pinned-members>
+    </pin-to-top-manager>
   </component>
 </project>

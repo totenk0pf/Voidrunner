@@ -19,6 +19,9 @@ public class AnimData {
         this.Damage = damage;
         this.AnimSpeed = animSpeed;
         this.Enemies = enemies;
+
+        if (AnimSpeed < 0.1f)
+            NCLogger.Log($"you're pausing {this} animator, make sure the logic is correct", LogLevel.WARNING);
     }
 }
 
@@ -84,6 +87,15 @@ public class PlayerAnimator : MonoBehaviour, IInteractiveAnimator, ICombatAnimat
     }
     public void ResetTrigger(string triggerStr) {
         GetAnimator().ResetTrigger(triggerStr);
+    }
+
+    public void PauseAnimator(float speed = 0.01f) {
+        GetAnimator().speed = speed;
+    }
+
+    public void ResumeAnimator() {
+        GetAnimator().speed = 1;
+        NCLogger.Log($"speed after end input: { GetAnimator().speed }");
     }
     
     private float GetClipLength(string name) {
