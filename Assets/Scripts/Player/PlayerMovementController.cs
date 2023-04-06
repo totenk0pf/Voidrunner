@@ -112,7 +112,7 @@ public class PlayerMovementController : MonoBehaviour
     {
         foreach (var input in _inputToDirDict.Keys.Where(Input.GetKeyDown)) {
             _canMove = true;
-            this.FireEvent(EventType.CancelMeleeAttackEvent);
+           // this.FireEvent(EventType.CancelMeleeAttackEvent);
         }
         
         foreach (var input in _inputToDirDict.Keys.Where(Input.GetKey)) {
