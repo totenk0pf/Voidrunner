@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 namespace Combat
@@ -8,5 +9,14 @@ namespace Combat
         [SerializeField] private RangedAttribute rangedAttribute;
 
         public RangedAttribute Attribute => rangedAttribute;
+
+        //Clear enemies list on play
+        private void OnEnable() {
+            ClearEnemiesCache();
+        }
+
+        public void ClearEnemiesCache() {
+            Attribute.Enemies.Clear();
+        }
     }
 }

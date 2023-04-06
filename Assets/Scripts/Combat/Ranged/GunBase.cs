@@ -16,7 +16,7 @@ namespace Combat {
         // [SerializeField] private LayerMask raycastMask;
 
         [ReadOnly] protected RangedAttribute attribute; 
-        public Transform firePoint;
+        // public Transform firePoint;
         [TitleGroup("Gun states")]
         protected bool isReloading;
 
@@ -28,7 +28,7 @@ namespace Combat {
 
         protected void Awake() {
             this.AddListener(EventType.RefreshRangedAttributesEvent, param => UpdateAttribute((RangedAttribute)param));
-            
+            this.AddListener(EventType.RangedEnemyDamageEvent, dmgData => ApplyDamageOnEnemy((AnimData) dmgData));
         }
 
         protected IEnumerator Start() {
@@ -51,72 +51,50 @@ namespace Combat {
                 clip = clipAmount
             });
         }
-
-        // protected void Update() {
-        //     if (Input.GetMouseButtonDown(0)) {
-        //         if (!canAttack) return;
-        //         //if (isAttacking) return;
-        //         if (currentAmmo >= 1) {
-        //             currentAmmo--;
-        //             // StartCoroutine(Fire());
-        //         }
-        //     }
-        //     // if (Input.GetKeyDown(KeyCode.R)) {
-        //     //     if (isReloading) return;
-        //     //     if (isAttacking) return;
-        //     //     if (clipAmount >= 1) {
-        //     //         StartCoroutine(Reload());
-        //     //     }
-        //     // }
-        // }
+        
         protected void Update() {
             if (Input.GetMouseButtonDown(0) && canAttack) {
                 if (currentAmmo >= 1) {
                     currentAmmo--;
                     this.FireEvent(EventType.WeaponRangedFiredEvent);
                 }
-                //isAttacking = true;
+            }
+            if (Input.GetKeyDown(KeyCode.R)) {
+                if (isReloading) return;
+                if (isAttacking) return;
+                if (clipAmount >= 1) {
+                    StartCoroutine(Reload());
+                }
             }
         }
-        // protected override EnemyBase GetEnemy(Collider col = null) {
-        //     Debug.DrawLine(firePoint.position, firePoint.forward * 100f, Color.yellow, 5f);
-        //     if (Physics.Raycast(firePoint.position, firePoint.forward, out var hit, Mathf.Infinity, raycastMask)) {
-        //         var enemy = hit.transform.GetComponent<EnemyBase>();
-        //         return !enemy ? null : enemy;
-        //     }
-        //     return null;
-        // }
 
-        // public override IEnumerator AltFire() {
-        //     yield return null;
-        // }
-        //
-        // public override IEnumerator Fire() {
-        //     canAttack = false;
-        //     isAttacking = true;
-        //     yield return new WaitForSeconds(preshotDelay);
-        //     //Damage(GetEnemy());
-        //     UpdateUI();
-        //     this.FireEvent(EventType.WeaponFiredEvent, new WeaponFireUIMsg {
-        //         type = WeaponType.Ranged,
-        //         rechargeDuration = aftershotDelay
-        //     });
-        //     yield return new WaitForSeconds(aftershotDelay);
-        //     this.FireEvent(EventType.WeaponRechargedEvent);
-        //     canAttack = true;
-        //     isAttacking = false;
-        //     yield return null;
-        // }
-
-        // protected IEnumerator Reload() {
-        //     isReloading = true;
-        //     canAttack = false;
-        //     clipAmount--;
-        //     currentAmmo = maxAmmo;
-        //     isReloading = false;
-        //     canAttack = true;
-        //     UpdateUI();
-        //     yield return null;
-        // }
+        protected void ApplyDamageOnEnemy(AnimData dmgData) {
+            var enemies = dmgData.Enemies;
+            foreach (var enemy in enemies) {
+                if (enemies.Count < 1) return;
+                Damage(enemy, dmgData.Damage);
+                NCLogger.Log($"dmg: {dmgData.Damage}");
+                
+                UpdateUI();
+                this.FireEvent(EventType.WeaponFiredEvent, new WeaponFireUIMsg {
+                    type = WeaponType.Ranged,
+                    rechargeDuration = attribute.AftershotDelay
+                });
+               
+                this.FireEvent(EventType.WeaponRechargedEvent);
+                
+            }
+        }
+        
+        protected IEnumerator Reload() {
+            isReloading = true;
+            canAttack = false;
+            clipAmount--;
+            currentAmmo = attribute.MaxAmmo;
+            isReloading = false;
+            canAttack = true;
+            UpdateUI();
+            yield return null;
+        }
     }
 }

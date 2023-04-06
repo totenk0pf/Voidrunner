@@ -5,7 +5,7 @@ namespace Player
 {
     public interface IAnimator
     { 
-        public void PlayAnimation(string clipStr);
+        public void PlayAnimation(PlayerAnimState state);
         public Animator GetAnimator();
     }
 }

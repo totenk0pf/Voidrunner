@@ -48,7 +48,8 @@ namespace Core.Events {
         AttackBeginEvent,
         OnInputWindowHold,
         AttackEndEvent,
-        EnemyDamageEvent, //duplicate of DamageEnemyEvent (testing purposes, may update later)
+        MeleeEnemyDamageEvent, //duplicate of DamageEnemyEvent (testing purposes, may update later)
+        RangedEnemyDamageEvent,
         //Player Animator Init Events
         RequestPlayerAnimatorEvent,
         ReceivePlayerAnimatorEvent,

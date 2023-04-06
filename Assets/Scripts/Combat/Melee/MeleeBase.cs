@@ -19,7 +19,7 @@ namespace Combat {
         // protected List<EnemyBase> enemies = new();
         
         protected void Awake() {
-            this.AddListener(EventType.EnemyDamageEvent, dmgData => ApplyDamageOnEnemy((AnimData) dmgData));
+            this.AddListener(EventType.MeleeEnemyDamageEvent, dmgData => ApplyDamageOnEnemy((AnimData) dmgData));
             canAttack = true;
             // StartCoroutine(Fire());
             // StartCoroutine(AltFire());

@@ -16,10 +16,16 @@ MonoBehaviour:
     fireTriggerStr: Fire
     preshotDelay: 0.2
     aftershotDelay: 0.6
+    damagePerPellet: 5
+    pelletCount: 8
+    rayCastRange: 30
+    maxSpreadAngle: 10
+    coneProjectionRadius: 5
     maxAmmo: 20
     maxClip: 1
     raycastMask:
       serializedVersion: 2
       m_Bits: 256
+    Enemies: []
     canDamageMod: 0
     attackSpeed: 0
