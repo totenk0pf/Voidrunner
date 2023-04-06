@@ -4,39 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="1f89fcac-8ef0-4509-830b-c916bb1f72c2" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/Assets/Scripts/IHardReferenceAnim.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Scripts/IHardReferenceAnim.cs.meta" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Scripts/Player/AnimationSystem/AnimationParamData.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/.idea.Voidrunner/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.Voidrunner/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/AnimationClips/Fire.anim" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/AnimationClips/Fire.anim" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Animator/GunTestAnimator.controller" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Animator/GunTestAnimator.controller.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Animator/PlayerAnimator.controller" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Animator/PlayerAnimator.controller" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Animator/PlayerAnimator.controller.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Animator/PlayerAnimator.controller.meta" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Resources/Boss.asset" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Resources/Boss.asset.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Resources/BossAnimData.asset" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Resources/BossAnimData.asset.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Resources/JuggAnimData.asset" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Resources/JuggAnimData.asset.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Resources/Juggernaut.asset" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Resources/Juggernaut.asset.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scenes/CombatScene.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scenes/CombatScene.unity" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Combat/Melee/MeleeBase.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Combat/Melee/MeleeBase.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Combat/MeleeData/MeleeSequenceData.asset" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Combat/MeleeData/MeleeSequenceData.asset.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Combat/RangedData/RangedData.asset" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Combat/RangedData/RangedData.asset.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Entities/Enemy/AnimSerializedData.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Entities/Enemy/AnimSerializedData.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Entities/Enemy/EnemyAnimData.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/HardReferenceAnimData.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Entities/Enemy/EnemyAnimData.cs.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/HardReferenceAnimData.cs.meta" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Player/AnimationSystem/AnimationStateData.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Player/AnimationSystem/AnimationStateData.cs.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Player/AnimationSystem/AnimationParamData.cs.meta" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Player/AnimationSystem/PlayerAnimator.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Player/AnimationSystem/PlayerAnimator.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Player/AnimationSystem/SerializedAnimationStateData.asset" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Player/AnimationSystem/SerializedAnimationStateData.asset.meta" beforeDir="false" />
-    </list>
+    <list default="true" id="1f89fcac-8ef0-4509-830b-c916bb1f72c2" name="Changes" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -46,6 +14,8 @@
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="HighlightingSettingsPerFile">
+    <setting file="mock:///Dummy.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock:///Dummy.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/77d87730a7884c42b26aed6b1a0dbc46ca00/88/38a6eb57/NavMeshAgent.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/88d854ea2c91426ebc464f01cd71aa85157a00/31/298b4615/SetupCoroutine.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/88d854ea2c91426ebc464f01cd71aa85157a00/94/c91700ac/MonoBehaviour.cs" root0="SKIP_HIGHLIGHTING" />
@@ -123,7 +93,7 @@
       <workItem from="1680188579957" duration="4301000" />
       <workItem from="1680581625475" duration="18202000" />
       <workItem from="1680666071365" duration="31194000" />
-      <workItem from="1680750001356" duration="24121000" />
+      <workItem from="1680750001356" duration="24456000" />
     </task>
     <servers />
   </component>
@@ -165,6 +135,23 @@
     <option name="CLEAR_INITIAL_COMMIT_MESSAGE" value="true" />
   </component>
   <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="DotNet Breakpoints">
+          <url>file://$PROJECT_DIR$/Assets/Scripts/Player/AnimationSystem/PlayerAnimator.cs</url>
+          <line>98</line>
+          <properties documentPath="E:\_School Projects\Voidrunner\Assets\Scripts\Player\AnimationSystem\PlayerAnimator.cs" initialLine="98" containingFunctionPresentation="method 'ApplyDamageOnFrame'">
+            <startOffsets>
+              <option value="3154" />
+            </startOffsets>
+            <endOffsets>
+              <option value="3155" />
+            </endOffsets>
+          </properties>
+          <option name="timeStamp" value="9" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
     <pin-to-top-manager>
       <pinned-members>
         <PinnedItemInfo parentTag="Type#UnityEngine.Animator" memberName="speed" />

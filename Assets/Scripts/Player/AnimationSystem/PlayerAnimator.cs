@@ -122,8 +122,7 @@ public class PlayerAnimator : MonoBehaviour, IInteractiveAnimator, ICombatAnimat
         //NCLogger.Log($"{param.paramName}");
         GetAnimator().speed = _animData.AnimSpeed;
         var id = param.Hash;
-        NCLogger.Log($"{param.param.hash} {id}");
-        
+
         switch (param.Type)
         {
             case AnimatorControllerParameterType.Trigger:
