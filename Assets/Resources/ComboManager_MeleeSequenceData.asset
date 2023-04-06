@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: e1a8a923c00246008e56efbb7564fe9c, type: 3}
-  m_Name: MeleeSequenceData
+  m_Name: ComboManager_MeleeSequenceData
   m_EditorClassIdentifier: 
   serializationData:
     SerializedFormat: 2
@@ -53,9 +53,9 @@ MonoBehaviour:
     - Name: $v
       Entry: 7
       Data: 2|MeleeSequenceAttribute, Assembly-CSharp
-    - Name: animClipStr
-      Entry: 1
-      Data: Attack1
+    - Name: state
+      Entry: 3
+      Data: 0
     - Name: nextSeqInputWindow
       Entry: 4
       Data: 0.5
@@ -95,9 +95,9 @@ MonoBehaviour:
     - Name: $v
       Entry: 7
       Data: 3|MeleeSequenceAttribute, Assembly-CSharp
-    - Name: animClipStr
-      Entry: 1
-      Data: Attack2
+    - Name: state
+      Entry: 3
+      Data: 1
     - Name: nextSeqInputWindow
       Entry: 4
       Data: 0.5
@@ -137,9 +137,9 @@ MonoBehaviour:
     - Name: $v
       Entry: 7
       Data: 4|MeleeSequenceAttribute, Assembly-CSharp
-    - Name: animClipStr
-      Entry: 1
-      Data: Attack3
+    - Name: state
+      Entry: 3
+      Data: 2
     - Name: nextSeqInputWindow
       Entry: 4
       Data: 2

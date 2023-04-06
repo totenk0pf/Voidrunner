@@ -9,8 +9,8 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8f6685c960774c8abf81f536c5b81834, type: 3}
-  m_Name: SerializedAnimationStateData
+  m_Script: {fileID: 11500000, guid: 017d7b394cc44f94bf17dc13b85ae6ac, type: 3}
+  m_Name: AnimationParamData_Jugg
   m_EditorClassIdentifier: 
   serializationData:
     SerializedFormat: 2
@@ -20,7 +20,20 @@ MonoBehaviour:
     Prefab: {fileID: 0}
     PrefabModificationsReferencedUnityObjects: []
     PrefabModifications: []
-    SerializationNodes:
-    - Name: animationStates
-      Entry: 6
-      Data: 
+    SerializationNodes: []
+  data: {fileID: 11400000, guid: dde3f6e4e0de14a4cbfc3cbe854f0c5b, type: 2}
+  idleAnim:
+    type: 4
+    name: isWalking
+    hash: -830007593
+  hostileAnim:
+    type: 4
+    name: isWalking
+    hash: -830007593
+  attackAnim:
+  - type: 9
+    name: Spin
+    hash: -1304917071
+  - type: 9
+    name: Slam
+    hash: -153875945

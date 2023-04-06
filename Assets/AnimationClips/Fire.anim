@@ -8058,7 +8058,7 @@ AnimationClip:
     floatParameter: 0
     intParameter: 0
     messageOptions: 0
-  - time: 1.4166666
+  - time: 0.041666668
     functionName: ApplyDamageOnFrame
     data: 
     objectReferenceParameter: {fileID: 0}

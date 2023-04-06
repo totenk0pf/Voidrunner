@@ -33,20 +33,22 @@ namespace Combat {
         }
 
         protected void ApplyDamageOnEnemy(AnimData dmgData) {
+            if(dmgData == null) return;
             var enemies = dmgData.Enemies;
+            if (enemies == null) return;
             foreach (var enemy in enemies) {
                 if (enemies.Count < 1) return;
                 Damage(enemy, dmgData.Damage);
                 NCLogger.Log($"dmg: {dmgData.Damage}");
-                
-                this.FireEvent(EventType.WeaponFiredEvent, new WeaponFireUIMsg {
-                        type = WeaponType.Melee,
-                        rechargeDuration = dmgData.animDuration //default value
-                });
-                //waiting for recharge time is handled in CombatManager
-                this.FireEvent(EventType.WeaponRechargedEvent);
-                //resetting atk attributes is handled in CombatManager
             }
+            
+            this.FireEvent(EventType.WeaponFiredEvent, new WeaponFireUIMsg {
+                    type = WeaponType.Melee,
+                    rechargeDuration = dmgData.animDuration //default value
+            });
+            //waiting for recharge time is handled in CombatManager
+            this.FireEvent(EventType.WeaponRechargedEvent);
+            //resetting atk attributes is handled in CombatManager
         }
         
         // protected void OnTriggerEnter(Collider col) {

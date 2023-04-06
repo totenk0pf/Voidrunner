@@ -7,8 +7,8 @@ using UnityEngine;
 
 namespace Entities.Enemy {
     [CreateAssetMenu(fileName = "SerializedAnimData", menuName = "Enemies/SerializedAnimData", order = 0)]
-    public class AnimSerializedData : SerializedScriptableObject {
-        public EnemyAnimData data;
+    public class AnimSerializedData : SerializedScriptableObject, IHardReferenceAnim {
+        public HardReferenceAnimData data;
         
         [ValueDropdown("GetAnimData", IsUniqueList = true, ExpandAllMenuItems = true, HideChildProperties = true)] [ShowInInspector]
         public AnimParam idleAnim;
@@ -22,6 +22,13 @@ namespace Entities.Enemy {
         protected IEnumerable GetAnimData(){
             if (!data) return new List<AnimParam>();
             return data.animParams.Select(x => new ValueDropdownItem(x.name, x));
+        }
+        
+        [Button("Validate & Create Refs")]
+        public void ValidateData()
+        {
+            //Validate hard reference data
+            data.ValidateData();
         }
     }
 }

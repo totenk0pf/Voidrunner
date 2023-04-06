@@ -1,6 +1,7 @@
 using System.Collections;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using Combat;
 using Core.Events;
 using Core.Logging;
@@ -10,12 +11,6 @@ using Sirenix.OdinInspector;
 using UnityEngine;
 using EventType = Core.Events.EventType;
 
-public enum AnimParamType {
-    Trigger,
-    Float,
-    Int,
-    Bool
-}
 
 public enum PlayerAnimState {
     MeleeAttack1,
@@ -28,22 +23,21 @@ public enum PlayerAnimState {
 }
 
 [Serializable]
-public class AnimStateContainer
+public class AnimParamContainer
 {
-    [EnumToggleButtons]
-    public AnimParamType paramType;
-    public string paramName;
-
-    public int hash => !string.IsNullOrEmpty(paramName) ? Animator.StringToHash(paramName) : 0;
-
-    // [ShowIf("paramType", AnimParamType.Trigger)]
-    // public string triggerParam;
-    [ShowIf("paramType", AnimParamType.Float)]
-    public float floatParam;
-    [ShowIf("paramType", AnimParamType.Int)]
-    public int intParam;
-    [ShowIf("paramType", AnimParamType.Bool)]
-    public bool boolParam;
+    [ReadOnly] public HardReferenceAnimData data;
+    //public AnimatorControllerParameterType paramType;
+    [ValueDropdown("GetParamType", IsUniqueList = true, ExpandAllMenuItems = true, HideChildProperties = true)] [ShowInInspector]
+    public AnimParam param;
+    
+    public int Hash => param.hash;
+    public AnimatorControllerParameterType Type => param.type;
+    public string Name => param.name;
+    
+    private IEnumerable GetParamType(){
+        if (!data) return new List<AnimParam>();
+        return data.animParams.Select(x => new ValueDropdownItem(x.name, x));
+    }
 }
 
 public class AnimData {
@@ -74,7 +68,7 @@ public class PlayerAnimator : MonoBehaviour, IInteractiveAnimator, ICombatAnimat
     private Animator _animator;
     private AnimData _animData;
     private WeaponType _curWeaponType;
-    [SerializeField] private AnimationStateData animationStateData;
+    [SerializeField] private AnimationParamData animationParamData;
     [SerializeField] private int mainAnimLayer = 0;
     
     private void Awake() {
@@ -83,7 +77,7 @@ public class PlayerAnimator : MonoBehaviour, IInteractiveAnimator, ICombatAnimat
         this.AddListener(EventType.RequestPlayerAnimatorEvent, param => OnRequestAnimator());
         this.AddListener(EventType.WeaponChangedEvent, param => _curWeaponType = ((WeaponManager.WeaponEntry)param).Type);
         
-        if(!animationStateData) NCLogger.Log($"Missing Animation State Data", LogLevel.ERROR);
+        if(!animationParamData) NCLogger.Log($"Missing Animation State Data", LogLevel.ERROR);
     }
 
     private void UpdateAnimAttribute(AnimData data) {
@@ -124,23 +118,25 @@ public class PlayerAnimator : MonoBehaviour, IInteractiveAnimator, ICombatAnimat
     #region IAnimator
     public void PlayAnimation(PlayerAnimState state)
     {
-        var param = animationStateData.GetAnimParam(state);
-        NCLogger.Log($"{param.paramName}");
+        var param = animationParamData.GetAnimParam(state);
+        //NCLogger.Log($"{param.paramName}");
         GetAnimator().speed = _animData.AnimSpeed;
-
-        switch (param.paramType)
+        var id = param.Hash;
+        NCLogger.Log($"{param.param.hash} {id}");
+        
+        switch (param.Type)
         {
-            case AnimParamType.Trigger:
-                GetAnimator().SetTrigger(param.hash);
+            case AnimatorControllerParameterType.Trigger:
+                GetAnimator().SetTrigger(id);
                 break;
-            case AnimParamType.Float:
-                GetAnimator().SetFloat(param.hash, param.floatParam);
+            case AnimatorControllerParameterType.Float:
+                GetAnimator().SetFloat(id, param.param.floatParam);
                 break;
-            case AnimParamType.Int:
-                GetAnimator().SetFloat(param.hash, param.intParam);
+            case AnimatorControllerParameterType.Int:
+                GetAnimator().SetFloat(id, param.param.intParam);
                 break;
-            case AnimParamType.Bool:
-                GetAnimator().SetBool(param.hash, param.boolParam);
+            case AnimatorControllerParameterType.Bool:
+                GetAnimator().SetBool(id, param.param.boolParam);
                 break;
             default:
                 throw new ArgumentOutOfRangeException();
@@ -157,12 +153,12 @@ public class PlayerAnimator : MonoBehaviour, IInteractiveAnimator, ICombatAnimat
         this.FireEvent(EventType.ReceivePlayerAnimatorEvent, this);
     }
     public void ResetTrigger(PlayerAnimState state) {
-        var param = animationStateData.GetAnimParam(state);
-        if (param.paramType != AnimParamType.Trigger) {
+        var param = animationParamData.GetAnimParam(state);
+        if (param.Type != AnimatorControllerParameterType.Trigger) {
             NCLogger.Log($"Not Trigger Param -> Not Reset-able", LogLevel.INFO);
             return;
         }
-        GetAnimator().ResetTrigger(param.hash);
+        GetAnimator().ResetTrigger(param.Hash);
     }
 
     public void PauseAnimator(float speed = 0.01f) {
