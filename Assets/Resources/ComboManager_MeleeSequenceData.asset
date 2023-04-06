@@ -100,7 +100,7 @@ MonoBehaviour:
       Data: 1
     - Name: nextSeqInputWindow
       Entry: 4
-      Data: 0.5
+      Data: 1.5
     - Name: damage
       Entry: 4
       Data: 10
@@ -154,7 +154,7 @@ MonoBehaviour:
       Data: 2
     - Name: canDamageMod
       Entry: 5
-      Data: false
+      Data: true
     - Name: damageScale
       Entry: 4
       Data: 1
@@ -163,7 +163,7 @@ MonoBehaviour:
       Data: 0
     - Name: attackSpeedModifier
       Entry: 4
-      Data: 2
+      Data: 0.75
     - Name: 
       Entry: 8
       Data: 
