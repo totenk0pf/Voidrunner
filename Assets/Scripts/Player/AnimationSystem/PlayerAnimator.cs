@@ -1,11 +1,9 @@
 using System.Collections;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using Combat;
 using Core.Events;
 using Core.Logging;
-using Entities.Enemy;
 using Player.AnimationSystem;
 using Sirenix.OdinInspector;
 using UnityEngine;
@@ -22,26 +20,7 @@ public enum PlayerAnimState {
     Dash
 }
 
-[Serializable]
-public class AnimParamContainer
-{
-    [ReadOnly] public HardReferenceAnimData data;
-    //public AnimatorControllerParameterType paramType;
-    [ValueDropdown("GetParamType", IsUniqueList = true, ExpandAllMenuItems = true, HideChildProperties = true)] [ShowInInspector]
-    public AnimParam param;
-    
-    public int Hash => param.hash;
-    public AnimatorControllerParameterType Type => param.type;
-    public string Name => param.name;
-    
-    private IEnumerable GetParamType(){
-        if (!data) return new List<AnimParam>();
-        return data.animParams.Select(x => new ValueDropdownItem(x.name, x));
-    }
-}
-
 public class AnimData {
-
     public PlayerAnimState State { get; private set; }
     public float Damage { get; private set; }
     public float AnimSpeed { get; private set; }

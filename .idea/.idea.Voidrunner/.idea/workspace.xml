@@ -4,7 +4,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="1f89fcac-8ef0-4509-830b-c916bb1f72c2" name="Changes" comment="" />
+    <list default="true" id="1f89fcac-8ef0-4509-830b-c916bb1f72c2" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/HardReferenceAnimData.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/HardReferenceAnimData.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Player/AnimationSystem/PlayerAnimator.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Player/AnimationSystem/PlayerAnimator.cs" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -93,7 +96,7 @@
       <workItem from="1680188579957" duration="4301000" />
       <workItem from="1680581625475" duration="18202000" />
       <workItem from="1680666071365" duration="31194000" />
-      <workItem from="1680750001356" duration="24456000" />
+      <workItem from="1680750001356" duration="25034000" />
     </task>
     <servers />
   </component>
@@ -135,23 +138,6 @@
     <option name="CLEAR_INITIAL_COMMIT_MESSAGE" value="true" />
   </component>
   <component name="XDebuggerManager">
-    <breakpoint-manager>
-      <breakpoints>
-        <line-breakpoint enabled="true" type="DotNet Breakpoints">
-          <url>file://$PROJECT_DIR$/Assets/Scripts/Player/AnimationSystem/PlayerAnimator.cs</url>
-          <line>98</line>
-          <properties documentPath="E:\_School Projects\Voidrunner\Assets\Scripts\Player\AnimationSystem\PlayerAnimator.cs" initialLine="98" containingFunctionPresentation="method 'ApplyDamageOnFrame'">
-            <startOffsets>
-              <option value="3154" />
-            </startOffsets>
-            <endOffsets>
-              <option value="3155" />
-            </endOffsets>
-          </properties>
-          <option name="timeStamp" value="9" />
-        </line-breakpoint>
-      </breakpoints>
-    </breakpoint-manager>
     <pin-to-top-manager>
       <pinned-members>
         <PinnedItemInfo parentTag="Type#UnityEngine.Animator" memberName="speed" />
