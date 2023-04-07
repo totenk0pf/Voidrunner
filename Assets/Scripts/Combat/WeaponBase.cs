@@ -22,5 +22,10 @@ namespace Combat
             
             EventDispatcher.Instance.FireEvent(EventType.EmpowerDamageEnemyEvent, enemy);
         }
+
+        // public void OnWeaponChange(WeaponManager.WeaponEntry entry)
+        // {
+        //     ;
+        // }
     }
 }

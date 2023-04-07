@@ -29,6 +29,7 @@ namespace Combat {
         protected void Awake() {
             this.AddListener(EventType.RefreshRangedAttributesEvent, param => UpdateAttribute((RangedAttribute)param));
             this.AddListener(EventType.RangedEnemyDamageEvent, dmgData => ApplyDamageOnEnemy((AnimData) dmgData));
+            this.AddListener(EventType.WeaponChangedEvent, param => OnWeaponChange((WeaponManager.WeaponEntry) param));
         }
 
         protected IEnumerator Start() {
@@ -59,13 +60,13 @@ namespace Combat {
                     this.FireEvent(EventType.WeaponRangedFiredEvent);
                 }
             }
-            if (Input.GetKeyDown(KeyCode.R)) {
-                if (isReloading) return;
-                if (isAttacking) return;
-                if (clipAmount >= 1) {
-                    StartCoroutine(Reload());
-                }
-            }
+            // if (Input.GetKeyDown(KeyCode.R)) {
+            //     if (isReloading) return;
+            //     if (isAttacking) return;
+            //     if (clipAmount >= 1) {
+            //         StartCoroutine(Reload());
+            //     }
+            // }
         }
 
         protected void ApplyDamageOnEnemy(AnimData dmgData) {
@@ -86,15 +87,23 @@ namespace Combat {
             }
         }
         
-        protected IEnumerator Reload() {
-            isReloading = true;
-            canAttack = false;
-            clipAmount--;
-            currentAmmo = attribute.MaxAmmo;
-            isReloading = false;
-            canAttack = true;
-            UpdateUI();
-            yield return null;
+        // protected IEnumerator Reload() {
+        //     isReloading = true;
+        //     canAttack = false;
+        //     clipAmount--;
+        //     yield return new WaitForSeconds(attribute.ReloadTime);
+        //     currentAmmo = attribute.MaxAmmo;
+        //     isReloading = false;
+        //     canAttack = true;
+        //     UpdateUI();
+        //     yield return null;
+        // }
+
+        protected void OnWeaponChange(WeaponManager.WeaponEntry entry) {
+            if (entry.Type != WeaponType.Ranged) return;
+            //StopAllCoroutines();
+            isAttacking = false;
         }
+        
     }
 }

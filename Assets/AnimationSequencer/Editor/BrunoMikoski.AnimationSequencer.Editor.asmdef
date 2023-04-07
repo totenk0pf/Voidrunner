@@ -1,0 +1,19 @@
+{
+    "name": "BrunoMikoski.AnimationSequencer.Editor",
+    "rootNamespace": "",
+    "references": [
+        "BrunoMikoski.AnimationSequencer",
+        "DOTweenPro.EditorScripts"
+    ],
+    "includePlatforms": [
+        "Editor"
+    ],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

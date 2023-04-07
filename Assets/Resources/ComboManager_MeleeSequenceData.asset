@@ -80,6 +80,39 @@ MonoBehaviour:
     - Name: attackSpeedModifier
       Entry: 4
       Data: 2
+    - Name: ComboAnim
+      Entry: 7
+      Data: 3|ComboAnimContainer, Assembly-CSharp
+    - Name: transform
+      Entry: 6
+      Data: 
+    - Name: direction
+      Entry: 7
+      Data: UnityEngine.Vector3, UnityEngine.CoreModule
+    - Name: 
+      Entry: 4
+      Data: 0
+    - Name: 
+      Entry: 4
+      Data: 0
+    - Name: 
+      Entry: 4
+      Data: 0
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: distance
+      Entry: 4
+      Data: 1
+    - Name: time
+      Entry: 4
+      Data: 0.5
+    - Name: easeType
+      Entry: 3
+      Data: 9
+    - Name: 
+      Entry: 8
+      Data: 
     - Name: 
       Entry: 8
       Data: 
@@ -94,7 +127,7 @@ MonoBehaviour:
       Data: 1
     - Name: $v
       Entry: 7
-      Data: 3|MeleeSequenceAttribute, Assembly-CSharp
+      Data: 4|MeleeSequenceAttribute, Assembly-CSharp
     - Name: state
       Entry: 3
       Data: 1
@@ -122,6 +155,39 @@ MonoBehaviour:
     - Name: attackSpeedModifier
       Entry: 4
       Data: 1.5
+    - Name: ComboAnim
+      Entry: 7
+      Data: 5|ComboAnimContainer, Assembly-CSharp
+    - Name: transform
+      Entry: 6
+      Data: 
+    - Name: direction
+      Entry: 7
+      Data: UnityEngine.Vector3, UnityEngine.CoreModule
+    - Name: 
+      Entry: 4
+      Data: 0
+    - Name: 
+      Entry: 4
+      Data: 0
+    - Name: 
+      Entry: 4
+      Data: 0
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: distance
+      Entry: 4
+      Data: 2
+    - Name: time
+      Entry: 4
+      Data: 0.3
+    - Name: easeType
+      Entry: 3
+      Data: 9
+    - Name: 
+      Entry: 8
+      Data: 
     - Name: 
       Entry: 8
       Data: 
@@ -136,7 +202,7 @@ MonoBehaviour:
       Data: 2
     - Name: $v
       Entry: 7
-      Data: 4|MeleeSequenceAttribute, Assembly-CSharp
+      Data: 6|MeleeSequenceAttribute, Assembly-CSharp
     - Name: state
       Entry: 3
       Data: 2
@@ -164,6 +230,39 @@ MonoBehaviour:
     - Name: attackSpeedModifier
       Entry: 4
       Data: 0.75
+    - Name: ComboAnim
+      Entry: 7
+      Data: 7|ComboAnimContainer, Assembly-CSharp
+    - Name: transform
+      Entry: 6
+      Data: 
+    - Name: direction
+      Entry: 7
+      Data: UnityEngine.Vector3, UnityEngine.CoreModule
+    - Name: 
+      Entry: 4
+      Data: 0
+    - Name: 
+      Entry: 4
+      Data: 0
+    - Name: 
+      Entry: 4
+      Data: 0
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: distance
+      Entry: 4
+      Data: 3
+    - Name: time
+      Entry: 4
+      Data: 0.4
+    - Name: easeType
+      Entry: 3
+      Data: 9
+    - Name: 
+      Entry: 8
+      Data: 
     - Name: 
       Entry: 8
       Data: 

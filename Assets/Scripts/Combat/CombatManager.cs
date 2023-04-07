@@ -31,6 +31,8 @@ public class MeleeSequenceAttribute : IAnimDataConvertable {
     [ShowIf("canDamageMod")] [SerializeField] private float damageScale = 1;
     [ShowIf("canDamageMod")] [SerializeField] private float damageModifier = 0;
     [ShowIf("canDamageMod")] [SerializeField] private float attackSpeedModifier = 1;
+    public ComboAnimContainer ComboAnim;
+    
     
     //Getters
     public float NextSeqInputWindow => nextSeqInputWindow;
@@ -92,7 +94,8 @@ public class RangedAttribute : IAnimDataConvertable
     [SerializeField] private PlayerAnimState state;
     [SerializeField] private float preshotDelay;
     [SerializeField] private float aftershotDelay;
-
+    [SerializeField] private float reloadTime;
+    
     [SerializeField] private float damagePerPellet;
     [SerializeField] private int pelletCount;
     [SerializeField] private float rayCastRange;
@@ -106,6 +109,7 @@ public class RangedAttribute : IAnimDataConvertable
     
     public bool canDamageMod;
     [ShowIf("canDamageMod")] [SerializeField] private float attackSpeed;
+    public float ReloadTime => reloadTime;
     public PlayerAnimState State => state;
     public float PreshotDelay => preshotDelay;
     public float AftershotDelay => aftershotDelay;
@@ -153,6 +157,7 @@ public class CombatManager : MonoBehaviour
         this.AddListener(EventType.AttackEndEvent, param => OnAttackEnd());
         this.AddListener(EventType.CancelMeleeAttackEvent, param => ResetWeaponAttackState());
         this.AddListener(EventType.WeaponMeleeFiredEvent, param => MeleeAttack());
+        this.AddListener(EventType.NotifyPlayerComboSequenceEvent, param => OnAttackAnimation());
         //Ranged Related
         this.AddListener(EventType.WeaponRangedFiredEvent, param => StartCoroutine(RangedAttackRoutine()));
         //Movement State
@@ -287,6 +292,16 @@ public class CombatManager : MonoBehaviour
         }
     }
 
+    private void OnAttackAnimation()
+    {
+        var playerT = transform.root;
+        var container = MeleeSequence.OrderToAttributes[_curMeleeOrder].ComboAnim;
+        container.transform = playerT;
+        container.direction = playerT.forward;
+            
+        this.FireEvent(EventType.RunPlayerComboSequenceEvent, container);
+    }    
+    
     private void OnInputWindowHold()
     {
         if (_curWeaponType == WeaponType.Melee) {

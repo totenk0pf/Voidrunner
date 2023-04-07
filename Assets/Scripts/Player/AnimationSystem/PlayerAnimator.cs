@@ -91,6 +91,10 @@ public class PlayerAnimator : MonoBehaviour, IInteractiveAnimator, ICombatAnimat
     public void HoldAnimationOnFrame() {
         this.FireEvent(EventType.OnInputWindowHold);
     }
+
+    public void RunTweenAnimation() {
+        this.FireEvent(EventType.NotifyPlayerComboSequenceEvent);
+    }
     
     #endregion
  
