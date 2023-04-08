@@ -19,6 +19,7 @@ MonoBehaviour:
     - {fileID: 0}
     - {fileID: 0}
     - {fileID: 0}
+    - {fileID: 0}
     SerializedBytesString: 
     Prefab: {fileID: 0}
     PrefabModificationsReferencedUnityObjects: []
@@ -61,7 +62,7 @@ MonoBehaviour:
       Data: 0.5
     - Name: damage
       Entry: 4
-      Data: 5
+      Data: 15
     - Name: knockBackForce
       Entry: 4
       Data: 10
@@ -84,20 +85,20 @@ MonoBehaviour:
       Entry: 7
       Data: 3|ComboAnimContainer, Assembly-CSharp
     - Name: transform
-      Entry: 6
-      Data: 
+      Entry: 10
+      Data: 1
     - Name: direction
       Entry: 7
       Data: UnityEngine.Vector3, UnityEngine.CoreModule
     - Name: 
       Entry: 4
-      Data: 0
+      Data: 0.7145667
     - Name: 
       Entry: 4
       Data: 0
     - Name: 
       Entry: 4
-      Data: 0
+      Data: 0.6995673
     - Name: 
       Entry: 8
       Data: 
@@ -136,13 +137,13 @@ MonoBehaviour:
       Data: 1.5
     - Name: damage
       Entry: 4
-      Data: 10
+      Data: 20
     - Name: knockBackForce
       Entry: 4
       Data: 15
     - Name: collider
       Entry: 10
-      Data: 1
+      Data: 2
     - Name: canDamageMod
       Entry: 5
       Data: false
@@ -159,20 +160,20 @@ MonoBehaviour:
       Entry: 7
       Data: 5|ComboAnimContainer, Assembly-CSharp
     - Name: transform
-      Entry: 6
-      Data: 
+      Entry: 10
+      Data: 1
     - Name: direction
       Entry: 7
       Data: UnityEngine.Vector3, UnityEngine.CoreModule
     - Name: 
       Entry: 4
-      Data: 0
+      Data: 0.7047834
     - Name: 
       Entry: 4
       Data: 0
     - Name: 
       Entry: 4
-      Data: 0
+      Data: 0.7094226
     - Name: 
       Entry: 8
       Data: 
@@ -211,13 +212,13 @@ MonoBehaviour:
       Data: 2
     - Name: damage
       Entry: 4
-      Data: 15
+      Data: 25
     - Name: knockBackForce
       Entry: 4
       Data: 30
     - Name: collider
       Entry: 10
-      Data: 2
+      Data: 3
     - Name: canDamageMod
       Entry: 5
       Data: true
@@ -234,20 +235,20 @@ MonoBehaviour:
       Entry: 7
       Data: 7|ComboAnimContainer, Assembly-CSharp
     - Name: transform
-      Entry: 6
-      Data: 
+      Entry: 10
+      Data: 1
     - Name: direction
       Entry: 7
       Data: UnityEngine.Vector3, UnityEngine.CoreModule
     - Name: 
       Entry: 4
-      Data: 0
+      Data: -0.952288151
     - Name: 
       Entry: 4
       Data: 0
     - Name: 
       Entry: 4
-      Data: 0
+      Data: -0.305200934
     - Name: 
       Entry: 8
       Data: 

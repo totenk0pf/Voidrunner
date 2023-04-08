@@ -116,15 +116,16 @@ public class PlayerMovementController : MonoBehaviour
            // this.FireEvent(EventType.CancelMeleeAttackEvent);
         }
         
+        _dodgeDir = transform.forward;
         foreach (var input in _inputToDirDict.Keys.Where(Input.GetKey)) {
-            _dodgeDir = Quaternion.AngleAxis(_inputToDirDict[input], Vector3.up) * transform.forward;
+            _dodgeDir = (Quaternion.AngleAxis(_inputToDirDict[input], Vector3.up) * transform.forward).normalized;
             break;
         }
         
         if (Input.GetKeyDown(dodgeKey) && Time.time >= _nextDodgeTimeStamp)
         {
             _nextDodgeTimeStamp = Time.time + dodgeCooldown;
-            ActionDodge(_dodgeDir);
+            ActionDodge();
         }
     }
 
@@ -325,15 +326,14 @@ public class PlayerMovementController : MonoBehaviour
     #endregion
     
     #region Movement Abilities
-    private void ActionDodge(Vector3 moveDir)
+    private void ActionDodge()
     {
         if (Rb.velocity.magnitude == 0 || moveState != MovementState.Normal) { return; }
         
-        this.FireEvent(EventType.CancelMeleeAttackEvent);
         moveState = MovementState.Dodge;
         //var velMagCache = Rb.velocity.magnitude;
-        Vector3 dest = transform.position + moveDir * dodgeDistance;
-        Vector3 rollAxis = Vector3.Cross(moveDir, playerVisualProto.up);
+        Vector3 dest = transform.position + _dodgeDir * dodgeDistance;
+        Vector3 rollAxis = Vector3.Cross(_dodgeDir, transform.root.up);
     
         StartCoroutine(LerpDodgeRoutine(dest, rollAxis));
     }
@@ -349,6 +349,8 @@ public class PlayerMovementController : MonoBehaviour
         if (toggleProtoDodge && moveState == MovementState.Dodge) {
             playerVisualProto.Rotate(rollAxis, -30f, Space.Self);
         }
+        NCLogger.Log($"dodge");
+        this.FireEvent(EventType.CancelMeleeAttackEvent);
         this.FireEvent(EventType.NotifyStopAllComboSequenceEvent, false);
         while (time < dodgeTime) {
             transform.position = Vector3.Lerp(startPos, dest, time / dodgeTime);

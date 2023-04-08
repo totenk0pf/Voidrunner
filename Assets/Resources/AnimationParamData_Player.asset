@@ -185,7 +185,7 @@ MonoBehaviour:
       Data: AnimParam, Assembly-CSharp
     - Name: type
       Entry: 3
-      Data: 9
+      Data: 4
     - Name: name
       Entry: 1
       Data: Fire
@@ -203,7 +203,7 @@ MonoBehaviour:
       Data: 0
     - Name: boolParam
       Entry: 5
-      Data: false
+      Data: true
     - Name: 
       Entry: 8
       Data: 

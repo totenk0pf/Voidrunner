@@ -287,12 +287,13 @@ public class CombatManager : MonoBehaviour
     }
     
     private void ResetWeaponAttackState() {
+        NCLogger.Log($"reset");
+        StopAllCoroutines();
         _curWeaponRef.canAttack = true;
         _curWeaponRef.isAttacking = false;
         _isInWindow = false;
         _curMeleeOrder = MeleeOrder.First;
         _playerAnimator.ResumeAnimator();
-        StopAllCoroutines();
         
         this.FireEvent(EventType.ResumeMovementEvent);
     }

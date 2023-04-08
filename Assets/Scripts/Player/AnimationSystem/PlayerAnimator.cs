@@ -46,7 +46,8 @@ public class PlayerAnimator : MonoBehaviour, IInteractiveAnimator, ICombatAnimat
 {
     private Animator _animator;
     private AnimData _animData;
-    private WeaponType _curWeaponType;
+    private WeaponManager.WeaponEntry _curWeaponEntry;
+    private WeaponType _curWeaponType => _curWeaponEntry.Type;
     [SerializeField] private AnimationParamData animationParamData;
     [SerializeField] private int mainAnimLayer = 0;
     
@@ -54,7 +55,7 @@ public class PlayerAnimator : MonoBehaviour, IInteractiveAnimator, ICombatAnimat
         this.AddListener(EventType.PlayAnimationEvent, animData => UpdateAnimAttribute((AnimData)animData));
         this.AddListener(EventType.PlayAttackEvent, animData => UpdateAnimAttribute((AnimData)animData));
         this.AddListener(EventType.RequestPlayerAnimatorEvent, param => OnRequestAnimator());
-        this.AddListener(EventType.WeaponChangedEvent, param => _curWeaponType = ((WeaponManager.WeaponEntry)param).Type);
+        this.AddListener(EventType.WeaponChangedEvent, param => _curWeaponEntry = ((WeaponManager.WeaponEntry)param));
         this.AddListener(EventType.CancelMeleeAttackEvent, param => SetParam(PlayerAnimState.RangedAttack, false));
         
         if(!animationParamData) NCLogger.Log($"Missing Animation State Data", LogLevel.ERROR);
@@ -66,12 +67,21 @@ public class PlayerAnimator : MonoBehaviour, IInteractiveAnimator, ICombatAnimat
     }
 
     #region IInteractiveAnimator
-    public void OnAnimationStart() {
-        if (_curWeaponType == WeaponType.Ranged) {
-            SetParam(PlayerAnimState.RangedAttack, false);
-        }
-        
-        this.FireEvent(EventType.AttackBeginEvent, GetAnimator());
+    public void OnAnimationStart()
+    {
+        // if (_animData == null) return;
+        // if (_animData.State == PlayerAnimState.Idle)
+        // {
+        //     _curWeaponEntry.Reference.isAttacking = false;
+        // }
+        // else
+        // {
+            if (_curWeaponType == WeaponType.Ranged) {
+                SetParam(PlayerAnimState.RangedAttack, false);
+            }
+            
+            this.FireEvent(EventType.AttackBeginEvent, GetAnimator());
+        // }
     }
 
     public void OnAnimationEnd() {

@@ -26,9 +26,6 @@ MonoBehaviour:
     name: Idle
     hash: 2081823275
   - type: 9
-    name: Fire
-    hash: -118708495
-  - type: 9
     name: Attack1
     hash: -47317214
   - type: 9
@@ -37,4 +34,7 @@ MonoBehaviour:
   - type: 9
     name: Attack3
     hash: 321101326
+  - type: 4
+    name: Fire
+    hash: -118708495
   controller: {fileID: 9100000, guid: 8f1ddedd75fca354aaf41768a6b60426, type: 2}
