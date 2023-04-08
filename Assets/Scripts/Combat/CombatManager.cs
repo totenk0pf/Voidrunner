@@ -147,7 +147,8 @@ public class CombatManager : MonoBehaviour
     [Space]
     [ReadOnly] private PlayerMovementController.MovementState _moveState;
     [ReadOnly] [SerializeField] private PlayerAnimator _playerAnimator;
-    
+
+    private bool _isGrounded;
     private void IncrementMeleeOrder() => _curMeleeOrder = _curMeleeOrder.Next();
 
     private void Awake() {
@@ -164,6 +165,7 @@ public class CombatManager : MonoBehaviour
         this.AddListener(EventType.WeaponRangedFiredEvent, param => StartCoroutine(RangedAttackRoutine()));
         //Movement State
         this.AddListener(EventType.SetMovementStateEvent, state => _moveState = (PlayerMovementController.MovementState) state);
+        this.AddListener(EventType.ReceiveIsOnGroundEvent, param => _isGrounded = (bool)param);
         //Receive Refs
         this.AddListener(EventType.ReceivePlayerAnimatorEvent, animator => _playerAnimator = (PlayerAnimator) animator);
         
@@ -191,6 +193,8 @@ public class CombatManager : MonoBehaviour
         if (!_curWeaponRef.canAttack || _curWeaponRef.isAttacking) return;
         if (_curWeaponType != WeaponType.Melee || !Input.GetMouseButtonDown(0)) return;
         if (_moveState != PlayerMovementController.MovementState.Normal) return;
+        this.FireEvent(EventType.RequestIsOnGroundEvent);
+        if (!_isGrounded) return;
         
         _curWeaponRef.canAttack = false;
         _curWeaponRef.isAttacking = true; 
@@ -252,7 +256,7 @@ public class CombatManager : MonoBehaviour
     private IEnumerator RangedAttackRoutine() {
         if (!_curWeaponRef.canAttack || _curWeaponRef.isAttacking) yield break;
         if (_curWeaponType != WeaponType.Ranged || !Input.GetMouseButtonDown(0)) yield break;
-        //if (_moveState != PlayerMovementController.MovementState.Normal) return;
+        if (_moveState == PlayerMovementController.MovementState.Grappling) yield break;
 
         _curWeaponRef.canAttack = false;
         _curWeaponRef.isAttacking = true;

@@ -16,7 +16,7 @@ public class PlayerMovementController : MonoBehaviour
     {
         Normal,
         Dodge,
-        Grappling
+        Grappling,
     }
     
     //max speed 
