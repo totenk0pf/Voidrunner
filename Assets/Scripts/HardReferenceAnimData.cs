@@ -10,15 +10,8 @@ using UnityEngine;
 [Serializable]
 public struct AnimParam {
     public AnimatorControllerParameterType type;
-    public string name;
-    public int hash;
-    
-    [ShowIf("type", AnimatorControllerParameterType.Float)]
-    public float floatParam;
-    [ShowIf("type", AnimatorControllerParameterType.Int)]
-    public int intParam;
-    [ShowIf("type", AnimatorControllerParameterType.Bool)]
-    public bool boolParam;
+    [ReadOnly] public string name;
+    [ReadOnly] public int hash;
 }
 
 
@@ -29,6 +22,13 @@ public class AnimParamContainer
     //public AnimatorControllerParameterType paramType;
     [ValueDropdown("GetParamType", IsUniqueList = true, ExpandAllMenuItems = true, HideChildProperties = true)] [ShowInInspector]
     public AnimParam param;
+
+    [ShowIf("Type", AnimatorControllerParameterType.Float)]
+    public float floatParam;
+    [ShowIf("Type", AnimatorControllerParameterType.Int)]
+    public int intParam;
+    [ShowIf("Type", AnimatorControllerParameterType.Bool)]
+    public bool boolParam;
     
     public int Hash => param.hash;
     public AnimatorControllerParameterType Type => param.type;

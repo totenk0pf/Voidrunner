@@ -5,6 +5,8 @@ using BrunoMikoski.AnimationSequencer;
 using Core.Events;
 using Core.Logging;
 using DG.Tweening;
+using DG.Tweening.Core;
+using DG.Tweening.Plugins.Options;
 using Sirenix.OdinInspector;
 using UnityEngine;
 using EventType = Core.Events.EventType;
@@ -29,12 +31,26 @@ public class ComboAnimContainer
 
 public class CombatAnimationSequenceController : MonoBehaviour
 {
+    private bool _canPlay = true;
+    private TweenerCore<Vector3, Vector3, VectorOptions> _tween;
+    private Transform _tweenObj;
+    
     private void Awake() {
         this.AddListener(EventType.RunPlayerComboSequenceEvent, param => PlayComboAnimation((ComboAnimContainer) param));
+        this.AddListener(EventType.NotifyResumeAllComboSequenceEvent, param => _canPlay = true);
+        this.AddListener(EventType.NotifyStopAllComboSequenceEvent, param => StopAllComboSequence());
+    }
+
+    private void StopAllComboSequence()
+    {
+        DOTween.Kill(_tweenObj);
+        _canPlay = false;
     }
     
     private void PlayComboAnimation(ComboAnimContainer param)
     {
+        if(!_canPlay) return;
+        
         if (param.transform == null) {
             NCLogger.Log($"param.transform: {param.transform}", LogLevel.ERROR);
             return;
@@ -44,7 +60,9 @@ public class CombatAnimationSequenceController : MonoBehaviour
             NCLogger.Log($"param.direction: {param.direction}", LogLevel.ERROR);
             return;
         }
-        
-        param.transform.DOMove(param.transform.position + param.direction * param.distance , param.time).SetEase(param.easeType);
+
+        _tweenObj = param.transform;
+        //change this into a coroutine so you can cancel it
+        _tween = param.transform.DOMove(param.transform.position + param.direction * param.distance , param.time).SetEase(param.easeType);
     }
 }

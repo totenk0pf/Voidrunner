@@ -53,7 +53,10 @@ namespace Core.Events {
         //Player Animator Init Events
         RequestPlayerAnimatorEvent,
         ReceivePlayerAnimatorEvent,
+        //
         NotifyPlayerComboSequenceEvent,
         RunPlayerComboSequenceEvent,
+        NotifyStopAllComboSequenceEvent,
+        NotifyResumeAllComboSequenceEvent,
     }
 }

@@ -343,14 +343,14 @@ public class PlayerMovementController : MonoBehaviour
         if (toggleProtoDodge && moveState == MovementState.Dodge) {
             playerVisualProto.Rotate(rollAxis, -30f, Space.Self);
         }
-        
+        this.FireEvent(EventType.NotifyStopAllComboSequenceEvent);
         while (time < dodgeTime) {
             transform.position = Vector3.Lerp(startPos, dest, time / dodgeTime);
             time += Time.deltaTime;
             
             yield return null;
         }
-        
+        this.FireEvent(EventType.NotifyResumeAllComboSequenceEvent);
         transform.position = dest;
         playerVisualProto.up = Vector3.up;
         moveState = MovementState.Normal;

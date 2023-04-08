@@ -61,15 +61,23 @@ public class PlayerAnimator : MonoBehaviour, IInteractiveAnimator, ICombatAnimat
 
     private void UpdateAnimAttribute(AnimData data) {
         _animData = data;
-        PlayAnimation(_animData.State);
+        SetParam(_animData.State);
     }
 
     #region IInteractiveAnimator
     public void OnAnimationStart() {
+        if (_curWeaponType == WeaponType.Ranged) {
+            SetParam(PlayerAnimState.RangedAttack, false);
+        }
+        
         this.FireEvent(EventType.AttackBeginEvent, GetAnimator());
     }
 
     public void OnAnimationEnd() {
+        if (_curWeaponType == WeaponType.Ranged) {
+            SetParam(PlayerAnimState.RangedAttack, false);
+        }
+        
         this.FireEvent(EventType.AttackEndEvent, GetAnimator());
     }
     #endregion
@@ -99,7 +107,7 @@ public class PlayerAnimator : MonoBehaviour, IInteractiveAnimator, ICombatAnimat
     #endregion
  
     #region IAnimator
-    public void PlayAnimation(PlayerAnimState state)
+    public void SetParam(PlayerAnimState state)
     {
         var param = animationParamData.GetAnimParam(state);
         //NCLogger.Log($"{param.paramName}");
@@ -112,16 +120,34 @@ public class PlayerAnimator : MonoBehaviour, IInteractiveAnimator, ICombatAnimat
                 GetAnimator().SetTrigger(id);
                 break;
             case AnimatorControllerParameterType.Float:
-                GetAnimator().SetFloat(id, param.param.floatParam);
+                GetAnimator().SetFloat(id, param.floatParam);
                 break;
             case AnimatorControllerParameterType.Int:
-                GetAnimator().SetFloat(id, param.param.intParam);
+                GetAnimator().SetFloat(id, param.intParam);
                 break;
             case AnimatorControllerParameterType.Bool:
-                GetAnimator().SetBool(id, param.param.boolParam);
+                NCLogger.Log($"asdasd");
+                GetAnimator().SetBool(id, param.boolParam);
                 break;
             default:
                 throw new ArgumentOutOfRangeException();
+        }
+
+        if (state == PlayerAnimState.Idle) {
+            SetParam(PlayerAnimState.RangedAttack, false);
+        }
+    }
+
+    public void SetParam(PlayerAnimState state, bool value)
+    {
+        var param = animationParamData.GetAnimParam(state);
+        GetAnimator().speed = _animData.AnimSpeed;
+        var id = param.Hash;
+
+        if (param.Type == AnimatorControllerParameterType.Bool) {
+            GetAnimator().SetBool(id, value);
+        } else {
+            NCLogger.Log($"Anim State: {state} uses {param.Type} not Bool", LogLevel.ERROR);
         }
     }
     

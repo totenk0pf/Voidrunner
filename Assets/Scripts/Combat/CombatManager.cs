@@ -277,8 +277,10 @@ public class CombatManager : MonoBehaviour
         _curMeleeOrder = MeleeOrder.First;
         _playerAnimator.ResumeAnimator();
         StopAllCoroutines();
-        //TODO: Replace this down the line with "PlayAnimationEvent", not "PlayMeleeAttackEvent"
-        this.FireEvent(EventType.PlayAttackEvent, new AnimData(PlayerAnimState.Idle));
+        if (_curWeaponType == WeaponType.Melee)
+        {
+            this.FireEvent(EventType.PlayAnimationEvent, new AnimData(PlayerAnimState.Idle));
+        }
         this.FireEvent(EventType.ResumeMovementEvent);
     }
     #endregion
@@ -320,10 +322,13 @@ public class CombatManager : MonoBehaviour
 
     private void OnAttackEnd()
     {
+        this.FireEvent(EventType.PlayAnimationEvent, new AnimData(PlayerAnimState.Idle));
         if (_curWeaponType == WeaponType.Melee)
             OnAttackEndMelee();
         else if (_curWeaponType == WeaponType.Ranged)
+        {
             StartCoroutine(OnAttackEndRangedRoutine());
+        }
     }
 
     private void OnAttackEndMelee()
