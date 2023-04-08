@@ -55,6 +55,7 @@ public class PlayerAnimator : MonoBehaviour, IInteractiveAnimator, ICombatAnimat
         this.AddListener(EventType.PlayAttackEvent, animData => UpdateAnimAttribute((AnimData)animData));
         this.AddListener(EventType.RequestPlayerAnimatorEvent, param => OnRequestAnimator());
         this.AddListener(EventType.WeaponChangedEvent, param => _curWeaponType = ((WeaponManager.WeaponEntry)param).Type);
+        this.AddListener(EventType.CancelMeleeAttackEvent, param => SetParam(PlayerAnimState.RangedAttack, false));
         
         if(!animationParamData) NCLogger.Log($"Missing Animation State Data", LogLevel.ERROR);
     }
@@ -88,6 +89,12 @@ public class PlayerAnimator : MonoBehaviour, IInteractiveAnimator, ICombatAnimat
             NCLogger.Log($"no melee anim data - animData: {_animData}");
             return; }
 
+        if (_animData.State != PlayerAnimState.MeleeAttack1 &&
+            _animData.State != PlayerAnimState.MeleeAttack2 &&
+            _animData.State != PlayerAnimState.MeleeAttack3 &&
+            _animData.State != PlayerAnimState.RangedAttack)
+            return;
+        
         _animData.animDuration = CurrentClipLength;
         if (_curWeaponType == WeaponType.Melee) {
             this.FireEvent(EventType.MeleeEnemyDamageEvent, _animData);
@@ -126,7 +133,6 @@ public class PlayerAnimator : MonoBehaviour, IInteractiveAnimator, ICombatAnimat
                 GetAnimator().SetFloat(id, param.intParam);
                 break;
             case AnimatorControllerParameterType.Bool:
-                NCLogger.Log($"asdasd");
                 GetAnimator().SetBool(id, param.boolParam);
                 break;
             default:

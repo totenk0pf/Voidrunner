@@ -23,6 +23,7 @@ namespace Combat {
         public int currentAmmo;
         public int clipAmount;
 
+        private WeaponType _curWeaponType;
         [TitleGroup("Components")]
         [SerializeField] protected Animator animator;
 
@@ -54,7 +55,7 @@ namespace Combat {
         }
         
         protected void Update() {
-            if (Input.GetMouseButtonDown(0) && canAttack) {
+            if (Input.GetMouseButtonDown(0) && canAttack && _curWeaponType == WeaponType.Ranged) {
                 if (currentAmmo >= 1) {
                     currentAmmo--;
                     this.FireEvent(EventType.WeaponRangedFiredEvent);
@@ -100,8 +101,8 @@ namespace Combat {
         // }
 
         protected void OnWeaponChange(WeaponManager.WeaponEntry entry) {
+            _curWeaponType = entry.Type;
             if (entry.Type != WeaponType.Ranged) return;
-            //StopAllCoroutines();
             isAttacking = false;
         }
         

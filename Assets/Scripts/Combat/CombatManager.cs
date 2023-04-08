@@ -155,7 +155,7 @@ public class CombatManager : MonoBehaviour
         this.AddListener(EventType.AttackBeginEvent, param => OnAttackBegin());
         this.AddListener(EventType.OnInputWindowHold, param => OnInputWindowHold());
         this.AddListener(EventType.AttackEndEvent, param => OnAttackEnd());
-        this.AddListener(EventType.CancelMeleeAttackEvent, param => ResetWeaponAttackState());
+        this.AddListener(EventType.CancelMeleeAttackEvent, param => CancelWeaponAttack());
         this.AddListener(EventType.WeaponMeleeFiredEvent, param => MeleeAttack());
         this.AddListener(EventType.NotifyPlayerComboSequenceEvent, param => OnAttackAnimation());
         //Ranged Related
@@ -205,6 +205,12 @@ public class CombatManager : MonoBehaviour
     }
 
     private void UpdateCurrentWeapon(WeaponManager.WeaponEntry entry) {
+        if (entry.Type != _curWeaponType)
+        {
+            this.FireEvent(EventType.CancelMeleeAttackEvent);
+            this.FireEvent(EventType.NotifyStopAllComboSequenceEvent, true);
+        }
+        
         _curWeaponType = entry.Type;
         _curWeaponRef = entry.Reference;
     }
@@ -270,6 +276,16 @@ public class CombatManager : MonoBehaviour
     #endregion
     
     #region Common Attack Methods
+
+    private void CancelWeaponAttack()
+    {
+        ResetWeaponAttackState();
+        // if (_curWeaponType == WeaponType.Melee)
+        // {
+        this.FireEvent(EventType.PlayAnimationEvent, new AnimData(PlayerAnimState.Idle));
+        // }
+    }
+    
     private void ResetWeaponAttackState() {
         _curWeaponRef.canAttack = true;
         _curWeaponRef.isAttacking = false;
@@ -277,10 +293,7 @@ public class CombatManager : MonoBehaviour
         _curMeleeOrder = MeleeOrder.First;
         _playerAnimator.ResumeAnimator();
         StopAllCoroutines();
-        if (_curWeaponType == WeaponType.Melee)
-        {
-            this.FireEvent(EventType.PlayAnimationEvent, new AnimData(PlayerAnimState.Idle));
-        }
+        
         this.FireEvent(EventType.ResumeMovementEvent);
     }
     #endregion

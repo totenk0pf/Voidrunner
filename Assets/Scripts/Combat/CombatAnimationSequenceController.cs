@@ -38,13 +38,24 @@ public class CombatAnimationSequenceController : MonoBehaviour
     private void Awake() {
         this.AddListener(EventType.RunPlayerComboSequenceEvent, param => PlayComboAnimation((ComboAnimContainer) param));
         this.AddListener(EventType.NotifyResumeAllComboSequenceEvent, param => _canPlay = true);
-        this.AddListener(EventType.NotifyStopAllComboSequenceEvent, param => StopAllComboSequence());
+        this.AddListener(EventType.NotifyStopAllComboSequenceEvent, param => StartCoroutine(StopAllComboSequence((bool) param)));
     }
 
-    private void StopAllComboSequence()
+    /// <summary>
+    /// Stop DOTween sequence for moving forward when attacking
+    /// </summary>
+    /// <param name="isPending"> isPending is false by default since "_canPlay" always set-ed by animation event,
+    /// but on weapon switch (not an animation, YET). It should be done manually</param>
+    /// <returns></returns>
+    private IEnumerator StopAllComboSequence(bool isPending = false)
     {
         DOTween.Kill(_tweenObj);
         _canPlay = false;
+        
+        if (!isPending) yield break;
+        
+        yield return null;
+        _canPlay = true;
     }
     
     private void PlayComboAnimation(ComboAnimContainer param)
