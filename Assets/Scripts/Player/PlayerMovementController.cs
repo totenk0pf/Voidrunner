@@ -70,7 +70,8 @@ public class PlayerMovementController : MonoBehaviour
     [SerializeField] private KeyCode dodgeKey;
     [SerializeField] private float dodgeTime;
     [SerializeField] private float dodgeDistance;
-
+    [SerializeField] private float dodgeCooldown;
+    private float _nextDodgeTimeStamp;
     
     private Dictionary<KeyCode, float> _inputToDirDict;
     private Vector3 _dodgeDir;
@@ -119,7 +120,12 @@ public class PlayerMovementController : MonoBehaviour
             _dodgeDir = Quaternion.AngleAxis(_inputToDirDict[input], Vector3.up) * transform.forward;
             break;
         }
-        if(Input.GetKeyDown(dodgeKey)) ActionDodge(_dodgeDir);
+        
+        if (Input.GetKeyDown(dodgeKey) && Time.time >= _nextDodgeTimeStamp)
+        {
+            _nextDodgeTimeStamp = Time.time + dodgeCooldown;
+            ActionDodge(_dodgeDir);
+        }
     }
 
     #region Movement Base
