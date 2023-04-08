@@ -350,6 +350,7 @@ public class PlayerMovementController : MonoBehaviour
             
             yield return null;
         }
+        this.FireEvent(EventType.CancelMeleeAttackEvent);
         this.FireEvent(EventType.NotifyResumeAllComboSequenceEvent);
         transform.position = dest;
         playerVisualProto.up = Vector3.up;
