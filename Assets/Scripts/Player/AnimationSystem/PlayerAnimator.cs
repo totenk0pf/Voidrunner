@@ -23,15 +23,17 @@ public enum PlayerAnimState {
 public class AnimData {
     public PlayerAnimState State { get; private set; }
     public float Damage { get; private set; }
+    public float Knockback { get; private set; }
     public float AnimSpeed { get; private set; }
     public List<EnemyBase> Enemies { get; private set; }
     public float animDuration;
 
-    public AnimData(PlayerAnimState state, List<EnemyBase> enemies = null, float damage = 0, float animSpeed = 1) {
+    public AnimData(PlayerAnimState state, List<EnemyBase> enemies = null, float damage = 0, float knockback = 0, float animSpeed = 1) {
         this.State = state;
         this.Enemies = enemies;
         this.Damage = damage;
         this.AnimSpeed = animSpeed;
+        this.Knockback = knockback;
         InitCheck();
     }
 
@@ -128,7 +130,7 @@ public class PlayerAnimator : MonoBehaviour, IInteractiveAnimator, ICombatAnimat
     {
         var param = animationParamData.GetAnimParam(state);
         //NCLogger.Log($"{param.paramName}");
-        GetAnimator().speed = _animData.AnimSpeed;
+        GetAnimator().speed = _animData?.AnimSpeed ?? 1;
         var id = param.Hash;
 
         switch (param.Type)
@@ -157,7 +159,7 @@ public class PlayerAnimator : MonoBehaviour, IInteractiveAnimator, ICombatAnimat
     public void SetParam(PlayerAnimState state, bool value)
     {
         var param = animationParamData.GetAnimParam(state);
-        GetAnimator().speed = _animData.AnimSpeed;
+        GetAnimator().speed = _animData?.AnimSpeed ?? 1;
         var id = param.Hash;
 
         if (param.Type == AnimatorControllerParameterType.Bool) {

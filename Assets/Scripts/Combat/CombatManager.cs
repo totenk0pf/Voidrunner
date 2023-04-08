@@ -71,7 +71,7 @@ public class MeleeSequenceAttribute : IAnimDataConvertable {
     }
     
     public AnimData CloneToAnimData() {
-        return new AnimData(State, collider.Enemies, Damage, AtkSpdModifier);
+        return new AnimData(State, collider.Enemies, Damage, KnockBackForce, AtkSpdModifier);
     }
     
     public MeleeSequenceAttribute(PlayerAnimState animState, float seqInputWin, float dmg, float knockForce, MeleeCollider col,
@@ -95,7 +95,8 @@ public class RangedAttribute : IAnimDataConvertable
     [SerializeField] private float preshotDelay;
     [SerializeField] private float aftershotDelay;
     [SerializeField] private float reloadTime;
-    
+
+    [SerializeField] private float knockbackForce;
     [SerializeField] private float damagePerPellet;
     [SerializeField] private int pelletCount;
     [SerializeField] private float rayCastRange;
@@ -110,6 +111,7 @@ public class RangedAttribute : IAnimDataConvertable
     public bool canDamageMod;
     [ShowIf("canDamageMod")] [SerializeField] private float attackSpeed;
     public float ReloadTime => reloadTime;
+    public float Knockback => knockbackForce;
     public PlayerAnimState State => state;
     public float PreshotDelay => preshotDelay;
     public float AftershotDelay => aftershotDelay;
@@ -122,7 +124,7 @@ public class RangedAttribute : IAnimDataConvertable
     public float Angle => maxSpreadAngle;
     public AnimData CloneToAnimData()
     {
-        return new AnimData(State, Enemies, damagePerPellet, AtkSpdModifier);
+        return new AnimData(State, Enemies, damagePerPellet, knockbackForce, AtkSpdModifier);
     }
 }
 

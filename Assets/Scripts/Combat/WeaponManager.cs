@@ -39,9 +39,13 @@ namespace Combat {
 
         private void Awake()
         {
-            OnWeaponSwap(currentWeapon);
             this.AddListener(EventType.WeaponFiredEvent, param => canSwap = false);
             this.AddListener(EventType.WeaponRechargedEvent, param => canSwap = true);
+            OnWeaponSwap(currentWeapon);
+        }
+
+        private void Start()
+        {
         }
 
         private void Update()
@@ -76,6 +80,7 @@ namespace Combat {
             }
 
             currentWeapon = weapon;
+            currentType = currentWeapon.Type;
             this.FireEvent(EventType.WeaponChangedEvent, currentWeapon);
         }
 
