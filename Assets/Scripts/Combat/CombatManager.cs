@@ -102,6 +102,7 @@ public class RangedAttribute : IAnimDataConvertable
     [SerializeField] private float reloadTime;
 
     [SerializeField] private float knockbackForce;
+    [SerializeField] private float knockbackStackCap;
     [ReadOnly] public Transform playerTransform;
     [SerializeField] private float damagePerPellet;
     [SerializeField] private int pelletCount;
@@ -113,7 +114,23 @@ public class RangedAttribute : IAnimDataConvertable
     [SerializeField] private LayerMask raycastMask;
 
     [ReadOnly] public List<EnemyBase> Enemies;
-    
+
+    public Dictionary<EnemyBase, int> EnemyToCountDict
+    {
+        get
+        {
+            var dict = new Dictionary<EnemyBase, int>();
+            foreach (var enemy in Enemies)
+            {
+                if (dict.Keys.Contains(enemy))
+                    dict[enemy]++;
+                else
+                    dict.Add(enemy, 0);
+            }
+
+            return dict;
+        }
+    }
     public bool canDamageMod;
     [ShowIf("canDamageMod")] [SerializeField] private float attackSpeed;
     public float ReloadTime => reloadTime;
@@ -129,10 +146,10 @@ public class RangedAttribute : IAnimDataConvertable
     public float Range => rayCastRange;
     public float Angle => maxSpreadAngle;
     public AnimData CloneToAnimData() {
-        return new AnimData(State, Enemies, damagePerPellet, knockbackForce, playerTransform, AtkSpdModifier);
+        return new AnimData(State, EnemyToCountDict, damagePerPellet, knockbackForce, knockbackStackCap, playerTransform, AtkSpdModifier);
     }
     public AnimData CloneToAnimData(Transform transform) {
-        return new AnimData(State,Enemies, damagePerPellet, Knockback, transform, AtkSpdModifier);
+        return new AnimData(State, EnemyToCountDict, damagePerPellet, Knockback, knockbackStackCap,  transform, AtkSpdModifier);
     }
 }
 
@@ -278,6 +295,7 @@ public class CombatManager : MonoBehaviour
         var attribute = RangedData.Attribute;
         var origin = firePoint.position;
         Physics physics = new Physics();
+        
         
         RangedData.ClearEnemiesCache();
         physics.ConeCastEnemy(ref attribute.Enemies, 
