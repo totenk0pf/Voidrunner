@@ -65,13 +65,16 @@ MonoBehaviour:
       Data: 15
     - Name: knockBackForce
       Entry: 4
-      Data: 10
+      Data: 6
+    - Name: playerTransform
+      Entry: 6
+      Data: 
     - Name: collider
       Entry: 10
       Data: 0
     - Name: canDamageMod
       Entry: 5
-      Data: false
+      Data: true
     - Name: damageScale
       Entry: 4
       Data: 1
@@ -80,7 +83,7 @@ MonoBehaviour:
       Data: 0
     - Name: attackSpeedModifier
       Entry: 4
-      Data: 2
+      Data: 1.5
     - Name: ComboAnim
       Entry: 7
       Data: 3|ComboAnimContainer, Assembly-CSharp
@@ -92,25 +95,25 @@ MonoBehaviour:
       Data: UnityEngine.Vector3, UnityEngine.CoreModule
     - Name: 
       Entry: 4
-      Data: 0.7145667
+      Data: -0.59230113
     - Name: 
       Entry: 4
       Data: 0
     - Name: 
       Entry: 4
-      Data: 0.6995673
+      Data: 0.8057167
     - Name: 
       Entry: 8
       Data: 
     - Name: distance
       Entry: 4
-      Data: 1
+      Data: 3
     - Name: time
       Entry: 4
       Data: 0.5
     - Name: easeType
       Entry: 3
-      Data: 9
+      Data: 21
     - Name: 
       Entry: 8
       Data: 
@@ -134,19 +137,22 @@ MonoBehaviour:
       Data: 1
     - Name: nextSeqInputWindow
       Entry: 4
-      Data: 1.5
+      Data: 0.4
     - Name: damage
       Entry: 4
       Data: 20
     - Name: knockBackForce
       Entry: 4
-      Data: 15
+      Data: 3
+    - Name: playerTransform
+      Entry: 6
+      Data: 
     - Name: collider
       Entry: 10
       Data: 2
     - Name: canDamageMod
       Entry: 5
-      Data: false
+      Data: true
     - Name: damageScale
       Entry: 4
       Data: 1
@@ -155,7 +161,7 @@ MonoBehaviour:
       Data: 0
     - Name: attackSpeedModifier
       Entry: 4
-      Data: 1.5
+      Data: 1
     - Name: ComboAnim
       Entry: 7
       Data: 5|ComboAnimContainer, Assembly-CSharp
@@ -167,13 +173,13 @@ MonoBehaviour:
       Data: UnityEngine.Vector3, UnityEngine.CoreModule
     - Name: 
       Entry: 4
-      Data: 0.7047834
+      Data: 0.918499649
     - Name: 
       Entry: 4
       Data: 0
     - Name: 
       Entry: 4
-      Data: 0.7094226
+      Data: 0.395421982
     - Name: 
       Entry: 8
       Data: 
@@ -209,13 +215,16 @@ MonoBehaviour:
       Data: 2
     - Name: nextSeqInputWindow
       Entry: 4
-      Data: 2
+      Data: 0.7
     - Name: damage
       Entry: 4
       Data: 25
     - Name: knockBackForce
       Entry: 4
-      Data: 30
+      Data: 9
+    - Name: playerTransform
+      Entry: 6
+      Data: 
     - Name: collider
       Entry: 10
       Data: 3
@@ -242,19 +251,19 @@ MonoBehaviour:
       Data: UnityEngine.Vector3, UnityEngine.CoreModule
     - Name: 
       Entry: 4
-      Data: -0.952288151
+      Data: 0.8433146
     - Name: 
       Entry: 4
       Data: 0
     - Name: 
       Entry: 4
-      Data: -0.305200934
+      Data: 0.5374203
     - Name: 
       Entry: 8
       Data: 
     - Name: distance
       Entry: 4
-      Data: 3
+      Data: 3.5
     - Name: time
       Entry: 4
       Data: 0.4

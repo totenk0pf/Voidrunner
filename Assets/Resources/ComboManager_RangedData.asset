@@ -16,6 +16,9 @@ MonoBehaviour:
     state: 3
     preshotDelay: 0
     aftershotDelay: 0
+    reloadTime: 0
+    knockbackForce: 4
+    playerTransform: {fileID: 0}
     damagePerPellet: 5
     pelletCount: 8
     rayCastRange: 30
