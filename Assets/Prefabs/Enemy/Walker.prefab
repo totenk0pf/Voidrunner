@@ -573,8 +573,8 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents:
-    - {fileID: 876952724007795067, guid: 47663268f90cf224e851bd321ca0641b, type: 3}
-    - {fileID: 4554049958587841281, guid: 47663268f90cf224e851bd321ca0641b, type: 3}
+    - {fileID: 0}
+    - {fileID: 0}
   m_SourcePrefab: {fileID: 100100000, guid: 47663268f90cf224e851bd321ca0641b, type: 3}
 --- !u!4 &167730217972060101 stripped
 Transform:
@@ -604,6 +604,13 @@ MonoBehaviour:
   target: {fileID: 0}
   detected: 0
   minimumDistanceToEdge: 4
+  rotateDuration: 1.8
+  minDelayBeforeWalking: 3
+  maxDelayBeforeWalking: 6
+  minWalkSteps: 4
+  maxWalkSteps: 8
+  isStartDelayed: 1
+  startDelay: 3
   _nextState: {fileID: 8457903045779802717}
   _animData: {fileID: 11400000, guid: 8522a6f20a0c8004383cdfb1d49b917d, type: 2}
 --- !u!1001 &8804593437656045287
@@ -662,8 +669,8 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents:
-    - {fileID: 876952724007795067, guid: 47663268f90cf224e851bd321ca0641b, type: 3}
-    - {fileID: 4554049958587841281, guid: 47663268f90cf224e851bd321ca0641b, type: 3}
+    - {fileID: 0}
+    - {fileID: 0}
   m_SourcePrefab: {fileID: 100100000, guid: 47663268f90cf224e851bd321ca0641b, type: 3}
 --- !u!4 &4770152778788287771 stripped
 Transform:
@@ -692,7 +699,5 @@ MonoBehaviour:
     m_Bits: 8
   target: {fileID: 0}
   detected: 0
-  fastChaseSpeed: 5
   _nextState: {fileID: 5940769060041157936}
-  _animData: {fileID: 0}
-  canSwitchChaseType: 1
+  _animData: {fileID: 11400000, guid: 8522a6f20a0c8004383cdfb1d49b917d, type: 2}

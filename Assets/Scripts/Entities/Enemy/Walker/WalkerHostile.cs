@@ -1,44 +1,49 @@
 using System.Collections;
 using System.Collections.Generic;
+using Entities.Enemy;
+using Sirenix.OdinInspector;
 using UnityEngine;
 
 public class WalkerHostile : EnemyState
 {
-    public float fastChaseSpeed;
+    [Title("Data")]
     [SerializeField] private WalkerAttack _nextState;
-    private enum HostileStyle
-    {
-        Slow,
-        Fast
-    }
+    [SerializeField] private AnimSerializedData _animData;
 
-    private HostileStyle chaseType;
-    public bool canSwitchChaseType = true;
-
+    private bool _canSwitchChaseState = true;
+    private bool _canSwitchState = true;
+    private AnimParam _currAnim; 
+    
     public override EnemyState RunCurrentState() {
-        Agent.SetDestination(target.transform.position);
-        Agent.isStopped = false;
-
-        if (canSwitchChaseType) {
-            StartCoroutine(ChangeChaseType());
+        transform.root.LookAt(target.transform.position);
+        if (_canSwitchChaseState) {
+            StartCoroutine(SwitchChaseState());
         }
-
-        if (_nextState.inRange) {
-            Agent.isStopped = true;
+        
+        if (_nextState.inRange && _canSwitchState) {
+            _canSwitchState = false;
+            TriggerAnim(_currAnim);
             return _nextState;
         }
         
         return this;
     }
 
-    IEnumerator ChangeChaseType() {
-        canSwitchChaseType = false;
+    public void ResetState() {
+        _canSwitchState = true;
+        _canSwitchChaseState = true;
+    }
 
-        if (Random.Range(0, 1) == 0) {
-            Agent.speed = enemyBase.enemySpeed;
+    private IEnumerator SwitchChaseState() {
+        _canSwitchChaseState = false;
+        
+        //reset anims
+        foreach (var animParam in _animData.hostileAnim) {
+            animator.SetBool(animParam.name, false);
         }
-        else Agent.speed = fastChaseSpeed;
 
+        _currAnim = _animData.hostileAnim[Random.Range(0, _animData.hostileAnim.Count - 1)];
+        TriggerAnim(_currAnim);
         yield return null;
     }
 }

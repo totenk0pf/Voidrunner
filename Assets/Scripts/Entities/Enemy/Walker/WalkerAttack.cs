@@ -49,8 +49,7 @@ public class WalkerAttack : EnemyState
     public override void OnTriggerExit(Collider other) {
         if (CheckLayerMask.IsInLayerMask(other.gameObject, playerMask)) {
             StopAllCoroutines();
-
-            _previousState.canSwitchChaseType = true;
+            
             Agent.ResetPath();
             _canAttack = false;
             inRange = false;
