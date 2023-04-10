@@ -1066,6 +1066,22 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7389021632460828519, guid: 47663268f90cf224e851bd321ca0641b, type: 3}
+      propertyPath: m_Size.x
+      value: 1.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 7389021632460828519, guid: 47663268f90cf224e851bd321ca0641b, type: 3}
+      propertyPath: m_Size.y
+      value: 3.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 7389021632460828519, guid: 47663268f90cf224e851bd321ca0641b, type: 3}
+      propertyPath: m_Size.z
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 7389021632460828519, guid: 47663268f90cf224e851bd321ca0641b, type: 3}
+      propertyPath: m_Center.z
+      value: 0.8
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 47663268f90cf224e851bd321ca0641b, type: 3}
 --- !u!4 &6054583442564460454 stripped
@@ -1098,5 +1114,6 @@ MonoBehaviour:
   previousState: {fileID: 6764285391558067201}
   nextState: {fileID: 0}
   animData: {fileID: 11400000, guid: 880a0da178da5324cbc62008f8c90c23, type: 2}
-  isAttacking: 0
   canAttack: 1
+  canSwitchState: 1
+  isAttacking: 0
