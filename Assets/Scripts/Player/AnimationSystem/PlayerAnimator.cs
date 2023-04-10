@@ -24,16 +24,18 @@ public class AnimData {
     public PlayerAnimState State { get; private set; }
     public float Damage { get; private set; }
     public float Knockback { get; private set; }
+    public Transform playerTransform { get; private set; }
     public float AnimSpeed { get; private set; }
     public List<EnemyBase> Enemies { get; private set; }
     public float animDuration;
 
-    public AnimData(PlayerAnimState state, List<EnemyBase> enemies = null, float damage = 0, float knockback = 0, float animSpeed = 1) {
+    public AnimData(PlayerAnimState state, List<EnemyBase> enemies = null, float damage = 0, float knockback = 0, Transform playerTransform = null, float animSpeed = 1) {
         this.State = state;
         this.Enemies = enemies;
         this.Damage = damage;
         this.AnimSpeed = animSpeed;
         this.Knockback = knockback;
+        this.playerTransform = playerTransform;
         InitCheck();
     }
 

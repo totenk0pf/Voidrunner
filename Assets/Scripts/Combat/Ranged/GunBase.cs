@@ -75,6 +75,7 @@ namespace Combat {
             foreach (var enemy in enemies) {
                 if (enemies.Count < 1) return;
                 Damage(enemy, dmgData.Damage);
+                KnockBack(enemy, dmgData.Knockback,(enemy.transform.root.position - dmgData.playerTransform.position).normalized);
                 NCLogger.Log($"dmg: {dmgData.Damage}");
                 
                 UpdateUI();

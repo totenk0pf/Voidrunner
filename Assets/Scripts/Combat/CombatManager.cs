@@ -26,6 +26,7 @@ public class MeleeSequenceAttribute : IAnimDataConvertable {
     [SerializeField] private float nextSeqInputWindow;
     [SerializeField] private float damage;
     [SerializeField] private float knockBackForce;
+    [ReadOnly] public Transform playerTransform;
     [ReadOnly] public MeleeCollider collider;
     public bool canDamageMod;
     [ShowIf("canDamageMod")] [SerializeField] private float damageScale = 1;
@@ -37,9 +38,9 @@ public class MeleeSequenceAttribute : IAnimDataConvertable {
     //Getters
     public float NextSeqInputWindow => nextSeqInputWindow;
     public float Damage => canDamageMod ? (damage + damageModifier) * damageScale : damage;
-    public float KnockBackForce => knockBackForce;
     public PlayerAnimState State => state;
-
+    public float Knockback => knockBackForce;
+    
     public float AtkSpdModifier {
         get => canDamageMod ? attackSpeedModifier : ReturnFloatWithLog(1);
         set => attackSpeedModifier = value;
@@ -71,7 +72,11 @@ public class MeleeSequenceAttribute : IAnimDataConvertable {
     }
     
     public AnimData CloneToAnimData() {
-        return new AnimData(State, collider.Enemies, Damage, KnockBackForce, AtkSpdModifier);
+        return new AnimData(State, collider.Enemies, Damage, Knockback, playerTransform, AtkSpdModifier);
+    }
+
+    public AnimData CloneToAnimData(Transform transform) {
+        return new AnimData(State, collider.Enemies, Damage, Knockback, transform, AtkSpdModifier);
     }
     
     public MeleeSequenceAttribute(PlayerAnimState animState, float seqInputWin, float dmg, float knockForce, MeleeCollider col,
@@ -97,6 +102,7 @@ public class RangedAttribute : IAnimDataConvertable
     [SerializeField] private float reloadTime;
 
     [SerializeField] private float knockbackForce;
+    [ReadOnly] public Transform playerTransform;
     [SerializeField] private float damagePerPellet;
     [SerializeField] private int pelletCount;
     [SerializeField] private float rayCastRange;
@@ -122,9 +128,11 @@ public class RangedAttribute : IAnimDataConvertable
     public int PelletCount => pelletCount;
     public float Range => rayCastRange;
     public float Angle => maxSpreadAngle;
-    public AnimData CloneToAnimData()
-    {
-        return new AnimData(State, Enemies, damagePerPellet, knockbackForce, AtkSpdModifier);
+    public AnimData CloneToAnimData() {
+        return new AnimData(State, Enemies, damagePerPellet, knockbackForce, playerTransform, AtkSpdModifier);
+    }
+    public AnimData CloneToAnimData(Transform transform) {
+        return new AnimData(State,Enemies, damagePerPellet, Knockback, transform, AtkSpdModifier);
     }
 }
 
@@ -206,7 +214,8 @@ public class CombatManager : MonoBehaviour
         //StopCoroutine(thisRoutine) would not stop all coroutines of same "thisRoutine" method
         StopAllCoroutines();
         //Clone -> not edit in SO data
-        this.FireEvent(EventType.PlayAttackEvent, MeleeSequence.OrderToAttributes[_curMeleeOrder].CloneToAnimData());
+        var animData = MeleeSequence.OrderToAttributes[_curMeleeOrder].CloneToAnimData();
+        this.FireEvent(EventType.PlayAttackEvent, MeleeSequence.OrderToAttributes[_curMeleeOrder].CloneToAnimData(transform.root));
         this.FireEvent(EventType.StopMovementEvent);
     }
 
@@ -262,7 +271,7 @@ public class CombatManager : MonoBehaviour
         _curWeaponRef.isAttacking = true;
         GetEnemies();
         yield return new WaitForSeconds(RangedData.Attribute.PreshotDelay);
-        this.FireEvent(EventType.PlayAttackEvent, RangedData.Attribute.CloneToAnimData());
+        this.FireEvent(EventType.PlayAttackEvent, RangedData.Attribute.CloneToAnimData(transform.root));
     }
 
     private void GetEnemies() {

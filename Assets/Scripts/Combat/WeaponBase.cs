@@ -23,6 +23,11 @@ namespace Combat
             EventDispatcher.Instance.FireEvent(EventType.EmpowerDamageEnemyEvent, enemy);
         }
 
+        protected virtual void KnockBack(EnemyBase enemy, float force, Vector3 dir) {
+            if (!enemy) return;
+            enemy.Rigidbody.AddForce(dir * force, ForceMode.Impulse);
+        }
+
         // public void OnWeaponChange(WeaponManager.WeaponEntry entry)
         // {
         //     ;
