@@ -27,7 +27,7 @@ MonoBehaviour:
     name: isIdle
     hash: 2098831385
   hostileAnim:
-    type: 4
+  - type: 4
     name: isWalking
     hash: -830007593
   attackAnim:

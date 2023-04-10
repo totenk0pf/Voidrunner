@@ -24,10 +24,10 @@ MonoBehaviour:
   data: {fileID: 11400000, guid: dde3f6e4e0de14a4cbfc3cbe854f0c5b, type: 2}
   idleAnim:
     type: 4
-    name: isWalking
-    hash: -830007593
+    name: isIdle
+    hash: 2098831385
   hostileAnim:
-    type: 4
+  - type: 4
     name: isWalking
     hash: -830007593
   attackAnim:

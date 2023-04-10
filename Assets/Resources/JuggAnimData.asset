@@ -31,4 +31,7 @@ MonoBehaviour:
   - type: 9
     name: Slam
     hash: -153875945
+  - type: 4
+    name: isIdle
+    hash: 2098831385
   controller: {fileID: 9100000, guid: 97bd86f533ca331438ed13edece5f680, type: 2}

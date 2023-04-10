@@ -9,7 +9,7 @@ public class JuggernautHostile : EnemyState
     [SerializeField] private AnimSerializedData animData;
     
     public override EnemyState RunCurrentState() {
-        if (!animator.GetBool(animData.hostileAnim.name)) TriggerAnim(animData.hostileAnim);
+        if (!animator.GetBool(animData.hostileAnim[0].name)) TriggerAnim(animData.hostileAnim[0]);
         if (Agent.enabled) Agent.SetDestination(target.transform.position);
   
         if (_nextState.inRange) {

@@ -21,7 +21,7 @@ public class JuggernautIdle : EnemyState
         }
 
         if (!Agent.pathPending && detected) {
-            TriggerAnim(animData.hostileAnim);
+            TriggerAnim(animData.hostileAnim[0]);
             Agent.ResetPath();
             return _nextState;
         }

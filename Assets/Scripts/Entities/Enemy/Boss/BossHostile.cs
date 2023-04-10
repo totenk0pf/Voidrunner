@@ -11,12 +11,12 @@ namespace Entities.Enemy.Boss {
         [SerializeField] private AnimSerializedData animData;
     
         public override EnemyState RunCurrentState() {
-            if (!animator.GetBool(animData.hostileAnim.name)) TriggerAnim(animData.hostileAnim);
+            if (!animator.GetBool(animData.hostileAnim[0].name)) TriggerAnim(animData.hostileAnim[0]);
             if (Agent.enabled) Agent.SetDestination(target.transform.position);
   
             if (GetPathRemainingDistance(Agent) < 3f && GetPathRemainingDistance(Agent) > -1 && detected)
             {
-                TriggerAnim(animData.hostileAnim);
+                TriggerAnim(animData.hostileAnim[0]);
                 Agent.isStopped = true;
                 nextState.canAttack = true;
                 return nextState;
