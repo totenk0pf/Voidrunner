@@ -588,6 +588,22 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7389021632460828519, guid: 47663268f90cf224e851bd321ca0641b, type: 3}
+      propertyPath: m_Size.x
+      value: 1.4
+      objectReference: {fileID: 0}
+    - target: {fileID: 7389021632460828519, guid: 47663268f90cf224e851bd321ca0641b, type: 3}
+      propertyPath: m_Size.y
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 7389021632460828519, guid: 47663268f90cf224e851bd321ca0641b, type: 3}
+      propertyPath: m_Size.z
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7389021632460828519, guid: 47663268f90cf224e851bd321ca0641b, type: 3}
+      propertyPath: m_Center.z
+      value: 0.7
+      objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 4554049958587841281, guid: 47663268f90cf224e851bd321ca0641b, type: 3}
     - {fileID: 876952724007795067, guid: 47663268f90cf224e851bd321ca0641b, type: 3}
@@ -619,7 +635,8 @@ MonoBehaviour:
     m_Bits: 8
   target: {fileID: 0}
   detected: 0
-  attackDelay: 5
+  attackDelay: 3
   _previousState: {fileID: 2842254728877912562}
   _nextState: {fileID: 0}
   animData: {fileID: 11400000, guid: a2fae99f2e186f947abfb6ea3981ae86, type: 2}
+  inRange: 0
