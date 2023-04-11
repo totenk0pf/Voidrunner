@@ -73,7 +73,7 @@ public class PlayerMovementController : MonoBehaviour
     [SerializeField] private float dodgeCooldown;
     private float _nextDodgeTimeStamp;
     
-    private Dictionary<KeyCode, float> _inputToDirDict;
+    private List<KeyCode> _inputKeyList;
     private Vector3 _dodgeDir;
     private float _horiz;
     private float _vert;
@@ -87,12 +87,9 @@ public class PlayerMovementController : MonoBehaviour
         this.AddListener(EventType.RequestIsOnGroundEvent, param => EventDispatcher.Instance.FireEvent(EventType.ReceiveIsOnGroundEvent, _isGrounded));
         this.AddListener(EventType.StopMovementEvent, param => ToggleMovement(false));
         this.AddListener(EventType.ResumeMovementEvent, param => ToggleMovement(true));
-        
-        _inputToDirDict = new Dictionary<KeyCode, float>() {
-            {KeyCode.W, 0},
-            {KeyCode.S, 180},
-            {KeyCode.A, -90},
-            {KeyCode.D, 90}
+
+        _inputKeyList = new List<KeyCode>() {
+            KeyCode.W, KeyCode.S, KeyCode.A, KeyCode.D
         };
         _canMove = true;
         _canGravity = true;
@@ -111,16 +108,31 @@ public class PlayerMovementController : MonoBehaviour
 
     private void Update()
     {
-        foreach (var input in _inputToDirDict.Keys.Where(Input.GetKeyDown)) {
+        foreach (var input in _inputKeyList.Where(Input.GetKeyDown)) {
             _canMove = true;
            // this.FireEvent(EventType.CancelMeleeAttackEvent);
         }
         
-        _dodgeDir = transform.forward;
-        foreach (var input in _inputToDirDict.Keys.Where(Input.GetKey)) {
-            _dodgeDir = (Quaternion.AngleAxis(_inputToDirDict[input], Vector3.up) * transform.forward).normalized;
-            break;
+        //_dodgeDir = transform.forward;
+        foreach (var input in _inputKeyList.Where(Input.GetKey)) {
+            switch (input) {
+                case KeyCode.W:
+                    _dodgeDir += transform.forward;
+                    break;
+                case KeyCode.S:
+                    _dodgeDir += -transform.forward; 
+                    break;
+                case KeyCode.A:
+                    _dodgeDir += -transform.right; 
+                    break;
+                case KeyCode.D:
+                    _dodgeDir += transform.right; 
+                    break;
+                default:
+                    throw new ArgumentOutOfRangeException();
+            }
         }
+        _dodgeDir = _dodgeDir.normalized;
         
         if (Input.GetKeyDown(dodgeKey) && Time.time >= _nextDodgeTimeStamp)
         {

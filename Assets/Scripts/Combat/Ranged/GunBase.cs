@@ -60,11 +60,13 @@ namespace Combat {
         }
 
         protected void ApplyDamageOnEnemy(AnimData dmgData) {
-            var enemies = dmgData.Enemies;
+            var enemies = dmgData.EnemiesToCount;
             foreach (var enemy in enemies) {
                 if (enemies.Count < 1) return;
-                Damage(enemy, dmgData.Damage);
-                KnockBack(enemy, dmgData.Knockback,(enemy.transform.root.position - dmgData.playerTransform.position).normalized);
+                Damage(enemy.Key, dmgData.Damage * enemy.Value);
+                KnockBack(enemy.Key, 
+                    Mathf.Clamp(dmgData.Knockback * enemy.Value, dmgData.Knockback, dmgData.KnockbackCap),
+                    (enemy.Key.transform.root.position - dmgData.playerTransform.position).normalized);
                 NCLogger.Log($"dmg: {dmgData.Damage}");
                 
                 UpdateUI();

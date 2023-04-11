@@ -18,6 +18,7 @@ MonoBehaviour:
     aftershotDelay: 0
     reloadTime: 0
     knockbackForce: 4
+    knockbackStackCap: 15
     playerTransform: {fileID: 0}
     damagePerPellet: 5
     pelletCount: 8
@@ -28,6 +29,10 @@ MonoBehaviour:
     raycastMask:
       serializedVersion: 2
       m_Bits: 256
-    Enemies: []
+    Enemies:
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
     canDamageMod: 0
     attackSpeed: 0
