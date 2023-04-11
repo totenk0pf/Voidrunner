@@ -1,20 +1,25 @@
 using System.Collections;
-using System.Collections.Generic;
+using Entities.Enemy;
+using Sirenix.OdinInspector;
 using StaticClass;
 using UnityEngine;
 
 public class WalkerAttack : EnemyState
 {
     public float attackDelay;
+    [HideInInspector] public bool inRange;
     
+    [Title("Data")]
     [SerializeField] private WalkerHostile _previousState;
-    [SerializeField] private EnemyState _nextState;
+    [SerializeField] private AnimSerializedData _animData;
 
-    public bool inRange;
-
+    [Title("Refs")] 
+    [SerializeField] private EnemyMoveRootMotion _moveWithRootMotion;
+    
     private bool _isAttacking = false;
     private bool _canSwitchState = false;
     private bool _canAttack = true;
+    
 
     public override EnemyState RunCurrentState() {
 
@@ -29,32 +34,40 @@ public class WalkerAttack : EnemyState
         return this;
     }
 
-    IEnumerator StartAttack() {
+    private IEnumerator StartAttack() {
+        if (_canSwitchState) yield break;
         _canAttack = false;
         _isAttacking = true;
-
-        DealDamage();
-
-        //Anim Time Here
-        yield return new WaitForSeconds(0.2f);
-        _isAttacking = false;
-        yield return DelayAttack();
+        if (_moveWithRootMotion.canMove) _moveWithRootMotion.canMove = false;
+        TriggerAnim(_animData.attackAnim[0]);
+        yield return StartCoroutine(FinishAnimation());
+        yield return StartCoroutine(DelayAttack());
     }
 
-    IEnumerator DelayAttack() {
+    private IEnumerator DelayAttack() {
         yield return new WaitForSeconds(attackDelay);
-        yield return StartCoroutine(StartAttack());
+        StartCoroutine(StartAttack());
+    }
+
+    private IEnumerator FinishAnimation() {
+        yield return new WaitUntil(() => animator.GetCurrentAnimatorStateInfo(0).normalizedTime >= 0.95f);
+        _isAttacking = false;
     }
     
     public override void OnTriggerExit(Collider other) {
         if (CheckLayerMask.IsInLayerMask(other.gameObject, playerMask)) {
             StopAllCoroutines();
+            if (_isAttacking) {
+                StartCoroutine(FinishAnimation());
+            }
             
-            Agent.ResetPath();
             _canAttack = false;
             inRange = false;
             
             _canSwitchState = true;
+            
+            _moveWithRootMotion.canMove = true;
+            _previousState.ResetState();
         }
     }
 

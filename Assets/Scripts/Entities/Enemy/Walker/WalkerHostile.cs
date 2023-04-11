@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Core.Collections;
 using Entities.Enemy;
 using Sirenix.OdinInspector;
 using UnityEngine;
@@ -9,9 +10,10 @@ public class WalkerHostile : EnemyState
     [Title("Data")]
     [SerializeField] private WalkerAttack _nextState;
     [SerializeField] private AnimSerializedData _animData;
-
+    
     private bool _canSwitchChaseState = true;
     private bool _canSwitchState = true;
+    
     private AnimParam _currAnim; 
     
     public override EnemyState RunCurrentState() {
