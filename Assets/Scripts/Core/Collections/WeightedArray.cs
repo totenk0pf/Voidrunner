@@ -8,7 +8,7 @@ namespace Core.Collections
     public class WeightedArray<T>
     {
         [Serializable]
-        private struct Element {
+        public struct Element {
             public T obj;
             public double weight;
             public Element(T obj, double weight = 0f) {
@@ -17,7 +17,7 @@ namespace Core.Collections
             }
         }
 
-        private List<Element> _elements = new List<Element>();
+        public List<Element> _elements = new List<Element>();
         private double sumWeight;
         private Random rand = new Random();
 
