@@ -63,7 +63,8 @@ public class WalkerIdle : EnemyState {
         if (_walkingAnim.name == null) _walkingAnim = _animData.hostileAnim.Find(anim => anim.name == "isWalking");
         yield return DelayedStart();
         transform.root.DORotate(
-            (transform.root.rotation * Quaternion.Euler(0, Random.Range(-50, 50), 0).eulerAngles), rotateDuration);
+            (transform.root.rotation * Quaternion.Euler
+                (0, Random.Range(transform.root.rotation.y - 20, transform.root.rotation.y + 20), 0).eulerAngles), rotateDuration);
         yield return new WaitForSeconds(rotateDuration);
         TriggerAnim(_walkingAnim);
         yield return new WaitForSeconds(animator.GetCurrentAnimatorStateInfo(0).length * Random.Range(minWalkSteps, maxWalkSteps));

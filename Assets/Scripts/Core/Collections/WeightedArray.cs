@@ -17,7 +17,7 @@ namespace Core.Collections
             }
         }
 
-        public List<Element> _elements = new List<Element>();
+        private List<Element> _elements = new List<Element>();
         private double sumWeight;
         private Random rand = new Random();
 

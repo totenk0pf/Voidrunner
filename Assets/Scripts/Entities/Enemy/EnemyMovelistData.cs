@@ -6,17 +6,20 @@ using Sirenix.OdinInspector;
 using UnityEngine;
 
 namespace Entities.Enemy {
+    public struct EnemyMovelist {
+        public AnimParam anim;
+        public float weight; 
+    }
+    
     [CreateAssetMenu(fileName = "EnemyMovelist", menuName = "Enemies/EnemyMovelist", order = 0)]
     public class EnemyMovelistData : SerializedScriptableObject { 
         public EnemyAnimData data;
         
-        [Space]
         [ValueDropdown("GetAnimData", IsUniqueList = true, ExpandAllMenuItems = true, HideChildProperties = true)] [ShowInInspector]
         [SerializeField] private List<AnimParam> moves;
-    
-        [Space]
-        public WeightedArray<AnimParam> weightedMoves = new WeightedArray<AnimParam>();
-
+        
+        public List<EnemyMovelist> moveList = new(); 
+        
         protected IEnumerable GetAnimData(){
             if (!data) return new List<AnimParam>();
             return data.animParams.Select(x => new ValueDropdownItem(x.name, x));
@@ -25,9 +28,12 @@ namespace Entities.Enemy {
         [Button("Validate data")]
         private void ValidateData(){
             if (!data) return;
-            weightedMoves.Clear();
+            moveList.Clear();
             foreach (var x in moves) {
-                weightedMoves.AddElement(x, 0);
+                moveList.Add(new EnemyMovelist {
+                    anim = x,
+                    weight = 0,
+                });
             }
         }
     }                                         

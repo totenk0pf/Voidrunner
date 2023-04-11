@@ -1,3 +1,5 @@
+using System.Collections.Generic;
+using Core.Collections;
 using Entities.Enemy;
 using Sirenix.OdinInspector;
 using UnityEngine;
@@ -84,5 +86,14 @@ public abstract class EnemyState : MonoBehaviour
         }
     
         return distance;
+    }
+
+    protected AnimParam GetItemFromMoveList(IEnumerable<EnemyMovelist> movelistData) {
+        var weighted = new WeightedArray<AnimParam>();
+        foreach (var move in movelistData) {
+            weighted.AddElement(move.anim, move.weight);
+        }
+
+        return weighted.GetRandomItem();
     }
 }

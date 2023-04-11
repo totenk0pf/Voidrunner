@@ -231,6 +231,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   canMove: 1
+--- !u!114 &2727628312762441496
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 919132148247971965}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7fa139a2d81ad3348ae25a897844d6cb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _walkerAttack: {fileID: 5940769060041157936}
 --- !u!1001 &97916756970570766
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -703,3 +716,4 @@ MonoBehaviour:
   detected: 0
   _nextState: {fileID: 5940769060041157936}
   _animData: {fileID: 11400000, guid: 8522a6f20a0c8004383cdfb1d49b917d, type: 2}
+  _hostileAnimData: {fileID: 11400000, guid: 79a4c5bf528cdaa4a9d494d719dc7f59, type: 2}

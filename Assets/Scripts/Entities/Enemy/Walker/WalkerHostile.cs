@@ -11,6 +11,8 @@ public class WalkerHostile : EnemyState
     [SerializeField] private WalkerAttack _nextState;
     [SerializeField] private AnimSerializedData _animData;
     
+    [SerializeField] private EnemyMovelistData _hostileAnimData; 
+    
     private bool _canSwitchChaseState = true;
     private bool _canSwitchState = true;
     
@@ -44,7 +46,7 @@ public class WalkerHostile : EnemyState
             animator.SetBool(animParam.name, false);
         }
 
-        _currAnim = _animData.hostileAnim[Random.Range(0, _animData.hostileAnim.Count - 1)];
+        _currAnim = GetItemFromMoveList(_hostileAnimData.moveList);
         TriggerAnim(_currAnim);
         yield return null;
     }
