@@ -23,6 +23,7 @@ namespace Combat {
 
         protected void Update() {
             if (Input.GetMouseButtonDown(entry.mouseNum) && canAttack && entry.type == WeaponType.Melee) {
+                NCLogger.Log($"lmfao");
                 this.FireEvent(EventType.WeaponMeleeFiredEvent);
                 //this.FireEvent(EventType.CancelMeleeAttackEvent);
                 //isAttacking = true;

@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using Core.Events;
+using Core.Logging;
 using UnityEngine;
 using EventType = Core.Events.EventType;
 
@@ -37,7 +38,8 @@ namespace Combat
 
         public void InitWeaponRef(List<WeaponEntry> list)
         {
-            foreach (var e in list.Where(e => entry.type == type)) {
+            NCLogger.Log($"hit ref");
+            foreach (var e in list.Where(e => e.type == type)) {
                 entry = e;
             }
         }

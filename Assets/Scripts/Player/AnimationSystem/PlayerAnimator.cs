@@ -68,12 +68,13 @@ public class PlayerAnimator : MonoBehaviour, IInteractiveAnimator, ICombatAnimat
 {
     private Animator _animator;
     private AnimData _animData;
-    private WeaponManager.WeaponEntry _curWeaponEntry;
-    private WeaponType _curWeaponType => _curWeaponEntry.Type;
+   // private WeaponEntry _curWeaponEntry;
+    //private WeaponType _curWeaponType => _curWeaponEntry.type;
     [SerializeField] private AnimationParamData animationParamData;
     [SerializeField] private int mainAnimLayer = 0;
-    
+    private WeaponType _activeType = WeaponType.None;
     private void Awake() {
+        this.AddListener(EventType.UpdateActiveWeaponEvent, param => _activeType = (WeaponType) param);
         this.AddListener(EventType.PlayAnimationEvent, animData => UpdateAnimAttribute((AnimData)animData));
         this.AddListener(EventType.PlayAttackEvent, animData => UpdateAnimAttribute((AnimData)animData));
         this.AddListener(EventType.RequestPlayerAnimatorEvent, param => OnRequestAnimator());
@@ -98,7 +99,7 @@ public class PlayerAnimator : MonoBehaviour, IInteractiveAnimator, ICombatAnimat
         // }
         // else
         // {
-            if (_curWeaponType == WeaponType.Ranged) {
+            if (_activeType == WeaponType.Ranged) {
                 SetParam(PlayerAnimState.RangedAttack, false);
             }
             
@@ -107,7 +108,7 @@ public class PlayerAnimator : MonoBehaviour, IInteractiveAnimator, ICombatAnimat
     }
 
     public void OnAnimationEnd() {
-        if (_curWeaponType == WeaponType.Ranged) {
+        if (_activeType == WeaponType.Ranged) {
             SetParam(PlayerAnimState.RangedAttack, false);
         }
         
@@ -128,9 +129,9 @@ public class PlayerAnimator : MonoBehaviour, IInteractiveAnimator, ICombatAnimat
             return;
         
         _animData.animDuration = CurrentClipLength;
-        if (_curWeaponType == WeaponType.Melee) {
+        if (_activeType == WeaponType.Melee) {
             this.FireEvent(EventType.MeleeEnemyDamageEvent, _animData);
-        }else if(_curWeaponType == WeaponType.Ranged) {
+        }else if(_activeType == WeaponType.Ranged) {
             this.FireEvent(EventType.RangedEnemyDamageEvent, _animData);
         }
     }

@@ -44,6 +44,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0a24c4496aa6360499c011ce1925517e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  type: 2
   canAttack: 0
   isAttacking: 0
   currentAmmo: 0
@@ -162,17 +163,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   weaponList:
-  - keymap: 49
-    type: 0
-    reference: {fileID: 4575592630711051230}
-  - keymap: 50
+  - mouseNum: 0
     type: 1
-    reference: {fileID: 9172188407077185864}
-  currentWeapon:
-    keymap: 49
-    type: 0
     reference: {fileID: 4575592630711051230}
-  currentType: 0
+  - mouseNum: 1
+    type: 2
+    reference: {fileID: 9172188407077185864}
 --- !u!1 &6037325518918287425
 GameObject:
   m_ObjectHideFlags: 0
@@ -950,6 +946,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bd040185ec8c285409b659df6727bea9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  type: 1
   canAttack: 0
   isAttacking: 0
 --- !u!1 &9064512858836528851

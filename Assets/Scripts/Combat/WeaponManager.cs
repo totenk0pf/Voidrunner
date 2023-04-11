@@ -12,7 +12,7 @@ namespace Combat {
     }
     
     [Serializable]
-    public struct WeaponEntry {
+    public class WeaponEntry {
         public int mouseNum;
         public WeaponType type;
         public WeaponBase reference;
@@ -21,17 +21,17 @@ namespace Combat {
     public class WeaponManager : MonoBehaviour
     {
 
-        [Serializable]
-        public class WeaponEntry
-        {
-            [SerializeField] private KeyCode keymap;
-            [SerializeField] private WeaponType type;
-            [SerializeField] private WeaponBase reference;
-
-            public KeyCode KeyMap => keymap;
-            public WeaponType Type => type;
-            public WeaponBase Reference => reference;
-        }
+        // [Serializable]
+        // public class WeaponEntry
+        // {
+        //     [SerializeField] private KeyCode keymap;
+        //     [SerializeField] private WeaponType type;
+        //     [SerializeField] private WeaponBase reference;
+        //
+        //     public KeyCode KeyMap => keymap;
+        //     public WeaponType Type => type;
+        //     public WeaponBase Reference => reference;
+        // }
 
         [SerializeField] private List<WeaponEntry> weaponList;
         // [SerializeField] private WeaponEntry currentWeapon;

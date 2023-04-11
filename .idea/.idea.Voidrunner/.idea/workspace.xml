@@ -9,12 +9,11 @@
       <change beforePath="$PROJECT_DIR$/Assets/Prefabs/Player/Player.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Prefabs/Player/Player.prefab" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Scripts/Combat/CombatManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Combat/CombatManager.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Scripts/Combat/Melee/MeleeBase.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Combat/Melee/MeleeBase.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Combat/Ranged/GunBase.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Combat/Ranged/GunBase.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Scripts/Combat/WeaponBase.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Combat/WeaponBase.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Combat/WeaponEmpowerment.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Combat/WeaponEmpowerment.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Scripts/Combat/WeaponManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Combat/WeaponManager.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Scripts/Core/Events/EventType.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Core/Events/EventType.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Scripts/Player/AnimationSystem/PlayerAnimator.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Player/AnimationSystem/PlayerAnimator.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Player/PlayerMovementController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Player/PlayerMovementController.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Scripts/UI/WeaponUI.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/UI/WeaponUI.cs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -26,6 +25,35 @@
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="HighlightingSettingsPerFile">
+    <setting file="mock:///Dummy.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock:///Dummy.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock:///Dummy.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock:///Dummy.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock:///Dummy.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock:///Dummy.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock:///Dummy.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock:///Dummy.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock:///Dummy.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock:///Dummy.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock:///Dummy.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock:///Dummy.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock:///Dummy.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock:///Dummy.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock:///Dummy.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock:///Dummy.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock:///Dummy.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock:///Dummy.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock:///Dummy.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock:///Dummy.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock:///Dummy.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock:///Dummy.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock:///Dummy.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock:///Dummy.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock:///Dummy.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock:///Dummy.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock:///Dummy.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock:///Dummy.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/88d854ea2c91426ebc464f01cd71aa85157a00/31/298b4615/SetupCoroutine.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/AnimationSequencer/Editor/Core/AnimationSequencerControllerCustomEditor.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/Combat/CombatAnimationSequenceController.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/Extensions/Extensions.cs" root0="FORCE_HIGHLIGHTING" />
@@ -51,6 +79,7 @@
     "node.js.selected.package.eslint": "(autodetect)",
     "node.js.selected.package.tslint": "(autodetect)",
     "nodejs_package_manager_path": "npm",
+    "rider.run.widget.enabled.cache": "false",
     "settings.editor.selected.configurable": "preferences.build.unityPlugin",
     "vue.rearranger.settings.migration": "true"
   }
@@ -74,10 +103,10 @@
       </option>
       <method v="2" />
     </configuration>
-    <configuration name="Attach to Unity Editor" type="UNITY_DEBUG_RUN_CONFIGURATION" factoryName="Unity Debug" show_console_on_std_err="false" show_console_on_std_out="false" port="50000" address="localhost">
+    <configuration name="Attach to Unity Editor" type="UNITY_DEBUG_RUN_CONFIGURATION" factoryName="Unity Debug" show_console_on_std_err="false" show_console_on_std_out="false" port="50000" address="localhost" ignored-value-for-modified-check="3996">
       <option name="allowRunningInParallel" value="false" />
       <option name="listenPortForConnections" value="false" />
-      <option name="pid" />
+      <option name="pid" value="3996" />
       <option name="projectPathOnTarget" />
       <option name="selectedOptions">
         <list />
@@ -105,6 +134,7 @@
       <workItem from="1681093000124" duration="203000" />
       <workItem from="1681093269114" duration="5021000" />
       <workItem from="1681196260177" duration="10000000" />
+      <workItem from="1681223221708" duration="5366000" />
     </task>
     <servers />
   </component>
@@ -162,7 +192,7 @@
         </line-breakpoint>
         <line-breakpoint type="DotNet Breakpoints">
           <url>file://$PROJECT_DIR$/Assets/Scripts/Combat/Melee/MeleeBase.cs</url>
-          <line>17</line>
+          <line>14</line>
           <properties documentPath="E:\_School Projects\Voidrunner\Assets\Scripts\Combat\Melee\MeleeBase.cs" initialLine="22" containingFunctionPresentation="method 'Awake'" />
           <option name="timeStamp" value="6" />
         </line-breakpoint>
@@ -178,25 +208,65 @@
           <properties documentPath="E:\_School Projects\Voidrunner\Assets\Scripts\UI\WeaponUI.cs" initialLine="58" containingFunctionPresentation="method 'Awake'" />
           <option name="timeStamp" value="9" />
         </line-breakpoint>
-        <line-breakpoint enabled="true" type="DotNet Breakpoints">
-          <url>file://$PROJECT_DIR$/Assets/Scripts/Combat/CombatManager.cs</url>
-          <line>227</line>
-          <properties documentPath="E:\_School Projects\Voidrunner\Assets\Scripts\Combat\CombatManager.cs" initialLine="211" containingFunctionPresentation="method 'UpdateCurrentWeapon'" />
-          <option name="timeStamp" value="12" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="DotNet Breakpoints">
+        <line-breakpoint type="DotNet Breakpoints">
           <url>file://$PROJECT_DIR$/Assets/Scripts/Player/PlayerMovementController.cs</url>
           <line>20</line>
           <properties documentPath="D:\Users\duong.lc\Documents\GitHub\Voidrunner\Assets\Scripts\Player\PlayerMovementController.cs" initialLine="20" isMultiMethodBreakpoint="true">
             <option name="multiMethodBreakpoint" value="true" />
-            <startOffsets>
-              <option value="-1" />
-            </startOffsets>
-            <endOffsets>
-              <option value="-1" />
-            </endOffsets>
           </properties>
           <option name="timeStamp" value="13" />
+        </line-breakpoint>
+        <line-breakpoint type="DotNet Breakpoints">
+          <url>file://$PROJECT_DIR$/Assets/Scripts/Combat/CombatManager.cs</url>
+          <line>223</line>
+          <properties documentPath="E:\_School Projects\Voidrunner\Assets\Scripts\Combat\CombatManager.cs" initialLine="220" containingFunctionPresentation="method 'MeleeAttack'">
+            <startOffsets>
+              <option value="8880" />
+            </startOffsets>
+            <endOffsets>
+              <option value="8881" />
+            </endOffsets>
+          </properties>
+          <option name="timeStamp" value="14" />
+        </line-breakpoint>
+        <line-breakpoint type="DotNet Breakpoints">
+          <url>file://$PROJECT_DIR$/Assets/Scripts/Combat/CombatManager.cs</url>
+          <line>263</line>
+          <properties documentPath="E:\_School Projects\Voidrunner\Assets\Scripts\Combat\CombatManager.cs" initialLine="259" containingFunctionPresentation="method 'WaitForInputWindowRoutine'">
+            <startOffsets>
+              <option value="10710" />
+            </startOffsets>
+            <endOffsets>
+              <option value="10711" />
+            </endOffsets>
+          </properties>
+          <option name="timeStamp" value="15" />
+        </line-breakpoint>
+        <line-breakpoint type="DotNet Breakpoints">
+          <url>file://$PROJECT_DIR$/Assets/Scripts/Combat/Melee/MeleeBase.cs</url>
+          <line>26</line>
+          <properties documentPath="E:\_School Projects\Voidrunner\Assets\Scripts\Combat\Melee\MeleeBase.cs" initialLine="25" containingFunctionPresentation="method 'Update'">
+            <startOffsets>
+              <option value="962" />
+            </startOffsets>
+            <endOffsets>
+              <option value="1010" />
+            </endOffsets>
+          </properties>
+          <option name="timeStamp" value="16" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="DotNet Breakpoints">
+          <url>file://$PROJECT_DIR$/Assets/Scripts/Combat/WeaponBase.cs</url>
+          <line>39</line>
+          <properties documentPath="E:\_School Projects\Voidrunner\Assets\Scripts\Combat\WeaponBase.cs" initialLine="39" containingFunctionPresentation="method 'InitWeaponRef'">
+            <startOffsets>
+              <option value="1230" />
+            </startOffsets>
+            <endOffsets>
+              <option value="1231" />
+            </endOffsets>
+          </properties>
+          <option name="timeStamp" value="19" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>

@@ -179,6 +179,8 @@ public class CombatManager : MonoBehaviour
     private void IncrementMeleeOrder() => _curMeleeOrder = _curMeleeOrder.Next();
 
     private void Awake() {
+        //Init Ref
+        this.AddListener(EventType.InitWeaponRefEvent, param => InitWeaponRef( (List<WeaponEntry>) param));
         //Weapon Switch
         // this.AddListener(EventType.WeaponChangedEvent, param => UpdateCurrentWeapon((WeaponManager.WeaponEntry) param));
         //Melee Combo Related
@@ -203,7 +205,10 @@ public class CombatManager : MonoBehaviour
         if(!MeleeSequence.ValidateColliders()) NCLogger.Log($"Collider Validation Failed", LogLevel.ERROR);
     }
 
-    private void Start() {
+    private IEnumerator Start()
+    {
+        yield return new WaitForSeconds(.2f);
+        
         if(!firePoint) NCLogger.Log($"firePoint = {firePoint}", LogLevel.ERROR);
         if(!_meleeEntry.reference) NCLogger.Log($"_meleeEntry.reference = {_meleeEntry.reference}", LogLevel.ERROR);
         if(!_rangedEntry.reference) NCLogger.Log($"_rangedEntry.reference = {_rangedEntry.reference}", LogLevel.ERROR);
@@ -222,7 +227,7 @@ public class CombatManager : MonoBehaviour
         if (_moveState != PlayerMovementController.MovementState.Normal) return;
         this.FireEvent(EventType.RequestIsOnGroundEvent);
         if (!_isGrounded) return;
-
+        
         _activeWeapon = WeaponType.Melee;
         _meleeEntry.reference.canAttack = false;
         _meleeEntry.reference.isAttacking = true; 
@@ -235,6 +240,7 @@ public class CombatManager : MonoBehaviour
         StopAllCoroutines();
         //Clone -> not edit in SO data
         var animData = MeleeSequence.OrderToAttributes[_curMeleeOrder].CloneToAnimData();
+        this.FireEvent(EventType.UpdateActiveWeaponEvent, _activeWeapon);
         this.FireEvent(EventType.PlayAttackEvent, MeleeSequence.OrderToAttributes[_curMeleeOrder].CloneToAnimData(transform.root));
         this.FireEvent(EventType.StopMovementEvent);
     }
@@ -287,10 +293,12 @@ public class CombatManager : MonoBehaviour
         if (_rangedEntry.type != WeaponType.Ranged) yield break;
         if (_moveState == PlayerMovementController.MovementState.Grappling) yield break;
 
+        _activeWeapon = WeaponType.Ranged;
         _rangedEntry.reference.canAttack = false;
         _rangedEntry.reference.isAttacking = true;
         GetEnemies();
         yield return new WaitForSeconds(RangedData.Attribute.PreshotDelay);
+        this.FireEvent(EventType.UpdateActiveWeaponEvent, _activeWeapon);
         this.FireEvent(EventType.PlayAttackEvent, RangedData.Attribute.CloneToAnimData(transform.root));
     }
 
@@ -337,6 +345,7 @@ public class CombatManager : MonoBehaviour
                 _curMeleeOrder = MeleeOrder.First;
                 _playerAnimator.ResumeAnimator();
         
+                this.FireEvent(EventType.UpdateActiveWeaponEvent, _activeWeapon);
                 this.FireEvent(EventType.ResumeMovementEvent);
                 
                 break;
@@ -347,6 +356,7 @@ public class CombatManager : MonoBehaviour
                 _rangedEntry.reference.isAttacking = false;
                 _playerAnimator.ResumeAnimator();
         
+                this.FireEvent(EventType.UpdateActiveWeaponEvent, _activeWeapon);
                 this.FireEvent(EventType.ResumeMovementEvent);
                 break;
             default:
@@ -414,6 +424,24 @@ public class CombatManager : MonoBehaviour
     #endregion
     
     #region Init Methods
+
+    private void InitWeaponRef(List<WeaponEntry> list)
+    {
+        foreach (var entry in list)
+        {
+            switch (entry.type) {
+                case WeaponType.Melee:
+                    _meleeEntry = entry;
+                    break;
+                case WeaponType.Ranged:
+                    _rangedEntry = entry;
+                    break;
+                default:
+                    throw new ArgumentOutOfRangeException();
+            }
+        }
+    }
+    
     private void AssignCollidersData() {
         var colList = GetComponentsInChildren<MeleeCollider>();
         foreach (var col in colList) {

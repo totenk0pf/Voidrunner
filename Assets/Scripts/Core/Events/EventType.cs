@@ -31,6 +31,7 @@ namespace Core.Events {
         RefreshRangedAttributesEvent,
         //Weapon Attack/Activation Events
         WeaponFiredEvent, //common for melee & ranged
+        UpdateActiveWeaponEvent,
         WeaponMeleeFiredEvent, //only for melee
         WeaponRangedFiredEvent, //only for ranged
         WeaponPostRangedFiredEvent, //only for ranged (UI/UX handle)

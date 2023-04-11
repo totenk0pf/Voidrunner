@@ -362,6 +362,7 @@ public class PlayerMovementController : MonoBehaviour
             playerVisualProto.Rotate(rollAxis, -30f, Space.Self);
         }
         NCLogger.Log($"dodge");
+        this.FireEvent(EventType.SetMovementStateEvent, moveState);
         this.FireEvent(EventType.CancelMeleeAttackEvent);
         this.FireEvent(EventType.NotifyStopAllComboSequenceEvent, false);
         while (time < dodgeTime) {
@@ -370,12 +371,13 @@ public class PlayerMovementController : MonoBehaviour
             
             yield return null;
         }
-        //this.FireEvent(EventType.CancelMeleeAttackEvent);
-        this.FireEvent(EventType.NotifyResumeAllComboSequenceEvent);
         transform.position = dest;
         playerVisualProto.up = Vector3.up;
         moveState = MovementState.Normal;
         Rb.velocity = velMag * Rb.velocity.normalized;
+        //this.FireEvent(EventType.CancelMeleeAttackEvent);
+        this.FireEvent(EventType.NotifyResumeAllComboSequenceEvent);
+        this.FireEvent(EventType.SetMovementStateEvent, moveState);
     }
     #endregion
     

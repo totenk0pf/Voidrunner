@@ -63,8 +63,8 @@ namespace UI {
             this.AddListener(EventType.WeaponFiredEvent, data => UpdateChargeUI((WeaponFireUIMsg) data));
         }
         
-        private void ChangeActivePanel(WeaponManager.WeaponEntry entry) {
-            currentType = entry.Type;
+        private void ChangeActivePanel(WeaponEntry entry) {
+            currentType = entry.type;
             _initHeight = Transform.rect.height - Layout.spacing;
             var segmentHeight = _initHeight / (panelList.Count);
             foreach (var item in panelList) {
