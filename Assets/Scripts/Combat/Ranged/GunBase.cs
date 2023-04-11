@@ -8,29 +8,18 @@ using EventType = Core.Events.EventType;
 
 namespace Combat {
     public class GunBase : WeaponBase {
-        // [TitleGroup("Gun settings")]
-        // public float preshotDelay;
-        // public float aftershotDelay;
-        // [SerializeField] private int maxAmmo;
-        // [SerializeField] private int maxClip;
-        // [SerializeField] private LayerMask raycastMask;
-
-        [ReadOnly] protected RangedAttribute attribute; 
-        // public Transform firePoint;
-        [TitleGroup("Gun states")]
-        protected bool isReloading;
+        [ReadOnly] protected RangedAttribute attribute;
 
         public int currentAmmo;
         public int clipAmount;
-
-        private WeaponType _curWeaponType;
         [TitleGroup("Components")]
         [SerializeField] protected Animator animator;
 
         protected void Awake() {
+            base.Awake();
             this.AddListener(EventType.RefreshRangedAttributesEvent, param => UpdateAttribute((RangedAttribute)param));
             this.AddListener(EventType.RangedEnemyDamageEvent, dmgData => ApplyDamageOnEnemy((AnimData) dmgData));
-            this.AddListener(EventType.WeaponChangedEvent, param => OnWeaponChange((WeaponManager.WeaponEntry) param));
+            // this.AddListener(EventType.WeaponChangedEvent, param => OnWeaponChange((WeaponManager.WeaponEntry) param));
         }
 
         protected IEnumerator Start() {
@@ -55,7 +44,7 @@ namespace Combat {
         }
         
         protected void Update() {
-            if (Input.GetMouseButtonDown(0) && canAttack && _curWeaponType == WeaponType.Ranged) {
+            if (Input.GetMouseButtonDown(entry.mouseNum) && canAttack && entry.type == WeaponType.Ranged) {
                 if (currentAmmo >= 1) {
                     currentAmmo--;
                     this.FireEvent(EventType.WeaponRangedFiredEvent);
@@ -101,11 +90,11 @@ namespace Combat {
         //     yield return null;
         // }
 
-        protected void OnWeaponChange(WeaponManager.WeaponEntry entry) {
-            _curWeaponType = entry.Type;
-            if (entry.Type != WeaponType.Ranged) return;
-            isAttacking = false;
-        }
+        // protected void OnWeaponChange(WeaponManager.WeaponEntry entry) {
+        //     _curWeaponType = entry.Type;
+        //     if (entry.Type != WeaponType.Ranged) return;
+        //     isAttacking = false;
+        // }
         
     }
 }

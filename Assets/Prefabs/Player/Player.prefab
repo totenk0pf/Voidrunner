@@ -707,7 +707,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f723dfac55f55fe49add6120239e968d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  grappleKey: 324
+  grappleKey: 325
   range: 100
   radius: 1.3
   maxAngleAA: 5

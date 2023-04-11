@@ -56,8 +56,8 @@ namespace UI {
         }
 
         private void Awake() {
-            this.AddListener(EventType.WeaponChangedEvent,
-                entry => ChangeActivePanel((WeaponManager.WeaponEntry) entry));
+            // this.AddListener(EventType.WeaponChangedEvent,
+            //     entry => ChangeActivePanel((WeaponManager.WeaponEntry) entry));
 
             this.AddListener(EventType.WeaponPostRangedFiredEvent, data => UpdateRangedUI((RangedUIMsg) data));
             this.AddListener(EventType.WeaponFiredEvent, data => UpdateChargeUI((WeaponFireUIMsg) data));

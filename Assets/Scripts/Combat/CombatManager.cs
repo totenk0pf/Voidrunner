@@ -18,6 +18,7 @@ public enum MeleeOrder {
     Third = 2
 }
 
+
 [Serializable]
 public class MeleeSequenceAttribute : IAnimDataConvertable {
     [SerializeField] private PlayerAnimState state;
@@ -150,18 +151,19 @@ public class CombatManager : MonoBehaviour
     [ReadOnly] private float _nextSeqTime;
     
     [TitleGroup("General settings")]
-    [ReadOnly] private WeaponType _curWeaponType;
-    [ReadOnly] private WeaponBase _curWeaponRef;
+    [ReadOnly] private WeaponEntry _meleeEntry;
+    [ReadOnly] private WeaponEntry _rangedEntry;
     [Space]
     [ReadOnly] private PlayerMovementController.MovementState _moveState;
     [ReadOnly] [SerializeField] private PlayerAnimator _playerAnimator;
 
+    private WeaponType _activeWeapon = WeaponType.None;
     private bool _isGrounded;
     private void IncrementMeleeOrder() => _curMeleeOrder = _curMeleeOrder.Next();
 
     private void Awake() {
         //Weapon Switch
-        this.AddListener(EventType.WeaponChangedEvent, param => UpdateCurrentWeapon((WeaponManager.WeaponEntry) param));
+        // this.AddListener(EventType.WeaponChangedEvent, param => UpdateCurrentWeapon((WeaponManager.WeaponEntry) param));
         //Melee Combo Related
         this.AddListener(EventType.AttackBeginEvent, param => OnAttackBegin());
         this.AddListener(EventType.OnInputWindowHold, param => OnInputWindowHold());
@@ -186,10 +188,10 @@ public class CombatManager : MonoBehaviour
 
     private void Start() {
         if(!firePoint) NCLogger.Log($"firePoint = {firePoint}", LogLevel.ERROR);
-        if(!_curWeaponRef) NCLogger.Log($"_curWeaponRef = {_curWeaponRef}", LogLevel.ERROR);
-        
+        if(!_meleeEntry.reference) NCLogger.Log($"_meleeEntry.reference = {_meleeEntry.reference}", LogLevel.ERROR);
+        if(!_rangedEntry.reference) NCLogger.Log($"_rangedEntry.reference = {_rangedEntry.reference}", LogLevel.ERROR);
         _curMeleeOrder = MeleeOrder.First;
-        _curWeaponRef.isAttacking = false;
+        //_curWeaponRef.isAttacking = false;
         _isInWindow = false;
         
         this.FireEvent(EventType.RefreshRangedAttributesEvent, RangedData.Attribute);
@@ -198,14 +200,15 @@ public class CombatManager : MonoBehaviour
     }
     #region Melee Methods
     private void MeleeAttack() {
-        if (!_curWeaponRef.canAttack || _curWeaponRef.isAttacking) return;
-        if (_curWeaponType != WeaponType.Melee || !Input.GetMouseButtonDown(0)) return;
+        if (!_meleeEntry.reference.canAttack || _meleeEntry.reference.isAttacking) return;
+        if (_meleeEntry.type != WeaponType.Melee) return;
         if (_moveState != PlayerMovementController.MovementState.Normal) return;
         this.FireEvent(EventType.RequestIsOnGroundEvent);
         if (!_isGrounded) return;
-        
-        _curWeaponRef.canAttack = false;
-        _curWeaponRef.isAttacking = true; 
+
+        _activeWeapon = WeaponType.Melee;
+        _meleeEntry.reference.canAttack = false;
+        _meleeEntry.reference.isAttacking = true; 
         _isInWindow = false;
 
         MeleeSequence.EnableIsolatedCollider(_curMeleeOrder);
@@ -219,16 +222,16 @@ public class CombatManager : MonoBehaviour
         this.FireEvent(EventType.StopMovementEvent);
     }
 
-    private void UpdateCurrentWeapon(WeaponManager.WeaponEntry entry) {
-        if (entry.Type != _curWeaponType)
-        {
-            this.FireEvent(EventType.CancelMeleeAttackEvent);
-            this.FireEvent(EventType.NotifyStopAllComboSequenceEvent, true);
-        }
-        
-        _curWeaponType = entry.Type;
-        _curWeaponRef = entry.Reference;
-    }
+    // private void UpdateCurrentWeapon(WeaponManager.WeaponEntry entry) {
+    //     if (entry.Type != _curWeaponType)
+    //     {
+    //         this.FireEvent(EventType.CancelMeleeAttackEvent);
+    //         this.FireEvent(EventType.NotifyStopAllComboSequenceEvent, true);
+    //     }
+    //     
+    //     _curWeaponType = entry.Type;
+    //     _curWeaponRef = entry.Reference;
+    // }
 
     /// <summary>
     /// Routine To Hold the Last frame of Attack Animation for x amount of time
@@ -244,7 +247,7 @@ public class CombatManager : MonoBehaviour
         IncrementMeleeOrder();
         if (_curMeleeOrder == MeleeOrder.First) {
             _isInWindow = false;
-            _curWeaponRef.canAttack = false;
+            _meleeEntry.reference.canAttack = false;
         }else {
             _isInWindow = true;
         }
@@ -263,12 +266,12 @@ public class CombatManager : MonoBehaviour
     
     #region Ranged Methods
     private IEnumerator RangedAttackRoutine() {
-        if (!_curWeaponRef.canAttack || _curWeaponRef.isAttacking) yield break;
-        if (_curWeaponType != WeaponType.Ranged || !Input.GetMouseButtonDown(0)) yield break;
+        if (!_rangedEntry.reference.canAttack || _rangedEntry.reference.isAttacking) yield break;
+        if (_rangedEntry.type != WeaponType.Ranged) yield break;
         if (_moveState == PlayerMovementController.MovementState.Grappling) yield break;
 
-        _curWeaponRef.canAttack = false;
-        _curWeaponRef.isAttacking = true;
+        _rangedEntry.reference.canAttack = false;
+        _rangedEntry.reference.isAttacking = true;
         GetEnemies();
         yield return new WaitForSeconds(RangedData.Attribute.PreshotDelay);
         this.FireEvent(EventType.PlayAttackEvent, RangedData.Attribute.CloneToAnimData(transform.root));
@@ -302,21 +305,41 @@ public class CombatManager : MonoBehaviour
     }
     
     private void ResetWeaponAttackState() {
-        NCLogger.Log($"reset");
-        StopAllCoroutines();
-        _curWeaponRef.canAttack = true;
-        _curWeaponRef.isAttacking = false;
-        _isInWindow = false;
-        _curMeleeOrder = MeleeOrder.First;
-        _playerAnimator.ResumeAnimator();
+        //NCLogger.Log($"reset");
+        switch (_activeWeapon) {
+            case WeaponType.None:
+                NCLogger.Log($"Reset-ing attack state when it's NONE?", LogLevel.WARNING);
+                break;
+            case WeaponType.Melee:
+                _activeWeapon = WeaponType.None;
+                StopAllCoroutines();
+                _meleeEntry.reference.canAttack = true;
+                _meleeEntry.reference.isAttacking = false;
+                _isInWindow = false;
+                _curMeleeOrder = MeleeOrder.First;
+                _playerAnimator.ResumeAnimator();
         
-        this.FireEvent(EventType.ResumeMovementEvent);
+                this.FireEvent(EventType.ResumeMovementEvent);
+                
+                break;
+            case WeaponType.Ranged:
+                _activeWeapon = WeaponType.None;
+                StopAllCoroutines();
+                _rangedEntry.reference.canAttack = true;
+                _rangedEntry.reference.isAttacking = false;
+                _playerAnimator.ResumeAnimator();
+        
+                this.FireEvent(EventType.ResumeMovementEvent);
+                break;
+            default:
+                throw new ArgumentOutOfRangeException();
+        }
     }
     #endregion
     
     #region Animation Events
     private void OnAttackBegin() {
-        if (_curWeaponType == WeaponType.Melee)
+        if (_activeWeapon == WeaponType.Melee)
         {
         } else {
             ;
@@ -335,9 +358,9 @@ public class CombatManager : MonoBehaviour
     
     private void OnInputWindowHold()
     {
-        if (_curWeaponType == WeaponType.Melee) {
-            _curWeaponRef.canAttack = true;
-             _curWeaponRef.isAttacking = false;
+        if (_activeWeapon == WeaponType.Melee) {
+            _meleeEntry.reference.canAttack = true;
+            _meleeEntry.reference.isAttacking = false;
             MeleeSequence.DisableAllColliders();
             
             if (_curMeleeOrder == MeleeOrder.Third) { _playerAnimator.ResumeAnimator(); } 
@@ -352,9 +375,9 @@ public class CombatManager : MonoBehaviour
     private void OnAttackEnd()
     {
         this.FireEvent(EventType.PlayAnimationEvent, new AnimData(PlayerAnimState.Idle));
-        if (_curWeaponType == WeaponType.Melee)
+        if (_activeWeapon == WeaponType.Melee)
             OnAttackEndMelee();
-        else if (_curWeaponType == WeaponType.Ranged)
+        else if (_activeWeapon == WeaponType.Ranged)
         {
             StartCoroutine(OnAttackEndRangedRoutine());
         }

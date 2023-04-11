@@ -44,6 +44,7 @@ namespace Core.Events {
         ResumeMovementEvent, //resume movement after melee window
         StopMovementEvent, //stop movement on melee atk
         CancelMeleeAttackEvent,
+        CancelRangedAttackEvent,
         //Animation Clips Combat Events
         AttackBeginEvent,
         OnInputWindowHold,
@@ -58,5 +59,6 @@ namespace Core.Events {
         RunPlayerComboSequenceEvent,
         NotifyStopAllComboSequenceEvent,
         NotifyResumeAllComboSequenceEvent,
+        InitWeaponRefEvent,
     }
 }

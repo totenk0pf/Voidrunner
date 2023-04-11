@@ -11,24 +11,20 @@ namespace Combat {
     [RequireComponent(typeof(Rigidbody))]
     [RequireComponent(typeof(BoxCollider))]
     public class MeleeBase : WeaponBase {
-        // [TitleGroup("Melee settings")]
-        // public float attackSpeed;
-        // public float attackRadius;
-        // public float attackSpeedModifier = 1f;
-        //
-        // protected List<EnemyBase> enemies = new();
-        
+
         protected void Awake() {
+            base.Awake();
             this.AddListener(EventType.MeleeEnemyDamageEvent, dmgData => ApplyDamageOnEnemy((AnimData) dmgData));
-            this.AddListener(EventType.WeaponChangedEvent, param => OnWeaponChange((WeaponManager.WeaponEntry) param));
+            // this.AddListener(EventType.WeaponChangedEvent, param => OnWeaponChange((WeaponManager.WeaponEntry) param));
             canAttack = true;
             // StartCoroutine(Fire());
             // StartCoroutine(AltFire());
         }
 
         protected void Update() {
-            if (Input.GetMouseButtonDown(0) && canAttack) {
+            if (Input.GetMouseButtonDown(entry.mouseNum) && canAttack && entry.type == WeaponType.Melee) {
                 this.FireEvent(EventType.WeaponMeleeFiredEvent);
+                //this.FireEvent(EventType.CancelMeleeAttackEvent);
                 //isAttacking = true;
             }
         }
@@ -53,10 +49,10 @@ namespace Combat {
             //resetting atk attributes is handled in CombatManager
         }
         
-        protected void OnWeaponChange(WeaponManager.WeaponEntry entry) {
-            if (entry.Type != WeaponType.Melee) return;
-            StopAllCoroutines();
-            isAttacking = false;
-        }
+        // protected void OnWeaponChange(WeaponManager.WeaponEntry entry) {
+        //     if (entry.Type != WeaponType.Melee) return;
+        //     StopAllCoroutines();
+        //     isAttacking = false;
+        // }
     }
 }

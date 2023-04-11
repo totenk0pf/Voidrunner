@@ -1,4 +1,7 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
+using System.Collections.Generic;
+using System.Linq;
 using Core.Events;
 using UnityEngine;
 using EventType = Core.Events.EventType;
@@ -9,13 +12,17 @@ namespace Combat
         // public float damage;
         // public float damageScale;
         // public float damageModifier;
-        
+
+        [SerializeField] private WeaponType type;
+        protected WeaponEntry entry;
         public bool canAttack;
         public bool isAttacking;
         
-        // public abstract IEnumerator Fire();
-        // public abstract IEnumerator AltFire();
-        //protected abstract EnemyBase GetEnemy(Collider col = null);
+        protected void Awake()
+        {
+            this.AddListener(EventType.InitWeaponRefEvent, param => InitWeaponRef( (List<WeaponEntry>) param));
+        }
+
         protected virtual void Damage(EnemyBase enemy, float damage) {
             if (!enemy) return;
             enemy.TakeDamage(damage);
@@ -28,9 +35,11 @@ namespace Combat
             enemy.Rigidbody.AddForce(dir * force, ForceMode.Impulse);
         }
 
-        // public void OnWeaponChange(WeaponManager.WeaponEntry entry)
-        // {
-        //     ;
-        // }
+        public void InitWeaponRef(List<WeaponEntry> list)
+        {
+            foreach (var e in list.Where(e => entry.type == type)) {
+                entry = e;
+            }
+        }
     }
 }

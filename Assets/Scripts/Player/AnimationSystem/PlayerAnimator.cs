@@ -59,7 +59,7 @@ public class PlayerAnimator : MonoBehaviour, IInteractiveAnimator, ICombatAnimat
         this.AddListener(EventType.PlayAnimationEvent, animData => UpdateAnimAttribute((AnimData)animData));
         this.AddListener(EventType.PlayAttackEvent, animData => UpdateAnimAttribute((AnimData)animData));
         this.AddListener(EventType.RequestPlayerAnimatorEvent, param => OnRequestAnimator());
-        this.AddListener(EventType.WeaponChangedEvent, param => _curWeaponEntry = ((WeaponManager.WeaponEntry)param));
+        //this.AddListener(EventType.WeaponChangedEvent, param => _curWeaponEntry = ((WeaponManager.WeaponEntry)param));
         this.AddListener(EventType.CancelMeleeAttackEvent, param => SetParam(PlayerAnimState.RangedAttack, false));
         
         if(!animationParamData) NCLogger.Log($"Missing Animation State Data", LogLevel.ERROR);

@@ -47,11 +47,10 @@ namespace Combat {
 
         private void Awake() {
             _empowerIndex = 0;
-            EventDispatcher.Instance.AddListener(EventType.WeaponChangedEvent,
-                                                 param => UpdateCurrentWeapon((WeaponEntry) param));
-            EventDispatcher.Instance.AddListener(EventType.EmpowerDamageEnemyEvent,
-                                                 enemy => DealEmpowerDamage((EnemyBase) enemy));
-            EventDispatcher.Instance.AddListener(EventType.InventoryToggleEvent, msg => OnInventoryUIEvent((InventoryToggleMsg) msg));
+            // this.AddListener(EventType.WeaponChangedEvent,
+            //                                      param => UpdateCurrentWeapon((WeaponEntry) param));
+            this.AddListener(EventType.EmpowerDamageEnemyEvent, enemy => DealEmpowerDamage((EnemyBase) enemy));
+            this.AddListener(EventType.InventoryToggleEvent, msg => OnInventoryUIEvent((InventoryToggleMsg) msg));
             UpdateCurrentAugment();
         }
 

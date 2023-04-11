@@ -6,13 +6,14 @@ using EventType = Core.Events.EventType;
 
 namespace Combat {
     public enum WeaponType {
+        None,
         Melee,
         Ranged
     }
     
     [Serializable]
     public struct WeaponEntry {
-        public KeyCode keymap;
+        public int mouseNum;
         public WeaponType type;
         public WeaponBase reference;
     }
@@ -33,31 +34,32 @@ namespace Combat {
         }
 
         [SerializeField] private List<WeaponEntry> weaponList;
-        [SerializeField] private WeaponEntry currentWeapon;
-        [SerializeField] private WeaponType currentType;
-        private bool canSwap = true;
+        // [SerializeField] private WeaponEntry currentWeapon;
+        // [SerializeField] private WeaponType currentType;
+        // private bool canSwap = true;
 
         private void Awake()
         {
-            this.AddListener(EventType.WeaponFiredEvent, param => canSwap = false);
-            this.AddListener(EventType.WeaponRechargedEvent, param => canSwap = true);
-            OnWeaponSwap(currentWeapon);
+            // this.AddListener(EventType.WeaponFiredEvent, param => canSwap = false);
+            // this.AddListener(EventType.WeaponRechargedEvent, param => canSwap = true);
+            //OnWeaponSwap(currentWeapon);
         }
 
         private void Start()
         {
+            this.FireEvent(EventType.InitWeaponRefEvent, weaponList);
         }
 
         private void Update()
         {
-            if (!canSwap) return;
-            foreach (var item in weaponList)
-            {
-                if (Input.GetKeyDown(item.KeyMap))
-                {
-                    OnWeaponSwap(item);
-                }
-            }
+            // if (!canSwap) return;
+            // foreach (var item in weaponList)
+            // {
+            //     if (Input.GetKeyDown(item.KeyMap))
+            //     {
+            //         OnWeaponSwap(item);
+            //     }
+            // }
         }
 
 
@@ -74,20 +76,20 @@ namespace Combat {
         //     }
         // }
 
-        private void OnWeaponSwap(WeaponEntry weapon) {
-            foreach (var item in weaponList) {
-                item.Reference.canAttack = item.Type == weapon.Type;
-            }
-
-            currentWeapon = weapon;
-            currentType = currentWeapon.Type;
-            this.FireEvent(EventType.WeaponChangedEvent, currentWeapon);
-        }
-
-        private void OnValidate()
-        {
-            var entry = weaponList.Find(x => x.Type == currentType);
-            currentWeapon = entry;
-        }
+        // private void OnWeaponSwap(WeaponEntry weapon) {
+        //     foreach (var item in weaponList) {
+        //         item.Reference.canAttack = item.Type == weapon.Type;
+        //     }
+        //
+        //     currentWeapon = weapon;
+        //     currentType = currentWeapon.Type;
+        //     this.FireEvent(EventType.WeaponChangedEvent, currentWeapon);
+        // }
+        //
+        // private void OnValidate()
+        // {
+        //     var entry = weaponList.Find(x => x.Type == currentType);
+        //     currentWeapon = entry;
+        // }
     }
 }
