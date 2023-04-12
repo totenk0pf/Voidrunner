@@ -29,6 +29,7 @@ MonoBehaviour:
     raycastMask:
       serializedVersion: 2
       m_Bits: 256
+    fireClip: {fileID: 7400000, guid: d678c89824242554baac333cb9a5d1e1, type: 2}
     Enemies: []
     canDamageMod: 1
     attackSpeed: 1.75
