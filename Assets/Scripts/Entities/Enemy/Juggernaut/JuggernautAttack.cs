@@ -40,11 +40,9 @@ namespace Entities.Enemy.Juggernaut {
             _canAttack = false;
             _isAttacking = true;
             if (_moveWithRootMotion.canMove) _moveWithRootMotion.canMove = false;
-            
             var randomAttack = Random.Range(0, animData.attackAnim.Count);
             var attack = animData.attackAnim[randomAttack];
             TriggerAnim(attack);
-
             yield return StartCoroutine(FinishAnimation());
             yield return StartCoroutine(DelayAttack());
         }
@@ -56,7 +54,7 @@ namespace Entities.Enemy.Juggernaut {
         }
         
         private IEnumerator FinishAnimation() {
-            yield return new WaitUntil(() => animator.GetCurrentAnimatorStateInfo(0).normalizedTime >= 0.95f);
+            yield return new WaitUntil(() => animator.GetCurrentAnimatorStateInfo(0).normalizedTime >= 0.99f);
             _isAttacking = false;
         }
 
@@ -65,6 +63,10 @@ namespace Entities.Enemy.Juggernaut {
                 StopAllCoroutines();
                 if (_isAttacking) {
                     StartCoroutine(FinishAnimation());
+                }
+
+                foreach (var anim in animData.attackAnim) {
+                    ResetAnim(anim);
                 }
                 
                 _canAttack = false;

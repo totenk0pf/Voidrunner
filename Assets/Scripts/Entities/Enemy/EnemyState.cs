@@ -66,6 +66,17 @@ public abstract class EnemyState : MonoBehaviour
                 break;
         }
     }
+    
+    protected void ResetAnim(AnimParam param) {
+        switch (param.type) {
+            case AnimatorControllerParameterType.Bool:
+                animator.SetBool(param.name, false);
+                break;
+            case AnimatorControllerParameterType.Trigger:
+                animator.ResetTrigger(param.name);
+                break;
+        }
+    }
 
     public virtual void DealDamage(){
         var oxygenComp = target.GetComponent<Oxygen>();
