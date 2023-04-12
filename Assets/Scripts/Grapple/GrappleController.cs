@@ -69,8 +69,8 @@ namespace Grapple {
         private RaycastHit _currentGrappleHit;
         private PlayerMovementController.MovementState _moveState;
         private bool _isOnGround;
-        private IEnumerator _enemyToPlayerRoutine;
-        private IEnumerator _playerToPointRoutine;
+        private Coroutine _enemyToPlayerRoutine;
+        private Coroutine _playerToPointRoutine;
         private EnemyBase _currentGrappledEnemy;
         private Vector3 PlayerHeightOffset => new Vector3(0, 1, 0) * transform.localScale.y;
 
@@ -200,13 +200,13 @@ namespace Grapple {
                     EventDispatcher.Instance.FireEvent(EventType.RequestIsOnGroundEvent);
                     if (!_isOnGround) return false;
                     EventDispatcher.Instance.FireEvent(EventType.SetMovementStateEvent, PlayerMovementController.MovementState.Grappling);
-                    _enemyToPlayerRoutine = EnemyToPlayerRoutine();
-                    StartCoroutine(_enemyToPlayerRoutine);
+                    //_enemyToPlayerRoutine = EnemyToPlayerRoutine();
+                    _enemyToPlayerRoutine = StartCoroutine(EnemyToPlayerRoutine());
                     break;
                 case GrappleType.PlayerToPoint:
                     EventDispatcher.Instance.FireEvent(EventType.SetMovementStateEvent, PlayerMovementController.MovementState.Grappling);
-                    _playerToPointRoutine = PlayerToPointRoutine();
-                    StartCoroutine(_playerToPointRoutine);
+                    //_playerToPointRoutine = PlayerToPointRoutine();
+                    _playerToPointRoutine = StartCoroutine(PlayerToPointRoutine());
                     return true;
                 default:
                     return false;

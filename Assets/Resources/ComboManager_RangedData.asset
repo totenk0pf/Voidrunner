@@ -29,10 +29,6 @@ MonoBehaviour:
     raycastMask:
       serializedVersion: 2
       m_Bits: 256
-    Enemies:
-    - {fileID: 0}
-    - {fileID: 0}
-    - {fileID: 0}
-    - {fileID: 0}
-    canDamageMod: 0
-    attackSpeed: 0
+    Enemies: []
+    canDamageMod: 1
+    attackSpeed: 1.75

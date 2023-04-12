@@ -80,9 +80,7 @@ public class PlayerAnimator : MonoBehaviour, IInteractiveAnimator, ICombatAnimat
         this.AddListener(EventType.PlayAnimationEvent, animData => UpdateAnimAttribute((AnimData)animData));
         this.AddListener(EventType.PlayAttackEvent, animData => UpdateAnimAttribute((AnimData)animData));
         this.AddListener(EventType.RequestPlayerAnimatorEvent, param => OnRequestAnimator());
-        //this.AddListener(EventType.WeaponChangedEvent, param => _curWeaponEntry = ((WeaponManager.WeaponEntry)param));
-        this.AddListener(EventType.CancelMeleeAttackEvent, param => SetParam(PlayerAnimState.RangedAttack, false));
-        
+        this.AddListener(EventType.CancelAttackEvent, state => OnCancelAttack((WeaponType) state) );
         if(!animationParamData) NCLogger.Log($"Missing Animation State Data", LogLevel.ERROR);
     }
 
@@ -95,6 +93,11 @@ public class PlayerAnimator : MonoBehaviour, IInteractiveAnimator, ICombatAnimat
         SetParam(_animData.State);
     }
 
+    private void OnCancelAttack(WeaponType state)
+    {
+        if (state == WeaponType.Ranged && _activeType == WeaponType.Melee)
+            SetParam(PlayerAnimState.RangedAttack, false);
+    }
     #region IInteractiveAnimator
     public void OnAnimationStart()
     {
@@ -123,7 +126,9 @@ public class PlayerAnimator : MonoBehaviour, IInteractiveAnimator, ICombatAnimat
     #endregion
     
     #region ICombatAnimator
-    public void ApplyDamageOnFrame() {
+    public void ApplyDamageOnFrame()
+    {
+        float length = CurrentClipLength;
         if (_animData == null) {
             NCLogger.Log($"no melee anim data - animData: {_animData}");
             return; }
@@ -133,8 +138,17 @@ public class PlayerAnimator : MonoBehaviour, IInteractiveAnimator, ICombatAnimat
             _animData.State != PlayerAnimState.MeleeAttack3 &&
             _animData.State != PlayerAnimState.RangedAttack)
             return;
-        
-        _animData.animDuration = CurrentClipLength;
+
+        //Scale Anim Length with anim speed
+        if (_animData.AnimSpeed > 1) {
+            var spd = _animData.AnimSpeed - 1;
+            length = CurrentClipLength + CurrentClipLength * spd;
+            
+        }else if (_animData.AnimSpeed < 1) {
+            length = CurrentClipLength * _animData.AnimSpeed;
+        }
+
+        _animData.animDuration = length;
         if (_activeType == WeaponType.Melee) {
             this.FireEvent(EventType.MeleeEnemyDamageEvent, _animData);
         }else if(_activeType == WeaponType.Ranged) {

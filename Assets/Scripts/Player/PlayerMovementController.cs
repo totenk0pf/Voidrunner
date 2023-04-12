@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using Combat;
 using Core.Events;
 using Core.Logging;
 using Unity.VisualScripting;
@@ -108,11 +109,10 @@ public class PlayerMovementController : MonoBehaviour
 
     private void Update()
     {
-        foreach (var input in _inputKeyList.Where(Input.GetKeyDown)) {
-            _canMove = true;
-           // this.FireEvent(EventType.CancelMeleeAttackEvent);
-        }
-        
+        // foreach (var input in _inputKeyList.Where(Input.GetKeyDown)) {
+        //     _canMove = true;
+        // }
+        //
         //_dodgeDir = transform.forward;
         foreach (var input in _inputKeyList.Where(Input.GetKey)) {
             switch (input) {
@@ -136,6 +136,7 @@ public class PlayerMovementController : MonoBehaviour
         
         if (Input.GetKeyDown(dodgeKey) && Time.time >= _nextDodgeTimeStamp)
         {
+            NCLogger.Log($"dodging");
             _nextDodgeTimeStamp = Time.time + dodgeCooldown;
             ActionDodge();
         }
@@ -340,7 +341,7 @@ public class PlayerMovementController : MonoBehaviour
     #region Movement Abilities
     private void ActionDodge()
     {
-        if (Rb.velocity.magnitude == 0 || moveState != MovementState.Normal) { return; }
+        if (moveState == MovementState.Grappling) { return; }
         
         moveState = MovementState.Dodge;
         //var velMagCache = Rb.velocity.magnitude;
@@ -363,7 +364,7 @@ public class PlayerMovementController : MonoBehaviour
         }
         NCLogger.Log($"dodge");
         this.FireEvent(EventType.SetMovementStateEvent, moveState);
-        this.FireEvent(EventType.CancelMeleeAttackEvent);
+        this.FireEvent(EventType.CancelAttackEvent, WeaponType.Melee);
         this.FireEvent(EventType.NotifyStopAllComboSequenceEvent, false);
         while (time < dodgeTime) {
             transform.position = Vector3.Lerp(startPos, dest, time / dodgeTime);
@@ -375,7 +376,6 @@ public class PlayerMovementController : MonoBehaviour
         playerVisualProto.up = Vector3.up;
         moveState = MovementState.Normal;
         Rb.velocity = velMag * Rb.velocity.normalized;
-        //this.FireEvent(EventType.CancelMeleeAttackEvent);
         this.FireEvent(EventType.NotifyResumeAllComboSequenceEvent);
         this.FireEvent(EventType.SetMovementStateEvent, moveState);
     }

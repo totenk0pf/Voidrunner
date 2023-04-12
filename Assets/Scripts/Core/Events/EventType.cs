@@ -44,8 +44,7 @@ namespace Core.Events {
         PlayAttackEvent,
         ResumeMovementEvent, //resume movement after melee window
         StopMovementEvent, //stop movement on melee atk
-        CancelMeleeAttackEvent,
-        CancelRangedAttackEvent,
+        CancelAttackEvent,
         //Animation Clips Combat Events
         AttackBeginEvent,
         OnInputWindowHold,
