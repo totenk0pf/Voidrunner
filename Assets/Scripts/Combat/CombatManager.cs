@@ -293,6 +293,7 @@ public class CombatManager : MonoBehaviour
         if (_rangedEntry.type != WeaponType.Ranged) yield break;
         if (_moveState == PlayerMovementController.MovementState.Grappling) yield break;
 
+        NCLogger.Log($"shooting");
         _activeWeapon = WeaponType.Ranged;
         _rangedEntry.reference.canAttack = false;
         _rangedEntry.reference.isAttacking = true;
@@ -323,10 +324,12 @@ public class CombatManager : MonoBehaviour
 
     private void CancelWeaponAttack()
     {
+        NCLogger.Log($"anim speed before {_playerAnimator.GetAnimator().speed}");
         ResetWeaponAttackState();
         // if (_curWeaponType == WeaponType.Melee)
         // {
-        this.FireEvent(EventType.PlayAnimationEvent, new AnimData(PlayerAnimState.Idle));
+        this.FireEvent(EventType.PlayAnimationEvent, new AnimData(PlayerAnimState.Idle, 1));
+        NCLogger.Log($"anim speed after {_playerAnimator.GetAnimator().speed}");
         // }
     }
     
@@ -335,6 +338,8 @@ public class CombatManager : MonoBehaviour
         switch (_activeWeapon) {
             case WeaponType.None:
                 NCLogger.Log($"Reset-ing attack state when it's NONE?", LogLevel.WARNING);
+                _playerAnimator.ResumeAnimator();
+                this.FireEvent(EventType.ResumeMovementEvent);
                 break;
             case WeaponType.Melee:
                 _activeWeapon = WeaponType.None;
@@ -402,7 +407,7 @@ public class CombatManager : MonoBehaviour
 
     private void OnAttackEnd()
     {
-        this.FireEvent(EventType.PlayAnimationEvent, new AnimData(PlayerAnimState.Idle));
+        this.FireEvent(EventType.PlayAnimationEvent, new AnimData(PlayerAnimState.Idle, 1));
         if (_activeWeapon == WeaponType.Melee)
             OnAttackEndMelee();
         else if (_activeWeapon == WeaponType.Ranged)

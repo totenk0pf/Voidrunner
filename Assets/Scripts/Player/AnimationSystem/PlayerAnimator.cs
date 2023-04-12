@@ -52,9 +52,11 @@ public class AnimData {
         InitCheck();
     }
 
-    public AnimData(PlayerAnimState state)
+    public AnimData(PlayerAnimState state, float animSpeed = 1, Transform playerTransform = null)
     {
         this.State = state;
+        this.AnimSpeed = animSpeed;
+        this.playerTransform = playerTransform;
     }
     
     private void InitCheck() {
@@ -86,6 +88,10 @@ public class PlayerAnimator : MonoBehaviour, IInteractiveAnimator, ICombatAnimat
 
     private void UpdateAnimAttribute(AnimData data) {
         _animData = data;
+        if (data.State == PlayerAnimState.Idle)
+        {
+            _animData = data;
+        }
         SetParam(_animData.State);
     }
 
