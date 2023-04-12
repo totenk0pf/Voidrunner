@@ -24,7 +24,7 @@ public class WalkerHostile : EnemyState
             StartCoroutine(SwitchChaseState());
         }
         
-        if (inRange && _canSwitchState) {
+        if (_nextState.inRange && _canSwitchState) {
             _canSwitchState = false;
             TriggerAnim(_currAnim);
             return _nextState;

@@ -7,6 +7,7 @@ using UnityEngine;
 public class WalkerAttack : EnemyState
 {
     public float attackDelay;
+    [HideInInspector] public bool inRange; 
 
     [Title("Data")]
     [SerializeField] private WalkerHostile _previousState;

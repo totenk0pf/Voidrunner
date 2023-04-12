@@ -7,6 +7,7 @@ namespace Entities.Enemy.Juggernaut {
     public class JuggernautAttack : EnemyState
     {
         public float attackDelay;
+        [HideInInspector] public bool inRange; 
     
         [TitleGroup("Attack settings")]
         [SerializeField] private JuggernautHostile _previousState;

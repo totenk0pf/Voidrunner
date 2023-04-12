@@ -16,7 +16,7 @@ namespace Entities.Enemy.Boss {
             if (!animator.GetBool(animData.hostileAnim[0].name)) TriggerAnim(animData.hostileAnim[0]);
             LookAtTarget(0.15f);
 
-            if (inRange && canSwitchState) {
+            if (nextState.inRange && canSwitchState) {
                 canSwitchState = false;
                 TriggerAnim(animData.hostileAnim[0]);
                 return nextState;

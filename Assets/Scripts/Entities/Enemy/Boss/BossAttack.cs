@@ -11,6 +11,7 @@ namespace Entities.Enemy.Boss {
 
     public class BossAttack : EnemyState {
         public float attackDelay;
+        [HideInInspector] public bool inRange; 
         [Space]
         
         [TitleGroup("Attack settings")]
