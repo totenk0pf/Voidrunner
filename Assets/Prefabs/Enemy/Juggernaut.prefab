@@ -559,7 +559,7 @@ MonoBehaviour:
     m_Bits: 8
   target: {fileID: 0}
   detected: 0
-  turnSpeed: 0.8
+  turnSpeed: 0.27
   _nextState: {fileID: 5604865495905539267}
   animData: {fileID: 11400000, guid: a2fae99f2e186f947abfb6ea3981ae86, type: 2}
   canSwitch: 1
