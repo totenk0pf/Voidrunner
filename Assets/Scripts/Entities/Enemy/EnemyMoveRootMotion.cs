@@ -47,8 +47,6 @@ namespace Entities.Enemy {
                     
                     parent.position = rootPos;
                     _agent.nextPosition = rootPos;
-                    
-                    parent.rotation = _animator.rootRotation;
                 }
 
                 else {
