@@ -271,7 +271,7 @@ public class CombatManager : MonoBehaviour
             yield return null;
         }
         
-        NCLogger.Log($"fail the chain");
+        //NCLogger.Log($"fail the chain");
         //When exceeds window input time - reset combo chain
         if(_activeWeapon != WeaponType.Melee) NCLogger.Log($"_activeWeapon should be Melee when it's {_activeWeapon}", LogLevel.ERROR);
         ResetWeaponAttackState(false, _activeWeapon);
@@ -286,7 +286,7 @@ public class CombatManager : MonoBehaviour
         if (_rangedEntry.type != WeaponType.Ranged) yield break;
         if (_moveState == PlayerMovementController.MovementState.Grappling) yield break;
 
-        NCLogger.Log($"shooting");
+        //NCLogger.Log($"shooting");
         //if(_activeWeapon != WeaponType.Ranged) this.FireEvent(EventType.CancelAttackEvent, _activeWeapon);
         this.FireEvent(EventType.CancelAttackEvent,WeaponType.Melee);
         _activeWeapon = WeaponType.Ranged;

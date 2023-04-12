@@ -85,7 +85,7 @@ namespace Combat {
                 KnockBack(enemy.Key, 
                     Mathf.Clamp(dmgData.Knockback * enemy.Value, dmgData.Knockback, dmgData.KnockbackCap),
                     knockbackDir);
-                NCLogger.Log($"dmg: {dmgData.Damage}");
+                //NCLogger.Log($"dmg: {dmgData.Damage}");
             }
         }
         

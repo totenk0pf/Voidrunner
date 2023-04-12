@@ -77,6 +77,7 @@ namespace Grapple {
         [ReadOnly] public GameObject currGrappleObj;
 
         private void Awake() {
+            this.AddListener(EventType.ReceiveIsOnGroundEvent, isGrounded => _isOnGround = (bool) isGrounded);
             this.AddListener(EventType.CancelGrappleEvent, param => CancelGrapple());
             this.AddListener(EventType.SetMovementStateEvent, param => UpdateMoveState((PlayerMovementController.MovementState) param));
             //this.AddListener(EventType.ReceiveIsOnGroundEvent, param => UpdateIsOnGround((bool) param));
@@ -108,7 +109,7 @@ namespace Grapple {
             if (_currentGrappleHit.collider) currGrappleObj = _currentGrappleHit.collider.gameObject;
             if (Input.GetKeyDown(grappleKey)) {
                 if (_moveState != PlayerMovementController.MovementState.Grappling) {
-                    NCLogger.Log($"to grapple");
+                    //NCLogger.Log($"to grapple");
                     if(!CastToGetGrappleLocation()) return;
                     Grapple();
                 }
@@ -195,16 +196,17 @@ namespace Grapple {
             switch (type)
             {
                 case GrappleType.EnemyToPlayer:
+                     NCLogger.Log($"grapple enemy to player");
                     _currentGrappledEnemy = _currentGrappleHit.collider.GetComponent<EnemyBase>();
                     if (!_currentGrappledEnemy.CanPull) return false;
-                    EventDispatcher.Instance.FireEvent(EventType.RequestIsOnGroundEvent);
+                    this.FireEvent(EventType.RequestIsOnGroundEvent);
                     if (!_isOnGround) return false;
-                    EventDispatcher.Instance.FireEvent(EventType.SetMovementStateEvent, PlayerMovementController.MovementState.Grappling);
+                    this.FireEvent(EventType.SetMovementStateEvent, PlayerMovementController.MovementState.Grappling);
                     //_enemyToPlayerRoutine = EnemyToPlayerRoutine();
                     _enemyToPlayerRoutine = StartCoroutine(EnemyToPlayerRoutine());
                     break;
                 case GrappleType.PlayerToPoint:
-                    EventDispatcher.Instance.FireEvent(EventType.SetMovementStateEvent, PlayerMovementController.MovementState.Grappling);
+                    this.FireEvent(EventType.SetMovementStateEvent, PlayerMovementController.MovementState.Grappling);
                     //_playerToPointRoutine = PlayerToPointRoutine();
                     _playerToPointRoutine = StartCoroutine(PlayerToPointRoutine());
                     return true;
@@ -323,9 +325,9 @@ namespace Grapple {
         #region Helper Function
 
         private void UpdateMoveState(PlayerMovementController.MovementState currState) {
-            NCLogger.Log($"pre-event: {_moveState}");
+            //NCLogger.Log($"pre-event: {_moveState}");
             _moveState = currState;
-            NCLogger.Log($"post-event: {_moveState}");
+            //NCLogger.Log($"post-event: {_moveState}");
 
         }
 

@@ -21,7 +21,7 @@ namespace Combat {
 
         protected void Update() {
             if (Input.GetMouseButtonDown(entry.mouseNum) && canAttack && entry.type == WeaponType.Melee) {
-                NCLogger.Log($"lmfao");
+                //NCLogger.Log($"lmfao");
                 this.FireEvent(EventType.WeaponMeleeFiredEvent);
             }
         }
@@ -39,7 +39,7 @@ namespace Combat {
                     : playerToEnemyVector3.normalized;
                 
                 KnockBack(enemy, dmgData.Knockback, knockbackDir);
-                NCLogger.Log($"dmg: {dmgData.Damage}");
+                //NCLogger.Log($"dmg: {dmgData.Damage}");
             }
             
             this.FireEvent(EventType.WeaponFiredEvent, new WeaponFireUIMsg {

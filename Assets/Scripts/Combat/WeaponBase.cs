@@ -38,7 +38,7 @@ namespace Combat
 
         public void InitWeaponRef(List<WeaponEntry> list)
         {
-            NCLogger.Log($"hit ref");
+            //NCLogger.Log($"hit ref");
             foreach (var e in list.Where(e => e.type == type)) {
                 entry = e;
             }
