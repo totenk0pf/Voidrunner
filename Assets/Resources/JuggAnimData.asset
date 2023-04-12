@@ -23,8 +23,8 @@ MonoBehaviour:
     SerializationNodes: []
   animParams:
   - type: 4
-    name: isWalking
-    hash: -830007593
+    name: isRunning
+    hash: 1239866031
   - type: 9
     name: Spin
     hash: -1304917071

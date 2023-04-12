@@ -96,4 +96,12 @@ public abstract class EnemyState : MonoBehaviour
 
         return weighted.GetRandomItem();
     }
+    
+    /// <param name="speed">Lerp ratio from 0 - 1</param>
+    protected void LookAtTarget(float speed) {
+        if (!target) return;
+        var dir = (target.transform.position - transform.root.position).normalized;
+        var rot = Quaternion.LookRotation(dir);
+        transform.root.rotation = Quaternion.Slerp(transform.root.rotation, rot, speed);
+    }
 }

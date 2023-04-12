@@ -1,19 +1,24 @@
 using Entities.Enemy;
 using Entities.Enemy.Juggernaut;
 using UnityEngine;
+using UnityEngine.Serialization;
 
-public class JuggernautHostile : EnemyState
-{
-    public float fastChaseSpeed;
+public class JuggernautHostile : EnemyState {
+    public float turnSpeed;
+    [Space]
+    
     [SerializeField] private JuggernautAttack _nextState;
     [SerializeField] private AnimSerializedData animData;
+
+    [HideInInspector] public bool canSwitch = true;
     
     public override EnemyState RunCurrentState() {
         if (!animator.GetBool(animData.hostileAnim[0].name)) TriggerAnim(animData.hostileAnim[0]);
-        if (Agent.enabled) Agent.SetDestination(target.transform.position);
-  
-        if (_nextState.inRange) {
-            Agent.isStopped = true;
+        LookAtTarget(turnSpeed);
+
+        if (_nextState.inRange && canSwitch) {
+            canSwitch = false;
+            TriggerAnim(animData.hostileAnim[0]);
             return _nextState;
         }
         
