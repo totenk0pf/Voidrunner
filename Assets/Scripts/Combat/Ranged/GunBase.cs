@@ -62,13 +62,6 @@ namespace Combat {
                     }
                 }
             }
-            // if (Input.GetKeyDown(KeyCode.R)) {
-            //     if (isReloading) return;
-            //     if (isAttacking) return;
-            //     if (clipAmount >= 1) {
-            //         StartCoroutine(Reload());
-            //     }
-            // }
         }
 
         protected void ApplyDamageOnEnemy(AnimData dmgData) {
@@ -84,9 +77,14 @@ namespace Combat {
             foreach (var enemy in enemies) {
                 if (enemies.Count < 1) return;
                 Damage(enemy.Key, dmgData.Damage * enemy.Value);
+                var playerToEnemyVector3 = (enemy.Key.transform.root.position - dmgData.playerTransform.position);
+                var knockbackDir = playerToEnemyVector3.magnitude <= 1
+                    ? dmgData.playerTransform.forward.normalized
+                    : playerToEnemyVector3.normalized;
+                
                 KnockBack(enemy.Key, 
                     Mathf.Clamp(dmgData.Knockback * enemy.Value, dmgData.Knockback, dmgData.KnockbackCap),
-                    (enemy.Key.transform.root.position - dmgData.playerTransform.position).normalized);
+                    knockbackDir);
                 NCLogger.Log($"dmg: {dmgData.Damage}");
             }
         }

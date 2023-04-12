@@ -8,8 +8,6 @@ using UI;
 using EventType = Core.Events.EventType;
 
 namespace Combat {
-    [RequireComponent(typeof(Rigidbody))]
-    [RequireComponent(typeof(BoxCollider))]
     public class MeleeBase : WeaponBase {
 
         protected void Awake() {
@@ -35,7 +33,12 @@ namespace Combat {
             foreach (var enemy in enemies) {
                 if (enemies.Count < 1) return;
                 Damage(enemy, dmgData.Damage);
-                KnockBack(enemy, dmgData.Knockback,(enemy.transform.root.position - dmgData.playerTransform.position).normalized);
+                var playerToEnemyVector3 = (enemy.transform.root.position - dmgData.playerTransform.position);
+                var knockbackDir = playerToEnemyVector3.magnitude <= 1
+                    ? dmgData.playerTransform.forward.normalized
+                    : playerToEnemyVector3.normalized;
+                
+                KnockBack(enemy, dmgData.Knockback, knockbackDir);
                 NCLogger.Log($"dmg: {dmgData.Damage}");
             }
             

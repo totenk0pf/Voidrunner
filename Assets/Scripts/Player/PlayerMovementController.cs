@@ -67,7 +67,9 @@ public class PlayerMovementController : MonoBehaviour
     
     [Header("Dodge Attributes")] 
     public bool toggleProtoDodge = true;
+
     [Space]
+    [SerializeField] private LayerMask dodgeSafetyIgnoreLayer;
     [SerializeField] private KeyCode dodgeKey;
     [SerializeField] private float dodgeTime;
     [SerializeField] private float dodgeDistance;
@@ -344,8 +346,20 @@ public class PlayerMovementController : MonoBehaviour
         if (moveState == MovementState.Grappling) { return; }
         
         moveState = MovementState.Dodge;
-        //var velMagCache = Rb.velocity.magnitude;
-        Vector3 dest = transform.position + _dodgeDir * dodgeDistance;
+        Vector3 dest = Vector3.zero;
+        var isHit = Physics.Raycast(transform.position, _dodgeDir, out var hit, dodgeDistance, ~dodgeSafetyIgnoreLayer);
+        if (isHit && !hit.collider.isTrigger)
+        {
+            Debug.DrawLine(transform.position, hit.point, Color.magenta, 5f);
+            NCLogger.Log($"dodge hit {hit.collider.name}");
+            dest = hit.point;
+        }
+        else
+        {
+            Debug.DrawLine(transform.position, transform.position + _dodgeDir * dodgeDistance, Color.magenta, 5f);
+            dest = transform.position + _dodgeDir * dodgeDistance;
+        }
+        
         Vector3 rollAxis = Vector3.Cross(_dodgeDir, transform.root.up);
     
         StartCoroutine(LerpDodgeRoutine(dest, rollAxis));

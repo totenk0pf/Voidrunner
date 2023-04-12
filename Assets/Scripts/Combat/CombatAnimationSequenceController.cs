@@ -34,6 +34,7 @@ public class CombatAnimationSequenceController : MonoBehaviour
     private bool _canPlay = true;
     private TweenerCore<Vector3, Vector3, VectorOptions> _tween;
     private Transform _tweenObj;
+    [SerializeField] private LayerMask tweenSafetyIgnoreLayer;
     
     private void Awake() {
         this.AddListener(EventType.RunPlayerComboSequenceEvent, param => PlayComboAnimation((ComboAnimContainer) param));
@@ -74,6 +75,16 @@ public class CombatAnimationSequenceController : MonoBehaviour
 
         _tweenObj = param.transform;
         //change this into a coroutine so you can cancel it
-        _tween = param.transform.DOMove(param.transform.position + param.direction * param.distance , param.time).SetEase(param.easeType);
+        Vector3 dest = param.transform.position + param.direction * param.distance;
+        var isHit = Physics.Raycast(transform.position, param.direction, out var hit,  param.distance, ~tweenSafetyIgnoreLayer);
+        if (isHit && !hit.collider.isTrigger) {
+            dest = hit.point;
+            Debug.DrawLine(transform.position, dest, Color.red, 5f);
+            //NCLogger.Log($"dodge hit {hit.collider.name}");
+        }
+        else {
+            Debug.DrawLine(transform.position, dest, Color.red, 5f);
+        }
+        _tween = param.transform.DOMove(dest , param.time).SetEase(param.easeType);
     }
 }

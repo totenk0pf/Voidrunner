@@ -242,7 +242,6 @@ public class CombatManager : MonoBehaviour
         //StopCoroutine(thisRoutine) would not stop all coroutines of same "thisRoutine" method
         StopAllCoroutines();
         //Clone -> not edit in SO data
-        var animData = MeleeSequence.OrderToAttributes[_curMeleeOrder].CloneToAnimData();
         this.FireEvent(EventType.UpdateActiveWeaponEvent, _activeWeapon);
         this.FireEvent(EventType.PlayAttackEvent, MeleeSequence.OrderToAttributes[_curMeleeOrder].CloneToAnimData(transform.root));
         this.FireEvent(EventType.StopMovementEvent);
