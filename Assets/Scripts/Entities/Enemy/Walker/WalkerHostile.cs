@@ -11,15 +11,15 @@ public class WalkerHostile : EnemyState
     [SerializeField] private WalkerAttack _nextState;
     [SerializeField] private AnimSerializedData _animData;
     
-    [SerializeField] private EnemyMovelistData _hostileAnimData; 
-    
+    [SerializeField] private EnemyMovelistData _hostileAnimData;
+
     private bool _canSwitchChaseState = true;
     private bool _canSwitchState = true;
     
     private AnimParam _currAnim; 
     
     public override EnemyState RunCurrentState() {
-        LookAtTarget(0.17f);
+        Agent.SetDestination(target.transform.position);
         if (_canSwitchChaseState) {
             StartCoroutine(SwitchChaseState());
         }
@@ -27,6 +27,7 @@ public class WalkerHostile : EnemyState
         if (_nextState.inRange && _canSwitchState) {
             _canSwitchState = false;
             TriggerAnim(_currAnim);
+            Agent.ResetPath();
             return _nextState;
         }
         
@@ -40,7 +41,7 @@ public class WalkerHostile : EnemyState
 
     private IEnumerator SwitchChaseState() {
         _canSwitchChaseState = false;
-        
+
         //reset anims
         foreach (var animParam in _animData.hostileAnim) {
             ResetAnim(animParam);

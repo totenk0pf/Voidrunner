@@ -28,6 +28,9 @@ public class WalkerIdle : EnemyState {
     [Title("State/Data")]
     [SerializeField] private WalkerHostile _nextState;
     [SerializeField] private AnimSerializedData _animData;
+    
+    [Title("Refs")] 
+    [SerializeField] private EnemyMoveRootMotion _moveWithRootMotion;
 
     private AnimParam _walkingAnim;
     private bool _canWalk = true;
@@ -53,6 +56,7 @@ public class WalkerIdle : EnemyState {
         if (detected && !_stateSwitched) {
             _stateSwitched = false;
             StopAllCoroutines();
+            _moveWithRootMotion.useNavAgent = true;
             return _nextState;
         }
         return this;

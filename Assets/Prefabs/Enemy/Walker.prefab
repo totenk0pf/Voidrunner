@@ -79,7 +79,7 @@ NavMeshAgent:
   m_Enabled: 1
   m_AgentTypeID: 0
   m_Radius: 0.5
-  m_Speed: 0
+  m_Speed: 3
   m_Acceleration: 8
   avoidancePriority: 50
   m_AngularSpeed: 120
@@ -231,6 +231,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   canMove: 1
+  useNavAgent: 0
 --- !u!114 &2727628312762441496
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -628,6 +629,7 @@ MonoBehaviour:
   startDelay: 3
   _nextState: {fileID: 8457903045779802717}
   _animData: {fileID: 11400000, guid: 8522a6f20a0c8004383cdfb1d49b917d, type: 2}
+  _moveWithRootMotion: {fileID: 614507488950970045}
 --- !u!1001 &8804593437656045287
 PrefabInstance:
   m_ObjectHideFlags: 0
