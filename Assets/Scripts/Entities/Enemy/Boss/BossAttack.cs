@@ -19,7 +19,7 @@ namespace Entities.Enemy.Boss {
         [SerializeField] private EnemyState nextState;
 
         [TitleGroup("Attack sets")]
-        [SerializeField] private AnimSerializedData animData;
+        [SerializeField] private EnemyMovelistData animData;
         
         [Title("Refs")] 
         [SerializeField] private EnemyMoveRootMotion _moveWithRootMotion;
@@ -47,19 +47,7 @@ namespace Entities.Enemy.Boss {
             _canAttack = false;
             _isAttacking = true;
             if (_moveWithRootMotion.canMove) _moveWithRootMotion.canMove = false;
-
-            //Chance to grab
-            //AnimData index 4 is grab attack
-            if (Random.Range(0, 1) == 1)
-            {
-                TriggerAnim(animData.attackAnim[animData.attackAnim.Count]);
-            }
-
-            else
-            {
-                TriggerAnim(animData.attackAnim[Random.Range(0, animData.attackAnim.Count - 1)]);
-            }
-            
+            TriggerAnim(GetItemFromMoveList(animData.moveList));
             yield return StartCoroutine(FinishAnimation());
             yield return StartCoroutine(DelayAttack());
         }
@@ -81,8 +69,8 @@ namespace Entities.Enemy.Boss {
                     StartCoroutine(FinishAnimation());
                 }
             
-                foreach (var anim in animData.attackAnim) {
-                    ResetAnim(anim);
+                foreach (var move in animData.moveList) {
+                    ResetAnim(move.anim);
                 }
                 
                 inRange = false;
@@ -96,6 +84,7 @@ namespace Entities.Enemy.Boss {
         public override void OnTriggerEnter(Collider other) {
             if (CheckLayerMask.IsInLayerMask(other.gameObject, playerMask)) {
                 inRange = true;
+                _canAttack = true;
                 _canSwitchState = false;
                 target = other.gameObject;
             }

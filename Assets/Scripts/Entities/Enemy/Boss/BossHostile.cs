@@ -14,10 +14,11 @@ namespace Entities.Enemy.Boss {
     
         public override EnemyState RunCurrentState() {
             if (!animator.GetBool(animData.hostileAnim[0].name)) TriggerAnim(animData.hostileAnim[0]);
-            LookAtTarget(0.15f);
+            Agent.SetDestination(target.transform.position);
 
             if (nextState.inRange && canSwitchState) {
                 canSwitchState = false;
+                Agent.ResetPath();
                 TriggerAnim(animData.hostileAnim[0]);
                 return nextState;
             }

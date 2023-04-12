@@ -32,14 +32,14 @@ MonoBehaviour:
     hash: -830007593
   attackAnim:
   - type: 9
-    name: attackSwipeL
-    hash: 1365363773
+    name: SwipeL
+    hash: 85304741
   - type: 9
-    name: attackSwipeR
-    hash: -1418792610
+    name: SwipeR
+    hash: -15034170
   - type: 9
-    name: attackStomp
-    hash: 875506928
+    name: Stomp
+    hash: -1643012858
   - type: 9
-    name: attackSlam
-    hash: -1037458567
+    name: Grab
+    hash: -1347921612

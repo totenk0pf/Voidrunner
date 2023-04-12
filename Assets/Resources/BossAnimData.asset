@@ -29,15 +29,15 @@ MonoBehaviour:
     name: isWalking
     hash: -830007593
   - type: 9
-    name: attackSwipeL
-    hash: 1365363773
+    name: SwipeL
+    hash: 85304741
   - type: 9
-    name: attackSwipeR
-    hash: -1418792610
+    name: SwipeR
+    hash: -15034170
   - type: 9
-    name: attackSlam
-    hash: -1037458567
+    name: Stomp
+    hash: -1643012858
   - type: 9
-    name: attackStomp
-    hash: 875506928
-  controller: {fileID: 9100000, guid: 50be432f9380e5642b8fa12f9b6351e9, type: 2}
+    name: Grab
+    hash: -1347921612
+  controller: {fileID: 9100000, guid: 2275b3e202d6fcd43bb2783d0dadafc6, type: 2}
