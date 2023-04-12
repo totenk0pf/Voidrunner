@@ -13,6 +13,7 @@ namespace Combat {
         public int currentAmmo;
         public int clipAmount;
         private float _cooldown;
+        private float _cooldownTimeStamp = 0;
         [TitleGroup("Components")]
         [SerializeField] protected Animator animator;
 
@@ -53,9 +54,12 @@ namespace Combat {
         
         protected void Update() {
             if (Input.GetMouseButtonDown(entry.mouseNum) && canAttack && entry.type == WeaponType.Ranged) {
-                if (currentAmmo >= 1) {
-                    currentAmmo--;
-                    this.FireEvent(EventType.WeaponRangedFiredEvent);
+                if (Time.time > _cooldownTimeStamp) {
+                    _cooldownTimeStamp = Time.time + _cooldown; 
+                    if (currentAmmo >= 1) {
+                        currentAmmo--;
+                        this.FireEvent(EventType.WeaponRangedFiredEvent);
+                    }
                 }
             }
             // if (Input.GetKeyDown(KeyCode.R)) {
@@ -68,6 +72,14 @@ namespace Combat {
         }
 
         protected void ApplyDamageOnEnemy(AnimData dmgData) {
+            UpdateUI();
+            this.FireEvent(EventType.WeaponFiredEvent, new WeaponFireUIMsg {
+                type = WeaponType.Ranged,
+                rechargeDuration = _cooldown
+            });
+               
+            this.FireEvent(EventType.WeaponRechargedEvent);
+            
             var enemies = dmgData.EnemiesToCount;
             foreach (var enemy in enemies) {
                 if (enemies.Count < 1) return;
@@ -76,15 +88,6 @@ namespace Combat {
                     Mathf.Clamp(dmgData.Knockback * enemy.Value, dmgData.Knockback, dmgData.KnockbackCap),
                     (enemy.Key.transform.root.position - dmgData.playerTransform.position).normalized);
                 NCLogger.Log($"dmg: {dmgData.Damage}");
-                
-                UpdateUI();
-                this.FireEvent(EventType.WeaponFiredEvent, new WeaponFireUIMsg {
-                    type = WeaponType.Ranged,
-                    rechargeDuration = _cooldown
-                });
-               
-                this.FireEvent(EventType.WeaponRechargedEvent);
-                
             }
         }
         
