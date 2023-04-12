@@ -9,9 +9,10 @@ using EventType = Core.Events.EventType;
 namespace Combat {
     public class GunBase : WeaponBase {
         [ReadOnly] protected RangedAttribute attribute;
-
+        //private cooldown = clip length * anim speed + aftershot delay + preshot delay
         public int currentAmmo;
         public int clipAmount;
+        private float _cooldown;
         [TitleGroup("Components")]
         [SerializeField] protected Animator animator;
 
@@ -26,6 +27,13 @@ namespace Combat {
             yield return new WaitForSeconds(.5f); //skip X seconds to queue checking after init steps
             if(currentAmmo == 0 || clipAmount == 0)
                 NCLogger.Log($"Did not receive refreshAttribute at Awake", LogLevel.ERROR);
+            if (attribute.AtkSpdModifier > 1) {
+                var spd = attribute.AtkSpdModifier - 1;
+                _cooldown = attribute.fireClip.length + attribute.fireClip.length * spd + attribute.AftershotDelay;
+            
+            }else if (attribute.AtkSpdModifier < 1) {
+                _cooldown = attribute.fireClip.length * attribute.AtkSpdModifier + attribute.AftershotDelay;
+            }
         }
 
         protected void UpdateAttribute(RangedAttribute attribute) {
@@ -72,7 +80,7 @@ namespace Combat {
                 UpdateUI();
                 this.FireEvent(EventType.WeaponFiredEvent, new WeaponFireUIMsg {
                     type = WeaponType.Ranged,
-                    rechargeDuration = attribute.AftershotDelay
+                    rechargeDuration = _cooldown
                 });
                
                 this.FireEvent(EventType.WeaponRechargedEvent);

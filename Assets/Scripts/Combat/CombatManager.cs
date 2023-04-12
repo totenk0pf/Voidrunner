@@ -114,6 +114,7 @@ public class RangedAttribute : IAnimDataConvertable
     [SerializeField] private int maxClip;
     [SerializeField] private LayerMask raycastMask;
 
+    public AnimationClip fireClip;
     [ReadOnly] public List<EnemyBase> Enemies;
 
     public Dictionary<EnemyBase, int> EnemyToCountDict
