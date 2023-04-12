@@ -24,7 +24,7 @@ public class WalkerHostile : EnemyState
             StartCoroutine(SwitchChaseState());
         }
         
-        if (_nextState.inRange && _canSwitchState) {
+        if (inRange && _canSwitchState) {
             _canSwitchState = false;
             TriggerAnim(_currAnim);
             return _nextState;
@@ -43,7 +43,7 @@ public class WalkerHostile : EnemyState
         
         //reset anims
         foreach (var animParam in _animData.hostileAnim) {
-            animator.SetBool(animParam.name, false);
+            ResetAnim(animParam);
         }
 
         _currAnim = GetItemFromMoveList(_hostileAnimData.moveList);

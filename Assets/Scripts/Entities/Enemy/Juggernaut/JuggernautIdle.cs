@@ -5,7 +5,6 @@ using System.Collections;
 
 public class JuggernautIdle : EnemyState
 {
-    private bool _canWalk = true;
     [SerializeField] private EnemyState _nextState;
     [SerializeField] private AnimSerializedData animData;
 

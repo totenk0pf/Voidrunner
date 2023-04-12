@@ -37,6 +37,7 @@ public abstract class EnemyState : MonoBehaviour
 
     [ReadOnly] public GameObject target;
     [ReadOnly] public bool detected;
+    [ReadOnly] public bool inRange; 
 
     public abstract EnemyState RunCurrentState();
 

@@ -16,7 +16,7 @@ public class JuggernautHostile : EnemyState {
         if (!animator.GetBool(animData.hostileAnim[0].name)) TriggerAnim(animData.hostileAnim[0]);
         LookAtTarget(turnSpeed);
 
-        if (_nextState.inRange && canSwitch) {
+        if (inRange && canSwitch) {
             canSwitch = false;
             TriggerAnim(animData.hostileAnim[0]);
             return _nextState;

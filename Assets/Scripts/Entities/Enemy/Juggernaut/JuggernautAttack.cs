@@ -17,8 +17,6 @@ namespace Entities.Enemy.Juggernaut {
 
         [TitleGroup("Attack sets")] [SerializeField]
         private AnimSerializedData animData;
-        
-        public bool inRange;
 
         private bool _isAttacking = false;
         private bool _canSwitchState = false;

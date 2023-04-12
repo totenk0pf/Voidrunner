@@ -5,30 +5,24 @@ using UnityEngine.AI;
 using UnityEngine.Serialization;
 
 namespace Entities.Enemy.Boss {
-    public class BossHostile : BossState
+    public class BossHostile : EnemyState
     {
         [SerializeField] private BossAttack nextState;
         [SerializeField] private AnimSerializedData animData;
+
+        [HideInInspector] public bool canSwitchState = true; 
     
         public override EnemyState RunCurrentState() {
             if (!animator.GetBool(animData.hostileAnim[0].name)) TriggerAnim(animData.hostileAnim[0]);
-            if (Agent.enabled) Agent.SetDestination(target.transform.position);
-  
-            if (GetPathRemainingDistance(Agent) < 3f && GetPathRemainingDistance(Agent) > -1 && detected)
-            {
+            LookAtTarget(0.15f);
+
+            if (inRange && canSwitchState) {
+                canSwitchState = false;
                 TriggerAnim(animData.hostileAnim[0]);
-                Agent.isStopped = true;
-                nextState.canAttack = true;
                 return nextState;
             }
             
-            Agent.isStopped = false;
             return this;
-        }
- 
-        private void OnDrawGizmos() {
-            Gizmos.color = Color.red;
-            Gizmos.DrawWireSphere(Agent.destination, 0.5f);
         }
     }
 }

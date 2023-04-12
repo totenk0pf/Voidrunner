@@ -7,8 +7,7 @@ using UnityEngine;
 public class WalkerAttack : EnemyState
 {
     public float attackDelay;
-    [HideInInspector] public bool inRange;
-    
+
     [Title("Data")]
     [SerializeField] private WalkerHostile _previousState;
     [SerializeField] private AnimSerializedData _animData;
@@ -20,7 +19,6 @@ public class WalkerAttack : EnemyState
     private bool _canSwitchState = false;
     private bool _canAttack = true;
     
-
     public override EnemyState RunCurrentState() {
 
         if (_canSwitchState && !_isAttacking) {
