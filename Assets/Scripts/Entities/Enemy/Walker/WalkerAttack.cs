@@ -61,6 +61,10 @@ public class WalkerAttack : EnemyState
                 StartCoroutine(FinishAnimation());
             }
             
+            foreach (var anim in _animData.attackAnim) {
+                ResetAnim(anim);
+            }
+            
             _canAttack = false;
             inRange = false;
             

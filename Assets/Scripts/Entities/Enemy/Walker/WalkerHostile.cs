@@ -19,7 +19,7 @@ public class WalkerHostile : EnemyState
     private AnimParam _currAnim; 
     
     public override EnemyState RunCurrentState() {
-        transform.root.LookAt(target.transform.position);
+        LookAtTarget(0.17f);
         if (_canSwitchChaseState) {
             StartCoroutine(SwitchChaseState());
         }
