@@ -8,21 +8,23 @@ using EventType = Core.Events.EventType;
 
 namespace Combat {
     public class GunBase : WeaponBase {
-        [ReadOnly] protected RangedAttribute attribute;
-        //private cooldown = clip length * anim speed + aftershot delay + preshot delay
+        [TitleGroup("Ranged Specifics")]
+        [SerializeField] protected RangedData rangedData;
+        protected RangedAttribute attribute;
+        
         public int currentAmmo;
         public int clipAmount;
         private float _cooldown;
         private float _cooldownTimeStamp = 0;
-        [TitleGroup("Components")]
-        [SerializeField] protected Animator animator;
 
         protected void Awake() {
             base.Awake();
-            //this.AddListener(EventType.RefreshRangedAttributesEvent, param => UpdateAttribute((RangedAttribute)param));
             this.AddListener(EventType.RangedEnemyDamageEvent, dmgData => ApplyDamageOnEnemy((AnimData) dmgData));
+
+            if(!rangedData) NCLogger.Log($"rangedData missing reference", LogLevel.ERROR);
+            attribute = rangedData.Attribute;
+            
             canAttack = true;
-            attribute = transform.root.GetComponentInChildren<CombatManager>().RangedData.Attribute;
             UpdateAttribute();
         }
 
@@ -56,7 +58,7 @@ namespace Combat {
         }
         
         protected void Update() {
-            if (Input.GetMouseButtonDown(entry.mouseNum) && canAttack && entry.type == WeaponType.Ranged) {
+            if (Input.GetKeyDown(entry.key) && canAttack && entry.type == WeaponType.Ranged) {
                 if (Time.time > _cooldownTimeStamp) {
                     _cooldownTimeStamp = Time.time + _cooldown; 
                     if (currentAmmo >= 1) {

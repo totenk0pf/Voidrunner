@@ -13,15 +13,17 @@ namespace Combat
         // public float damage;
         // public float damageScale;
         // public float damageModifier;
-
-        [SerializeField] private WeaponType type;
+        [SerializeField] protected WeaponEntriesData EntriesData;
+        [SerializeField] protected WeaponType type;
         protected WeaponEntry entry;
         public bool canAttack;
         public bool isAttacking;
         
         protected void Awake()
         {
-            this.AddListener(EventType.InitWeaponRefEvent, param => InitWeaponRef( (List<WeaponEntry>) param));
+            if(!EntriesData) NCLogger.Log($"Missing Entries Data", LogLevel.ERROR);    
+            //this.AddListener(EventType.InitWeaponRefEvent, param => InitWeaponRef( (List<WeaponEntry>) param));
+            entry = EntriesData.HookReference(this, type);
         }
 
         protected virtual void Damage(EnemyBase enemy, float damage) {
@@ -36,12 +38,8 @@ namespace Combat
             enemy.Rigidbody.AddForce(dir * force, ForceMode.Impulse);
         }
 
-        public void InitWeaponRef(List<WeaponEntry> list)
-        {
-            //NCLogger.Log($"hit ref");
-            foreach (var e in list.Where(e => e.type == type)) {
-                entry = e;
-            }
+        public void InitWeaponRef(WeaponEntry entry) {
+            this.entry = entry;
         }
     }
 }

@@ -159,10 +159,12 @@ public class RangedAttribute : IAnimDataConvertable
 
 public class CombatManager : MonoBehaviour
 {
+    [TitleGroup("Entries Data")] 
+    [SerializeField] private WeaponEntriesData EntriesData;
+    
     [TitleGroup("Ranged Settings")] 
-    [SerializeField] public RangedData RangedData;
+    [SerializeField] private RangedData RangedData;
     [SerializeField] private Transform firePoint;
-   
     
     [TitleGroup("Melee settings")]
     [SerializeField] private MeleeSequenceData MeleeSequence;
@@ -175,6 +177,7 @@ public class CombatManager : MonoBehaviour
     [ReadOnly] private WeaponEntry _rangedEntry;
     [Space]
     [ReadOnly] private PlayerMovementController.MovementState _moveState;
+    [TitleGroup("Other")]
     [ReadOnly] [SerializeField] private PlayerAnimator _playerAnimator;
 
     private WeaponType _activeWeapon = WeaponType.None;
@@ -184,7 +187,7 @@ public class CombatManager : MonoBehaviour
     private GrappleType _currentGrappleType;
     private void Awake() {
         //Init Ref
-        this.AddListener(EventType.InitWeaponRefEvent, param => InitWeaponRef( (List<WeaponEntry>) param));
+        //this.AddListener(EventType.InitWeaponRefEvent, param => InitWeaponRef( (List<WeaponEntry>) param));
         //Cancel Anim
         this.AddListener(EventType.CancelAttackEvent, state => CancelWeaponAttack((WeaponType)state));
         //Melee Combo Related
@@ -205,15 +208,22 @@ public class CombatManager : MonoBehaviour
         
         if(!MeleeSequence) NCLogger.Log($"Missing Melee Sequence Data", LogLevel.ERROR);
         if(!RangedData) NCLogger.Log($"Missing Ranged Data", LogLevel.ERROR);
-
+        if(!EntriesData) NCLogger.Log($"Missing Entries Data", LogLevel.ERROR);        
+        
+        
+        
         AssignCollidersData();
         if(!MeleeSequence.ValidateColliders()) NCLogger.Log($"Collider Validation Failed", LogLevel.ERROR);
     }
 
-    private IEnumerator Start()
+    
+    
+    private void Start()
     {
-        yield return new WaitForSeconds(.2f);
-        
+       // yield return new WaitForSeconds(.2f);
+        _meleeEntry = EntriesData.GetReference(WeaponType.Melee);
+        _rangedEntry = EntriesData.GetReference(WeaponType.Ranged); 
+       
         if(!firePoint) NCLogger.Log($"firePoint = {firePoint}", LogLevel.ERROR);
         if(!_meleeEntry.reference) NCLogger.Log($"_meleeEntry.reference = {_meleeEntry.reference}", LogLevel.ERROR);
         if(!_rangedEntry.reference) NCLogger.Log($"_rangedEntry.reference = {_rangedEntry.reference}", LogLevel.ERROR);
@@ -221,7 +231,7 @@ public class CombatManager : MonoBehaviour
         //_curWeaponRef.isAttacking = false;
         _isInWindow = false;
         
-        this.FireEvent(EventType.RefreshRangedAttributesEvent, RangedData.Attribute);
+        //this.FireEvent(EventType.RefreshRangedAttributesEvent, RangedData.Attribute);
         this.FireEvent(EventType.UpdateCombatModifiersEvent, MeleeSequence);
         this.FireEvent(EventType.RequestPlayerAnimatorEvent);
     }
@@ -468,22 +478,22 @@ public class CombatManager : MonoBehaviour
     
     #region Init Methods
 
-    private void InitWeaponRef(List<WeaponEntry> list)
-    {
-        foreach (var entry in list)
-        {
-            switch (entry.type) {
-                case WeaponType.Melee:
-                    _meleeEntry = entry;
-                    break;
-                case WeaponType.Ranged:
-                    _rangedEntry = entry;
-                    break;
-                default:
-                    throw new ArgumentOutOfRangeException();
-            }
-        }
-    }
+    // private void InitWeaponRef(List<WeaponEntry> list)
+    // {
+    //     foreach (var entry in list)
+    //     {
+    //         switch (entry.type) {
+    //             case WeaponType.Melee:
+    //                 _meleeEntry = entry;
+    //                 break;
+    //             case WeaponType.Ranged:
+    //                 _rangedEntry = entry;
+    //                 break;
+    //             default:
+    //                 throw new ArgumentOutOfRangeException();
+    //         }
+    //     }
+    // }
     
     private void AssignCollidersData() {
         var colList = GetComponentsInChildren<MeleeCollider>();

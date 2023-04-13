@@ -47,9 +47,9 @@ MonoBehaviour:
   type: 2
   canAttack: 0
   isAttacking: 0
+  rangedData: {fileID: 11400000, guid: 25f7fbfde7e904beb8725147e74ca5b9, type: 2}
   currentAmmo: 0
   clipAmount: 0
-  animator: {fileID: 0}
 --- !u!1 &1878942210399660783
 GameObject:
   m_ObjectHideFlags: 0
@@ -162,13 +162,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: df0f61ba0c444dec8cbdecd41837c59e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  weaponList:
-  - mouseNum: 0
-    type: 1
-    reference: {fileID: 4575592630711051230}
-  - mouseNum: 1
-    type: 2
-    reference: {fileID: 9172188407077185864}
 --- !u!1 &6037325518918287425
 GameObject:
   m_ObjectHideFlags: 0
@@ -970,6 +963,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 23841b4e2e723e3429b020874452424d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  EntriesData: {fileID: 11400000, guid: d53e7eb9c1a41b24484391ec28994f17, type: 2}
   RangedData: {fileID: 11400000, guid: 25f7fbfde7e904beb8725147e74ca5b9, type: 2}
   firePoint: {fileID: 6037325520643900592}
   MeleeSequence: {fileID: 11400000, guid: 547072da3b9b3482dba78e7aaab8264f, type: 2}

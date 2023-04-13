@@ -13,15 +13,13 @@ namespace Combat {
         protected void Awake() {
             base.Awake();
             this.AddListener(EventType.MeleeEnemyDamageEvent, dmgData => ApplyDamageOnEnemy((AnimData) dmgData));
-            // this.AddListener(EventType.WeaponChangedEvent, param => OnWeaponChange((WeaponManager.WeaponEntry) param));
+            
             canAttack = true;
-            // StartCoroutine(Fire());
-            // StartCoroutine(AltFire());
         }
 
         protected void Update() {
-            if (Input.GetMouseButtonDown(entry.mouseNum) && canAttack && entry.type == WeaponType.Melee) {
-                //NCLogger.Log($"lmfao");
+            if (Input.GetKeyDown(entry.key) && canAttack && entry.type == WeaponType.Melee) {
+
                 this.FireEvent(EventType.WeaponMeleeFiredEvent);
             }
         }
