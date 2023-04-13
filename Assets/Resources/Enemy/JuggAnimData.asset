@@ -9,8 +9,8 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 017d7b394cc44f94bf17dc13b85ae6ac, type: 3}
-  m_Name: Crawler
+  m_Script: {fileID: 11500000, guid: c5d877de8f6aa564e9e964cee834dbd0, type: 3}
+  m_Name: JuggAnimData
   m_EditorClassIdentifier: 
   serializationData:
     SerializedFormat: 2
@@ -21,19 +21,17 @@ MonoBehaviour:
     PrefabModificationsReferencedUnityObjects: []
     PrefabModifications: []
     SerializationNodes: []
-  data: {fileID: 11400000, guid: 9a68cbae6cb9a5a479759820fcd7a6ba, type: 2}
-  idleAnim:
-    type: 4
-    name: isIdle
-    hash: 2098831385
-  hostileAnim:
+  animParams:
   - type: 4
     name: isRunning
     hash: 1239866031
-  attackAnim:
   - type: 9
-    name: Kick
-    hash: -1092128709
+    name: Spin
+    hash: -1304917071
   - type: 9
-    name: Sweep
-    hash: 1240087862
+    name: Slam
+    hash: -153875945
+  - type: 4
+    name: isIdle
+    hash: 2098831385
+  controller: {fileID: 9100000, guid: 97bd86f533ca331438ed13edece5f680, type: 2}

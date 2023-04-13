@@ -9,7 +9,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4fbc56399ede4471a58f96992e62225d, type: 3}
+  m_Script: {fileID: 11500000, guid: c5d877de8f6aa564e9e964cee834dbd0, type: 3}
   m_Name: WalkerAnimData
   m_EditorClassIdentifier: 
   serializationData:

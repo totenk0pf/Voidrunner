@@ -33,7 +33,7 @@ MonoBehaviour:
       Data: Entities.Enemy.EnemyMovelist, Assembly-CSharp
     - Name: anim
       Entry: 7
-      Data: Entities.Enemy.AnimParam, Assembly-CSharp
+      Data: AnimParam, Assembly-CSharp
     - Name: type
       Entry: 3
       Data: 4
@@ -57,7 +57,7 @@ MonoBehaviour:
       Data: Entities.Enemy.EnemyMovelist, Assembly-CSharp
     - Name: anim
       Entry: 7
-      Data: Entities.Enemy.AnimParam, Assembly-CSharp
+      Data: AnimParam, Assembly-CSharp
     - Name: type
       Entry: 3
       Data: 4

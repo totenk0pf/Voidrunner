@@ -86,6 +86,25 @@ public class EnemyBase : EntityBase {
             EnablePathfinding();
         }
     }
+    public virtual void EnablePathfinding() {
+        if (CanPull && IsGrounded && (!StateMachine || !NavMeshAgent)) {
+            StateMachine.enabled = true;
+            NavMeshAgent.enabled = true;
+            Rigidbody.useGravity = false;
+        }
+    }
+
+    public virtual void DisablePathfinding() {
+        StateMachine.enabled = false;
+        NavMeshAgent.enabled = false;
+        Rigidbody.useGravity = CanPull;
+    }
+
+    public virtual void OnGrappled() {
+        Rigidbody.velocity = Vector3.zero;
+        _canPull = false;
+        DisablePathfinding();
+    }
 
     public virtual void Stun(float duration) {
         StartCoroutine(StunCoroutine(duration));

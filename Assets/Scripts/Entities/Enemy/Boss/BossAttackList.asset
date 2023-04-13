@@ -33,7 +33,7 @@ MonoBehaviour:
       Data: Entities.Enemy.EnemyMovelist, Assembly-CSharp
     - Name: anim
       Entry: 7
-      Data: Entities.Enemy.AnimParam, Assembly-CSharp
+      Data: AnimParam, Assembly-CSharp
     - Name: type
       Entry: 3
       Data: 9
@@ -57,7 +57,7 @@ MonoBehaviour:
       Data: Entities.Enemy.EnemyMovelist, Assembly-CSharp
     - Name: anim
       Entry: 7
-      Data: Entities.Enemy.AnimParam, Assembly-CSharp
+      Data: AnimParam, Assembly-CSharp
     - Name: type
       Entry: 3
       Data: 9
@@ -81,7 +81,7 @@ MonoBehaviour:
       Data: Entities.Enemy.EnemyMovelist, Assembly-CSharp
     - Name: anim
       Entry: 7
-      Data: Entities.Enemy.AnimParam, Assembly-CSharp
+      Data: AnimParam, Assembly-CSharp
     - Name: type
       Entry: 3
       Data: 9
@@ -105,7 +105,7 @@ MonoBehaviour:
       Data: Entities.Enemy.EnemyMovelist, Assembly-CSharp
     - Name: anim
       Entry: 7
-      Data: Entities.Enemy.AnimParam, Assembly-CSharp
+      Data: AnimParam, Assembly-CSharp
     - Name: type
       Entry: 3
       Data: 9
@@ -130,7 +130,7 @@ MonoBehaviour:
     - Name: 
       Entry: 8
       Data: 
-  data: {fileID: 11400000, guid: 2265f95cbc912744b8c286d4acad6e5b, type: 2}
+  data: {fileID: 11400000, guid: d18c91e266e8c1b42a41fa2db10be58f, type: 2}
   moves:
   - type: 9
     name: SwipeL
