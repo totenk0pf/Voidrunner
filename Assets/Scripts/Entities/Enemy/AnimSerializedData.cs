@@ -8,13 +8,14 @@ using UnityEngine;
 namespace Entities.Enemy {
     [CreateAssetMenu(fileName = "SerializedAnimData", menuName = "Enemies/SerializedAnimData", order = 0)]
     public class AnimSerializedData : SerializedScriptableObject, IHardReferenceAnim {
-        public HardReferenceAnimData data;
+        public HardReferenceAnimData hardRefdata;
+        public EnemyAnimData enemyAnimdata;
         
         [ValueDropdown("GetAnimData", IsUniqueList = true, ExpandAllMenuItems = true, HideChildProperties = true)] [ShowInInspector]
         public AnimParam idleAnim;
         
         [ValueDropdown("GetAnimData", IsUniqueList = true, ExpandAllMenuItems = true, HideChildProperties = true)] [ShowInInspector]
-        public AnimParam hostileAnim;
+        public List<AnimParam> hostileAnim;
         
         [ValueDropdown("GetAnimData", IsUniqueList = true, ExpandAllMenuItems = true, HideChildProperties = true)] [ShowInInspector]
         public List<AnimParam> attackAnim;

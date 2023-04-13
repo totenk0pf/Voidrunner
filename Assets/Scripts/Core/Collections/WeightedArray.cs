@@ -8,7 +8,7 @@ namespace Core.Collections
     public class WeightedArray<T>
     {
         [Serializable]
-        private struct Element {
+        public struct Element {
             public T obj;
             public double weight;
             public Element(T obj, double weight = 0f) {
