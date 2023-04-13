@@ -9,8 +9,8 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 017d7b394cc44f94bf17dc13b85ae6ac, type: 3}
-  m_Name: Juggernaut
+  m_Script: {fileID: 11500000, guid: c5d877de8f6aa564e9e964cee834dbd0, type: 3}
+  m_Name: BossAnimData
   m_EditorClassIdentifier: 
   serializationData:
     SerializedFormat: 2
@@ -21,19 +21,23 @@ MonoBehaviour:
     PrefabModificationsReferencedUnityObjects: []
     PrefabModifications: []
     SerializationNodes: []
-  data: {fileID: 11400000, guid: dde3f6e4e0de14a4cbfc3cbe854f0c5b, type: 2}
-  idleAnim:
-    type: 4
+  animParams:
+  - type: 4
     name: isIdle
     hash: 2098831385
-  hostileAnim:
   - type: 4
-    name: isRunning
-    hash: 1239866031
-  attackAnim:
+    name: isWalking
+    hash: -830007593
   - type: 9
-    name: Spin
-    hash: -1304917071
+    name: SwipeL
+    hash: 85304741
   - type: 9
-    name: Slam
-    hash: -153875945
+    name: SwipeR
+    hash: -15034170
+  - type: 9
+    name: Stomp
+    hash: -1643012858
+  - type: 9
+    name: Grab
+    hash: -1347921612
+  controller: {fileID: 9100000, guid: 2275b3e202d6fcd43bb2783d0dadafc6, type: 2}

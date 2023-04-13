@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 017d7b394cc44f94bf17dc13b85ae6ac, type: 3}
-  m_Name: Boss
+  m_Name: Walker
   m_EditorClassIdentifier: 
   serializationData:
     SerializedFormat: 2
@@ -21,7 +21,7 @@ MonoBehaviour:
     PrefabModificationsReferencedUnityObjects: []
     PrefabModifications: []
     SerializationNodes: []
-  data: {fileID: 11400000, guid: 2265f95cbc912744b8c286d4acad6e5b, type: 2}
+  hardRefdata: {fileID: 11400000, guid: 9c5d40d875951d3498ef3dabc3596dfc, type: 2}
   idleAnim:
     type: 4
     name: isIdle
@@ -30,16 +30,10 @@ MonoBehaviour:
   - type: 4
     name: isWalking
     hash: -830007593
+  - type: 4
+    name: isRunning
+    hash: 1239866031
   attackAnim:
   - type: 9
-    name: SwipeL
-    hash: 85304741
-  - type: 9
-    name: SwipeR
-    hash: -15034170
-  - type: 9
-    name: Stomp
-    hash: -1643012858
-  - type: 9
-    name: Grab
-    hash: -1347921612
+    name: Attack
+    hash: 1080829965
