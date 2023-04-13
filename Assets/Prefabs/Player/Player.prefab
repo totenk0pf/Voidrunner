@@ -717,6 +717,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 232
   grappleHaltOffsetZ: 1.3
+  currentGrappleType: 0
   grappleSpeed: 20
   distIgnoreCheck: 1
   enemyLayer:

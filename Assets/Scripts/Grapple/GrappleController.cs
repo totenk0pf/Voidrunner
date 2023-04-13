@@ -300,6 +300,8 @@ namespace Grapple {
                 if (_moveState != PlayerMovementController.MovementState.Grappling)
                 {
                     NCLogger.Log($"Grappling but move state is: {_moveState}");
+                    this.FireEvent(EventType.SetMovementStateEvent, PlayerMovementController.MovementState.Grappling);
+                    NCLogger.Log($"Grappling but move state is: {_moveState} [after]");
                 }
                 _lr.SetPosition(1, _currentGrappleHit.transform.position);
                 _currentGrappleHit.collider.transform.position = Vector3.Lerp(startPos, endPos, i);
@@ -326,6 +328,8 @@ namespace Grapple {
                 if (_moveState != PlayerMovementController.MovementState.Grappling)
                 {
                     NCLogger.Log($"Grappling but move state is: {_moveState}");
+                    this.FireEvent(EventType.SetMovementStateEvent, PlayerMovementController.MovementState.Grappling);
+                    NCLogger.Log($"Grappling but move state is: {_moveState} [after]");
                 }
                 _lr.SetPosition(0, GrappleHaltPosition);
                 transform.position = Vector3.Lerp(startPos, endPos, i);
