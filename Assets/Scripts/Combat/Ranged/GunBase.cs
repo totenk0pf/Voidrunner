@@ -26,8 +26,11 @@ namespace Combat {
 
         protected IEnumerator Start() {
             yield return new WaitForSeconds(.5f); //skip X seconds to queue checking after init steps
-            if(currentAmmo == 0 || clipAmount == 0)
+            if (currentAmmo == 0 || clipAmount == 0)
+            {
                 NCLogger.Log($"Did not receive refreshAttribute at Awake", LogLevel.ERROR);
+                yield return null;
+            }
             if (attribute.AtkSpdModifier > 1) {
                 var spd = attribute.AtkSpdModifier - 1;
                 _cooldown = attribute.fireClip.length + attribute.fireClip.length * spd + attribute.AftershotDelay;

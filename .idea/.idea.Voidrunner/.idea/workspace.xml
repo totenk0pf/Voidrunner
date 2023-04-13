@@ -6,12 +6,10 @@
   <component name="ChangeListManager">
     <list default="true" id="1f89fcac-8ef0-4509-830b-c916bb1f72c2" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/.idea.Voidrunner/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.Voidrunner/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/Player/Player.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Prefabs/Player/Player.prefab" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Combat/CombatManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Combat/CombatManager.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Combat/Melee/MeleeBase.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Combat/Melee/MeleeBase.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Scripts/Combat/Ranged/GunBase.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Combat/Ranged/GunBase.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Core/Events/EventType.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Core/Events/EventType.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Entities/Enemy/EnemyBase.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Entities/Enemy/EnemyBase.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Scripts/Grapple/GrappleController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Grapple/GrappleController.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Player/AnimationSystem/PlayerAnimator.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Player/AnimationSystem/PlayerAnimator.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Scripts/Player/PlayerMovementController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Player/PlayerMovementController.cs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -37,8 +35,14 @@
     <setting file="file://$PROJECT_DIR$/Library/PackageCache/com.unity.render-pipelines.core@12.1.7/Editor/Lighting/IESReader.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Library/PackageCache/com.unity.render-pipelines.universal@12.1.7/Editor/ShaderGraph/UniversalStructs.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Library/PackageCache/com.unity.shadergraph@12.1.7/Editor/Data/Nodes/Artistic/Blend/BlendMode.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Library/PackageCache/com.unity.timeline@1.6.4/Editor/Window/TimelineWindow.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Library/PackageCache/com.unity.timeline@1.6.4/Editor/treeview/Snapping/SnapEngine.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Library/PackageCache/com.unity.ugui@1.0.0/Runtime/UI/Core/DefaultControls.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Library/PackageCache/com.unity.ugui@1.0.0/Runtime/UI/Core/Graphic.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Library/PackageCache/com.unity.ugui@1.0.0/Tests/Editor/RectMask2D/RectMask2DCulling.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Library/PackageCache/com.unity.ugui@1.0.0/Tests/Runtime/Toggle/ToggleGroupTests.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Library/PackageCache/com.unity.visualscripting@1.7.8/Editor/VisualScripting.Core/Dependencies/ReorderableList/Internal/ReorderableListResources.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Library/PackageCache/com.unity.visualscripting@1.7.8/Editor/VisualScripting.Core/Widgets/Nodes/NodeWidget.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Library/PackageCache/com.unity.visualscripting@1.7.8/Runtime/VisualScripting.Core/Utilities/StringUtility.cs" root0="SKIP_HIGHLIGHTING" />
   </component>
   <component name="MarkdownSettingsMigration">
@@ -75,10 +79,10 @@
       <option name="USE_EXTERNAL_CONSOLE" value="0" />
       <method v="2" />
     </configuration>
-    <configuration name="Attach to Unity Editor &amp; Play" type="UNITY_DEBUG_RUN_CONFIGURATION" factoryName="UNITY_ATTACH_AND_PLAY" show_console_on_std_err="false" show_console_on_std_out="false" port="50000" address="localhost">
+    <configuration name="Attach to Unity Editor &amp; Play" type="UNITY_DEBUG_RUN_CONFIGURATION" factoryName="UNITY_ATTACH_AND_PLAY" show_console_on_std_err="false" show_console_on_std_out="false" port="50000" address="localhost" ignored-value-for-modified-check="11960">
       <option name="allowRunningInParallel" value="false" />
       <option name="listenPortForConnections" value="false" />
-      <option name="pid" />
+      <option name="pid" value="11960" />
       <option name="projectPathOnTarget" />
       <option name="selectedOptions">
         <list />
@@ -215,7 +219,7 @@
         </line-breakpoint>
         <line-breakpoint type="DotNet Breakpoints">
           <url>file://$PROJECT_DIR$/Assets/Scripts/Combat/Ranged/GunBase.cs</url>
-          <line>90</line>
+          <line>93</line>
           <properties documentPath="D:\Users\duong.lc\Documents\GitHub\Voidrunner\Assets\Scripts\Combat\Ranged\GunBase.cs" initialLine="73" containingFunctionPresentation="method 'ApplyDamageOnEnemy'" />
           <option name="timeStamp" value="21" />
         </line-breakpoint>
@@ -239,16 +243,16 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="DotNet Breakpoints">
           <url>file://$PROJECT_DIR$/Assets/Scripts/Grapple/GrappleController.cs</url>
-          <line>221</line>
-          <properties documentPath="D:\Users\duong.lc\Documents\GitHub\Voidrunner\Assets\Scripts\Grapple\GrappleController.cs" initialLine="220" containingFunctionPresentation="method 'CancelGrapple'">
+          <line>237</line>
+          <properties documentPath="D:\Users\duong.lc\Documents\GitHub\Voidrunner\Assets\Scripts\Grapple\GrappleController.cs" initialLine="237" containingFunctionPresentation="method 'ResetGrapple_EnemyToPlayer'">
             <startOffsets>
-              <option value="9329" />
+              <option value="10050" />
             </startOffsets>
             <endOffsets>
-              <option value="9330" />
+              <option value="10051" />
             </endOffsets>
           </properties>
-          <option name="timeStamp" value="28" />
+          <option name="timeStamp" value="29" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>

@@ -101,6 +101,7 @@ public class EnemyBase : EntityBase {
     }
 
     public virtual void OnGrappled() {
+        Rigidbody.velocity = Vector3.zero;
         _canPull = false;
         DisablePathfinding();
     }

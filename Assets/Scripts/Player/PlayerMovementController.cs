@@ -148,6 +148,7 @@ public class PlayerMovementController : MonoBehaviour
 
     private void ToggleMovement(bool canMove) {
         moveState = canMove ? MovementState.Normal : MovementState.Locked;
+        this.FireEvent(EventType.SetMovementStateEvent, moveState);
     }
     
     private void UpdateStrafe()

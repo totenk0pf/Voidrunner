@@ -8,6 +8,7 @@ using Player.AnimationSystem;
 using Sirenix.OdinInspector;
 using UnityEngine;
 using EventType = Core.Events.EventType;
+using Random = UnityEngine.Random;
 
 
 public enum PlayerAnimState {
@@ -101,19 +102,18 @@ public class PlayerAnimator : MonoBehaviour, IInteractiveAnimator, ICombatAnimat
     #region IInteractiveAnimator
     public void OnAnimationStart()
     {
-        // if (_animData == null) return;
-        // if (_animData.State == PlayerAnimState.Idle)
-        // {
-        //     _curWeaponEntry.Reference.isAttacking = false;
-        // }
-        // else
-        // {
-            if (_activeType == WeaponType.Ranged) {
-                SetParam(PlayerAnimState.RangedAttack, false);
-            }
-            
-            this.FireEvent(EventType.AttackBeginEvent, GetAnimator());
-        // }
+        if (_animData is { State: PlayerAnimState.Idle })
+        {
+            this.FireEvent(EventType.CancelAttackEvent, WeaponType.Melee);
+            this.FireEvent(EventType.CancelAttackEvent, WeaponType.Ranged);
+            return;
+        }
+        
+        if (_activeType == WeaponType.Ranged) {
+            SetParam(PlayerAnimState.RangedAttack, false);
+        }
+        
+        this.FireEvent(EventType.AttackBeginEvent, GetAnimator());
     }
 
     public void OnAnimationEnd() {

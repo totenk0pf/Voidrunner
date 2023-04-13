@@ -117,7 +117,7 @@ namespace Grapple {
                 else//is during grappling
                 {
                     //cancel grappling TODO: When cancel grappling on any object, have them keep momentum to them.
-                    CancelGrapple();
+                    CancelGrapple(false);
                 }
                 if (!CastToGetGrappleLocation()) return;
             }
@@ -193,7 +193,8 @@ namespace Grapple {
             var type = GetGrappleType(_currentGrappleHit.collider.gameObject.layer);
             if (type == GrappleType.None) return false;
             
-            StopAllCoroutines();
+            if(_enemyToPlayerRoutine != null)StopCoroutine(_enemyToPlayerRoutine);
+            if(_playerToPointRoutine != null)StopCoroutine(_playerToPointRoutine);
             switch (type)
             {
                 case GrappleType.EnemyToPlayer:
@@ -235,6 +236,8 @@ namespace Grapple {
 
         private void ResetGrapple_EnemyToPlayer(bool isCanceled = false)
         {
+            if(isCanceled)
+                NCLogger.Log($"cancel enemy to player grapple");
             if (isCanceled) {
                 var dir = (transform.position - _currentGrappledEnemy.transform.position).normalized;
                 _currentGrappledEnemy.Rigidbody.AddForce(dir*enemyMomentumForce, enemyForceMode);
@@ -289,6 +292,7 @@ namespace Grapple {
             _lr.SetPosition(0, GrappleHaltPosition);
             currentGrappleType = GrappleType.EnemyToPlayer;
             
+            Debug.DrawLine(endPos, endPos+Vector3.up, Color.black, 5f);
             for (var i = 0.0f; i < 1.0f; i += (grappleSpeed * Time.deltaTime) / dist) {
                 //if condition to break loop
                 if (_moveState != PlayerMovementController.MovementState.Grappling) break;
