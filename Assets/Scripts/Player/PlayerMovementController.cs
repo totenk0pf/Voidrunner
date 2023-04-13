@@ -344,7 +344,9 @@ public class PlayerMovementController : MonoBehaviour
     #region Movement Abilities
     private void ActionDodge()
     {
-        if (moveState == MovementState.Grappling) { return; }
+        if (moveState == MovementState.Grappling) {
+            this.FireEvent(EventType.CancelGrappleEvent, true);
+        }
         
         moveState = MovementState.Dodge;
         Vector3 dest = Vector3.zero;
