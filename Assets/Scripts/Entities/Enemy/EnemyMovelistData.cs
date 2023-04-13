@@ -13,7 +13,7 @@ namespace Entities.Enemy {
     
     [CreateAssetMenu(fileName = "EnemyMovelist", menuName = "Enemies/EnemyMovelist", order = 0)]
     public class EnemyMovelistData : SerializedScriptableObject { 
-        public EnemyAnimData data;
+        public HardReferenceAnimData data;
         
         [ValueDropdown("GetAnimData", IsUniqueList = true, ExpandAllMenuItems = true, HideChildProperties = true)] [ShowInInspector]
         [SerializeField] private List<AnimParam> moves;

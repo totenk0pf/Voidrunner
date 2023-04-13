@@ -126,7 +126,6 @@ GameObject:
   m_Component:
   - component: {fileID: 298141708695055172}
   - component: {fileID: 5502601102066641784}
-  - component: {fileID: 2617546210943878228}
   m_Layer: 7
   m_Name: _WeaponHolder
   m_TagString: Player

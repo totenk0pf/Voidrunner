@@ -117,6 +117,10 @@ public class EnemyBase : EntityBase {
         yield return null;
     }
 
+    public virtual void OnRelease() {
+        _canPull = true;
+    }
+    
     public virtual void Attack() {
         throw new System.NotImplementedException();
     }
@@ -133,5 +137,10 @@ public class EnemyBase : EntityBase {
         if (currentHp <= 0) {
             Destroy(gameObject);
         }
+    }
+    
+    private void OnDrawGizmos() {
+        Gizmos.color = Color.green;
+        Gizmos.DrawLine(transform.position, transform.position + Vector3.down * checkDist);
     }
 }
