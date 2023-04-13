@@ -23,7 +23,7 @@ MonoBehaviour:
     damagePerPellet: 5
     pelletCount: 8
     rayCastRange: 30
-    maxSpreadAngle: 10
+    maxSpreadAngle: 0
     maxAmmo: 20
     maxClip: 1
     raycastMask:

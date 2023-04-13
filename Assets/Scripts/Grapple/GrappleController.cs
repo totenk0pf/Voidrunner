@@ -78,6 +78,7 @@ namespace Grapple {
         [ReadOnly] public GameObject currGrappleObj;
 
         private void Awake() {
+            this.AddListener(EventType.ReceiveMovementStateEvent, state => _moveState = (PlayerMovementController.MovementState) state);
             this.AddListener(EventType.ReceiveIsOnGroundEvent, isGrounded => _isOnGround = (bool) isGrounded);
             this.AddListener(EventType.CancelGrappleEvent, param => CancelGrapple((bool) param));
             this.AddListener(EventType.SetMovementStateEvent, param => UpdateMoveState((PlayerMovementController.MovementState) param));
@@ -125,7 +126,7 @@ namespace Grapple {
         }
 
         private bool CastToGetGrappleLocation() {
-            this.FireEvent(EventType.GetMovementStateEvent);
+            this.FireEvent(EventType.RequestMovementStateEvent);
             if (_moveState != PlayerMovementController.MovementState.Normal) return false;
 
             var lookDir = _mainCam.transform.forward;
@@ -239,14 +240,11 @@ namespace Grapple {
 
         private void ResetGrapple_EnemyToPlayer(bool isCanceled = false)
         {
-            test++;
-            if(test == 2)
-                NCLogger.Log($"cancel enemy to player grapple");
+            NCLogger.Log($"cancel enemy to player grapple | isCanceled: {isCanceled}");
             if (isCanceled) {
                 var dir = (transform.position - _currentGrappledEnemy.transform.position).normalized;
                 _currentGrappledEnemy.Rigidbody.AddForce(dir*enemyMomentumForce, enemyForceMode);
             }
-            
             EventDispatcher.Instance.FireEvent(EventType.SetMovementStateEvent, PlayerMovementController.MovementState.Normal);
             _currentGrappleHit = new RaycastHit();
             _lr.enabled = false;
@@ -299,9 +297,13 @@ namespace Grapple {
             Debug.DrawLine(endPos, endPos+Vector3.up, Color.black, 5f);
             for (var i = 0.0f; i < 1.0f; i += (grappleSpeed * Time.deltaTime) / dist) {
                 //if condition to break loop
-                if (_moveState != PlayerMovementController.MovementState.Grappling) break;
+                if (_moveState != PlayerMovementController.MovementState.Grappling)
+                {
+                    NCLogger.Log($"Grappling but move state is: {_moveState}");
+                }
                 _lr.SetPosition(1, _currentGrappleHit.transform.position);
                 _currentGrappleHit.collider.transform.position = Vector3.Lerp(startPos, endPos, i);
+               // NCLogger.Log($"pulling enemy | Progress: {i}");
                 yield return null;
             }
             
@@ -321,7 +323,10 @@ namespace Grapple {
             currentGrappleType = GrappleType.PlayerToPoint;
             
             for (var i = 0.0f; i < 1.0f; i += (grappleSpeed * Time.deltaTime) / dist) {
-                if (_moveState != PlayerMovementController.MovementState.Grappling) break;
+                if (_moveState != PlayerMovementController.MovementState.Grappling)
+                {
+                    NCLogger.Log($"Grappling but move state is: {_moveState}");
+                }
                 _lr.SetPosition(0, GrappleHaltPosition);
                 transform.position = Vector3.Lerp(startPos, endPos, i);
                 yield return null;
@@ -337,9 +342,14 @@ namespace Grapple {
         #region Helper Function
 
         private void UpdateMoveState(PlayerMovementController.MovementState currState) {
-            //NCLogger.Log($"pre-event: {_moveState}");
+            NCLogger.Log($"pre-event: {_moveState}");
+            if (_moveState == PlayerMovementController.MovementState.Grappling && _moveState != currState) {
+                this.FireEvent(EventType.SetMovementStateEvent, PlayerMovementController.MovementState.Grappling);
+                return;
+            }
             _moveState = currState;
-            //NCLogger.Log($"post-event: {_moveState}");
+            
+            NCLogger.Log($"post-event: {_moveState}");
 
         }
 

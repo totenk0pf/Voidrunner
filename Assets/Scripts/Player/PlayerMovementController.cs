@@ -85,10 +85,10 @@ public class PlayerMovementController : MonoBehaviour
 
     private void Awake()
     {
-        this.AddListener(EventType.GetMovementStateEvent, param => GetMovementState());
+        this.AddListener(EventType.RequestMovementStateEvent, param => this.FireEvent(EventType.ReceiveMovementStateEvent, moveState));
         this.AddListener(EventType.SetMovementStateEvent, param => UpdateMovementState((MovementState) param));
         this.AddListener(EventType.RequestIsOnGroundEvent, param => EventDispatcher.Instance.FireEvent(EventType.ReceiveIsOnGroundEvent, _isGrounded));
-        this.AddListener(EventType.StopMovementEvent, param => ToggleMovement(false));
+        //this.AddListener(EventType.StopMovementEvent, param => ToggleMovement(false));
         this.AddListener(EventType.ResumeMovementEvent, param => ToggleMovement(true));
 
         _inputKeyList = new List<KeyCode>() {
@@ -376,7 +376,9 @@ public class PlayerMovementController : MonoBehaviour
     
         if (toggleProtoDodge && moveState == MovementState.Dodge) {
             playerVisualProto.Rotate(rollAxis, -30f, Space.Self);
-        }
+        }else if(moveState == MovementState.Dodge)
+            NCLogger.Log($"movestate is not Dodge: movestate = {moveState}");
+        
         NCLogger.Log($"dodge");
         this.FireEvent(EventType.SetMovementStateEvent, moveState);
         this.FireEvent(EventType.CancelAttackEvent, WeaponType.Melee);

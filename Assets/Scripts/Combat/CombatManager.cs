@@ -160,7 +160,7 @@ public class RangedAttribute : IAnimDataConvertable
 public class CombatManager : MonoBehaviour
 {
     [TitleGroup("Ranged Settings")] 
-    [SerializeField] private RangedData RangedData;
+    [SerializeField] public RangedData RangedData;
     [SerializeField] private Transform firePoint;
    
     
@@ -201,6 +201,7 @@ public class CombatManager : MonoBehaviour
         this.AddListener(EventType.ReceiveCurrentGrappleTypeEvent, param => _currentGrappleType = (GrappleType) param);
         //Receive Refs
         this.AddListener(EventType.ReceivePlayerAnimatorEvent, animator => _playerAnimator = (PlayerAnimator) animator);
+        this.AddListener(EventType.ReceiveMovementStateEvent, state => _moveState = (PlayerMovementController.MovementState) state);
         
         if(!MeleeSequence) NCLogger.Log($"Missing Melee Sequence Data", LogLevel.ERROR);
         if(!RangedData) NCLogger.Log($"Missing Ranged Data", LogLevel.ERROR);
@@ -249,7 +250,8 @@ public class CombatManager : MonoBehaviour
         this.FireEvent(EventType.CancelGrappleEvent, true);
         this.FireEvent(EventType.UpdateActiveWeaponEvent, _activeWeapon);
         this.FireEvent(EventType.PlayAttackEvent, MeleeSequence.OrderToAttributes[_curMeleeOrder].CloneToAnimData(transform.root));
-        this.FireEvent(EventType.StopMovementEvent);
+        //this.FireEvent(EventType.StopMovementEvent);
+        this.FireEvent(EventType.SetMovementStateEvent, PlayerMovementController.MovementState.Locked);
     }
 
     /// <summary>
@@ -344,8 +346,10 @@ public class CombatManager : MonoBehaviour
                 NCLogger.Log($"Reset-ing attack state when it's NONE?", LogLevel.WARNING);
                 _playerAnimator.ResumeAnimator();
                 
+                this.FireEvent(EventType.RequestMovementStateEvent);
                 if(_moveState == PlayerMovementController.MovementState.Dodge)
-                    this.FireEvent(EventType.ResumeMovementEvent);
+                    this.FireEvent(EventType.SetMovementStateEvent, PlayerMovementController.MovementState.Normal);
+                    //this.FireEvent(EventType.ResumeMovementEvent);
                 
                 //If canceled due to movement (activeWeapon = NONE), check moveState
                 if(_moveState == PlayerMovementController.MovementState.Dodge || !isCancel)
@@ -362,6 +366,7 @@ public class CombatManager : MonoBehaviour
                 _playerAnimator.ResumeAnimator();
                 
                 //dodging when firing gun - do not reset active weapon
+                this.FireEvent(EventType.RequestMovementStateEvent);
                 if (_activeWeapon == WeaponType.Ranged && isCancel && _moveState == PlayerMovementController.MovementState.Dodge) {
                     _activeWeapon = WeaponType.Ranged;
                 }
@@ -389,9 +394,8 @@ public class CombatManager : MonoBehaviour
                 _playerAnimator.ResumeAnimator();
         
                 this.FireEvent(EventType.UpdateActiveWeaponEvent, _activeWeapon);
-                
                 this.FireEvent(EventType.ResumeMovementEvent);
-                
+                this.FireEvent(EventType.RequestMovementStateEvent);
                 //If canceled due to movement (activeWeapon = NONE), check moveState
                 if(_moveState == PlayerMovementController.MovementState.Dodge || !isCancel)
                     this.FireEvent(EventType.PlayAnimationEvent, new AnimData(PlayerAnimState.Idle, 1));
