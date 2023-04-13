@@ -3,71 +3,91 @@ using System.Collections.Generic;
 using Core.Logging;
 using UnityEngine;
 using Sirenix.OdinInspector;
+using StaticClass;
 using UnityEngine.ProBuilder.MeshOperations;
 using Random = UnityEngine.Random;
 
 namespace Entities.Enemy.Boss {
 
-    public class BossAttack : BossState
-    {
+    public class BossAttack : EnemyState {
+        public float attackDelay;
+        [HideInInspector] public bool inRange; 
+        [Space]
+        
         [TitleGroup("Attack settings")]
-    
-        [SerializeField] private EnemyState previousState;
+        [SerializeField] private BossHostile previousState;
         [SerializeField] private EnemyState nextState;
 
         [TitleGroup("Attack sets")]
-        [SerializeField] private AnimSerializedData animData;
+        [SerializeField] private EnemyMovelistData animData;
+        
+        [Title("Refs")] 
+        [SerializeField] private EnemyMoveRootMotion _moveWithRootMotion;
 
-        public bool isAttacking;
-        private bool _canChangeState;
-        private bool _canAttack;
-        private bool _isDelayed;
+        private bool _canAttack = true;
+        private bool _canSwitchState = true;
+        private bool _isAttacking = true;
 
         public override EnemyState RunCurrentState() {
-            if (_canChangeState)
+            if (_canSwitchState && !_isAttacking)
             {
-                _canChangeState = false;
                 return previousState;
             }
             
-            if (!_isDelayed && !_canAttack) {
+            if (_canAttack) {
                 StartCoroutine(StartAttack());
             }
+            
             return this;
         }
 
-        public IEnumerator StartAttack()
+        private IEnumerator StartAttack()
         {
+            if (_canSwitchState) yield break;
             _canAttack = false;
-            isAttacking = true;
-            
-            var randomAttack = Random.Range(0, animData.attackAnim.Count);
-            var attack = animData.attackAnim[randomAttack];
-            
-            Agent.enabled = false;
-            
-            TriggerAnim(attack);
-            yield return new WaitUntil(() => animator.GetCurrentAnimatorStateInfo(0).normalizedTime >= 0.95f);
-            
-            _canAttack = true;
-            isAttacking = false;
-
-            var dist = Vector3.Distance(transform.position, target.transform.position);
-            if (dist > 2f && !isAttacking)
-            {
-                Agent.enabled = true;
-                Agent.ResetPath();
-                _canChangeState = true;
-                _canAttack = false;
-            }
-
-            else yield return DelayAttack();
+            _isAttacking = true;
+            if (_moveWithRootMotion.canMove) _moveWithRootMotion.canMove = false;
+            TriggerAnim(GetItemFromMoveList(animData.moveList));
+            yield return StartCoroutine(FinishAnimation());
+            yield return StartCoroutine(DelayAttack());
         }
 
-        public IEnumerator DelayAttack()
-        {
-            yield return new WaitForSeconds(0.2f);
-            yield return StartCoroutine(StartAttack());
+        private IEnumerator DelayAttack() {
+            yield return new WaitForSeconds(attackDelay);
+            StartCoroutine(StartAttack());
+        }
+
+        private IEnumerator FinishAnimation() {
+            yield return new WaitUntil(() => animator.GetCurrentAnimatorStateInfo(0).normalizedTime >= 0.95f);
+            _isAttacking = false;
+        }
+
+        public override void OnTriggerExit(Collider other) {
+            if (CheckLayerMask.IsInLayerMask(other.gameObject, playerMask)) {
+                StopAllCoroutines();
+                if (_isAttacking) {
+                    StartCoroutine(FinishAnimation());
+                }
+            
+                foreach (var move in animData.moveList) {
+                    ResetAnim(move.anim);
+                }
+                
+                inRange = false;
+                _canAttack = false;
+                _canSwitchState = true;
+                _moveWithRootMotion.canMove = true;
+                previousState.canSwitchState = true;
+            }
+        }
+
+        public override void OnTriggerEnter(Collider other) {
+            if (CheckLayerMask.IsInLayerMask(other.gameObject, playerMask)) {
+                inRange = true;
+                _canAttack = true;
+                _canSwitchState = false;
+                target = other.gameObject;
+            }
         }
     }
 }

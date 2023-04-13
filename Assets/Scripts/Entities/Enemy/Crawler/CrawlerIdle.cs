@@ -1,44 +1,41 @@
 using System.Collections;
-using UnityEngine.AI;
+using DG.Tweening;
 using UnityEngine;
 
-public class CrawlerIdle : EnemyState
-{
-    public float minEnemyRange;
-    public float maxEnemyRange;
+namespace Entities.Enemy.Crawler {
+    public class CrawlerIdle : EnemyState {
+        public float rotateDuration;
+        [Space]
+        public float minDelay;
+        public float maxDelay;
+        [Space]
+        [SerializeField] private EnemyMoveRootMotion moveRootMotion;
+        [SerializeField] private EnemyState nextState;
+    
+        private bool _canRotate = true;
 
-    [Space]
-    public float minDelay;
-    public float maxDelay;
+        public override EnemyState RunCurrentState() {
+            if (_canRotate) {
+                StartCoroutine(Rotate());
+            }
 
-    private bool _canWalk = true;
-    [SerializeField] private EnemyState _nextState;
+            if (detected) {
+                moveRootMotion.useNavAgent = true;
+                return nextState;
+            }
 
-    public override EnemyState RunCurrentState() {
-        if (Agent.remainingDistance <= 0.1f && _canWalk) {
-            Agent.SetDestination(GetRandomWayPoint(Random.Range(minEnemyRange, maxEnemyRange)));
-            StartCoroutine(Delay(Random.Range(minDelay, maxDelay)));
+            return this;
         }
 
-        if (detected) return _nextState;
-        return this;
-    }
-
-    //radius is range to get a random waypoint
-    private Vector3 GetRandomWayPoint(float radius) {
-        var randomDir = Random.insideUnitSphere * radius;
-        randomDir += transform.position;
-
-        NavMeshHit hit;
-        NavMesh.SamplePosition(randomDir, out hit, radius, 1);
-
-        return hit.position;
-    }
-
-    IEnumerator Delay(float delay) {
-        _canWalk = false;
-        yield return new WaitForSeconds(delay);
-        _canWalk = true;
+        private IEnumerator Rotate() {
+            _canRotate = false;
+            yield return new WaitForSeconds(Random.Range(minDelay, maxDelay));
+            var parent = transform.root;
+            parent.DORotate(parent.rotation * Quaternion.Euler
+                (0, Random.Range(parent.rotation.y - 60, parent.rotation.y + 60), 0).eulerAngles, rotateDuration);
+            yield return new WaitForSeconds(rotateDuration);
+            _canRotate = true;
+        }
     }
 }
 

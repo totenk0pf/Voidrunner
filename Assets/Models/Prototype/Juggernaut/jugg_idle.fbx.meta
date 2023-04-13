@@ -5,7 +5,7 @@ ModelImporter:
   internalIDToNameTable:
   - first:
       74: -203655887218126122
-    second: Idle
+    second: JuggernautIdle
   externalObjects: {}
   materials:
     materialImportMode: 2
@@ -36,7 +36,7 @@ ModelImporter:
     extraUserProperties: []
     clipAnimations:
     - serializedVersion: 16
-      name: Idle
+      name: JuggernautIdle
       takeName: mixamo.com
       internalID: 0
       firstFrame: 0
@@ -612,7 +612,7 @@ ModelImporter:
     hasTranslationDoF: 0
     hasExtraRoot: 1
     skeletonHasParents: 1
-  lastHumanDescriptionAvatarSource: {fileID: 9000000, guid: 8d7e7052195e5a746a81c713e000d87e, type: 3}
+  lastHumanDescriptionAvatarSource: {fileID: 9000000, guid: 014d773ffa385f740b676cd0ffad99a4, type: 3}
   autoGenerateAvatarMappingIfUnspecified: 1
   animationType: 3
   humanoidOversampling: 1
