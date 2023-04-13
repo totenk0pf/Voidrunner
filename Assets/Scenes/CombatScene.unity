@@ -130,10 +130,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 929311467, guid: 12deb3e0214d891dbb950efb235efcdf, type: 3}
-      propertyPath: tweenSafetyIgnoreLayer.m_Bits
-      value: 396
-      objectReference: {fileID: 0}
     - target: {fileID: 3097869791500630934, guid: 12deb3e0214d891dbb950efb235efcdf, type: 3}
       propertyPath: m_AnchorMax.x
       value: 0
@@ -184,7 +180,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3097869792047458589, guid: 12deb3e0214d891dbb950efb235efcdf, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 155
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3097869792047458589, guid: 12deb3e0214d891dbb950efb235efcdf, type: 3}
       propertyPath: m_AnchoredPosition.y
@@ -389,10 +385,6 @@ PrefabInstance:
     - target: {fileID: 6037325520723149429, guid: 12deb3e0214d891dbb950efb235efcdf, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6037325520723149430, guid: 12deb3e0214d891dbb950efb235efcdf, type: 3}
-      propertyPath: dodgeSafetyIgnoreLayer.m_Bits
-      value: 396
       objectReference: {fileID: 0}
     - target: {fileID: 6344080343604437275, guid: 12deb3e0214d891dbb950efb235efcdf, type: 3}
       propertyPath: m_AnchorMax.x
