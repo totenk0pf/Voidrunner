@@ -24,20 +24,66 @@ public class EnemyBase : EntityBase {
 
     [SerializeField] private EnemyUI ui;
     protected NavMeshAgent navAgent;
-
+    protected EnemyStateMachine stateMachine;
+    protected Rigidbody rb;
+    private bool _canPull;
+    
+    //Ground check Attributes
+    public bool IsGrounded;
+    [SerializeField] private float checkDist;
+    [SerializeField] private LayerMask groundIgnoreLayer;
+    
+    #region Public Getters / Caching
+    public bool CanPull => _canPull;
+    public NavMeshAgent NavMeshAgent {
+        get {
+            if (!navAgent) {
+                navAgent = GetComponent<NavMeshAgent>();
+            }
+            return navAgent;
+        }
+    }
+    
+    public EnemyStateMachine StateMachine {
+        get {
+            if (!stateMachine) {
+                stateMachine = GetComponent<EnemyStateMachine>();
+            }
+            return stateMachine;
+        }
+    }
+    
+    public Rigidbody Rigidbody {
+        get {
+            if (!rb) {
+                rb = GetComponent<Rigidbody>();
+            }
+            return rb;
+        }
+    }
+    #endregion
+    
     private void Start() {
-        navAgent = GetComponent<NavMeshAgent>();
-        navAgent.speed = enemySpeed;
+        _canPull = true;
+        NavMeshAgent.speed = enemySpeed;
 
-        if (!navAgent.isOnNavMesh) {
+        if (!NavMeshAgent.isOnNavMesh) {
             Debug.LogWarning("No NavMesh is bound to Enemy");
         }
         currentHp = enemyHP;
     }
 
     private void Update() {
-        if (currentHp <= 0) {
-            Die();
+        Die();
+        AirborneUpdate();
+    }
+
+    public virtual void AirborneUpdate() {
+        IsGrounded = Physics.Raycast(transform.position, Vector3.down, checkDist, ~groundIgnoreLayer);
+        if (!IsGrounded && (StateMachine || NavMeshAgent)) {
+            DisablePathfinding();
+        } else {
+            EnablePathfinding();
         }
     }
 
@@ -76,14 +122,16 @@ public class EnemyBase : EntityBase {
     }
 
     public virtual void Move(Transform destination) {
-        navAgent.SetDestination(destination.position);
+        NavMeshAgent.SetDestination(destination.position);
     }
  
     public virtual void Move(Vector3 destination) {
-        navAgent.SetDestination(destination);
+        NavMeshAgent.SetDestination(destination);
     }
 
     public virtual void Die() {
-        Destroy(gameObject);
+        if (currentHp <= 0) {
+            Destroy(gameObject);
+        }
     }
 }

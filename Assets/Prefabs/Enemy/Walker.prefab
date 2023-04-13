@@ -56,6 +56,7 @@ MonoBehaviour:
   enemyHP: 100
   isStunned: 0
   ui: {fileID: 927390444342798379}
+  canPull: 1
 --- !u!114 &6507194866629278068
 MonoBehaviour:
   m_ObjectHideFlags: 0

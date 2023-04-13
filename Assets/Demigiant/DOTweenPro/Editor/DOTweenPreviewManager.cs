@@ -19,7 +19,7 @@ namespace DG.DOTweenEditor
         static bool _previewOnlyIfSetToAutoPlay = true;
         static readonly Dictionary<DOTweenAnimation,TweenInfo> _AnimationToTween = new Dictionary<DOTweenAnimation,TweenInfo>();
         static readonly List<DOTweenAnimation> _TmpKeys = new List<DOTweenAnimation>();
-
+        public static bool isPreviewing => _AnimationToTween.Count > 0;
         #region Public Methods & GUI
 
         /// <summary>

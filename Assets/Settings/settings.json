@@ -1,0 +1,16 @@
+{
+    "video": {
+        "fullscreen": true,
+        "particles": true,
+        "postprocess": true,
+        "sensitivity": 1.0,
+        "resolution": 0
+    },
+    "audio": {
+        "master": 1.0,
+        "music": 1.0,
+        "effects": 1.0,
+        "voices": 1.0,
+        "captions": true
+    }
+}

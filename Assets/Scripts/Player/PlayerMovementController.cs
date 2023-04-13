@@ -1,19 +1,24 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
+using Combat;
+using Core.Events;
+using Core.Logging;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.Serialization;
+using EventType = Core.Events.EventType;
 
 public class PlayerMovementController : MonoBehaviour
 {
     public enum MovementState
     {
+        Locked,
         Normal,
-        Roll,
-        Slide,
-        Falling
+        Dodge,
+        Grappling,
     }
     
     //max speed 
@@ -30,7 +35,7 @@ public class PlayerMovementController : MonoBehaviour
         }
     }
 
-    public MovementState moveState;
+    [SerializeField] private MovementState moveState;
 
     [SerializeField] private Transform playerVisualProto;
     
@@ -41,6 +46,13 @@ public class PlayerMovementController : MonoBehaviour
     [SerializeField] private float accelForce;
     [SerializeField] private float maxSpeed;
 
+    private bool _canGravity = true;
+    [Header("Custom Gravity and Ground Check")] 
+    [SerializeField] private float gravityAcceleration;
+    [SerializeField] private float gravityScale;
+    [SerializeField] private LayerMask ignoreMask;
+    [SerializeField] private float groundCastDist;
+    
     [Header("Movement Drag")] 
     [SerializeField] private bool canDrag = true;
     [SerializeField] private float slopeDrag = 3f;
@@ -53,40 +65,92 @@ public class PlayerMovementController : MonoBehaviour
     private RaycastHit _slopeHit;
     
     private Vector3 _moveDir;
-
-    [Header("Roll Attributes")] 
-    public bool toggleProtoRoll = true;
-    public float rollAngleProto = 10;
-    [Space]
-    [SerializeField]  private KeyCode rollKey;
-    [SerializeField] private float rollDistance;
-    [SerializeField] private float rollTime;
-
-    [Header("Slide Attributes")] 
-    public bool toggleProtoSlide = true;
-    [Space]
-    [SerializeField] private KeyCode slideKey;
-    [SerializeField] private float slideTime;
-    [SerializeField] private float slideDistance;
     
+    [Header("Dodge Attributes")] 
+    public bool toggleProtoDodge = true;
 
+    [Space]
+    [SerializeField] private LayerMask dodgeSafetyIgnoreLayer;
+    [SerializeField] private KeyCode dodgeKey;
+    [SerializeField] private float dodgeTime;
+    [SerializeField] private float dodgeDistance;
+    [SerializeField] private float dodgeCooldown;
+    private float _nextDodgeTimeStamp;
+    
+    private List<KeyCode> _inputKeyList;
+    private Vector3 _dodgeDir;
     private float _horiz;
     private float _vert;
+    private bool _isGrounded;
+
+    private void Awake()
+    {
+        this.AddListener(EventType.GetMovementStateEvent, param => GetMovementState());
+        this.AddListener(EventType.SetMovementStateEvent, param => UpdateMovementState((MovementState) param));
+        this.AddListener(EventType.RequestIsOnGroundEvent, param => EventDispatcher.Instance.FireEvent(EventType.ReceiveIsOnGroundEvent, _isGrounded));
+        this.AddListener(EventType.StopMovementEvent, param => ToggleMovement(false));
+        this.AddListener(EventType.ResumeMovementEvent, param => ToggleMovement(true));
+
+        _inputKeyList = new List<KeyCode>() {
+            KeyCode.W, KeyCode.S, KeyCode.A, KeyCode.D
+        };
+        moveState = MovementState.Normal;
+        _canGravity = true;
+        Rb.useGravity = false;
+    }
+    
     private void FixedUpdate()
     {
-        UpdateMoveDir();
-        if(moveState == MovementState.Normal) UpdateStrafe();
+        if (moveState == MovementState.Normal) {
+            UpdateMoveDir();
+            if(moveState == MovementState.Normal) UpdateStrafe();
+        }
         if (canDrag) ApplyDrag();
+        if(_canGravity) CustomGravity();
     }
 
     private void Update()
     {
+        // foreach (var input in _inputKeyList.Where(Input.GetKeyDown)) {
+        //     _canMove = true;
+        // }
+        //
+        //_dodgeDir = transform.forward;
+        foreach (var input in _inputKeyList.Where(Input.GetKey)) {
+            switch (input) {
+                case KeyCode.W:
+                    _dodgeDir += transform.forward;
+                    break;
+                case KeyCode.S:
+                    _dodgeDir += -transform.forward; 
+                    break;
+                case KeyCode.A:
+                    _dodgeDir += -transform.right; 
+                    break;
+                case KeyCode.D:
+                    _dodgeDir += transform.right; 
+                    break;
+                default:
+                    throw new ArgumentOutOfRangeException();
+            }
+        }
+        _dodgeDir = _dodgeDir.normalized;
         
-        if(Input.GetKeyDown(rollKey)) ActionRoll(_moveDir);
-        if(Input.GetKeyDown(slideKey)) ActionSlide(_moveDir);
+        if (Input.GetKeyDown(dodgeKey) && Time.time >= _nextDodgeTimeStamp)
+        {
+            NCLogger.Log($"dodging");
+            _nextDodgeTimeStamp = Time.time + dodgeCooldown;
+            ActionDodge();
+        }
     }
 
+    #region Movement Base
 
+    private void ToggleMovement(bool canMove) {
+        moveState = canMove ? MovementState.Normal : MovementState.Locked;
+        this.FireEvent(EventType.SetMovementStateEvent, moveState);
+    }
+    
     private void UpdateStrafe()
     {
         if (OnSlope()) {
@@ -140,8 +204,10 @@ public class PlayerMovementController : MonoBehaviour
 
     private bool OnSlope()
     {
-        if (Physics.Raycast(transform.position, Vector3.down, out _slopeHit, slopeCastDist))
+        if (Physics.Raycast(transform.position, Vector3.down, out _slopeHit, slopeCastDist, ~ignoreMask))
         {
+            if (_slopeHit.collider.isTrigger) return false;
+            
             float angle = Vector3.Angle(Vector3.up, _slopeHit.normal);
             return angle < maxSlopeAngle && angle != 0;
         }
@@ -152,7 +218,8 @@ public class PlayerMovementController : MonoBehaviour
     {
         if (!OnSlope()) {
             Rb.drag = groundDrag;
-            Rb.useGravity = true;
+            _canGravity = true;
+            //Rb.useGravity = true;
             return;
         }
         
@@ -160,15 +227,18 @@ public class PlayerMovementController : MonoBehaviour
         //going down
         if (value < 0) { 
             Rb.drag = slopeDrag;
-            Rb.useGravity = false;
+            _canGravity = false;
+            //Rb.useGravity = false;
         }
         else {
             Rb.drag = groundDrag;
-            Rb.useGravity = true;
+            _canGravity = true;
+            //Rb.useGravity = true;
         }
 
         if (Rb.velocity.magnitude < 0.3f)
-            Rb.useGravity = true;
+            _canGravity = true;
+            //Rb.useGravity = true;
 
     }
 
@@ -185,6 +255,9 @@ public class PlayerMovementController : MonoBehaviour
 
         return _moveDir;
     }
+    #endregion
+    
+    #region Movement Abilities (Outdated)
     
     /// <summary>
     /// Roll the character
@@ -192,85 +265,197 @@ public class PlayerMovementController : MonoBehaviour
     /// - roll visual towards said point
     /// </summary>
     /// <param name="moveDir"> normalized input direction vector </param>
-    private void ActionRoll(Vector3 moveDir)
+    // private void ActionRoll(Vector3 moveDir)
+    // {
+    //     //check for movement and prevent roll stack
+    //     if (moveDir.magnitude == 0 || moveState != MovementState.Normal) { return; }
+    //
+    //     moveState = MovementState.Roll;
+    //     
+    //     Rb.velocity = Vector3.zero;
+    //     Vector3 dest = transform.position + (moveDir) * rollDistance;
+    //     Vector3 rollAxis = Vector3.Cross(moveDir, playerVisualProto.up);
+    //     
+    //     StartCoroutine(LerpRollRoutine(dest, rollAxis));
+    // }
+    //
+    // private IEnumerator LerpRollRoutine(Vector3 dest, Vector3 rollAxis)
+    // {
+    //     var startPos = transform.position;
+    //     float time = 0;
+    //     
+    //     while (time < rollTime)
+    //     {
+    //         transform.position = Vector3.Lerp(startPos, dest, time / rollTime);
+    //         time += Time.deltaTime;
+    //         
+    //         if(toggleProtoRoll && moveState == MovementState.Roll)
+    //             playerVisualProto.RotateAround(transform.position, rollAxis, rollAngleProto);
+    //         
+    //         
+    //         yield return null;
+    //     }
+    //     
+    //     transform.position = dest;
+    //     playerVisualProto.up = Vector3.up;
+    //     moveState = MovementState.Normal;
+    // }
+    //
+    //
+    // private void ActionSlide(Vector3 moveDir)
+    // {
+    //     if (Mathf.Abs(Rb.velocity.magnitude - maxSpeed) > 0.5f || moveState != MovementState.Normal) { return; }
+    //
+    //     moveState = MovementState.Slide;
+    //     //var velMagCache = Rb.velocity.magnitude;
+    //     Vector3 dest = transform.position + moveDir * slideDistance;
+    //     Vector3 pointAxis = moveDir;
+    //
+    //     StartCoroutine(LerpSlideRoutine(dest, pointAxis));
+    //
+    // }
+    //
+    //
+    // private IEnumerator LerpSlideRoutine(Vector3 dest, Vector3 pointAxis)
+    // {
+    //     var startPos = transform.position;
+    //     float time = 0;
+    //
+    //     if (toggleProtoSlide && moveState == MovementState.Slide)
+    //     {
+    //         playerVisualProto.up = -pointAxis;
+    //     }
+    //     
+    //     while (time < slideTime)
+    //     {
+    //         transform.position = Vector3.Lerp(startPos, dest, time / slideTime);
+    //         time += Time.deltaTime;
+    //         
+    //         yield return null;
+    //     }
+    //     
+    //     transform.position = dest;
+    //     playerVisualProto.up = Vector3.up;
+    //     moveState = MovementState.Normal;
+    //
+    // }
+    #endregion
+    
+    #region Movement Abilities
+    private void ActionDodge()
     {
-        //check for movement and prevent roll stack
-        if (moveDir.magnitude == 0 || moveState != MovementState.Normal) { return; }
-
-        moveState = MovementState.Roll;
+        if (moveState == MovementState.Grappling) { return; }
         
-        Rb.velocity = Vector3.zero;
-        Vector3 dest = transform.position + (moveDir) * rollDistance;
-        Vector3 rollAxis = Vector3.Cross(moveDir, playerVisualProto.up);
+        moveState = MovementState.Dodge;
+        Vector3 dest = Vector3.zero;
+        var isHit = Physics.Raycast(transform.position, _dodgeDir, out var hit, dodgeDistance, ~dodgeSafetyIgnoreLayer);
+        if (isHit && !hit.collider.isTrigger)
+        {
+            Debug.DrawLine(transform.position, hit.point, Color.magenta, 5f);
+            NCLogger.Log($"dodge hit {hit.collider.name}");
+            dest = hit.point;
+        }
+        else
+        {
+            Debug.DrawLine(transform.position, transform.position + _dodgeDir * dodgeDistance, Color.magenta, 5f);
+            dest = transform.position + _dodgeDir * dodgeDistance;
+        }
         
-        StartCoroutine(LerpRollRoutine(dest, rollAxis));
+        Vector3 rollAxis = Vector3.Cross(_dodgeDir, transform.root.up);
+    
+        StartCoroutine(LerpDodgeRoutine(dest, rollAxis));
     }
     
-    private IEnumerator LerpRollRoutine(Vector3 dest, Vector3 rollAxis)
+    
+    private IEnumerator LerpDodgeRoutine(Vector3 dest, Vector3 rollAxis)
     {
+        //NCLogger.Log($"Dir: {_dodgeDir}", LogLevel.INFO);
         var startPos = transform.position;
+        var velMag = Rb.velocity.magnitude;
         float time = 0;
-        
-        while (time < rollTime)
-        {
-            transform.position = Vector3.Lerp(startPos, dest, time / rollTime);
+    
+        if (toggleProtoDodge && moveState == MovementState.Dodge) {
+            playerVisualProto.Rotate(rollAxis, -30f, Space.Self);
+        }
+        NCLogger.Log($"dodge");
+        this.FireEvent(EventType.SetMovementStateEvent, moveState);
+        this.FireEvent(EventType.CancelAttackEvent, WeaponType.Melee);
+        this.FireEvent(EventType.NotifyStopAllComboSequenceEvent, false);
+        while (time < dodgeTime) {
+            transform.position = Vector3.Lerp(startPos, dest, time / dodgeTime);
             time += Time.deltaTime;
-            
-            if(toggleProtoRoll && moveState == MovementState.Roll)
-                playerVisualProto.RotateAround(transform.position, rollAxis, rollAngleProto);
-            
             
             yield return null;
         }
-        
         transform.position = dest;
         playerVisualProto.up = Vector3.up;
         moveState = MovementState.Normal;
+        Rb.velocity = velMag * Rb.velocity.normalized;
+        this.FireEvent(EventType.NotifyResumeAllComboSequenceEvent);
+        this.FireEvent(EventType.SetMovementStateEvent, moveState);
     }
+    #endregion
     
-    
-    private void ActionSlide(Vector3 moveDir)
+    private bool IsOnGround()
     {
-        if (Mathf.Abs(Rb.velocity.magnitude - maxSpeed) > 0.5f || moveState != MovementState.Normal) { return; }
+        bool val;
+        if (!Physics.Raycast(transform.position, -Vector3.up, out var hit, groundCastDist, ~ignoreMask))
+        {
+            val = false;
+            _isGrounded = val;
+            return val;
+        }
+        val = !hit.collider.isTrigger;
 
-        moveState = MovementState.Slide;
-        //var velMagCache = Rb.velocity.magnitude;
-        Vector3 dest = transform.position + moveDir * slideDistance;
-        Vector3 pointAxis = moveDir;
-
-        StartCoroutine(LerpSlideRoutine(dest, pointAxis));
-
+        
+        _isGrounded = val;
+        return val;
     }
 
-    
-    private IEnumerator LerpSlideRoutine(Vector3 dest, Vector3 pointAxis)
+    private void CustomGravity()
     {
-        var startPos = transform.position;
-        float time = 0;
-
-        if (toggleProtoSlide && moveState == MovementState.Slide)
-        {
-            playerVisualProto.up = -pointAxis;
-        }
+        var gravityVector = IsOnGround() ? 
+            (-9.8f * 1 * Vector3.up) : 
+            (-gravityAcceleration * gravityScale * Vector3.up);
         
-        while (time < slideTime)
-        {
-            transform.position = Vector3.Lerp(startPos, dest, time / slideTime);
-            time += Time.deltaTime;
-            
-            yield return null;
-        }
-        
-        transform.position = dest;
-        playerVisualProto.up = Vector3.up;
-        moveState = MovementState.Normal;
-
+        Rb.AddForce(gravityVector, ForceMode.Acceleration);
     }
 
+    private void GetMovementState() {
+        EventDispatcher.Instance.FireEvent(EventType.SetMovementStateEvent, moveState);
+    }
+
+    private void UpdateMovementState(MovementState state)
+    {
+        moveState = state;
+        if (state == MovementState.Grappling) {
+            _rb.velocity = Vector3.zero;
+        }
+    }
+
+    public IEnumerator GravityDampRoutine(float dampDuration) {
+        if (dampDuration > 0) {
+            var originalScale = gravityScale;
+            var currentTime = 0f;
+            gravityScale = 0;
+            while (currentTime < dampDuration || gravityScale < originalScale) {
+                gravityScale = (currentTime/dampDuration) * originalScale;
+                currentTime += Time.deltaTime;
+                yield return null;
+            }
+            gravityScale = originalScale;
+            yield return null;  
+        }
+    }
+    
     private void OnDrawGizmosSelected()
     {
         Gizmos.color = Color.blue;
         Gizmos.DrawRay(transform.position, _moveDir * 3);
+        Gizmos.color = Color.green;
+        Gizmos.DrawRay(transform.position, _dodgeDir * 5);
+        Gizmos.color = Color.red;
+        Gizmos.DrawRay(transform.position, groundCastDist * Vector3.down);
     }
 }
 
