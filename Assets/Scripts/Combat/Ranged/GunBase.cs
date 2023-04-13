@@ -82,6 +82,7 @@ namespace Combat {
                     ? dmgData.playerTransform.forward.normalized
                     : playerToEnemyVector3.normalized;
                 
+                enemy.Key.Rigidbody.velocity = Vector3.zero;
                 KnockBack(enemy.Key, 
                     Mathf.Clamp(dmgData.Knockback * enemy.Value, dmgData.Knockback, dmgData.KnockbackCap),
                     knockbackDir);

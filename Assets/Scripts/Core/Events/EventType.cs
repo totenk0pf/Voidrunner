@@ -60,5 +60,8 @@ namespace Core.Events {
         NotifyStopAllComboSequenceEvent,
         NotifyResumeAllComboSequenceEvent,
         InitWeaponRefEvent,
+        //
+        RequestCurrentGrappleTypeEvent,
+        ReceiveCurrentGrappleTypeEvent,
     }
 }

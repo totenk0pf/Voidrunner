@@ -37,7 +37,8 @@ namespace Combat {
                 var knockbackDir = playerToEnemyVector3.magnitude <= 1
                     ? dmgData.playerTransform.forward.normalized
                     : playerToEnemyVector3.normalized;
-                
+
+                enemy.Rigidbody.velocity = Vector3.zero;
                 KnockBack(enemy, dmgData.Knockback, knockbackDir);
                 //NCLogger.Log($"dmg: {dmgData.Damage}");
             }

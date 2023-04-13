@@ -36,7 +36,7 @@ namespace Grapple {
 
         [TitleGroup("Grapple settings")] [SerializeField]
         private float grappleHaltOffsetZ;
-
+        [ReadOnly] public GrappleType currentGrappleType = GrappleType.None;
         [SerializeField] private float grappleSpeed = 5f;
         [SerializeField] private float distIgnoreCheck = 1;
         [Header("Grapple Enemy Attributes")]
@@ -78,8 +78,9 @@ namespace Grapple {
 
         private void Awake() {
             this.AddListener(EventType.ReceiveIsOnGroundEvent, isGrounded => _isOnGround = (bool) isGrounded);
-            this.AddListener(EventType.CancelGrappleEvent, param => CancelGrapple());
+            this.AddListener(EventType.CancelGrappleEvent, param => CancelGrapple((bool) param));
             this.AddListener(EventType.SetMovementStateEvent, param => UpdateMoveState((PlayerMovementController.MovementState) param));
+            this.AddListener(EventType.RequestCurrentGrappleTypeEvent, param => this.FireEvent(EventType.ReceiveCurrentGrappleTypeEvent, currentGrappleType));
             //this.AddListener(EventType.ReceiveIsOnGroundEvent, param => UpdateIsOnGround((bool) param));
 
             if (!GetComponent<LineRenderer>()) transform.AddComponent<LineRenderer>();
@@ -217,9 +218,9 @@ namespace Grapple {
             return false;
         }
 
-        private void CancelGrapple()
+        private void CancelGrapple(bool isFromAttack = false)
         {
-            if (_playerToPointRoutine != null) {
+            if (!isFromAttack && _playerToPointRoutine != null) {
                 //StopAllCoroutines();
                 StopCoroutine(_playerToPointRoutine);
                 ResetGrapple_PlayerToPoint(isCanceled: true);
@@ -243,6 +244,7 @@ namespace Grapple {
             _currentGrappleHit = new RaycastHit();
             _lr.enabled = false;
 
+            currentGrappleType = GrappleType.None;
             if(!_currentGrappledEnemy) NCLogger.Log($"_currentGrappledEnemy Null Object Exception", LogLevel.ERROR);
             _currentGrappledEnemy.OnRelease();
             _currentGrappledEnemy = null;
@@ -265,6 +267,7 @@ namespace Grapple {
             //damping fall velocity
             StartCoroutine(_controller.GravityDampRoutine(gravityDampDuration));
 
+            currentGrappleType = GrappleType.None;
             currGrappleObj = null;
             _currentGrappleHit = new RaycastHit();
             _playerToPointRoutine = null;
@@ -277,15 +280,15 @@ namespace Grapple {
             var startPos = _currentGrappleHit.point;
             var dist = Vector3.Distance(_currentGrappleHit.point, GrappleHaltPosition);
             var dir = (GrappleHaltPosition - _currentGrappleHit.point).normalized;
-            var endPos = startPos + dist * dir;
+            var endPos = startPos + (dist-2) * dir;
             
             if(!_currentGrappledEnemy) NCLogger.Log($"_currentGrappledEnemy Null Object Exception", LogLevel.ERROR);
             _currentGrappledEnemy.OnGrappled();
             
             _lr.enabled = true;
             _lr.SetPosition(0, GrappleHaltPosition);
-
-
+            currentGrappleType = GrappleType.EnemyToPlayer;
+            
             for (var i = 0.0f; i < 1.0f; i += (grappleSpeed * Time.deltaTime) / dist) {
                 //if condition to break loop
                 if (_moveState != PlayerMovementController.MovementState.Grappling) break;
@@ -307,7 +310,8 @@ namespace Grapple {
 
             _lr.enabled = true;
             _lr.SetPosition(1, _currentGrappleHit.transform.position);
-
+            currentGrappleType = GrappleType.PlayerToPoint;
+            
             for (var i = 0.0f; i < 1.0f; i += (grappleSpeed * Time.deltaTime) / dist) {
                 if (_moveState != PlayerMovementController.MovementState.Grappling) break;
                 _lr.SetPosition(0, GrappleHaltPosition);

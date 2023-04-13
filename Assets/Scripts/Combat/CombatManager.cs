@@ -6,8 +6,10 @@ using Combat;
 using Core.Events;
 using Core.Logging;
 using Extensions;
+using Grapple;
 using JetBrains.Annotations;
 using Sirenix.OdinInspector;
+using Unity.VisualScripting;
 using UnityEngine;
 using EventType = Core.Events.EventType;
 using Random = UnityEngine.Random;
@@ -179,7 +181,7 @@ public class CombatManager : MonoBehaviour
     private bool _isGrounded;
     private void IncrementMeleeOrder() => _curMeleeOrder = _curMeleeOrder.Next();
     private Coroutine _onHoldInputRoutine;
-    
+    private GrappleType _currentGrappleType;
     private void Awake() {
         //Init Ref
         this.AddListener(EventType.InitWeaponRefEvent, param => InitWeaponRef( (List<WeaponEntry>) param));
@@ -196,6 +198,7 @@ public class CombatManager : MonoBehaviour
         //Movement State
         this.AddListener(EventType.SetMovementStateEvent, state => _moveState = (PlayerMovementController.MovementState) state);
         this.AddListener(EventType.ReceiveIsOnGroundEvent, param => _isGrounded = (bool)param);
+        this.AddListener(EventType.ReceiveCurrentGrappleTypeEvent, param => _currentGrappleType = (GrappleType) param);
         //Receive Refs
         this.AddListener(EventType.ReceivePlayerAnimatorEvent, animator => _playerAnimator = (PlayerAnimator) animator);
         
@@ -225,7 +228,8 @@ public class CombatManager : MonoBehaviour
     private void MeleeAttack() {
         if (!_meleeEntry.reference.canAttack || _meleeEntry.reference.isAttacking) return;
         if (_meleeEntry.type != WeaponType.Melee) return;
-        if (_moveState != PlayerMovementController.MovementState.Normal) return;
+        this.FireEvent(EventType.RequestCurrentGrappleTypeEvent);
+        if (_currentGrappleType == GrappleType.PlayerToPoint) return;
         this.FireEvent(EventType.RequestIsOnGroundEvent, _activeWeapon);
         if (!_isGrounded) return;
         
@@ -242,6 +246,7 @@ public class CombatManager : MonoBehaviour
         //StopCoroutine(thisRoutine) would not stop all coroutines of same "thisRoutine" method
         StopAllCoroutines();
         //Clone -> not edit in SO data
+        this.FireEvent(EventType.CancelGrappleEvent, true);
         this.FireEvent(EventType.UpdateActiveWeaponEvent, _activeWeapon);
         this.FireEvent(EventType.PlayAttackEvent, MeleeSequence.OrderToAttributes[_curMeleeOrder].CloneToAnimData(transform.root));
         this.FireEvent(EventType.StopMovementEvent);
@@ -284,16 +289,17 @@ public class CombatManager : MonoBehaviour
     private IEnumerator RangedAttackRoutine() {
         if (!_rangedEntry.reference.canAttack || _rangedEntry.reference.isAttacking) yield break;
         if (_rangedEntry.type != WeaponType.Ranged) yield break;
-        if (_moveState == PlayerMovementController.MovementState.Grappling) yield break;
-
-        //NCLogger.Log($"shooting");
-        //if(_activeWeapon != WeaponType.Ranged) this.FireEvent(EventType.CancelAttackEvent, _activeWeapon);
+        this.FireEvent(EventType.RequestCurrentGrappleTypeEvent);
+        if (_currentGrappleType == GrappleType.PlayerToPoint) yield break;
+        
+        
         this.FireEvent(EventType.CancelAttackEvent,WeaponType.Melee);
         _activeWeapon = WeaponType.Ranged;
         _rangedEntry.reference.canAttack = false;
         _rangedEntry.reference.isAttacking = true;
         GetEnemies();
         yield return new WaitForSeconds(RangedData.Attribute.PreshotDelay);
+        this.FireEvent(EventType.CancelGrappleEvent, true);
         this.FireEvent(EventType.UpdateActiveWeaponEvent, _activeWeapon);
         this.FireEvent(EventType.PlayAttackEvent, RangedData.Attribute.CloneToAnimData(transform.root));
     }

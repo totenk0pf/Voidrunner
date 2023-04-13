@@ -15,6 +15,7 @@ public class PlayerMovementController : MonoBehaviour
 {
     public enum MovementState
     {
+        Locked,
         Normal,
         Dodge,
         Grappling,
@@ -81,7 +82,6 @@ public class PlayerMovementController : MonoBehaviour
     private float _horiz;
     private float _vert;
     private bool _isGrounded;
-    private bool _canMove;
 
     private void Awake()
     {
@@ -94,14 +94,14 @@ public class PlayerMovementController : MonoBehaviour
         _inputKeyList = new List<KeyCode>() {
             KeyCode.W, KeyCode.S, KeyCode.A, KeyCode.D
         };
-        _canMove = true;
+        moveState = MovementState.Normal;
         _canGravity = true;
         Rb.useGravity = false;
     }
     
     private void FixedUpdate()
     {
-        if (_canMove) {
+        if (moveState == MovementState.Normal) {
             UpdateMoveDir();
             if(moveState == MovementState.Normal) UpdateStrafe();
         }
@@ -147,7 +147,7 @@ public class PlayerMovementController : MonoBehaviour
     #region Movement Base
 
     private void ToggleMovement(bool canMove) {
-        _canMove = canMove;
+        moveState = canMove ? MovementState.Normal : MovementState.Locked;
     }
     
     private void UpdateStrafe()
