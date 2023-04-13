@@ -73,6 +73,7 @@ namespace Grapple {
         private Coroutine _playerToPointRoutine;
         private EnemyBase _currentGrappledEnemy;
         private Vector3 PlayerHeightOffset => new Vector3(0, 1, 0) * transform.localScale.y;
+        private int test = 0;
 
         [ReadOnly] public GameObject currGrappleObj;
 
@@ -224,11 +225,13 @@ namespace Grapple {
             if (!isFromAttack && _playerToPointRoutine != null) {
                 //StopAllCoroutines();
                 StopCoroutine(_playerToPointRoutine);
+                _playerToPointRoutine = null;
                 ResetGrapple_PlayerToPoint(isCanceled: true);
             }
             if (_enemyToPlayerRoutine != null) {
                 //StopAllCoroutines();
                 StopCoroutine(_enemyToPlayerRoutine);
+                _enemyToPlayerRoutine = null;
                 ResetGrapple_EnemyToPlayer(isCanceled: true);
             }   
             _lr.enabled = false;
@@ -236,7 +239,8 @@ namespace Grapple {
 
         private void ResetGrapple_EnemyToPlayer(bool isCanceled = false)
         {
-            if(isCanceled)
+            test++;
+            if(test == 2)
                 NCLogger.Log($"cancel enemy to player grapple");
             if (isCanceled) {
                 var dir = (transform.position - _currentGrappledEnemy.transform.position).normalized;
