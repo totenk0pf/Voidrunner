@@ -42,7 +42,7 @@ public class CombatAnimationSequenceController : MonoBehaviour
     private void Awake() {
         this.AddListener(EventType.RunPlayerComboSequenceEvent, param => PlayComboAnimation((ComboAnimContainer) param));
         // this.AddListener(EventType.NotifyResumeAllComboSequenceEvent, param => _canPlay = true);
-        // this.AddListener(EventType.NotifyStopAllComboSequenceEvent, param => StartCoroutine(StopAllComboSequence((bool) param)));
+        this.AddListener(EventType.NotifyStopAllComboSequenceEvent, param => StopAllComboSequence());
         this.AddListener(EventType.UpdateActiveWeaponEvent, param => _activeWeapon = (WeaponType)param);
         this.AddListener(EventType.SetMovementStateEvent, param => _moveState = (PlayerMovementController.MovementState) param );
     }
@@ -53,15 +53,10 @@ public class CombatAnimationSequenceController : MonoBehaviour
     /// <param name="isPending"> isPending is false by default since "_canPlay" always set-ed by animation event,
     /// but on weapon switch (not an animation, YET). It should be done manually</param>
     /// <returns></returns>
-    // private IEnumerator StopAllComboSequence(bool isPending = false)
-    // {
-    //     DOTween.Kill(_tweenObj);
-    //     _canPlay = false;
-    //     
-    //     if (!isPending) yield break;
-    //     
-    //     _canPlay = true;
-    //}
+     private void StopAllComboSequence()
+     {
+         DOTween.Kill(_tweenObj);
+     }
     
     private void PlayComboAnimation(ComboAnimContainer param)
     {

@@ -382,7 +382,7 @@ public class PlayerMovementController : MonoBehaviour
         NCLogger.Log($"dodge");
         this.FireEvent(EventType.SetMovementStateEvent, moveState);
         this.FireEvent(EventType.CancelAttackEvent, WeaponType.Melee);
-        this.FireEvent(EventType.NotifyStopAllComboSequenceEvent, false);
+        this.FireEvent(EventType.NotifyStopAllComboSequenceEvent);
         while (time < dodgeTime) {
             transform.position = Vector3.Lerp(startPos, dest, time / dodgeTime);
             time += Time.deltaTime;

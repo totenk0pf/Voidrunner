@@ -44,6 +44,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0a24c4496aa6360499c011ce1925517e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  EntriesData: {fileID: 11400000, guid: d53e7eb9c1a41b24484391ec28994f17, type: 2}
   type: 2
   canAttack: 0
   isAttacking: 0
@@ -915,6 +916,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bd040185ec8c285409b659df6727bea9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  EntriesData: {fileID: 11400000, guid: d53e7eb9c1a41b24484391ec28994f17, type: 2}
   type: 1
   canAttack: 0
   isAttacking: 0
