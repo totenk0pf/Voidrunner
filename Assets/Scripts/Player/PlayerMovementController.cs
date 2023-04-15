@@ -5,6 +5,7 @@ using System.Linq;
 using Combat;
 using Core.Events;
 using Core.Logging;
+using DG.Tweening;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -360,6 +361,7 @@ public class PlayerMovementController : MonoBehaviour
         Vector3 rollAxis = Vector3.Cross(_dodgeDir, transform.root.up);
     
         StartCoroutine(LerpDodgeRoutine(dest, rollAxis, dodgeDuration));
+        //LerpDodgeRoutine(dest, rollAxis, dodgeDuration);
     }
     
     
@@ -379,18 +381,31 @@ public class PlayerMovementController : MonoBehaviour
         this.FireEvent(EventType.SetMovementStateEvent, moveState);
         this.FireEvent(EventType.CancelAttackEvent, WeaponType.Melee);
         this.FireEvent(EventType.NotifyStopAllComboSequenceEvent);
+        // while (time < dodgeDuration) {
+        //     transform.position = Vector3.Lerp(startPos, dest, time / dodgeDuration);
+        //     time += Time.deltaTime;
+        //     
+        //     yield return null;
+        // }
+        var tween = transform.DOMove( dest, dodgeDuration).SetEase(Ease.InSine);
         while (time < dodgeDuration) {
-            transform.position = Vector3.Lerp(startPos, dest, time / dodgeDuration);
             time += Time.deltaTime;
-            
+
+            if (moveState != MovementState.Dodge)
+            {
+                NCLogger.Log($"Dodging but moveState is: {moveState}");
+                this.FireEvent(EventType.SetMovementStateEvent, MovementState.Dodge);
+            }
             yield return null;
         }
+
         transform.position = dest;
         playerVisualProto.up = Vector3.up;
         moveState = MovementState.Normal;
         Rb.velocity = velMag * Rb.velocity.normalized;
         this.FireEvent(EventType.NotifyResumeAllComboSequenceEvent);
         this.FireEvent(EventType.SetMovementStateEvent, moveState);
+        
     }
     #endregion
     

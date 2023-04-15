@@ -237,6 +237,8 @@ public class CombatManager : MonoBehaviour
     }
     #region Melee Methods
     private void MeleeAttack() {
+        this.FireEvent(EventType.RequestMovementStateEvent);
+        if (_moveState == PlayerMovementController.MovementState.Dodge) return;
         if (!_meleeEntry.reference.canAttack || _meleeEntry.reference.isAttacking) return;
         if (_meleeEntry.type != WeaponType.Melee) return;
         this.FireEvent(EventType.RequestCurrentGrappleTypeEvent);
@@ -250,7 +252,7 @@ public class CombatManager : MonoBehaviour
         _meleeEntry.reference.canAttack = false;
         _meleeEntry.reference.isAttacking = true; 
         _isInWindow = false;
-
+        NCLogger.Log($"meleeAtking");
         MeleeSequence.EnableIsolatedCollider(_curMeleeOrder);
 
         //StopAllCoroutines here due to spamming melee -> multiple instances of coroutine

@@ -81,6 +81,7 @@ namespace Combat {
             var enemies = dmgData.EnemiesToCount;
             foreach (var enemy in enemies) {
                 if (enemies.Count < 1) return;
+                if (!enemy.Key) return;
                 Damage(enemy.Key, dmgData.Damage * enemy.Value);
                 var playerToEnemyVector3 = (enemy.Key.transform.root.position - dmgData.playerTransform.position);
                 var knockbackDir = playerToEnemyVector3.magnitude <= 1
