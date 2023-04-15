@@ -349,27 +349,21 @@ public class PlayerMovementController : MonoBehaviour
         }
         
         moveState = MovementState.Dodge;
-        Vector3 dest = Vector3.zero;
+        Vector3 dest = transform.position + _dodgeDir * dodgeDistance;
         var isHit = Physics.Raycast(transform.position, _dodgeDir, out var hit, dodgeDistance, ~dodgeSafetyIgnoreLayer);
-        if (isHit && !hit.collider.isTrigger)
-        {
-            Debug.DrawLine(transform.position, hit.point, Color.magenta, 5f);
-            NCLogger.Log($"dodge hit {hit.collider.name}");
+        float dodgeDuration = dodgeTime;
+        if (isHit && !hit.collider.isTrigger) {
+            dodgeDuration = dodgeTime * (hit.distance / dodgeDistance);
             dest = hit.point;
-        }
-        else
-        {
-            Debug.DrawLine(transform.position, transform.position + _dodgeDir * dodgeDistance, Color.magenta, 5f);
-            dest = transform.position + _dodgeDir * dodgeDistance;
         }
         
         Vector3 rollAxis = Vector3.Cross(_dodgeDir, transform.root.up);
     
-        StartCoroutine(LerpDodgeRoutine(dest, rollAxis));
+        StartCoroutine(LerpDodgeRoutine(dest, rollAxis, dodgeDuration));
     }
     
     
-    private IEnumerator LerpDodgeRoutine(Vector3 dest, Vector3 rollAxis)
+    private IEnumerator LerpDodgeRoutine(Vector3 dest, Vector3 rollAxis, float dodgeDuration)
     {
         //NCLogger.Log($"Dir: {_dodgeDir}", LogLevel.INFO);
         var startPos = transform.position;
@@ -385,8 +379,8 @@ public class PlayerMovementController : MonoBehaviour
         this.FireEvent(EventType.SetMovementStateEvent, moveState);
         this.FireEvent(EventType.CancelAttackEvent, WeaponType.Melee);
         this.FireEvent(EventType.NotifyStopAllComboSequenceEvent);
-        while (time < dodgeTime) {
-            transform.position = Vector3.Lerp(startPos, dest, time / dodgeTime);
+        while (time < dodgeDuration) {
+            transform.position = Vector3.Lerp(startPos, dest, time / dodgeDuration);
             time += Time.deltaTime;
             
             yield return null;

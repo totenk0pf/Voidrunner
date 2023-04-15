@@ -195,8 +195,8 @@ namespace Grapple {
             var type = GetGrappleType(_currentGrappleHit.collider.gameObject.layer);
             if (type == GrappleType.None) return false;
             
-            if(_enemyToPlayerRoutine != null)StopCoroutine(_enemyToPlayerRoutine);
-            if(_playerToPointRoutine != null)StopCoroutine(_playerToPointRoutine);
+            if(_enemyToPlayerRoutine != null) StopCoroutine(_enemyToPlayerRoutine);
+            if(_playerToPointRoutine != null) StopCoroutine(_playerToPointRoutine);
             switch (type)
             {
                 case GrappleType.EnemyToPlayer:
@@ -208,7 +208,7 @@ namespace Grapple {
                     this.FireEvent(EventType.SetMovementStateEvent, PlayerMovementController.MovementState.Grappling);
                     //_enemyToPlayerRoutine = EnemyToPlayerRoutine();
                     _enemyToPlayerRoutine = StartCoroutine(EnemyToPlayerRoutine());
-                    break;
+                     return true;
                 case GrappleType.PlayerToPoint:
                     this.FireEvent(EventType.SetMovementStateEvent, PlayerMovementController.MovementState.Grappling);
                     //_playerToPointRoutine = PlayerToPointRoutine();
@@ -342,18 +342,17 @@ namespace Grapple {
         }
         #endregion
 
-
         #region Helper Function
 
         private void UpdateMoveState(PlayerMovementController.MovementState currState) {
-            NCLogger.Log($"pre-event: {_moveState}");
+            //NCLogger.Log($"pre-event: {_moveState}");
             if (_moveState == PlayerMovementController.MovementState.Grappling && _moveState != currState) {
                 this.FireEvent(EventType.SetMovementStateEvent, PlayerMovementController.MovementState.Grappling);
                 return;
             }
             _moveState = currState;
             
-            NCLogger.Log($"post-event: {_moveState}");
+            //NCLogger.Log($"post-event: {_moveState}");
 
         }
 
