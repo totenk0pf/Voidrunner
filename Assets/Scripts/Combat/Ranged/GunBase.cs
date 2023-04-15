@@ -34,13 +34,14 @@ namespace Combat {
             {
                 NCLogger.Log($"Did not receive refreshAttribute at Awake", LogLevel.ERROR);
             }
-            if (attribute.AtkSpdModifier > 1) {
-                var spd = attribute.AtkSpdModifier - 1;
-                _cooldown = attribute.fireClip.length + attribute.fireClip.length * spd + attribute.AftershotDelay;
-            
-            }else if (attribute.AtkSpdModifier < 1) {
-                _cooldown = attribute.fireClip.length * attribute.AtkSpdModifier + attribute.AftershotDelay;
-            }
+            // if (attribute.AtkSpdModifier > 1) {
+            //     //var spd = attribute.AtkSpdModifier - 1;
+            //     _cooldown = attribute.fireClip.length * spd + attribute.AftershotDelay;
+            //
+            // }else if (attribute.AtkSpdModifier < 1) {
+            //     _cooldown = attribute.fireClip.length + attribute.fireClip.length * attribute.AtkSpdModifier + attribute.AftershotDelay;
+            // }
+            _cooldown = attribute.fireClip.length / attribute.AtkSpdModifier + attribute.AftershotDelay;
         }
 
         protected void UpdateAttribute() {
@@ -60,6 +61,7 @@ namespace Combat {
         protected void Update() {
             if (Input.GetKeyDown(entry.key) && canAttack && entry.type == WeaponType.Ranged) {
                 if (Time.time > _cooldownTimeStamp) {
+                    _cooldown = attribute.fireClip.length / attribute.AtkSpdModifier + attribute.AftershotDelay;
                     _cooldownTimeStamp = Time.time + _cooldown; 
                     if (currentAmmo >= 1) {
                         currentAmmo--;
