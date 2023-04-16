@@ -13,16 +13,6 @@ namespace Combat {
 
     public class WeaponManager : MonoBehaviour
     {
-        //[SerializeField] private WeaponEntriesData weaponList;
-
-
-        private void Awake()
-        {
-        }
-
-        // private void Start()
-        // {
-        //     this.FireEvent(EventType.InitWeaponRefEvent, weaponList);
-        // }
+        
     }
 }

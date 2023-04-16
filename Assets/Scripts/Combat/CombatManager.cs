@@ -480,23 +480,6 @@ public class CombatManager : MonoBehaviour
     
     #region Init Methods
 
-    // private void InitWeaponRef(List<WeaponEntry> list)
-    // {
-    //     foreach (var entry in list)
-    //     {
-    //         switch (entry.type) {
-    //             case WeaponType.Melee:
-    //                 _meleeEntry = entry;
-    //                 break;
-    //             case WeaponType.Ranged:
-    //                 _rangedEntry = entry;
-    //                 break;
-    //             default:
-    //                 throw new ArgumentOutOfRangeException();
-    //         }
-    //     }
-    // }
-    
     private void AssignCollidersData() {
         var colList = GetComponentsInChildren<MeleeCollider>();
         foreach (var col in colList) {

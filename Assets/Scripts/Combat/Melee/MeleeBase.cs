@@ -49,11 +49,5 @@ namespace Combat {
             this.FireEvent(EventType.WeaponRechargedEvent);
             //resetting atk attributes is handled in CombatManager
         }
-        
-        // protected void OnWeaponChange(WeaponManager.WeaponEntry entry) {
-        //     if (entry.Type != WeaponType.Melee) return;
-        //     StopAllCoroutines();
-        //     isAttacking = false;
-        // }
     }
 }

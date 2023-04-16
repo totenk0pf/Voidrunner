@@ -34,13 +34,6 @@ namespace Combat {
             {
                 NCLogger.Log($"Did not receive refreshAttribute at Awake", LogLevel.ERROR);
             }
-            // if (attribute.AtkSpdModifier > 1) {
-            //     //var spd = attribute.AtkSpdModifier - 1;
-            //     _cooldown = attribute.fireClip.length * spd + attribute.AftershotDelay;
-            //
-            // }else if (attribute.AtkSpdModifier < 1) {
-            //     _cooldown = attribute.fireClip.length + attribute.fireClip.length * attribute.AtkSpdModifier + attribute.AftershotDelay;
-            // }
             _cooldown = attribute.fireClip.length / attribute.AtkSpdModifier + attribute.AftershotDelay;
         }
 
@@ -94,27 +87,7 @@ namespace Combat {
                 KnockBack(enemy.Key, 
                     Mathf.Clamp(dmgData.Knockback * enemy.Value, dmgData.Knockback, dmgData.KnockbackCap),
                     knockbackDir);
-                //NCLogger.Log($"dmg: {dmgData.Damage}");
             }
         }
-        
-        // protected IEnumerator Reload() {
-        //     isReloading = true;
-        //     canAttack = false;
-        //     clipAmount--;
-        //     yield return new WaitForSeconds(attribute.ReloadTime);
-        //     currentAmmo = attribute.MaxAmmo;
-        //     isReloading = false;
-        //     canAttack = true;
-        //     UpdateUI();
-        //     yield return null;
-        // }
-
-        // protected void OnWeaponChange(WeaponManager.WeaponEntry entry) {
-        //     _curWeaponType = entry.Type;
-        //     if (entry.Type != WeaponType.Ranged) return;
-        //     isAttacking = false;
-        // }
-        
     }
 }

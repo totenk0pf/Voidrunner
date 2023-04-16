@@ -10,9 +10,6 @@ using EventType = Core.Events.EventType;
 namespace Combat
 {
     public abstract class WeaponBase : MonoBehaviour, IWeapon {
-        // public float damage;
-        // public float damageScale;
-        // public float damageModifier;
         [SerializeField] protected WeaponEntriesData EntriesData;
         [SerializeField] protected WeaponType type;
         protected WeaponEntry entry;
@@ -21,8 +18,7 @@ namespace Combat
         
         protected void Awake()
         {
-            if(!EntriesData) NCLogger.Log($"Missing Entries Data", LogLevel.ERROR);    
-            //this.AddListener(EventType.InitWeaponRefEvent, param => InitWeaponRef( (List<WeaponEntry>) param));
+            if(!EntriesData) NCLogger.Log($"Missing Entries Data", LogLevel.ERROR);
             entry = EntriesData.HookReference(this, type);
         }
 
@@ -37,9 +33,6 @@ namespace Combat
             if (!enemy) return;
             enemy.Rigidbody.AddForce(dir * force, ForceMode.Impulse);
         }
-
-        public void InitWeaponRef(WeaponEntry entry) {
-            this.entry = entry;
-        }
+        
     }
 }
