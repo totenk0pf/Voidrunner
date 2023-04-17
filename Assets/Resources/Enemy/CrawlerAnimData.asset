@@ -25,6 +25,9 @@ MonoBehaviour:
   - type: 4
     name: isIdle
     hash: 2098831385
+  - type: 9
+    name: Hit
+    hash: 1654612129
   - type: 4
     name: isRunning
     hash: 1239866031

@@ -24,7 +24,8 @@ public enum PlayerAnimState {
 public class AnimData {
     public PlayerAnimState State { get; private set; }
     public float Damage { get; private set; }
-    public float Knockback { get; private set; }
+    public float KnockbackRange { get; private set; }
+    public float KnockbackDuration { get; private set; }
     public float KnockbackCap { get; private set; }
     public Transform playerTransform { get; private set; }
     public float AnimSpeed { get; private set; }
@@ -32,23 +33,25 @@ public class AnimData {
     public List<EnemyBase> Enemies { get; private set; }
     public float animDuration;
 
-    public AnimData(PlayerAnimState state,  Dictionary<EnemyBase, int> enemies = null, float damage = 0, float knockback = 0, float knockbackCap = 0, Transform playerTransform = null, float animSpeed = 1) {
+    public AnimData(PlayerAnimState state,  Dictionary<EnemyBase, int> enemies = null, float damage = 0, float knockbackRange = 0, float knockbackDuration = 0, float knockbackCap = 0, Transform playerTransform = null, float animSpeed = 1) {
         this.State = state;
         this.EnemiesToCount = enemies;
         this.Damage = damage;
         this.AnimSpeed = animSpeed;
-        this.Knockback = knockback;
+        this.KnockbackRange = knockbackRange;
+        this.KnockbackDuration = knockbackDuration;
         this.KnockbackCap = knockbackCap;
         this.playerTransform = playerTransform;
         InitCheck();
     }
     
-    public AnimData(PlayerAnimState state,  List<EnemyBase> enemies = null, float damage = 0, float knockback = 0, Transform playerTransform = null, float animSpeed = 1) {
+    public AnimData(PlayerAnimState state,  List<EnemyBase> enemies = null, float damage = 0, float knockbackRangeRange = 0, float knockbackDuration = 0, Transform playerTransform = null, float animSpeed = 1) {
         this.State = state;
         this.Enemies = enemies;
         this.Damage = damage;
         this.AnimSpeed = animSpeed;
-        this.Knockback = knockback;
+        this.KnockbackRange = knockbackRangeRange;
+        this.KnockbackDuration = knockbackDuration;
         this.playerTransform = playerTransform;
         InitCheck();
     }

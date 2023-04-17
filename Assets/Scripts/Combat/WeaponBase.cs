@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Core.Events;
 using Core.Logging;
+using DG.Tweening;
 using UnityEngine;
 using EventType = Core.Events.EventType;
 
@@ -29,10 +30,9 @@ namespace Combat
             EventDispatcher.Instance.FireEvent(EventType.EmpowerDamageEnemyEvent, enemy);
         }
 
-        protected virtual void KnockBack(EnemyBase enemy, float force, Vector3 dir) {
+        protected virtual void KnockBack(EnemyBase enemy, float duration, Vector3 dir) {
             if (!enemy) return;
-            enemy.Rigidbody.AddForce(dir * force, ForceMode.Impulse);
+            enemy.OnKnockback(dir, duration);
         }
-        
     }
 }

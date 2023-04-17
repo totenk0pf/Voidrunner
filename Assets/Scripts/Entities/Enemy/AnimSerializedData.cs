@@ -14,6 +14,9 @@ namespace Entities.Enemy {
         public AnimParam idleAnim;
         
         [ValueDropdown("GetAnimData", IsUniqueList = true, ExpandAllMenuItems = true, HideChildProperties = true)] [ShowInInspector]
+        public List<AnimParam> hitAnim;
+        
+        [ValueDropdown("GetAnimData", IsUniqueList = true, ExpandAllMenuItems = true, HideChildProperties = true)] [ShowInInspector]
         public List<AnimParam> hostileAnim;
         
         [ValueDropdown("GetAnimData", IsUniqueList = true, ExpandAllMenuItems = true, HideChildProperties = true)] [ShowInInspector]

@@ -92,7 +92,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7962184431429299329}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: MeleeColliders
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -930,7 +930,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5900335172496077412}
   - component: {fileID: 6757320572449239519}
-  m_Layer: 3
+  m_Layer: 7
   m_Name: CombatManager
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1278,6 +1278,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Seq Collider 3
       objectReference: {fileID: 0}
+    - target: {fileID: 6186902247348699735, guid: 4a0c4bc19096b374dbe26b4ccebbed4f, type: 3}
+      propertyPath: m_Layer
+      value: 7
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 4a0c4bc19096b374dbe26b4ccebbed4f, type: 3}
 --- !u!4 &921806782704915534 stripped
@@ -1376,6 +1380,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Seq Collider 1
       objectReference: {fileID: 0}
+    - target: {fileID: 6186902247348699735, guid: 4a0c4bc19096b374dbe26b4ccebbed4f, type: 3}
+      propertyPath: m_Layer
+      value: 7
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 4a0c4bc19096b374dbe26b4ccebbed4f, type: 3}
 --- !u!4 &955137117275079713 stripped
@@ -1473,6 +1481,10 @@ PrefabInstance:
     - target: {fileID: 6186902247348699735, guid: 4a0c4bc19096b374dbe26b4ccebbed4f, type: 3}
       propertyPath: m_Name
       value: Seq Collider 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 6186902247348699735, guid: 4a0c4bc19096b374dbe26b4ccebbed4f, type: 3}
+      propertyPath: m_Layer
+      value: 7
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 4a0c4bc19096b374dbe26b4ccebbed4f, type: 3}

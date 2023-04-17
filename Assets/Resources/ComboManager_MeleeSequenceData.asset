@@ -63,9 +63,12 @@ MonoBehaviour:
     - Name: damage
       Entry: 4
       Data: 15
-    - Name: knockBackForce
+    - Name: knockBackRange
       Entry: 4
       Data: 6
+    - Name: knockBackDuration
+      Entry: 4
+      Data: 1
     - Name: playerTransform
       Entry: 6
       Data: 
@@ -95,13 +98,13 @@ MonoBehaviour:
       Data: UnityEngine.Vector3, UnityEngine.CoreModule
     - Name: 
       Entry: 4
-      Data: -0.59230113
+      Data: -0.7767147
     - Name: 
       Entry: 4
       Data: 0
     - Name: 
       Entry: 4
-      Data: 0.8057167
+      Data: 0.629852533
     - Name: 
       Entry: 8
       Data: 
@@ -141,9 +144,12 @@ MonoBehaviour:
     - Name: damage
       Entry: 4
       Data: 20
-    - Name: knockBackForce
+    - Name: knockBackRange
       Entry: 4
       Data: 3
+    - Name: knockBackDuration
+      Entry: 4
+      Data: 2
     - Name: playerTransform
       Entry: 6
       Data: 
@@ -166,8 +172,8 @@ MonoBehaviour:
       Entry: 7
       Data: 5|ComboAnimContainer, Assembly-CSharp
     - Name: transform
-      Entry: 10
-      Data: 1
+      Entry: 6
+      Data: 
     - Name: direction
       Entry: 7
       Data: UnityEngine.Vector3, UnityEngine.CoreModule
@@ -219,9 +225,12 @@ MonoBehaviour:
     - Name: damage
       Entry: 4
       Data: 25
-    - Name: knockBackForce
+    - Name: knockBackRange
       Entry: 4
       Data: 9
+    - Name: knockBackDuration
+      Entry: 4
+      Data: 3
     - Name: playerTransform
       Entry: 6
       Data: 
@@ -244,8 +253,8 @@ MonoBehaviour:
       Entry: 7
       Data: 7|ComboAnimContainer, Assembly-CSharp
     - Name: transform
-      Entry: 10
-      Data: 1
+      Entry: 6
+      Data: 
     - Name: direction
       Entry: 7
       Data: UnityEngine.Vector3, UnityEngine.CoreModule

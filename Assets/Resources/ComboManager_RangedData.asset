@@ -17,7 +17,8 @@ MonoBehaviour:
     preshotDelay: 0
     aftershotDelay: 0
     reloadTime: 0
-    knockbackForce: 4
+    knockBackRange: 3
+    knockBackDuration: 2
     knockbackStackCap: 15
     playerTransform: {fileID: 0}
     damagePerPellet: 5

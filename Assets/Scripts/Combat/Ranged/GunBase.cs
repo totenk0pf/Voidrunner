@@ -77,16 +77,16 @@ namespace Combat {
             foreach (var enemy in enemies) {
                 if (enemies.Count < 1) return;
                 if (!enemy.Key) return;
-                Damage(enemy.Key, dmgData.Damage * enemy.Value);
+                
                 var playerToEnemyVector3 = (enemy.Key.transform.root.position - dmgData.playerTransform.position);
                 var knockbackDir = playerToEnemyVector3.magnitude <= 1
                     ? dmgData.playerTransform.forward.normalized
                     : playerToEnemyVector3.normalized;
-                
-                enemy.Key.Rigidbody.velocity = Vector3.zero;
-                KnockBack(enemy.Key, 
-                    Mathf.Clamp(dmgData.Knockback * enemy.Value, dmgData.Knockback, dmgData.KnockbackCap),
-                    knockbackDir);
+                knockbackDir.y = 0;
+                Damage(enemy.Key, dmgData.Damage * enemy.Value);
+                var range = Mathf.Clamp(dmgData.KnockbackRange * enemy.Value, dmgData.KnockbackRange,
+                    dmgData.KnockbackCap);
+                KnockBack(enemy.Key, dmgData.KnockbackDuration, knockbackDir * range);
             }
         }
     }

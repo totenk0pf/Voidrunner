@@ -89,8 +89,11 @@ MonoBehaviour:
   enemyDamage: 10
   enemySpeed: 5
   enemyHP: 100
-  isStunned: 0
   ui: {fileID: 907737044374819495}
+  animData: {fileID: 11400000, guid: cb0b6e593aa29d741b115bb5825fccdb, type: 2}
+  enemyRootMotion: {fileID: 2345367977018875063}
+  animator: {fileID: 3703614446501467867}
+  isStunned: 0
   IsGrounded: 0
   checkDist: 0
   groundIgnoreLayer:
@@ -108,7 +111,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7d9f9bc60c2f5374f98158e6b53e5c28, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _currentState: {fileID: 6190139054101900234}
+  currentState: {fileID: 6190139054101900234}
 --- !u!195 &5391198623046352642
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -159,7 +162,7 @@ Rigidbody:
   m_UseGravity: 1
   m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 80
+  m_Constraints: 122
   m_CollisionDetection: 0
 --- !u!1001 &3100636764477347262
 PrefabInstance:
@@ -597,6 +600,11 @@ PrefabInstance:
       objectReference: {fileID: 9100000, guid: 4c1ff995a8827df4aaed34fce68a3101, type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 813606c7e61c9af419604ff6e41ac46a, type: 3}
+--- !u!95 &3703614446501467867 stripped
+Animator:
+  m_CorrespondingSourceObject: {fileID: 5866666021909216657, guid: 813606c7e61c9af419604ff6e41ac46a, type: 3}
+  m_PrefabInstance: {fileID: 7065994015106739018}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &7315478998740651169 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 813606c7e61c9af419604ff6e41ac46a, type: 3}

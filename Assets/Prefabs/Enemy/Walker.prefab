@@ -55,8 +55,11 @@ MonoBehaviour:
   enemyDamage: 10
   enemySpeed: 1.2
   enemyHP: 100
-  isStunned: 0
   ui: {fileID: 927390444342798379}
+  animData: {fileID: 11400000, guid: 8522a6f20a0c8004383cdfb1d49b917d, type: 2}
+  enemyRootMotion: {fileID: 614507488950970045}
+  animator: {fileID: 5866666020675766461}
+  isStunned: 0
   IsGrounded: 0
   checkDist: 0
   groundIgnoreLayer:
@@ -74,7 +77,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7d9f9bc60c2f5374f98158e6b53e5c28, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _currentState: {fileID: 4532645165320745301}
+  currentState: {fileID: 4532645165320745301}
 --- !u!195 &6507194866629278065
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -125,7 +128,7 @@ Rigidbody:
   m_UseGravity: 1
   m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 80
+  m_Constraints: 122
   m_CollisionDetection: 0
 --- !u!1 &6507194867201685405
 GameObject:
@@ -267,6 +270,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _walkerAttack: {fileID: 5940769060041157936}
+--- !u!95 &5866666020675766461 stripped
+Animator:
+  m_CorrespondingSourceObject: {fileID: 5866666021909216657, guid: 5b4b12c9950848c459810b2e227735a4, type: 3}
+  m_PrefabInstance: {fileID: 1241216300}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &97916756970570766
 PrefabInstance:
   m_ObjectHideFlags: 0

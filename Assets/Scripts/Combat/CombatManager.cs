@@ -11,6 +11,7 @@ using JetBrains.Annotations;
 using Sirenix.OdinInspector;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.Serialization;
 using EventType = Core.Events.EventType;
 using Random = UnityEngine.Random;
 
@@ -28,7 +29,8 @@ public class MeleeSequenceAttribute : IAnimDataConvertable {
     //After it ends, next combo string can be played
     [SerializeField] private float nextSeqInputWindow;
     [SerializeField] private float damage;
-    [SerializeField] private float knockBackForce;
+    [SerializeField] private float knockBackRange;
+    [SerializeField] private float knockBackDuration;
     [ReadOnly] public Transform playerTransform;
     [ReadOnly] public MeleeCollider collider;
     public bool canDamageMod;
@@ -42,7 +44,8 @@ public class MeleeSequenceAttribute : IAnimDataConvertable {
     public float NextSeqInputWindow => nextSeqInputWindow;
     public float Damage => canDamageMod ? (damage + damageModifier) * damageScale : damage;
     public PlayerAnimState State => state;
-    public float Knockback => knockBackForce;
+    public float KnockbackRange => knockBackRange;
+    public float KnockbackDuration => knockBackDuration;
     
     public float AtkSpdModifier {
         get => canDamageMod ? attackSpeedModifier : ReturnFloatWithLog(1);
@@ -75,19 +78,20 @@ public class MeleeSequenceAttribute : IAnimDataConvertable {
     }
     
     public AnimData CloneToAnimData() {
-        return new AnimData(State, collider.Enemies, Damage, Knockback, playerTransform, AtkSpdModifier);
+        return new AnimData(State, collider.Enemies, Damage, KnockbackRange, KnockbackDuration, playerTransform, AtkSpdModifier);
     }
 
     public AnimData CloneToAnimData(Transform transform) {
-        return new AnimData(State, collider.Enemies, Damage, Knockback, transform, AtkSpdModifier);
+        return new AnimData(State, collider.Enemies, Damage, KnockbackRange, KnockbackDuration, transform, AtkSpdModifier);
     }
     
-    public MeleeSequenceAttribute(PlayerAnimState animState, float seqInputWin, float dmg, float knockForce, MeleeCollider col,
+    public MeleeSequenceAttribute(PlayerAnimState animState, float seqInputWin, float dmg, float knockRange, float knockDuration, MeleeCollider col,
         bool dmgMod = false, float dmgScale = 1, float dmgModifier = 0, float dmgSpeed = 1) {
         state = animState;
         nextSeqInputWindow = seqInputWin;
         damage = dmg;
-        knockBackForce = knockForce;
+        knockBackRange = knockRange;
+        knockBackDuration = knockDuration;
         collider = col;
         canDamageMod = dmgMod;
         damageScale = dmgScale;
@@ -104,7 +108,8 @@ public class RangedAttribute : IAnimDataConvertable
     [SerializeField] private float aftershotDelay;
     [SerializeField] private float reloadTime;
 
-    [SerializeField] private float knockbackForce;
+    [SerializeField] private float knockBackRange;
+    [SerializeField] private float knockBackDuration;
     [SerializeField] private float knockbackStackCap;
     [ReadOnly] public Transform playerTransform;
     [SerializeField] private float damagePerPellet;
@@ -138,7 +143,8 @@ public class RangedAttribute : IAnimDataConvertable
     public bool canDamageMod;
     [ShowIf("canDamageMod")] [SerializeField] private float attackSpeed;
     public float ReloadTime => reloadTime;
-    public float Knockback => knockbackForce;
+    public float KnockbackRange => knockBackRange;
+    public float KnockbackDuration => knockBackDuration;
     public PlayerAnimState State => state;
     public float PreshotDelay => preshotDelay;
     public float AftershotDelay => aftershotDelay;
@@ -150,10 +156,10 @@ public class RangedAttribute : IAnimDataConvertable
     public float Range => rayCastRange;
     public float Angle => maxSpreadAngle;
     public AnimData CloneToAnimData() {
-        return new AnimData(State, EnemyToCountDict, damagePerPellet, knockbackForce, knockbackStackCap, playerTransform, AtkSpdModifier);
+        return new AnimData(State, EnemyToCountDict, damagePerPellet, KnockbackRange, KnockbackDuration, knockbackStackCap, playerTransform, AtkSpdModifier);
     }
     public AnimData CloneToAnimData(Transform transform) {
-        return new AnimData(State, EnemyToCountDict, damagePerPellet, Knockback, knockbackStackCap,  transform, AtkSpdModifier);
+        return new AnimData(State, EnemyToCountDict, damagePerPellet, KnockbackRange, KnockbackDuration, knockbackStackCap,  transform, AtkSpdModifier);
     }
 }
 

@@ -30,14 +30,13 @@ namespace Combat {
             if (enemies == null) return;
             foreach (var enemy in enemies) {
                 if (enemies.Count < 1) return;
-                Damage(enemy, dmgData.Damage);
                 var playerToEnemyVector3 = (enemy.transform.root.position - dmgData.playerTransform.position);
                 var knockbackDir = playerToEnemyVector3.magnitude <= 1
                     ? dmgData.playerTransform.forward.normalized
                     : playerToEnemyVector3.normalized;
-
-                enemy.Rigidbody.velocity = Vector3.zero;
-                KnockBack(enemy, dmgData.Knockback, knockbackDir);
+                knockbackDir.y = 0;
+                Damage(enemy, dmgData.Damage);
+                KnockBack(enemy, dmgData.KnockbackDuration, knockbackDir * dmgData.KnockbackRange);
                 //NCLogger.Log($"dmg: {dmgData.Damage}");
             }
             

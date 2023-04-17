@@ -50,10 +50,15 @@ namespace Entities.Enemy {
                 }
 
                 else {
-                    //if (!_agent.updatePosition) _agent.updatePosition = true;
+                    if (!_agent.updatePosition) _agent.updatePosition = true;
                     transform.root.position += _animator.deltaPosition;
                 }
             }
+        }
+
+        public void OnMoveChange(bool state) {
+            canMove = state;
+            _agent.updatePosition = !state || _agent.updatePosition;
         }
     }
 }
