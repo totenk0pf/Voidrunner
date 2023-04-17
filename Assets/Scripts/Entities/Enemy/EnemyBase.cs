@@ -79,7 +79,7 @@ public class EnemyBase : EntityBase {
     }
 
     public virtual void AirborneUpdate() {
-        IsGrounded = Physics.Raycast(transform.position, Vector3.down, checkDist, ~groundIgnoreLayer);
+        IsGrounded = navAgent.isOnNavMesh;
         if (!IsGrounded && (StateMachine || NavMeshAgent)) {
             DisablePathfinding();
         } else {
