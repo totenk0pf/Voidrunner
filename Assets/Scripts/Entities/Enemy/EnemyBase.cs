@@ -87,6 +87,14 @@ public class EnemyBase : EntityBase {
         AirborneUpdate();
     }
 
+    #region Update Methods
+
+    public virtual void Die() {
+        if (currentHp <= 0) {
+            Destroy(gameObject);
+        }
+    }
+
     public virtual void AirborneUpdate() {
         IsGrounded = Rigidbody.velocity.y < 0.1f;
         if (!IsGrounded) {
@@ -95,24 +103,24 @@ public class EnemyBase : EntityBase {
             EnablePathfinding();
         }
     }
-    public virtual void EnablePathfinding() {
-        if (CanPull && IsGrounded) {
-            StateMachine.enabled = true;
-            NavMeshAgent.enabled = true;
-            Rigidbody.useGravity = false;
-        }
-    }
 
-    public virtual void DisablePathfinding() {
-        StateMachine.enabled = false;
-        NavMeshAgent.enabled = false;
-        Rigidbody.useGravity = CanPull;
-    }
+    #endregion
 
+    #region Combat Methods
     public virtual void OnGrappled() {
-        enemyRootMotion.OnMoveChange(false);
         _canPull = false;
+        isStunned = true;
+        enemyRootMotion.OnMoveChange(false);
+        foreach (var anim in animData.attackAnim) {ResetAnim(anim);}
+        animator.SetTrigger(animData.hitAnim[0].name);
         DisablePathfinding();
+    }
+    
+    public virtual void OnRelease() {
+        _canPull = true;
+        isStunned = false;
+        enemyRootMotion.OnMoveChange(true);
+        EnablePathfinding();
     }
 
     public virtual void Stun(float duration) {
@@ -145,12 +153,6 @@ public class EnemyBase : EntityBase {
         yield return null;
     }
 
-    public virtual void OnRelease() {
-        _canPull = true;
-        enemyRootMotion.OnMoveChange(true);
-        EnablePathfinding();
-    }
-
     public virtual void OnKnockback(Vector3 dir, float duration) {
         StartCoroutine(KnockbackCoroutine(dir, duration));
     }
@@ -170,12 +172,9 @@ public class EnemyBase : EntityBase {
         enemyRootMotion.OnMoveChange(true);
         isStunned = false;
     }
-    public virtual void Die() {
-        if (currentHp <= 0) {
-            Destroy(gameObject);
-        }
-    }
-    
+    #endregion
+
+    #region Helpers / Debug
     private void OnDrawGizmos() {
         Gizmos.color = Color.green;
         Gizmos.DrawLine(transform.position, transform.position + Vector3.down * checkDist);
@@ -191,4 +190,19 @@ public class EnemyBase : EntityBase {
                 break;
         }
     }
+
+    protected virtual void EnablePathfinding() {
+        if (CanPull && IsGrounded) {
+            StateMachine.enabled = true;
+            NavMeshAgent.enabled = true;
+            Rigidbody.useGravity = false;
+        }
+    }
+
+    protected virtual void DisablePathfinding() {
+        StateMachine.enabled = false;
+        NavMeshAgent.enabled = false;
+        Rigidbody.useGravity = CanPull;
+    }
+    #endregion
 }
