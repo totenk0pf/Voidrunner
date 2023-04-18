@@ -706,7 +706,7 @@ MonoBehaviour:
   maxAngleAA: 5
   grappleLayer:
     serializedVersion: 2
-    m_Bits: 768
+    m_Bits: 8960
   ignoreLayer:
     serializedVersion: 2
     m_Bits: 232
@@ -719,7 +719,7 @@ MonoBehaviour:
     m_Bits: 256
   grapplePointLayer:
     serializedVersion: 2
-    m_Bits: 512
+    m_Bits: 8704
   gravityDampDuration: 0.3
   momentumForce: 2500
   forceMode: 5

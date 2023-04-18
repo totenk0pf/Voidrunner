@@ -40,12 +40,12 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5173689491316041475}
-  - component: {fileID: 5173689491316041484}
+  - component: {fileID: 3116633803724457251}
   - component: {fileID: 5173689491316041485}
   - component: {fileID: 5173689491316041482}
   - component: {fileID: 375668074714074}
   - component: {fileID: 5714819504090998441}
-  m_Layer: 8
+  m_Layer: 13
   m_Name: Boss
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -70,7 +70,7 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &5173689491316041484
+--- !u!114 &3116633803724457251
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -79,12 +79,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 5173689491316041483}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bea0c9710358ed14b8aa1e421e4b5088, type: 3}
+  m_Script: {fileID: 11500000, guid: a8ac2ba36d534ba4283ce225c7c31a47, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   type: 0
   enemyDamage: 20
-  enemySpeed: 4
   enemyHP: 500
   ui: {fileID: 2970694111892148635}
   animData: {fileID: 11400000, guid: 7e424ba713b89b94d94843999e0cc043, type: 2}

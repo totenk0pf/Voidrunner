@@ -9,12 +9,12 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5173689491316041475}
-  - component: {fileID: 5173689491316041484}
+  - component: {fileID: 5345898016427155852}
   - component: {fileID: 5173689491316041485}
   - component: {fileID: 5173689491316041482}
   - component: {fileID: 6060207490705810709}
   - component: {fileID: 2940569346349917335}
-  m_Layer: 8
+  m_Layer: 13
   m_Name: Juggernaut
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -39,7 +39,7 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &5173689491316041484
+--- !u!114 &5345898016427155852
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -48,15 +48,14 @@ MonoBehaviour:
   m_GameObject: {fileID: 5173689491316041483}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bea0c9710358ed14b8aa1e421e4b5088, type: 3}
+  m_Script: {fileID: 11500000, guid: 44b28dd96f7f50d4e9d0f18d8e2411cd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   type: 0
   enemyDamage: 10
-  enemySpeed: 2
   enemyHP: 100
   ui: {fileID: 2970694111892148635}
-  animData: {fileID: 0}
+  animData: {fileID: 11400000, guid: 7497e4a145c882b4994849ef89527bd0, type: 2}
   enemyRootMotion: {fileID: 7144324290179378034}
   animator: {fileID: 5657671935441014972}
   isStunned: 0
@@ -88,7 +87,7 @@ NavMeshAgent:
   m_Enabled: 1
   m_AgentTypeID: 0
   m_Radius: 0.9
-  m_Speed: 0
+  m_Speed: 3
   m_Acceleration: 360
   avoidancePriority: 50
   m_AngularSpeed: 360

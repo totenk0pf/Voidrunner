@@ -20,8 +20,7 @@ public enum EnemyType {
 public class EnemyBase : EntityBase {
     [TitleGroup("Config")]
     public EnemyType type;
-    public float enemyDamage; 
-    public float enemySpeed;
+    public float enemyDamage;
     public float enemyHP;
     [SerializeField] private EnemyUI ui;
 
@@ -77,8 +76,6 @@ public class EnemyBase : EntityBase {
     
     private void Start() {
         _canPull = true;
-        NavMeshAgent.speed = enemySpeed;
-
         if (!NavMeshAgent.isOnNavMesh) {
             Debug.LogWarning("No NavMesh is bound to Enemy");
         }
@@ -154,7 +151,7 @@ public class EnemyBase : EntityBase {
         EnablePathfinding();
     }
 
-    public void OnKnockback(Vector3 dir, float duration) {
+    public virtual void OnKnockback(Vector3 dir, float duration) {
         StartCoroutine(KnockbackCoroutine(dir, duration));
     }
 
@@ -173,19 +170,6 @@ public class EnemyBase : EntityBase {
         enemyRootMotion.OnMoveChange(true);
         isStunned = false;
     }
-    
-    public virtual void Attack() {
-        throw new System.NotImplementedException();
-    }
-
-    public virtual void Move(Transform destination) {
-        NavMeshAgent.SetDestination(destination.position);
-    }
- 
-    public virtual void Move(Vector3 destination) {
-        NavMeshAgent.SetDestination(destination);
-    }
-
     public virtual void Die() {
         if (currentHp <= 0) {
             Destroy(gameObject);
