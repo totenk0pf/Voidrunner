@@ -11,10 +11,15 @@ public struct ItemMsg {
 
 public class InventorySystem : SerializedMonoBehaviour {
     [ReadOnly] public List<InventoryItem> inventory;
+    
+    [TitleGroup("Items")]
     private InventoryItem _activeItem;
     [SerializeField] private ItemData defaultItem;
+    
+    [TitleGroup("Weight")]
     private float _currentWeight;
     [SerializeField] private float maxWeight;
+    
     private bool _isUIActive;
     private bool _canUseItem;
 
@@ -24,6 +29,7 @@ public class InventorySystem : SerializedMonoBehaviour {
         inventory   = new List<InventoryItem>();
         this.AddListener(EventType.ItemAddEvent, data => Add((ItemMsg) data));
         this.AddListener(EventType.ItemPickEvent, data => Pick((ItemMsg) data));
+        this.AddListener(EventType.SpecUpEvent, data => );
         Add(new ItemMsg {
             data  = defaultItem
         });
@@ -104,5 +110,9 @@ public class InventorySystem : SerializedMonoBehaviour {
             count = _activeItem.itemCount,
             countOnly = true
         });
+    }
+
+    public void IncreaseMaxWeight(float amount) {
+        maxWeight += amount;
     }
 }

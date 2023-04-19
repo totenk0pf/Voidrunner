@@ -2,23 +2,20 @@ using Core.Events;
 using System.Timers;
 using UI;
 using UnityEngine;
+using UnityEngine.Serialization;
 using EventType = Core.Events.EventType;
 
 public class Oxygen : MonoBehaviour {
-    //Oxygen pool player has throughout the game
-    public float oxygenPool;
-
-    //Delay to regenerate oxygen (in seconds)
-    public int regenerateTime;
-
-    //Oxygen regen multipiler
+    public int regenDelay;
     public float regenMultipiler;
 
-    [Space] public float permanentOxygen;
+    public float defaultOxygen;
+    public float permanentOxygen;
     public float tempOxygen;
-
-    [Space] public float totalOxygen; //sum of perm and temp oxygen\
+    
+    public float totalOxygen; //sum of perm and temp oxygen
     public float currentOxygen;
+    
     public float oxygenRatio; //for UI
 
     //Check if can regenerate temp oxygen 
@@ -31,10 +28,10 @@ public class Oxygen : MonoBehaviour {
     private Timer _regenTimer;
 
     private void Awake() {
-        permanentOxygen = oxygenPool;
+        permanentOxygen = defaultOxygen;
         tempOxygen      = permanentOxygen;
 
-        _currentRegenTimer = regenerateTime;
+        _currentRegenTimer = regenDelay;
 
         totalOxygen   = permanentOxygen + tempOxygen;
         currentOxygen = totalOxygen;
@@ -48,8 +45,8 @@ public class Oxygen : MonoBehaviour {
         _regenTimer.Elapsed += OnTimedEvent;
 
         //Just in case
-        if (oxygenPool == 0) Debug.LogWarning("Oxygen Pool might be null");
-        if (regenerateTime == 0) Debug.LogWarning("Regen Time Pool might be null");
+        if (defaultOxygen == 0) Debug.LogWarning("Oxygen Pool might be null");
+        if (regenDelay == 0) Debug.LogWarning("Regen Time Pool might be null");
         if (regenMultipiler == 0) Debug.LogWarning("Regen Multiplier Pool might be null");
         
         this.FireEvent(EventType.UpdateOxygenModifiersEvent, this);
@@ -97,7 +94,7 @@ public class Oxygen : MonoBehaviour {
         tempOxygen -= amount;
 
         _canRegenOxygen    = false;
-        _currentRegenTimer = regenerateTime;
+        _currentRegenTimer = regenDelay;
         FireUIEvent();
     }
 
