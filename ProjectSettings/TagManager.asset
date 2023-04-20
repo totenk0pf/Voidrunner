@@ -4,7 +4,10 @@
 TagManager:
   serializedVersion: 2
   tags:
-  - Enemy
+  - Enemy_Walker
+  - Enemy_Crawler
+  - Enemy_Juggernaut
+  - Enemy_Boss1
   layers:
   - Default
   - TransparentFX

@@ -16,7 +16,7 @@ GameObject:
   - component: {fileID: 6235747964828826547}
   m_Layer: 8
   m_Name: Walker
-  m_TagString: Untagged
+  m_TagString: Enemy_Walker
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -53,7 +53,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   type: 0
   enemyDamage: 10
-  enemySpeed: 1.2
   enemyHP: 100
   ui: {fileID: 927390444342798379}
   animData: {fileID: 11400000, guid: 8522a6f20a0c8004383cdfb1d49b917d, type: 2}

@@ -19,6 +19,8 @@ public class InventorySystem : SerializedMonoBehaviour {
     [TitleGroup("Weight")]
     private float _currentWeight;
     [SerializeField] private float maxWeight;
+    [SerializeField] private float weightPerLevel;
+    [SerializeField] private float weightModifier;
     
     private bool _isUIActive;
     private bool _canUseItem;
@@ -29,7 +31,7 @@ public class InventorySystem : SerializedMonoBehaviour {
         inventory   = new List<InventoryItem>();
         this.AddListener(EventType.ItemAddEvent, data => Add((ItemMsg) data));
         this.AddListener(EventType.ItemPickEvent, data => Pick((ItemMsg) data));
-        this.AddListener(EventType.SpecUpEvent, data => );
+        this.AddListener(EventType.UpdateInventoryData, specAmt => SetMaxWeight((int) specAmt * weightPerLevel * weightModifier));
         Add(new ItemMsg {
             data  = defaultItem
         });
@@ -112,7 +114,11 @@ public class InventorySystem : SerializedMonoBehaviour {
         });
     }
 
+    public void SetMaxWeight(float amount) {
+        maxWeight = amount;
+    }
+    
     public void IncreaseMaxWeight(float amount) {
-        maxWeight += amount;
+        maxWeight += weightModifier + amount;
     }
 }

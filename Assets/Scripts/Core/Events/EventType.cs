@@ -14,6 +14,7 @@ namespace Core.Events {
         InventoryUpdateEvent,
         UIBarChangedEvent,
         OxygenChangeEvent,
+        XPGainEvent,
         LevelUpEvent,
         SpecUpEvent,
         WeaponChangedEvent,
@@ -27,46 +28,62 @@ namespace Core.Events {
         SetMovementStateEvent,
         RequestIsOnGroundEvent,
         ReceiveIsOnGroundEvent,
+        
         //Grapple Based Events
         CancelGrappleEvent,
+        
         //Weapon Init Events
         RefreshRangedAttributesEvent,
+        
         //Weapon Attack/Activation Events
         WeaponFiredEvent, //common for melee & ranged
         UpdateActiveWeaponEvent,
         WeaponMeleeFiredEvent, //only for melee
         WeaponRangedFiredEvent, //only for ranged
         WeaponPostRangedFiredEvent, //only for ranged (UI/UX handle)
+        
         //Modifiers Events
         RefreshModifiersEvent,
         UpdateCombatModifiersEvent,
         UpdateOxygenModifiersEvent,
+        UpdateOxygenData,
+        UpdateCombatData,
+        UpdateInventoryData,
+
         //Animation Events
         PlayAnimationEvent,
         PlayAttackEvent,
         ResumeMovementEvent, //resume movement after melee window
         StopMovementEvent, //stop movement on melee atk
         CancelAttackEvent,
+        
         //Animation Clips Combat Events
         AttackBeginEvent,
         OnInputWindowHold,
         AttackEndEvent,
         MeleeEnemyDamageEvent, //duplicate of DamageEnemyEvent (testing purposes, may update later)
         RangedEnemyDamageEvent,
+        
         //Player Animator Init Events
         RequestPlayerAnimatorEvent,
         ReceivePlayerAnimatorEvent,
+        
         //
         NotifyPlayerComboSequenceEvent,
         RunPlayerComboSequenceEvent,
         NotifyStopAllComboSequenceEvent,
         NotifyResumeAllComboSequenceEvent,
         InitWeaponRefEvent,
+        
         //
         LockInputEvent,
         UnlockInputEvent,
+        
         //
         RequestCurrentGrappleTypeEvent,
         ReceiveCurrentGrappleTypeEvent,
+        
+        // Entity update events
+        EntityDeathEvent
     }
 }

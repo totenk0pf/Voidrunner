@@ -3,22 +3,20 @@ using System.Collections.Generic;
 using UnityEngine;
 using Combat;
 using Core.Events;
+using Player.Progression;
 using Sirenix.OdinInspector;
 using EventType = Core.Events.EventType;
 
 public class PlayerStats : MonoBehaviour
 {
-    private PlayerProgession progression;
-    
-    [TitleGroup("Components")]
-    [SerializeField] private Oxygen oxygenComponent;
+    private PlayerProgression progression;
+    [SerializeField] private PlayerProgressionData progressionData;
 
     private void Awake() {
         this.AddListener(EventType.UpdateCombatModifiersEvent, param => UpdateCombatModifiers((MeleeSequenceData) param));
-        // this.AddListener(EventType.UpdateOxygenModifiersEvent, param => UpdateOxygenModifiers((Oxygen) param));
-        
-        progression = new PlayerProgession();
-        // level       = progression.currentLevel;
+        this.AddListener(EventType.UpdateOxygenModifiersEvent, param => UpdateOxygenModifiers());
+        this.AddListener(EventType.EntityDeathEvent, enemyType => progression.AddXP((string) enemyType));
+        progression = new PlayerProgression(progressionData);
     }
 
     private void Start() {
@@ -35,8 +33,7 @@ public class PlayerStats : MonoBehaviour
         // }
     }
 
-    // private void UpdateOxygenModifiers(Oxygen oxygenCompo)
-    // {
+    private void UpdateOxygenModifiers() {
         // oxygenCompo.oxygenPool = 100 + 5 * vigor;
-    // }
+    }
 }

@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Core.Events;
 using Core.Logging;
 using DG.Tweening;
 using Entities.Enemy;
@@ -8,6 +9,7 @@ using Sirenix.OdinInspector;
 using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.Serialization;
+using EventType = Core.Events.EventType;
 
 [Flags]
 [Serializable]
@@ -92,6 +94,7 @@ public class EnemyBase : EntityBase {
     public virtual void Die() {
         if (currentHp <= 0) {
             Destroy(gameObject);
+            this.FireEvent(EventType.EntityDeathEvent, transform.tag);
         }
     }
 

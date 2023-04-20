@@ -1,13 +1,31 @@
+using System;
 using System.Collections.Generic;
+using System.Linq;
 using Sirenix.OdinInspector;
 using UnityEngine;
 
 namespace Player.Progression {
+    [Serializable]
+    public class EnemyExperienceData {
+        [ValueDropdown("GetEnemyTags", DropdownTitle = "Select enemy type")]
+        public string tag;
+        public float gain;
+        private IEnumerable<string> GetEnemyTags() {
+            return UnityEditorInternal.InternalEditorUtility.tags.Where(x => x.ToLower().Contains("enemy"));
+        }
+    }
+    
     [CreateAssetMenu(fileName = "PlayerProgressionData", menuName = "Progression/Data", order = 0)]
     public class PlayerProgressionData : ScriptableObject {
-        [TabGroup("Level")] 
+        [TitleGroup("Level")] 
         public int defaultLevel; 
         public int maxLevel;
-        public int XPGainMod;
+
+        [TitleGroup("Experience")] 
+        public float baseXPGain;
+        public float XPGainMod;
+
+        [TitleGroup("Enemy settings")] 
+        public List<EnemyExperienceData> enemyExperienceData;
     }
 }

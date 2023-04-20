@@ -557,6 +557,7 @@ GameObject:
   - component: {fileID: 7264022383706710101}
   - component: {fileID: 166455798467986143}
   - component: {fileID: 929311467}
+  - component: {fileID: 4044656339745552635}
   m_Layer: 3
   m_Name: Player
   m_TagString: Player
@@ -680,11 +681,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 21266a94bd55c9f45983402752aa60cb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  oxygenPool: 100
-  regenerateTime: 1
+  regenDelay: 0
   regenMultipiler: 0
+  defaultOxygen: 0
   permanentOxygen: 0
   tempOxygen: 0
+  oxygenGainMod: 0
   totalOxygen: 0
   currentOxygen: 0
   oxygenRatio: 0
@@ -840,6 +842,19 @@ MonoBehaviour:
   tweenSafetyIgnoreLayer:
     serializedVersion: 2
     m_Bits: 396
+--- !u!114 &4044656339745552635
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6037325520723149425}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 641622d0253a27b4cac58dd103ed19bf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  progressionData: {fileID: 11400000, guid: 03f90e0da287c764a972c5e0237f20b4, type: 2}
 --- !u!1 &6513659971958900579
 GameObject:
   m_ObjectHideFlags: 0
@@ -1849,9 +1864,9 @@ Canvas:
   m_GameObject: {fileID: 3097869792405757167}
   m_Enabled: 1
   serializedVersion: 3
-  m_RenderMode: 0
-  m_Camera: {fileID: 6037325520195106356}
-  m_PlaneDistance: 10
+  m_RenderMode: 1
+  m_Camera: {fileID: 6037325518918287430}
+  m_PlaneDistance: 1
   m_PixelPerfect: 1
   m_ReceivesEvents: 1
   m_OverrideSorting: 0
@@ -1881,7 +1896,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0cd44c1031e13a943bb63640046fad76, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_UiScaleMode: 0
+  m_UiScaleMode: 1
   m_ReferencePixelsPerUnit: 100
   m_ScaleFactor: 1.34
   m_ReferenceResolution: {x: 800, y: 600}

@@ -50,7 +50,7 @@ GameObject:
   - component: {fileID: 8848387838451286161}
   m_Layer: 8
   m_Name: Crawler
-  m_TagString: Untagged
+  m_TagString: Enemy_Crawler
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -87,7 +87,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   type: 0
   enemyDamage: 10
-  enemySpeed: 5
   enemyHP: 100
   ui: {fileID: 907737044374819495}
   animData: {fileID: 11400000, guid: cb0b6e593aa29d741b115bb5825fccdb, type: 2}

@@ -12,6 +12,7 @@ public class Oxygen : MonoBehaviour {
     public float defaultOxygen;
     public float permanentOxygen;
     public float tempOxygen;
+    public float oxygenGainMod;
     
     public float totalOxygen; //sum of perm and temp oxygen
     public float currentOxygen;
@@ -49,6 +50,7 @@ public class Oxygen : MonoBehaviour {
         if (regenDelay == 0) Debug.LogWarning("Regen Time Pool might be null");
         if (regenMultipiler == 0) Debug.LogWarning("Regen Multiplier Pool might be null");
         
+        this.AddListener(EventType.UpdateOxygenData, spec => AddPermanentOxygen(oxygenGainMod * (int) spec));
         this.FireEvent(EventType.UpdateOxygenModifiersEvent, this);
     }
 
