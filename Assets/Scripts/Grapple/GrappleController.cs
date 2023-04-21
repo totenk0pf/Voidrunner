@@ -15,6 +15,7 @@ namespace Grapple {
     public enum GrappleType {
         None,
         PlayerToPoint,
+        PlayerToLargeEnemy,
         EnemyToPlayer
     }
 
@@ -45,7 +46,7 @@ namespace Grapple {
         [SerializeField] private LayerMask enemyLayer;
         [Space]
         [Header("Grapple Point Attributes")]
-        [SerializeField] private LayerMask grapplePointLayer;
+        [SerializeField] private LayerMask largeEnemyLayer;
 
         [Header("Post-Grapple Attributes")] 
         [SerializeField] private float gravityDampDuration;
@@ -93,7 +94,8 @@ namespace Grapple {
 
             _grappleCondition = new Dictionary<LayerMask, GrappleType>() {
                 {enemyLayer, GrappleType.EnemyToPlayer},
-                {grappleLayer, GrappleType.PlayerToPoint}
+                {largeEnemyLayer, GrappleType.PlayerToLargeEnemy},
+                {grappleLayer, GrappleType.PlayerToPoint},
             };
         }
 
@@ -216,6 +218,11 @@ namespace Grapple {
                     //_playerToPointRoutine = PlayerToPointRoutine();
                     _playerToPointRoutine = StartCoroutine(PlayerToPointRoutine());
                     return true;
+                case GrappleType.PlayerToLargeEnemy:
+                    this.FireEvent(EventType.SetMovementStateEvent, PlayerMovementController.MovementState.Grappling);
+                    //_playerToPointRoutine = PlayerToPointRoutine();
+                    _playerToPointRoutine = StartCoroutine(PlayerToPointRoutine(true));
+                    return true;
                 default:
                     return false;
             }
@@ -258,7 +265,7 @@ namespace Grapple {
             _enemyToPlayerRoutine = null;
         }
 
-        private void ResetGrapple_PlayerToPoint(bool isCanceled = false)
+        private void ResetGrapple_PlayerToPoint(bool isCanceled = false, bool cancelMomentum = false)
         {
             if (isCanceled) {
                 NCLogger.Log($"'cancel2");
@@ -267,7 +274,7 @@ namespace Grapple {
             }
             else //TODO: This is hardcoded, fix this later.
             {
-                Rigidbody.AddForce(Vector3.up*momentumForce/3, forceMode);
+                if (!cancelMomentum) Rigidbody.AddForce(Vector3.up*momentumForce/3, forceMode);
             }
             
             EventDispatcher.Instance.FireEvent(EventType.SetMovementStateEvent, PlayerMovementController.MovementState.Normal);
@@ -316,7 +323,7 @@ namespace Grapple {
             yield return null;
         }
 
-        private IEnumerator PlayerToPointRoutine() {
+        private IEnumerator PlayerToPointRoutine(bool cancelMomentum = false) {
             var startPos = transform.position;
             var dist = Vector3.Distance(_currentGrappleHit.point, GrappleHaltPosition);
             var dir = (_currentGrappleHit.point - GrappleHaltPosition).normalized;
@@ -338,7 +345,7 @@ namespace Grapple {
                 yield return null;
             }
             
-            ResetGrapple_PlayerToPoint();
+            ResetGrapple_PlayerToPoint(cancelMomentum);
 
             yield return null;
         }

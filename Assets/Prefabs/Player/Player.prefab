@@ -647,7 +647,7 @@ MonoBehaviour:
   toggleProtoDodge: 1
   dodgeSafetyIgnoreLayer:
     serializedVersion: 2
-    m_Bits: 396
+    m_Bits: 8588
   dodgeKey: 304
   dodgeTime: 0.35
   dodgeDistance: 4.5
@@ -706,7 +706,7 @@ MonoBehaviour:
   maxAngleAA: 5
   grappleLayer:
     serializedVersion: 2
-    m_Bits: 8960
+    m_Bits: 768
   ignoreLayer:
     serializedVersion: 2
     m_Bits: 232
@@ -717,9 +717,9 @@ MonoBehaviour:
   enemyLayer:
     serializedVersion: 2
     m_Bits: 256
-  grapplePointLayer:
+  largeEnemyLayer:
     serializedVersion: 2
-    m_Bits: 8704
+    m_Bits: 8192
   gravityDampDuration: 0.3
   momentumForce: 2500
   forceMode: 5
