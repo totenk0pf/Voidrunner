@@ -2,6 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Combat;
+using Core.Events;
+using EventType = Core.Events.EventType;
 
 public class PlayerStats : MonoBehaviour
 {
@@ -22,6 +24,10 @@ public class PlayerStats : MonoBehaviour
     public int level;
 
     private void Awake() {
+        //Combat Modifiers
+        this.AddListener(EventType.UpdateCombatModifiersEvent, param => UpdateCombatModifiers((MeleeSequenceData) param));
+        //Oxygen Modifiers
+        this.AddListener(EventType.UpdateOxygenModifiersEvent, param => UpdateOxygenModifiers((Oxygen) param));
         CheckRef(oxygenComponent);
         CheckRef(progessionComponent);
         CheckRef(meleeBase);
@@ -35,15 +41,30 @@ public class PlayerStats : MonoBehaviour
     }
 
     private void Start() {
-        //Oxygen Modifiers
-        oxygenComponent.oxygenPool = 100 + 5 * vigor;
-
-        //Combat Modifiers
-        meleeBase.damageScale = 1; //Default 1 haven't implemented damage scaling yet
-        meleeBase.damageModifier = meleeBase.damageScale * level;
-        meleeBase.attackSpeedModifier = dexterity;
+        this.FireEvent(EventType.RefreshModifiersEvent);
+       
     }
 
+    private void UpdateCombatModifiers(MeleeSequenceData meleeData)
+    {
+        //Modifying in SO
+        foreach (var seq in meleeData.OrderToAttributes.Values) {
+            seq.DmgScale = 1; //Default 1 haven't implemented damage scaling yet
+            seq.DmgModifer = seq.DmgScale * level;
+            seq.AtkSpdModifier = dexterity;
+        }
+        //Combat Modifiers
+        //meleeBase.damageScale = 1; //Default 1 haven't implemented damage scaling yet
+        //meleeBase.damageModifier = meleeBase.damageScale * level;
+        //meleeBase.attackSpeedModifier = dexterity;
+    }
+
+    private void UpdateOxygenModifiers(Oxygen oxygenCompo)
+    {
+        CheckRef(oxygenCompo);
+        oxygenCompo.oxygenPool = 100 + 5 * vigor;
+    }
+    
     private void CheckRef<T>(T reference) {
         if (reference == null) {
             Debug.LogError("Missing refs at: " + this);

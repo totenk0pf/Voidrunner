@@ -51,6 +51,8 @@ public class Oxygen : MonoBehaviour {
         if (oxygenPool == 0) Debug.LogWarning("Oxygen Pool might be null");
         if (regenerateTime == 0) Debug.LogWarning("Regen Time Pool might be null");
         if (regenMultipiler == 0) Debug.LogWarning("Regen Multiplier Pool might be null");
+        
+        this.FireEvent(EventType.UpdateOxygenModifiersEvent, this);
     }
 
     private void Update() {

@@ -38,5 +38,9 @@ namespace Core {
         public void Quit() {
             Application.Quit();
         }
+
+        public void StartGame() {
+            SceneManager.LoadScene(1, LoadSceneMode.Single);
+        }
     }
 }

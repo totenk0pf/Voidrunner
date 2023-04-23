@@ -1,8 +1,13 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Core.Logging;
+using DG.Tweening;
+using Entities.Enemy;
+using Sirenix.OdinInspector;
 using UnityEngine;
 using UnityEngine.AI;
+using UnityEngine.Serialization;
 
 [Flags]
 [Serializable]
@@ -13,34 +18,109 @@ public enum EnemyType {
 }
 
 public class EnemyBase : EntityBase {
+    [TitleGroup("Config")]
     public EnemyType type;
-    public float enemyDamage; 
-    public float enemySpeed;
+    public float enemyDamage;
     public float enemyHP;
+    [SerializeField] private EnemyUI ui;
+
+    [TitleGroup("Refs")]
+    [SerializeField] private AnimSerializedData animData;
+    [SerializeField] private EnemyMoveRootMotion enemyRootMotion;
+    [SerializeField] private Animator animator;
+    
+    [TitleGroup("Debug")]
+    [ReadOnly] public bool isStunned;
     protected float currentHp;
 
-    public bool isStunned;
-    private float _currentHP;
-
-    [SerializeField] private EnemyUI ui;
-    protected NavMeshAgent navAgent;
-
-    public bool canPull;
-
+    private NavMeshAgent _navAgent;
+    private EnemyStateMachine _stateMachine;
+    private Rigidbody _rb;
+    
+    private bool _canPull;
+    
+    //Ground check Attributes
+    [ReadOnly] public bool IsGrounded;
+    [SerializeField] private float checkDist;
+    [SerializeField] private LayerMask groundIgnoreLayer;
+    
+    #region Public Getters / Caching
+    public bool CanPull => _canPull;
+    public NavMeshAgent NavMeshAgent {
+        get {
+            if (!_navAgent) {
+                _navAgent = GetComponent<NavMeshAgent>();
+            }
+            return _navAgent;
+        }
+    }
+    
+    public EnemyStateMachine StateMachine {
+        get {
+            if (!_stateMachine) {
+                _stateMachine = GetComponent<EnemyStateMachine>();
+            }
+            return _stateMachine;
+        }
+    }
+    
+    public Rigidbody Rigidbody {
+        get {
+            if (!_rb) {
+                _rb = GetComponent<Rigidbody>();
+            }
+            return _rb;
+        }
+    }
+    #endregion
+    
     private void Start() {
-        navAgent = GetComponent<NavMeshAgent>();
-        navAgent.speed = enemySpeed;
-
-        if (!navAgent.isOnNavMesh) {
+        _canPull = true;
+        if (!NavMeshAgent.isOnNavMesh) {
             Debug.LogWarning("No NavMesh is bound to Enemy");
         }
         currentHp = enemyHP;
     }
 
     private void Update() {
+        Die();
+        AirborneUpdate();
+    }
+
+    #region Update Methods
+
+    public virtual void Die() {
         if (currentHp <= 0) {
-            Die();
+            Destroy(gameObject);
         }
+    }
+
+    public virtual void AirborneUpdate() {
+        IsGrounded = Rigidbody.velocity.y < 0.1f;
+        if (!IsGrounded) {
+            DisablePathfinding();
+        } else {
+            EnablePathfinding();
+        }
+    }
+
+    #endregion
+
+    #region Combat Methods
+    public virtual void OnGrappled() {
+        _canPull = false;
+        isStunned = true;
+        enemyRootMotion.OnMoveChange(false);
+        foreach (var anim in animData.attackAnim) {ResetAnim(anim);}
+        animator.SetTrigger(animData.hitAnim[0].name);
+        DisablePathfinding();
+    }
+    
+    public virtual void OnRelease() {
+        _canPull = true;
+        isStunned = false;
+        enemyRootMotion.OnMoveChange(true);
+        EnablePathfinding();
     }
 
     public virtual void Stun(float duration) {
@@ -50,7 +130,7 @@ public class EnemyBase : EntityBase {
     protected virtual IEnumerator StunCoroutine(float duration) {
         isStunned = true;
         yield return new WaitForSeconds(duration);
-        navAgent.ResetPath();
+        _navAgent.ResetPath();
         isStunned = false;
         yield return null;
     }
@@ -73,19 +153,56 @@ public class EnemyBase : EntityBase {
         yield return null;
     }
 
-    public virtual void Attack() {
-        throw new System.NotImplementedException();
+    public virtual void OnKnockback(Vector3 dir, float duration) {
+        StartCoroutine(KnockbackCoroutine(dir, duration));
     }
 
-    public virtual void Move(Transform destination) {
-        navAgent.SetDestination(destination.position);
+    private IEnumerator KnockbackCoroutine(Vector3 dir, float duration) {
+        enemyRootMotion.OnMoveChange(false);
+        isStunned = true;
+
+        foreach (var anim in animData.attackAnim) {ResetAnim(anim);}
+        animator.SetTrigger(animData.hitAnim[0].name);
+        animator.speed = animator.GetCurrentAnimatorStateInfo(0).length / duration;
+        transform.root.DOMove(dir + transform.position, duration);
+
+        yield return new WaitForSeconds(duration);
+        
+        animator.speed = 1;
+        enemyRootMotion.OnMoveChange(true);
+        isStunned = false;
     }
- 
-    public virtual void Move(Vector3 destination) {
-        navAgent.SetDestination(destination);
+    #endregion
+
+    #region Helpers / Debug
+    private void OnDrawGizmos() {
+        Gizmos.color = Color.green;
+        Gizmos.DrawLine(transform.position, transform.position + Vector3.down * checkDist);
+    }
+    
+    private void ResetAnim(AnimParam param) {
+        switch (param.type) {
+            case AnimatorControllerParameterType.Bool:
+                animator.SetBool(param.name, false);
+                break;
+            case AnimatorControllerParameterType.Trigger:
+                animator.ResetTrigger(param.name);
+                break;
+        }
     }
 
-    public virtual void Die() {
-        Destroy(gameObject);
+    protected virtual void EnablePathfinding() {
+        if (CanPull && IsGrounded) {
+            StateMachine.enabled = true;
+            NavMeshAgent.enabled = true;
+            Rigidbody.useGravity = false;
+        }
     }
+
+    protected virtual void DisablePathfinding() {
+        StateMachine.enabled = false;
+        NavMeshAgent.enabled = false;
+        Rigidbody.useGravity = CanPull;
+    }
+    #endregion
 }

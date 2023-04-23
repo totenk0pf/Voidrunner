@@ -1,6 +1,6 @@
 {
   "dependencies": {
-    "com.psydack.uimgui": "https://github.com/psydack/uimgui.git",
+    "com.coffee.softmask-for-ugui": "1.0.2",
     "com.unity.2d.sprite": "1.0.0",
     "com.unity.burst": "1.6.6",
     "com.unity.cinemachine": "2.8.9",
@@ -49,7 +49,6 @@
     "com.unity.modules.video": "1.0.0",
     "com.unity.modules.vr": "1.0.0",
     "com.unity.modules.wind": "1.0.0",
-    "com.unity.modules.xr": "1.0.0",
-    "com.coffee.softmask-for-ugui": "1.0.2"
+    "com.unity.modules.xr": "1.0.0"
   }
 }

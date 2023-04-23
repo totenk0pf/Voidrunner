@@ -1,49 +1,92 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using Entities.Enemy;
+using Entities.Enemy.Crawler;
+using Sirenix.OdinInspector;
+using StaticClass;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 public class CrawlerAttack : EnemyState
 {
     public float attackDelay;
+    [HideInInspector] public bool inRange; 
 
-    [SerializeField] private EnemyState _nextState;
-    [SerializeField] private EnemyState _previousState;
+    [Title("Data")]
+    [SerializeField] private CrawlerHostile _previousState;
+    [SerializeField] private AnimSerializedData _animData;
+
+    [Title("Refs")] 
+    [SerializeField] private EnemyMoveRootMotion _moveWithRootMotion;
     
-    private bool _isAttacking;
-    private bool _reachedTarget = false;
-
+    private bool _isAttacking = false;
+    private bool _canSwitchState = false;
+    private bool _canAttack = true;
+    
     public override EnemyState RunCurrentState() {
-        Agent.SetDestination(target.transform.position);
 
-        if (Vector3.Distance(transform.position, target.transform.position) < 2.5f && !_reachedTarget) {
-            _reachedTarget = true;
-            Agent.isStopped = true;
-        }
-
-        else if (Vector3.Distance(transform.position, target.transform.position) > 2.5f && _reachedTarget)
-        {
-            _agent.isStopped = false;
+        if (_canSwitchState && !_isAttacking) {
             return _previousState;
         }
 
-        if (_reachedTarget)
-        {
-            if (!_isAttacking) {
-                StartCoroutine(DamagePlayer());
-            }
+        if (_canAttack) {
+            StartCoroutine(StartAttack());
         }
 
         return this;
     }
 
-    IEnumerator DamagePlayer() {
+    private IEnumerator StartAttack() {
+        if (_canSwitchState) yield break;
+        _canAttack = false;
         _isAttacking = true;
+        if (_moveWithRootMotion.canMove) _moveWithRootMotion.canMove = false;
+        var rnd = Random.Range(0, 2);
+        TriggerAnim(_animData.attackAnim[rnd]);
+        yield return StartCoroutine(FinishAnimation());
+        yield return StartCoroutine(DelayAttack());
+    }
 
-        var oxygenComp = target.GetComponent<Oxygen>();
-        oxygenComp.ReducePermanentOxygen(enemyBase.enemyDamage);
-
+    private IEnumerator DelayAttack() {
         yield return new WaitForSeconds(attackDelay);
+        StartCoroutine(StartAttack());
+    }
 
+    private IEnumerator FinishAnimation() {
+        yield return new WaitUntil(() => animator.GetCurrentAnimatorStateInfo(0).normalizedTime >= 0.95f);
         _isAttacking = false;
     }
+    
+    public override void OnTriggerExit(Collider other) {
+        if (CheckLayerMask.IsInLayerMask(other.gameObject, playerMask)) {
+            StopAllCoroutines();
+            if (_isAttacking) {
+                StartCoroutine(FinishAnimation());
+            }
+            
+            foreach (var anim in _animData.attackAnim) {
+                ResetAnim(anim);
+            }
+            
+            _canAttack = false;
+            inRange = false;
+            
+            _canSwitchState = true;
+            
+            _moveWithRootMotion.canMove = true;
+            _previousState.canSwitchState = true;
+        }
+    }
+
+    public override void OnTriggerEnter(Collider other) {
+        if (CheckLayerMask.IsInLayerMask(other.gameObject, playerMask)) {
+            target = other.gameObject;
+            inRange = true;
+            _canAttack = true;
+           
+            _canSwitchState = false;
+        }
+    }
+    
 }

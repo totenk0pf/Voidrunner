@@ -1,3 +1,5 @@
+using System.Collections.Generic;
+using Core.Collections;
 using Entities.Enemy;
 using Sirenix.OdinInspector;
 using UnityEngine;
@@ -7,7 +9,7 @@ using StaticClass;
 public abstract class EnemyState : MonoBehaviour
 {
     protected NavMeshAgent _agent;
-    protected NavMeshAgent Agent {
+    public NavMeshAgent Agent {
         get {
             if (!_agent) _agent = transform.root.GetComponent<NavMeshAgent>();
             return _agent;
@@ -64,6 +66,17 @@ public abstract class EnemyState : MonoBehaviour
                 break;
         }
     }
+    
+    protected void ResetAnim(AnimParam param) {
+        switch (param.type) {
+            case AnimatorControllerParameterType.Bool:
+                animator.SetBool(param.name, false);
+                break;
+            case AnimatorControllerParameterType.Trigger:
+                animator.ResetTrigger(param.name);
+                break;
+        }
+    }
 
     public virtual void DealDamage(){
         var oxygenComp = target.GetComponent<Oxygen>();
@@ -84,5 +97,14 @@ public abstract class EnemyState : MonoBehaviour
         }
     
         return distance;
+    }
+
+    protected AnimParam GetItemFromMoveList(IEnumerable<EnemyMovelist> movelistData) {
+        var weighted = new WeightedArray<AnimParam>();
+        foreach (var move in movelistData) {
+            weighted.AddElement(move.anim, move.weight);
+        }
+
+        return weighted.GetRandomItem();
     }
 }

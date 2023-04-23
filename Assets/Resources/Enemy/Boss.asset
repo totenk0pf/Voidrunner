@@ -1,0 +1,45 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 017d7b394cc44f94bf17dc13b85ae6ac, type: 3}
+  m_Name: Boss
+  m_EditorClassIdentifier: 
+  serializationData:
+    SerializedFormat: 2
+    SerializedBytes: 
+    ReferencedUnityObjects: []
+    SerializedBytesString: 
+    Prefab: {fileID: 0}
+    PrefabModificationsReferencedUnityObjects: []
+    PrefabModifications: []
+    SerializationNodes: []
+  hardRefdata: {fileID: 11400000, guid: d18c91e266e8c1b42a41fa2db10be58f, type: 2}
+  idleAnim:
+    type: 4
+    name: isIdle
+    hash: 2098831385
+  hostileAnim:
+  - type: 4
+    name: isWalking
+    hash: -830007593
+  attackAnim:
+  - type: 9
+    name: SwipeL
+    hash: 85304741
+  - type: 9
+    name: SwipeR
+    hash: -15034170
+  - type: 9
+    name: Stomp
+    hash: -1643012858
+  - type: 9
+    name: Grab
+    hash: -1347921612

@@ -56,12 +56,14 @@ namespace UI {
         }
 
         private void Awake() {
-            this.AddListener(EventType.WeaponChangedEvent, 
-                             entry => ChangeActivePanel((WeaponEntry) entry));
-            this.AddListener(EventType.RangedShotEvent, data => UpdateRangedUI((RangedUIMsg) data));
-            this.AddListener(EventType.WeaponFiredEvent, data => UpdateChargeUI((WeaponFireUIMsg) data));
-        }
+            // this.AddListener(EventType.WeaponChangedEvent,
+            //     entry => ChangeActivePanel((WeaponManager.WeaponEntry) entry));
 
+            this.AddListener(EventType.UpdateActiveWeaponEvent, param => currentType = (WeaponType) param);
+            this.AddListener(EventType.WeaponPostRangedFiredEvent, data => UpdateRangedUI((RangedUIMsg) data));
+            this.AddListener(EventType.WeaponFiredEvent, data => UpdateChargeUI((WeaponFireUIMsg) data));
+        }  
+        
         private void ChangeActivePanel(WeaponEntry entry) {
             currentType = entry.type;
             _initHeight = Transform.rect.height - Layout.spacing;
