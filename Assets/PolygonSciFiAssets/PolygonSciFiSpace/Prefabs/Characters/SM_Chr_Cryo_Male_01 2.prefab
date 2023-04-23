@@ -289,7 +289,7 @@ GameObject:
   - component: {fileID: 4877908427625802}
   - component: {fileID: 95059134619875130}
   m_Layer: 0
-  m_Name: SM_Chr_Cryo_Male_01
+  m_Name: SM_Chr_Cryo_Male_01 2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -328,7 +328,12 @@ Animator:
   m_ApplyRootMotion: 1
   m_LinearVelocityBlending: 0
   m_StabilizeFeet: 0
-  m_WarningMessage: 
+  m_WarningMessage: '
+
+    Transform ''Ball_L'' has been deleted
+
+    Transform ''Ankle_L''
+    has been deleted'
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
@@ -1504,7 +1509,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1441603593516792}
-  m_LocalRotation: {x: 0.9692956, y: 0.19091542, z: -0.13159266, w: -0.08185735}
+  m_LocalRotation: {x: 0.9782807, y: 0.13269208, z: -0.12968898, w: -0.092413954}
   m_LocalPosition: {x: -0.3771235, y: -7.771561e-17, z: 1.6819879e-16}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -1512,7 +1517,7 @@ Transform:
   - {fileID: 4849060826564188}
   m_Father: {fileID: 4431817279946872}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: -173.774, y: 16.742004, z: -23.201996}
+  m_LocalEulerAnglesHint: {x: -171.582, y: 16.337997, z: -16.658997}
 --- !u!1 &1478878156461884
 GameObject:
   m_ObjectHideFlags: 0
