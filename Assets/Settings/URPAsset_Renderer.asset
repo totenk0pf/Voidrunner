@@ -67,4 +67,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Active: 1
   Camera: {fileID: 0}
-  RenderPassEvent: 600
+  RenderPassEvent: 1000
