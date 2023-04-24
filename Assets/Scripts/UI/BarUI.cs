@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Core.Events;
 using DG.Tweening;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.UI;
 using EventType = Core.Events.EventType;
 
@@ -34,7 +35,27 @@ namespace UI {
         private void UpdateBar(BarUIMsg msg) {
             var slider = barItems.Find(x => x.type == msg.type).slider;
             if (!slider) return;
-            DOTween.To(() => slider.value, x => slider.value = x, msg.value, lerpDuration).SetEase(Ease.InOutExpo);
+            switch (msg.type) {
+                case BarType.Experience:
+                    if (msg.value < slider.value) {
+                        LerpSliderValue(slider, 1f);
+                        
+                        break;
+                    }
+                    LerpSliderValue(slider, msg.value);
+                    break;
+                case BarType.Oxygen:
+                    LerpSliderValue(slider, msg.value);
+                    break;
+            }
+        }
+
+        private void LerpSliderValue(Slider slider, float value, Action callback = null) {
+            DOTween.To(() => slider.value, x => slider.value = x, value, lerpDuration).SetEase(Ease.InOutExpo).OnComplete(() => callback());
+        }
+
+        private void ResetValue() {
+            
         }
     }
 }
