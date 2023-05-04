@@ -16,8 +16,7 @@ MonoBehaviour:
     debugReplacementPS: {fileID: 4800000, guid: cf852408f2e174538bcd9b7fda1c5ae7, type: 3}
   m_RendererFeatures:
   - {fileID: 5707808205519033037}
-  - {fileID: 2304946759328472868}
-  m_RendererFeatureMap: cd9205585235364f241ff68fddd0fc1f
+  m_RendererFeatureMap: cd9205585235364f
   m_UseNativeRenderPass: 0
   postProcessData: {fileID: 11400000, guid: 41439944d30ece34e96484bdb6645b55, type: 2}
   xrSystemData: {fileID: 11400000, guid: 60e1133243b97e347b653163a8c01b64, type: 2}
@@ -85,7 +84,7 @@ MonoBehaviour:
   settings:
     renderPassEvent: 450
     blurMaterial: {fileID: 2100000, guid: a00afda211f274f6ca6cce958e4e13a5, type: 2}
-    blurPasses: 4
+    blurPasses: 8
     downsample: 4
     copyToFramebuffer: 0
     targetName: _blurTexture
