@@ -11,11 +11,11 @@ public class ObjectPool : PoolBase<PooledObjectBase>
         get => _pooledObjectEventType;
     }
     
-    private PooledObjectBase _prefab;
+    private PooledObjectBase _prefabRef;
 
     public virtual void Init(PooledObjectBase prefab, EventType eventType)
     {
-        _prefab = prefab;
+        _prefabRef = prefab;
         _pooledObjectEventType = eventType;
         this.AddListener(_pooledObjectEventType, 
             param=> (this.Get()).Init((PooledObjectCallbackData)param, this.Release));
@@ -23,6 +23,6 @@ public class ObjectPool : PoolBase<PooledObjectBase>
     
     public override PooledObjectBase CreateSetup()
     {
-        return Instantiate(_prefab, transform);
+        return Instantiate(_prefabRef, transform);
     }
 }

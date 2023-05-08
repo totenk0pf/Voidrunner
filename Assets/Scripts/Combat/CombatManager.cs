@@ -193,8 +193,11 @@ public class CombatManager : MonoBehaviour
     private GrappleType _currentGrappleType;
 
     [TitleGroup("Blood VFX settings")] 
+    [SerializeField] private LayerMask enemyLayer;
     [SerializeField] private int particlePerEnemy;
-    [SerializeField] private MeleeCollision meleeCollision;
+    [SerializeField] private Vector3 halfExtents;
+    [SerializeField] private Transform boxCastStart;
+    [SerializeField] private Transform boxCastEnd;
     
     private void Awake() {
         //Init Ref
@@ -494,7 +497,33 @@ public class CombatManager : MonoBehaviour
     #region VFX Methods
     private void SpawnBloodOnEnemy()
     {
-        meleeCollision.SpawnBlood(particlePerEnemy);
+        NCLogger.Log($"Spawning Blood");
+        // var vect = (boxCastEnd.position - boxCastStart.position);
+        // var raycastHits = Physics.BoxCastAll(boxCastStart.position, halfExtents, vect.normalized, Quaternion.identity, vect.magnitude, enemyLayer);
+        //
+        // foreach (var hit in raycastHits)
+        // {
+        //     NCLogger.Log($"hit.point {hit.point} enemy.transform.position {hit.collider.transform.position}");
+        //     // Debug.DrawLine(hit.point, hit.point + Vector3.up * 100, Color.white, 15);
+        //     for (var i = 0; i < particlePerEnemy; i++) {
+        //         this.FireEvent(EventType.SpawnParticleREDEvent, new ParticleCallbackData(hit.normal, hit.point, hit.collider.transform));
+        //     }
+        // }
+
+        var enemies = MeleeSequence.OrderToAttributes[_curMeleeOrder].collider.Enemies;
+        foreach (var enemy in enemies)
+        {
+            var vect = enemy.transform.position - transform.position;
+            var ogPos = enemy.transform.position;
+            var pos = ogPos + new Vector3(0, 0.4f * enemy.transform.localScale.y, 0);
+            // for (var i = 0; i < particlePerEnemy; i++) {
+            //     this.FireEvent(EventType.SpawnParticleREDEvent, new ParticleCallbackData(Random.onUnitSphere,pos , enemy.transform));
+            // }
+            this.FireEvent(EventType.SpawnParticleREDEvent, new ParticleCallbackData(Random.onUnitSphere,pos + enemy.transform.right * 0.1f, enemy.transform));
+            this.FireEvent(EventType.SpawnParticleREDEvent, new ParticleCallbackData(Random.onUnitSphere,pos - enemy.transform.right * 0.1f, enemy.transform));
+            this.FireEvent(EventType.SpawnParticleREDEvent, new ParticleCallbackData(Random.onUnitSphere,pos, enemy.transform));
+        }
+
     }
     #endregion
     
@@ -513,5 +542,12 @@ public class CombatManager : MonoBehaviour
         }
     }
    #endregion
+
+   private void OnDrawGizmos()
+   {
+       Gizmos.color = Color.green;
+       Gizmos.DrawWireCube(boxCastStart.position, halfExtents);
+       Gizmos.DrawWireCube(boxCastEnd.position, halfExtents);
+   }
 }
 

@@ -8,17 +8,19 @@ using UnityEngine;
 public class ParticleCallbackData : PooledObjectCallbackData
 {
     public Vector3 normal;
-
-    public ParticleCallbackData(Vector3 normal, Vector3 position) : base(position)
+    public Transform tempParent;
+    public ParticleCallbackData(Vector3 normal, Vector3 position, Transform tempParent) : base(position)
     {
         this.normal = normal;
         this.position = position;
+        this.tempParent = tempParent;
     }
 }
     
 
 public class ParticleBase : PooledObjectBase
 {
+    private Transform _ogParent;
     private ParticleSystem _ps;
     public ParticleSystem ParticleSystem {
         get {
@@ -42,12 +44,14 @@ public class ParticleBase : PooledObjectBase
 
     public override void Init(PooledObjectCallbackData data, Action<PooledObjectBase> killAction)
     {
+        _ogParent = transform.parent;
         ParticleSystem.Stop(true, ParticleSystemStopBehavior.StopEmittingAndClear);
         KillAction = killAction;
 
         try {
             transform.position = (data as ParticleCallbackData).position;
             transform.up = (data as ParticleCallbackData).normal;
+            transform.parent = (data as ParticleCallbackData).tempParent;
         } catch {
             NCLogger.Log($"particle call back data is null", LogLevel.ERROR);
         }
@@ -59,10 +63,13 @@ public class ParticleBase : PooledObjectBase
     
     public virtual IEnumerator RunRoutine()
     {
-        while (ParticleSystem.isPlaying) {
+        while (ParticleSystem.isPlaying)
+        {
+            //transform.up = UnityEngine.Random.onUnitSphere;
             yield return null;
         }
-    
+
+        transform.parent = _ogParent;
         KillAction(this);
         yield return null;
     }

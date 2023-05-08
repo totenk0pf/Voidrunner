@@ -59,7 +59,7 @@ public class PoolingManager : MonoBehaviour
         if (Input.GetMouseButtonDown(0)) {
             if (Physics.Raycast(ray, out hit, Mathf.Infinity)) {
                 //ActivateParticleFromPool(hit, EventType.SpawnParticleREDEvent);
-                this.FireEvent(EventType.SpawnParticleREDEvent, new ParticleCallbackData(hit.normal, hit.point));
+                // this.FireEvent(EventType.SpawnParticleREDEvent, new ParticleCallbackData(hit.normal, hit.point));
             }
         }
         

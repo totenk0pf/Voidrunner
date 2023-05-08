@@ -30,11 +30,12 @@ public class MeleeCollision : MonoBehaviour
 
     public void SpawnBlood(int particlePerEnemy)
     {
+        NCLogger.Log($"enemy to spawn blood on {enemyList.Count}");
         if (enemyList.Count == 0) return;
         foreach (var col in enemyList) {
             for (var i = 0; i < particlePerEnemy; i++) {
-                if(col.contacts.Length != 0) 
-                    this.FireEvent(EventType.SpawnParticleREDEvent, new ParticleCallbackData(col.contacts[0].normal, col.contacts[0].point));
+                // if(col.contacts.Length != 0) 
+                    // this.FireEvent(EventType.SpawnParticleREDEvent, new ParticleCallbackData(col.contacts[0].normal, col.contacts[0].point));
             }
         }
     }
