@@ -9,6 +9,15 @@ using Core.Patterns;
 using Unity.VisualScripting;
 using EventType = Core.Events.EventType;
 
+[Serializable]
+public class PooledData
+{
+    public ParticleBase prefab;
+    public int initialPoolSize = 10;
+    public int maxPoolSize = 50;
+}
+
+
 public class PoolingManager : MonoBehaviour
 {
     [SerializeField] private PoolManagerData alwaysLoaded_PoolData;

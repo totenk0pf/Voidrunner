@@ -11,11 +11,6 @@ public class PooledObjectCallbackData
     public PooledObjectCallbackData(Vector3 position) {
         this.position = position;
     }
-
-    protected PooledObjectCallbackData()
-    {
-        throw new NotImplementedException();
-    }
 }
 
 

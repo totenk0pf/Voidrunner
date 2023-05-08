@@ -5,46 +5,14 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="76b6dd0e-26ee-4d57-bbcb-028796191047" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/Assets/Scripts/Pooling/IPoolerCore.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Scripts/Pooling/IPoolerCore.cs.meta" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Scripts/Pooling/ObjectPool.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Scripts/Pooling/ParticleSpecifics.meta" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Scripts/Pooling/ParticleSpecifics/ParticleManager.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Scripts/Pooling/ParticleSpecifics/ParticleManager.cs.meta" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Scripts/Pooling/ParticleSpecifics/PooledObjectClass.meta" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Scripts/Pooling/ParticleSpecifics/PooledObjectClass/ParticleBase.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Scripts/Pooling/PooledObjectClasses/IPooledCore.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/.idea.Voidrunner/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.Voidrunner/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scenes/SampleScene.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scenes/SampleScene.unity" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Particle.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Pooling.meta" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Particle/ParticleClasses.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Pooling/PooledObjectClasses.meta" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Particle/ParticleClasses/IParticleCore.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Particle/ParticleClasses/IParticleCore.cs.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Pooling/PooledObjectClasses/IPooledCore.cs.meta" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Particle/ParticleClasses/ParticleBase.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Particle/ParticleClasses/ParticleBase.cs.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Pooling/ParticleSpecifics/PooledObjectClass/ParticleBase.cs.meta" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Particle/ParticleClasses/ParticleBloodRed.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Particle/ParticleClasses/ParticleBloodRed.cs.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Particle/ParticleData.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Pooling/ParticleSpecifics/ParticleData.meta" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Particle/ParticleData/ParticleData.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Pooling/ParticleSpecifics/ParticleData/ParticleData.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Particle/ParticleData/ParticleData.cs.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Pooling/ParticleSpecifics/ParticleData/ParticleData.cs.meta" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Particle/ParticleData/ParticleData_BloodBlue.asset" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Pooling/ParticleSpecifics/ParticleData/ParticleData_BloodBlue.asset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Particle/ParticleData/ParticleData_BloodBlue.asset.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Pooling/ParticleSpecifics/ParticleData/ParticleData_BloodBlue.asset.meta" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Particle/ParticleData/ParticleData_BloodGreen.asset" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Pooling/ParticleSpecifics/ParticleData/ParticleData_BloodGreen.asset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Particle/ParticleData/ParticleData_BloodGreen.asset.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Pooling/ParticleSpecifics/ParticleData/ParticleData_BloodGreen.asset.meta" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Particle/ParticleData/ParticleData_BloodRed.asset" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Pooling/ParticleSpecifics/ParticleData/ParticleData_BloodRed.asset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Particle/ParticleData/ParticleData_BloodRed.asset.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Pooling/ParticleSpecifics/ParticleData/ParticleData_BloodRed.asset.meta" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Particle/ParticleManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Pooling/PoolingManager.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Particle/ParticleManager.cs.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Pooling/PoolingManager.cs.meta" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Particle/ParticleManagerData.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Pooling/ParticleSpecifics/ParticleManagerData.meta" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Particle/ParticleManagerData/PMData-AlwaysLoaded.asset" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Particle/ParticleManagerData/PMData-AlwaysLoaded.asset.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Particle/ParticleManagerData/PMData-SceneBased-SampleScene.asset" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Particle/ParticleManagerData/PMData-SceneBased-SampleScene.asset.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Particle/ParticleManagerData/ParticleManagerData.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Pooling/ParticleSpecifics/ParticleManagerData/ParticleManagerData.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Particle/ParticleManagerData/ParticleManagerData.cs.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Pooling/ParticleSpecifics/ParticleManagerData/ParticleManagerData.cs.meta" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Particle/ParticlePool.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Particle/ParticlePool.cs.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Pooling/ObjectPool.cs.meta" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ProjectSettings/Packages/com.unity.probuilder/Settings.json" beforeDir="false" afterPath="$PROJECT_DIR$/ProjectSettings/Packages/com.unity.probuilder/Settings.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Pooling/ParticleSpecifics/PoolManagerData/PoolManagerData_SceneBased_Particle.asset" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Pooling/ParticleSpecifics/PoolManagerData/PoolManagerData_SceneBased_Particle.asset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Pooling/ParticleSpecifics/PoolManagerData/PoolManagerData_SceneBased_Particle.asset.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Pooling/ParticleSpecifics/PoolManagerData/PoolManagerData_SceneBased_Particle.asset.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Pooling/ParticleSpecifics/PooledObjectClass/ParticleBase.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Pooling/ParticleSpecifics/PooledObjectClass/ParticleBase.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Pooling/PoolManagerData.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Pooling/PoolManagerData.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Pooling/PoolManagerData_AlwaysLoaded.asset" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Pooling/PoolManagerData_AlwaysLoaded.asset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Pooling/PooledObjectClasses/PooledObjectBase.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Pooling/PooledObjectClasses/PooledObjectBase.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Pooling/PoolingManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Pooling/PoolingManager.cs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -132,7 +100,7 @@
       <workItem from="1669138286237" duration="10168000" />
       <workItem from="1669184896000" duration="1943000" />
       <workItem from="1669617898195" duration="608000" />
-      <workItem from="1683511505357" duration="9042000" />
+      <workItem from="1683511505357" duration="9763000" />
     </task>
     <servers />
   </component>

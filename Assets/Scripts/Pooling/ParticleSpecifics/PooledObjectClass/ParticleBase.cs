@@ -9,7 +9,8 @@ public class ParticleCallbackData : PooledObjectCallbackData
 {
     public Vector3 normal;
 
-    public ParticleCallbackData(Vector3 normal, Vector3 position) {
+    public ParticleCallbackData(Vector3 normal, Vector3 position) : base(position)
+    {
         this.normal = normal;
         this.position = position;
     }
