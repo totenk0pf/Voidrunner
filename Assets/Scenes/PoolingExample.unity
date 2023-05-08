@@ -527,8 +527,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 21400990ee1246488252874b9eeeb496, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  alwaysLoaded_PoolData: {fileID: 0}
-  sceneBased_PoolData_Particle: {fileID: 0}
+  alwaysLoaded_PoolData: {fileID: 11400000, guid: 9bbf50416b4054a428a310b2bab104f4, type: 2}
+  sceneBased_PoolData_Particle: {fileID: 11400000, guid: c27b18273f32cd6469cb0d4a87e081d4, type: 2}
 --- !u!4 &1107637209
 Transform:
   m_ObjectHideFlags: 0
