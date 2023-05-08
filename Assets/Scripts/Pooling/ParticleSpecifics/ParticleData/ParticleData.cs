@@ -1,7 +1,6 @@
 using UnityEngine;
 
-namespace Particle
-{
+
     [CreateAssetMenu(fileName = "ParticleData", menuName = "Particle Data", order = 0)]
     public class ParticleData : ScriptableObject
     {
@@ -9,4 +8,3 @@ namespace Particle
         public ParticleSystem.MinMaxCurve startLifeTime = 1;
         public bool canLoop = false;
     }
-}

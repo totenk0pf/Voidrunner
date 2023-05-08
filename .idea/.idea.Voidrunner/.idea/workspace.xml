@@ -1,10 +1,50 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
   <component name="ChangeListManager">
     <list default="true" id="76b6dd0e-26ee-4d57-bbcb-028796191047" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/Assets/Scripts/Pooling/IPoolerCore.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Scripts/Pooling/IPoolerCore.cs.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Scripts/Pooling/ObjectPool.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Scripts/Pooling/ParticleSpecifics.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Scripts/Pooling/ParticleSpecifics/ParticleManager.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Scripts/Pooling/ParticleSpecifics/ParticleManager.cs.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Scripts/Pooling/ParticleSpecifics/PooledObjectClass.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Scripts/Pooling/ParticleSpecifics/PooledObjectClass/ParticleBase.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Scripts/Pooling/PooledObjectClasses/IPooledCore.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/.idea.Voidrunner/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.Voidrunner/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Particle/ParticleManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Particle/ParticleManager.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Particle/ParticlePool.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Particle/ParticlePool.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scenes/SampleScene.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scenes/SampleScene.unity" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Particle.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Pooling.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Particle/ParticleClasses.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Pooling/PooledObjectClasses.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Particle/ParticleClasses/IParticleCore.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Particle/ParticleClasses/IParticleCore.cs.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Pooling/PooledObjectClasses/IPooledCore.cs.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Particle/ParticleClasses/ParticleBase.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Particle/ParticleClasses/ParticleBase.cs.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Pooling/ParticleSpecifics/PooledObjectClass/ParticleBase.cs.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Particle/ParticleClasses/ParticleBloodRed.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Particle/ParticleClasses/ParticleBloodRed.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Particle/ParticleData.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Pooling/ParticleSpecifics/ParticleData.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Particle/ParticleData/ParticleData.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Pooling/ParticleSpecifics/ParticleData/ParticleData.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Particle/ParticleData/ParticleData.cs.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Pooling/ParticleSpecifics/ParticleData/ParticleData.cs.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Particle/ParticleData/ParticleData_BloodBlue.asset" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Pooling/ParticleSpecifics/ParticleData/ParticleData_BloodBlue.asset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Particle/ParticleData/ParticleData_BloodBlue.asset.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Pooling/ParticleSpecifics/ParticleData/ParticleData_BloodBlue.asset.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Particle/ParticleData/ParticleData_BloodGreen.asset" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Pooling/ParticleSpecifics/ParticleData/ParticleData_BloodGreen.asset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Particle/ParticleData/ParticleData_BloodGreen.asset.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Pooling/ParticleSpecifics/ParticleData/ParticleData_BloodGreen.asset.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Particle/ParticleData/ParticleData_BloodRed.asset" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Pooling/ParticleSpecifics/ParticleData/ParticleData_BloodRed.asset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Particle/ParticleData/ParticleData_BloodRed.asset.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Pooling/ParticleSpecifics/ParticleData/ParticleData_BloodRed.asset.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Particle/ParticleManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Pooling/PoolingManager.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Particle/ParticleManager.cs.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Pooling/PoolingManager.cs.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Particle/ParticleManagerData.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Pooling/ParticleSpecifics/ParticleManagerData.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Particle/ParticleManagerData/PMData-AlwaysLoaded.asset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Particle/ParticleManagerData/PMData-AlwaysLoaded.asset.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Particle/ParticleManagerData/PMData-SceneBased-SampleScene.asset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Particle/ParticleManagerData/PMData-SceneBased-SampleScene.asset.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Particle/ParticleManagerData/ParticleManagerData.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Pooling/ParticleSpecifics/ParticleManagerData/ParticleManagerData.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Particle/ParticleManagerData/ParticleManagerData.cs.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Pooling/ParticleSpecifics/ParticleManagerData/ParticleManagerData.cs.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Particle/ParticlePool.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Particle/ParticlePool.cs.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Pooling/ObjectPool.cs.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ProjectSettings/Packages/com.unity.probuilder/Settings.json" beforeDir="false" afterPath="$PROJECT_DIR$/ProjectSettings/Packages/com.unity.probuilder/Settings.json" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -14,6 +54,13 @@
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
+  <component name="HighlightingSettingsPerFile">
+    <setting file="file://$PROJECT_DIR$/Assets/Scripts/Core/Events/EventType.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/Scripts/Core/GameManagerData.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/Scripts/Core/Patterns/PoolBase.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/Scripts/Core/Patterns/Singleton.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Library/PackageCache/com.unity.probuilder@5.0.6/Runtime/Core/ObjectPool.cs" root0="SKIP_HIGHLIGHTING" />
+  </component>
   <component name="MarkdownSettingsMigration">
     <option name="stateVersion" value="1" />
   </component>
@@ -22,16 +69,21 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;Discover.Launch.Via.Unity&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;editor.preferences.fonts.default&quot;,
-    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "Discover.Launch.Via.Unity": "true",
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "WebServerToolWindowFactoryState": "false",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "rider.run.widget.enabled.cache": "false",
+    "settings.editor.selected.configurable": "editor.preferences.fonts.default",
+    "vue.rearranger.settings.migration": "true"
   }
-}</component>
+}]]></component>
   <component name="RunManager" selected="Attach to Unity Editor.Attach to Unity Editor">
     <configuration name="UnitTests (batch mode)" type="RunUnityExe" factoryName="Unity Executable">
       <option name="EXE_PATH" value="C:\Program Files\Unity\Hub\Editor\2021.3.10f1\Editor\Unity.exe" />
@@ -80,6 +132,7 @@
       <workItem from="1669138286237" duration="10168000" />
       <workItem from="1669184896000" duration="1943000" />
       <workItem from="1669617898195" duration="608000" />
+      <workItem from="1683511505357" duration="9042000" />
     </task>
     <servers />
   </component>
