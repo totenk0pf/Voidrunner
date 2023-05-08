@@ -191,6 +191,11 @@ public class CombatManager : MonoBehaviour
     private void IncrementMeleeOrder() => _curMeleeOrder = _curMeleeOrder.Next();
     private Coroutine _onHoldInputRoutine;
     private GrappleType _currentGrappleType;
+
+    [TitleGroup("Blood VFX settings")] 
+    [SerializeField] private int particlePerEnemy;
+    [SerializeField] private MeleeCollision meleeCollision;
+    
     private void Awake() {
         //Init Ref
         //this.AddListener(EventType.InitWeaponRefEvent, param => InitWeaponRef( (List<WeaponEntry>) param));
@@ -211,6 +216,8 @@ public class CombatManager : MonoBehaviour
         //Receive Refs
         this.AddListener(EventType.ReceivePlayerAnimatorEvent, animator => _playerAnimator = (PlayerAnimator) animator);
         this.AddListener(EventType.ReceiveMovementStateEvent, state => _moveState = (PlayerMovementController.MovementState) state);
+        
+        this.AddListener(EventType.SpawnBloodEvent, param => SpawnBloodOnEnemy());
         
         if(!MeleeSequence) NCLogger.Log($"Missing Melee Sequence Data", LogLevel.ERROR);
         if(!RangedData) NCLogger.Log($"Missing Ranged Data", LogLevel.ERROR);
@@ -481,6 +488,13 @@ public class CombatManager : MonoBehaviour
         yield return new WaitForSeconds(RangedData.Attribute.AftershotDelay);
         if(_activeWeapon != WeaponType.Ranged) NCLogger.Log($"_activeWeapon should be RANGED when it's {_activeWeapon}", LogLevel.ERROR);
         ResetWeaponAttackState(false, _activeWeapon);
+    }
+    #endregion
+    
+    #region VFX Methods
+    private void SpawnBloodOnEnemy()
+    {
+        meleeCollision.SpawnBlood(particlePerEnemy);
     }
     #endregion
     

@@ -47,7 +47,7 @@ public class PoolingManager : MonoBehaviour
 
     private void Update()
     {
-        TestFireRayCast();
+       // TestFireRayCast();
     }
     
     //TODO: this is for testing, move this elsewhere if needed, use event dispatcher.

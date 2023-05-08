@@ -72,6 +72,7 @@ namespace Core.Events {
         ReceiveCurrentGrappleTypeEvent,
         SpawnParticleREDEvent,
         SpawnParticleGREENEvent,
-        SpawnParticleBLUEEvent
+        SpawnParticleBLUEEvent,
+        SpawnBloodEvent,
     }
 }
