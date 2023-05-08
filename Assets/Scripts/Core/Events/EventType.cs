@@ -67,5 +67,10 @@ namespace Core.Events {
         //
         RequestCurrentGrappleTypeEvent,
         ReceiveCurrentGrappleTypeEvent,
+        
+        //Room Events
+        EnableRoom,
+        DisableRoom,
+        DoorInvoked, 
     }
 }
