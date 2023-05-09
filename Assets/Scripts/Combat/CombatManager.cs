@@ -513,7 +513,7 @@ public class CombatManager : MonoBehaviour
         var enemies = MeleeSequence.OrderToAttributes[_curMeleeOrder].collider.Enemies;
         foreach (var enemy in enemies)
         {
-            var vect = enemy.transform.position - transform.position;
+            var vect = transform.position - enemy.transform.position;
             var ogPos = enemy.transform.position;
             var pos = ogPos + new Vector3(0, 0.4f * enemy.transform.localScale.y, 0);
             // for (var i = 0; i < particlePerEnemy; i++) {

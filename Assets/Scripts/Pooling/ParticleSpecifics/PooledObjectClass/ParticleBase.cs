@@ -68,7 +68,7 @@ public class ParticleBase : PooledObjectBase
         StartCoroutine(RunRoutine());
     }
     
-    public virtual IEnumerator RunRoutine()
+    public override IEnumerator RunRoutine()
     {
         while (ParticleSystem.isPlaying)
         {

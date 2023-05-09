@@ -29,11 +29,6 @@ public class PoolingManager : MonoBehaviour
     {
         _eventToPooledData = _eventToPooledData.AddRange(alwaysLoaded_PoolData.eventToPooledData)
             .AddRange(sceneBased_PoolData_Particle.eventToPooledData);
-    
-    
-        // foreach(var kvp in sceneBased_PoolData_Particle.eventToPooledData){
-        //     ParticleManager.Instance.AddListener(kvp.Key, param => SpawnPooledObject(kvp.Key, (PooledObjectCallbackData) param));
-        // }
     }
     
     
