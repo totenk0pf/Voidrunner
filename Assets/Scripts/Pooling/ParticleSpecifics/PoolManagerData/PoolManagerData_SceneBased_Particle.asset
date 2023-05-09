@@ -17,6 +17,7 @@ MonoBehaviour:
     SerializedBytes: 
     ReferencedUnityObjects:
     - {fileID: 8470634110270536629, guid: 53cb2c4aa6256f04e9fae883c4a58539, type: 3}
+    - {fileID: 4295798393523096461, guid: 6f9fede08e004bb4bb91998e9e9b3c6f, type: 3}
     SerializedBytesString: 
     Prefab: {fileID: 0}
     PrefabModificationsReferencedUnityObjects: []
@@ -41,7 +42,7 @@ MonoBehaviour:
       Data: 
     - Name: 
       Entry: 12
-      Data: 1
+      Data: 2
     - Name: 
       Entry: 7
       Data: 
@@ -54,6 +55,30 @@ MonoBehaviour:
     - Name: prefab
       Entry: 10
       Data: 0
+    - Name: initialPoolSize
+      Entry: 3
+      Data: 10
+    - Name: maxPoolSize
+      Entry: 3
+      Data: 50
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 3
+      Data: 57
+    - Name: $v
+      Entry: 7
+      Data: 3|PooledData, Assembly-CSharp
+    - Name: prefab
+      Entry: 10
+      Data: 1
     - Name: initialPoolSize
       Entry: 3
       Data: 10

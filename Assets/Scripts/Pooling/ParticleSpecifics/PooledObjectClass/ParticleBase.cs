@@ -15,16 +15,22 @@ public class ParticleCallbackData : PooledObjectCallbackData
         this.position = position;
         this.tempParent = tempParent;
     }
+    
+    public ParticleCallbackData(Vector3 normal, Vector3 position) : base(position)
+    {
+        this.normal = normal;
+        this.position = position;
+    }
 }
     
 
 public class ParticleBase : PooledObjectBase
 {
     private Transform _ogParent;
-    private ParticleSystem _ps;
+    [SerializeField] private ParticleSystem _ps;
     public ParticleSystem ParticleSystem {
         get {
-            if (!_ps) _ps = GetComponent<ParticleSystem>();
+            if (!_ps) _ps = GetComponentsInChildren<ParticleSystem>()[0];
             return _ps;
         } 
     }
@@ -38,7 +44,6 @@ public class ParticleBase : PooledObjectBase
         
         var main = ParticleSystem.main;
         main.duration = particleData.duration;
-        main.startLifetime = particleData.startLifeTime;
         main.loop = particleData.canLoop;
     }
 
@@ -51,7 +56,9 @@ public class ParticleBase : PooledObjectBase
         try {
             transform.position = (data as ParticleCallbackData).position;
             transform.up = (data as ParticleCallbackData).normal;
-            transform.parent = (data as ParticleCallbackData).tempParent;
+            
+            if((data as ParticleCallbackData).tempParent != null)
+                transform.parent = (data as ParticleCallbackData).tempParent;
         } catch {
             NCLogger.Log($"particle call back data is null", LogLevel.ERROR);
         }
