@@ -4,6 +4,7 @@ using Core.Logging;
 using UnityEngine;
 using Sirenix.OdinInspector;
 using UnityEditor;
+using MagicLightProbes;
 
 namespace Level {
     public enum RoomType {
@@ -78,7 +79,7 @@ namespace Level {
                 }
             }
         }
-
+        
         [Button("Validate")]
         private void Validate() {
             GenerateBounds();
@@ -87,6 +88,18 @@ namespace Level {
 
         private void OnEnable() {
             Validate();
+        }
+
+        [Button("Generate probes")]
+        private void GenerateProbes() {
+            
+        }
+
+        [Button("Rotate collider")]
+        private void RotateCollider() {
+            var currentSize = col.size;
+            var rotated = new Vector3(currentSize.z, currentSize.y, currentSize.x);
+            col.size = rotated;
         }
 
 #if UNITY_EDITOR
