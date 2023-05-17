@@ -20,6 +20,7 @@ namespace Entities.Enemy.Boss {
 
         [TitleGroup("Attack sets")]
         [SerializeField] private EnemyMovelistData animData;
+        [SerializeField] private AnimationClip idleAnim;
         
         [Title("Refs")] 
         [SerializeField] private EnemyMoveRootMotion _moveWithRootMotion;

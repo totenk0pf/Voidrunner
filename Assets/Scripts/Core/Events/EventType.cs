@@ -20,6 +20,9 @@ namespace Core.Events {
         AugmentChangedEvent,
         AugmentChargeEvent,
         AugmentDrainEvent,
+        DamageEnemyEvent,
+        RangedShotEvent,
+        GetMovementStateEvent,
         EmpowerDamageEnemyEvent,
         RequestMovementStateEvent,
         ReceiveMovementStateEvent,
@@ -67,6 +70,9 @@ namespace Core.Events {
         //
         RequestCurrentGrappleTypeEvent,
         ReceiveCurrentGrappleTypeEvent,
+        SpawnParticleEnemyDeadEvent,
+        SpawnBloodEvent,
+        SpawnParticleREDEvent,
         
         //Room Events
         EnableRoom,

@@ -191,6 +191,14 @@ public class CombatManager : MonoBehaviour
     private void IncrementMeleeOrder() => _curMeleeOrder = _curMeleeOrder.Next();
     private Coroutine _onHoldInputRoutine;
     private GrappleType _currentGrappleType;
+
+    [TitleGroup("Blood VFX settings")] 
+    [SerializeField] private LayerMask enemyLayer;
+    [SerializeField] private int particlePerEnemy;
+    [SerializeField] private Vector3 halfExtents;
+    [SerializeField] private Transform boxCastStart;
+    [SerializeField] private Transform boxCastEnd;
+    
     private void Awake() {
         //Init Ref
         //this.AddListener(EventType.InitWeaponRefEvent, param => InitWeaponRef( (List<WeaponEntry>) param));
@@ -211,6 +219,8 @@ public class CombatManager : MonoBehaviour
         //Receive Refs
         this.AddListener(EventType.ReceivePlayerAnimatorEvent, animator => _playerAnimator = (PlayerAnimator) animator);
         this.AddListener(EventType.ReceiveMovementStateEvent, state => _moveState = (PlayerMovementController.MovementState) state);
+        
+        this.AddListener(EventType.SpawnBloodEvent, param => SpawnBloodOnEnemy());
         
         if(!MeleeSequence) NCLogger.Log($"Missing Melee Sequence Data", LogLevel.ERROR);
         if(!RangedData) NCLogger.Log($"Missing Ranged Data", LogLevel.ERROR);
@@ -484,6 +494,39 @@ public class CombatManager : MonoBehaviour
     }
     #endregion
     
+    #region VFX Methods
+    private void SpawnBloodOnEnemy()
+    {
+        NCLogger.Log($"Spawning Blood");
+        // var vect = (boxCastEnd.position - boxCastStart.position);
+        // var raycastHits = Physics.BoxCastAll(boxCastStart.position, halfExtents, vect.normalized, Quaternion.identity, vect.magnitude, enemyLayer);
+        //
+        // foreach (var hit in raycastHits)
+        // {
+        //     NCLogger.Log($"hit.point {hit.point} enemy.transform.position {hit.collider.transform.position}");
+        //     // Debug.DrawLine(hit.point, hit.point + Vector3.up * 100, Color.white, 15);
+        //     for (var i = 0; i < particlePerEnemy; i++) {
+        //         this.FireEvent(EventType.SpawnParticleREDEvent, new ParticleCallbackData(hit.normal, hit.point, hit.collider.transform));
+        //     }
+        // }
+
+        var enemies = MeleeSequence.OrderToAttributes[_curMeleeOrder].collider.Enemies;
+        foreach (var enemy in enemies)
+        {
+            var vect = transform.position - enemy.transform.position;
+            var ogPos = enemy.transform.position;
+            var pos = ogPos + new Vector3(0, 0.4f * enemy.transform.localScale.y, 0);
+            // for (var i = 0; i < particlePerEnemy; i++) {
+            //     this.FireEvent(EventType.SpawnParticleREDEvent, new ParticleCallbackData(Random.onUnitSphere,pos , enemy.transform));
+            // }
+            this.FireEvent(EventType.SpawnParticleREDEvent, new ParticleCallbackData(Random.onUnitSphere,pos + enemy.transform.right * 0.1f, enemy.transform));
+            this.FireEvent(EventType.SpawnParticleREDEvent, new ParticleCallbackData(Random.onUnitSphere,pos - enemy.transform.right * 0.1f, enemy.transform));
+            this.FireEvent(EventType.SpawnParticleREDEvent, new ParticleCallbackData(Random.onUnitSphere,pos, enemy.transform));
+        }
+
+    }
+    #endregion
+    
     #region Init Methods
 
     private void AssignCollidersData() {
@@ -499,5 +542,12 @@ public class CombatManager : MonoBehaviour
         }
     }
    #endregion
+
+   private void OnDrawGizmos()
+   {
+       Gizmos.color = Color.green;
+       Gizmos.DrawWireCube(boxCastStart.position, halfExtents);
+       Gizmos.DrawWireCube(boxCastEnd.position, halfExtents);
+   }
 }
 

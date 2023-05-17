@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Core.Events;
 using Core.Logging;
 using DG.Tweening;
 using Entities.Enemy;
@@ -8,6 +9,7 @@ using Sirenix.OdinInspector;
 using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.Serialization;
+using EventType = Core.Events.EventType;
 
 [Flags]
 [Serializable]
@@ -38,6 +40,8 @@ public class EnemyBase : EntityBase {
     private Rigidbody _rb;
     
     private bool _canPull;
+
+    private Tween _currentTween;
     
     //Ground check Attributes
     [ReadOnly] public bool IsGrounded;
@@ -91,6 +95,7 @@ public class EnemyBase : EntityBase {
 
     public virtual void Die() {
         if (currentHp <= 0) {
+            this.FireEvent(EventType.SpawnParticleEnemyDeadEvent, new ParticleCallbackData(Vector3.up, transform.position + Vector3.up));
             Destroy(gameObject);
         }
     }
@@ -113,6 +118,10 @@ public class EnemyBase : EntityBase {
         enemyRootMotion.OnMoveChange(false);
         foreach (var anim in animData.attackAnim) {ResetAnim(anim);}
         animator.SetTrigger(animData.hitAnim[0].name);
+        if (_currentTween != null) {
+            _currentTween.Kill();
+            _currentTween = null;
+        }
         DisablePathfinding();
     }
     
@@ -164,7 +173,9 @@ public class EnemyBase : EntityBase {
         foreach (var anim in animData.attackAnim) {ResetAnim(anim);}
         animator.SetTrigger(animData.hitAnim[0].name);
         animator.speed = animator.GetCurrentAnimatorStateInfo(0).length / duration;
-        transform.root.DOMove(dir + transform.position, duration);
+        _currentTween = transform.root.DOMove(dir + transform.position, duration).OnComplete(() => {
+            _currentTween = null;
+        });
 
         yield return new WaitForSeconds(duration);
         

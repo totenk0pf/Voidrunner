@@ -8,11 +8,11 @@ namespace Entities.Enemy.Boss {
         }
         
         public override void OnGrappled() {
-            //neko arc
+            //shadow wizard money gang
         }
         
         public override void OnRelease() {
-            //neko arc
+            //if you reading this, you are entitled to give me free stuff
         }
     }
 }
