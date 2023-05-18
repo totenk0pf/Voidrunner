@@ -11,6 +11,7 @@ namespace Rooms {
 
         private void Awake() {
             gameObject.GetComponent<BoxCollider>().isTrigger = true;
+            if (isStartingRoom) isInRoom = true;
         }
 
         private void OnTriggerEnter(Collider other) {

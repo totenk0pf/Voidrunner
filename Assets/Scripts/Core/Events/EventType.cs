@@ -13,8 +13,8 @@ namespace Core.Events {
         InventoryToggleEvent,
         InventoryUpdateEvent,
         UIBarChangedEvent,
+        UITextChangedEvent,
         OxygenChangeEvent,
-        LevelChangeEvent,
         WeaponChangedEvent,
         WeaponRechargedEvent,
         AugmentChangedEvent,
@@ -78,5 +78,12 @@ namespace Core.Events {
         EnableRoom,
         DisableRoom,
         DoorInvoked, 
+        SetCheckpoint,
+        
+        //Player Events
+        OnPlayerDie,
+        OnPlayerEnterDoor,
+        AddXP, 
+        AddSkillLevel,
     }
 }
