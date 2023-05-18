@@ -39,12 +39,24 @@ namespace Level {
                 return;
             }
 
+            var hasBounds = false;
             var tempBounds     = new Bounds();
-            var childColliders = transform.GetComponentsInChildren<Collider>();
-            for (int i = 0; i < childColliders.Length; i++) {
-                if (childColliders[i] == col) continue;
-                if (i == 1) tempBounds = childColliders[i].bounds;
-                tempBounds.Encapsulate(childColliders[i].bounds);
+            // var childColliders = transform.GetComponentsInChildren<Collider>();
+            // for (int i = 0; i < childColliders.Length; i++) {
+            //     if (childColliders[i] == col) continue;
+            //     if (i == 1) tempBounds = childColliders[i].bounds;
+            //     tempBounds.Encapsulate(childColliders[i].bounds);
+            // }
+            
+            for (var i = 0; i < transform.childCount; ++i) {
+                Renderer childRenderer = transform.GetChild(i).GetComponent<Renderer>();
+                if (childRenderer == null) continue;
+                if (hasBounds) {
+                    tempBounds.Encapsulate(childRenderer.bounds);
+                } else {
+                    tempBounds = childRenderer.bounds;
+                    hasBounds  = true;
+                }
             }
 
             _worldSpaceBounds = tempBounds;
@@ -65,21 +77,13 @@ namespace Level {
                 entry.offset = offset;
             }
         }
-
-
-        [HorizontalGroup("Generate")]
-        [Button("Generate rotations")]
-        private void GenerateRotation() {
-            foreach (var entry in entries) {
-                var normal          = entry.offset.normalized;
-                var currentRotation = transform.rotation;
-                for (int i = 1; i < 4; i++) {
-                    var rotatedNormal = Quaternion.Euler(0, 90 * i, 0) * normal;
-                    
-                }
-            }
-        }
         
+        [HorizontalGroup("Generate")]
+        [Button("Generate probes")]
+        private void GenerateProbes() {
+            
+        }
+
         [Button("Validate")]
         private void Validate() {
             GenerateBounds();
@@ -90,10 +94,6 @@ namespace Level {
             Validate();
         }
 
-        [Button("Generate probes")]
-        private void GenerateProbes() {
-            
-        }
 
         [Button("Rotate collider")]
         private void RotateCollider() {
@@ -109,7 +109,7 @@ namespace Level {
             }
         }
 
-        private void OnDrawGizmos() {
+        private void OnDrawGizmosSelected() {
             if (!Application.isPlaying) {
                 EditorApplication.QueuePlayerLoopUpdate();
                 SceneView.RepaintAll();

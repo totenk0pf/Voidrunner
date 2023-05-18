@@ -3,7 +3,7 @@ using UnityEngine;
 
 public class SceneCleanup : MonoBehaviour {
     [MenuItem("Collab Toolkit/Collider/Clean selection up")]
-    private static void CleanSelection() {
+    public static void CleanSelection() {
         foreach (GameObject root in Selection.gameObjects) {
             var total = root.transform.GetComponentsInChildren<Collider>(true);
             if (!EditorUtility.DisplayDialog("Clean selection up",
