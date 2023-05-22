@@ -1,48 +1,90 @@
 using System.Collections;
-using System.Collections.Generic;
+using Sirenix.OdinInspector;
+using StaticClass;
 using UnityEngine;
 
-public class JuggernautAttack : EnemyState
-{
-    public float attackDelay;
+namespace Entities.Enemy.Juggernaut {
+    public class JuggernautAttack : EnemyState
+    {
+        public float attackDelay;
+        [HideInInspector] public bool inRange; 
+    
+        [TitleGroup("Attack settings")]
+        [SerializeField] private JuggernautHostile _previousState;
+        [SerializeField] private EnemyState _nextState;
+        
+        [Title("Refs")] 
+        [SerializeField] private EnemyMoveRootMotion _moveWithRootMotion;
 
-    private GameObject target;
-    [SerializeField] private EnemyState _previousState;
-    [SerializeField] private EnemyState _nextState;
+        [TitleGroup("Attack sets")] [SerializeField]
+        private AnimSerializedData animData;
 
-    private bool _isAttacking = false;
+        private bool _isAttacking = false;
+        private bool _canSwitchState = false;
+        private bool _canAttack = true;
 
-    public override EnemyState RunCurrentState() {
-        //Change 2f number if changed in WalkerHostile also 
-        if (Vector3.Distance(transform.position, target.transform.position) > 2f) {
-            return _previousState;
+        public override EnemyState RunCurrentState() {
+            if (_canSwitchState && !_isAttacking) {
+                return _previousState;
+            }
+
+            if (_canAttack) {
+                StartCoroutine(StartAttack());
+            }
+
+            return this;
+        }
+        
+        IEnumerator StartAttack() {
+            _canAttack = false;
+            _isAttacking = true;
+            if (_moveWithRootMotion.canMove) _moveWithRootMotion.canMove = false;
+            var randomAttack = Random.Range(0, animData.attackAnim.Count);
+            var attack = animData.attackAnim[randomAttack];
+            TriggerAnim(attack);
+            yield return StartCoroutine(FinishAnimation());
+            yield return StartCoroutine(DelayAttack());
         }
 
-        if (!_isAttacking) {
-            StartCoroutine(DamagePlayer());
+        private IEnumerator DelayAttack()
+        {
+            yield return new WaitForSeconds(attackDelay);
+            StartCoroutine(StartAttack());
+        }
+        
+        private IEnumerator FinishAnimation() {
+            yield return new WaitUntil(() => animator.GetCurrentAnimatorStateInfo(0).normalizedTime >= 0.99f);
+            _isAttacking = false;
         }
 
-        return this;
-    }
+        public override void OnTriggerExit(Collider other) {
+            if (CheckLayerMask.IsInLayerMask(other.gameObject, playerMask)) {
+                StopAllCoroutines();
+                if (_isAttacking) {
+                    StartCoroutine(FinishAnimation());
+                }
 
-    IEnumerator DamagePlayer() {
-        _isAttacking = true;
+                foreach (var anim in animData.attackAnim) {
+                    ResetAnim(anim);
+                }
+                
+                _canAttack = false;
+                inRange = false;
+                
+                _moveWithRootMotion.canMove = true;
+                _canSwitchState = true;
+                _previousState.canSwitch = true;
+            }
+        }
 
-        var oxygenComp = target.GetComponent<Oxygen>();
-        oxygenComp.ReducePermanentOxygen(eBase.enemyDamage);
-
-        yield return new WaitForSeconds(attackDelay);
-
-        _isAttacking = false;
-    }
-
-    public override void OnTriggerEnter(Collider other) {
-
-    }
-
-    public override void OnTriggerStay(Collider other) {
-        if (other.tag == "Player") {
-            target = other.gameObject;
+        public override void OnTriggerEnter(Collider other) {
+            if (CheckLayerMask.IsInLayerMask(other.gameObject, playerMask)) {
+                target = other.gameObject;
+                inRange = true;
+                _canAttack = true;
+           
+                _canSwitchState = false;
+            }
         }
     }
 }

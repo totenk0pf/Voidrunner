@@ -1,11 +1,10 @@
 {
   "dependencies": {
-    "com.psydack.uimgui": {
-      "version": "https://github.com/psydack/uimgui.git",
+    "com.coffee.softmask-for-ugui": {
+      "version": "file:SoftMaskForUGUI-1.0.2",
       "depth": 0,
-      "source": "git",
-      "dependencies": {},
-      "hash": "1957436cf805ff960e92aea2e50135289338164a"
+      "source": "embedded",
+      "dependencies": {}
     },
     "com.unity.2d.sprite": {
       "version": "1.0.0",

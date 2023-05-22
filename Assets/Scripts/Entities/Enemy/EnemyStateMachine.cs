@@ -1,14 +1,23 @@
-using System.Collections;
-using System.Collections.Generic;
+using System;
+using Core.Logging;
+using Sirenix.OdinInspector;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 public class EnemyStateMachine :MonoBehaviour
 {
-    [SerializeField] private EnemyState _currentState;
+    public EnemyState currentState;
+    private EnemyBase _enemyBase;
+    private EnemyBase enemyBase {
+        get {
+            if (!_enemyBase) _enemyBase = GetComponent<EnemyBase>();
+            return _enemyBase;
+        }
+    }
 
-    private void Start() {
-        if (_currentState == null) {
-            Debug.LogWarning("No entry state in " + this);
+    private void Awake() {
+        if (currentState == null) {
+            NCLogger.Log($"Initial state not set.", LogLevel.ERROR);
         }
     }
 
@@ -17,22 +26,21 @@ public class EnemyStateMachine :MonoBehaviour
     }
 
     private void RunStateMachine() {
-        EnemyState nextState = _currentState.RunCurrentState();
-
+        EnemyState nextState = enemyBase.isStunned ? currentState : currentState.RunCurrentState();
         if (nextState != null) {
             SwitchState(nextState);
         }
     }
 
     private void SwitchState(EnemyState state) {
-        _currentState = state;
+        currentState = state;
     }
 
     private void OnTriggerEnter(Collider other) {
-        _currentState.OnTriggerEnter(other);
+        currentState.OnTriggerEnter(other);
     }
 
-    private void OnTriggerStay(Collider other) {
-        _currentState.OnTriggerStay(other);
-    }
+    private void OnTriggerExit(Collider other) {
+        currentState.OnTriggerExit(other);
+    }   
 }

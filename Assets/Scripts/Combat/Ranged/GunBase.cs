@@ -1,72 +1,93 @@
 using System.Collections;
+using Core.Events;
+using Core.Logging;
 using UnityEngine;
 using Sirenix.OdinInspector;
+using UI;
+using EventType = Core.Events.EventType;
 
 namespace Combat {
     public class GunBase : WeaponBase {
-        [TitleGroup("Gun settings")]
-        public float preshotDelay;
-        public Transform firePoint;
-        [SerializeField] private int maxAmmo;
-        [SerializeField] private int maxClip;
+        [TitleGroup("Ranged Specifics")]
+        [SerializeField] protected RangedData rangedData;
+        protected RangedAttribute attribute;
         
-        [TitleGroup("Gun states")]
-        protected bool isReloading;
-        protected bool isFiring;
-
         public int currentAmmo;
         public int clipAmount;
-
-        [TitleGroup("Components")]
-        [SerializeField] protected Animator animator;
+        private float _cooldown;
+        private float _cooldownTimeStamp = 0;
 
         protected void Awake() {
-            currentAmmo = maxAmmo;
+            base.Awake();
+            this.AddListener(EventType.RangedEnemyDamageEvent, dmgData => ApplyDamageOnEnemy((AnimData) dmgData));
+
+            if(!rangedData) NCLogger.Log($"rangedData missing reference", LogLevel.ERROR);
+            attribute = rangedData.Attribute;
+            
+            canAttack = true;
+            UpdateAttribute();
         }
 
+        protected void Start() {
+            //yield return new WaitForSeconds(.5f); //skip X seconds to queue checking after init steps
+            if (currentAmmo == 0 || clipAmount == 0)
+            {
+                NCLogger.Log($"Did not receive refreshAttribute at Awake", LogLevel.ERROR);
+            }
+            _cooldown = attribute.fireClip.length / attribute.AtkSpdModifier + attribute.AftershotDelay;
+        }
+
+        protected void UpdateAttribute() {
+
+            currentAmmo = this.attribute.MaxAmmo;
+            clipAmount = this.attribute.MaxClip;
+            UpdateUI();
+        }
+        
+        protected void UpdateUI() {
+            this.FireEvent(EventType.WeaponPostRangedFiredEvent, new RangedUIMsg {
+                ammo = currentAmmo,
+                clip = clipAmount
+            });
+        }
+        
         protected void Update() {
-            if (Input.GetMouseButtonDown(2) && animator.GetCurrentAnimatorStateInfo(0).IsName("GunSwitching")) {
-                if (isFiring) return;
-                if (currentAmmo >= 1) {
-                    currentAmmo--;
-                    StartCoroutine(Fire());
-                }
-            }
-            if (Input.GetKeyDown(KeyCode.R)) {
-                if (isReloading) return;
-                if (clipAmount >= 1) {
-                    isReloading = true;
-                    StartCoroutine(Reload());
+            if (Input.GetKeyDown(entry.key) && canAttack && entry.type == WeaponType.Ranged) {
+                if (Time.time > _cooldownTimeStamp) {
+                    _cooldown = attribute.fireClip.length / attribute.AtkSpdModifier + attribute.AftershotDelay;
+                    _cooldownTimeStamp = Time.time + _cooldown; 
+                    if (currentAmmo >= 1) {
+                        currentAmmo--;
+                        this.FireEvent(EventType.WeaponRangedFiredEvent);
+                    }
                 }
             }
         }
 
-        protected EnemyBase GetEnemy() {
-            if (Physics.Raycast(firePoint.position, firePoint.forward, out var hit, Mathf.Infinity)) {
-                var enemy = hit.transform.GetComponent<EnemyBase>();
-                return !enemy ? null : enemy;
+        protected void ApplyDamageOnEnemy(AnimData dmgData) {
+            UpdateUI();
+            this.FireEvent(EventType.WeaponFiredEvent, new WeaponFireUIMsg {
+                type = WeaponType.Ranged,
+                rechargeDuration = _cooldown
+            });
+               
+            this.FireEvent(EventType.WeaponRechargedEvent);
+            
+            var enemies = dmgData.EnemiesToCount;
+            foreach (var enemy in enemies) {
+                if (enemies.Count < 1) return;
+                if (!enemy.Key) return;
+                
+                var playerToEnemyVector3 = (enemy.Key.transform.root.position - dmgData.playerTransform.position);
+                var knockbackDir = playerToEnemyVector3.magnitude <= 1
+                    ? dmgData.playerTransform.forward.normalized
+                    : playerToEnemyVector3.normalized;
+                knockbackDir.y = 0;
+                Damage(enemy.Key, dmgData.Damage * enemy.Value);
+                var range = Mathf.Clamp(dmgData.KnockbackRange * enemy.Value, dmgData.KnockbackRange,
+                    dmgData.KnockbackCap);
+                KnockBack(enemy.Key, dmgData.KnockbackDuration, knockbackDir * range);
             }
-            return null;
-        }
-
-        public override IEnumerator AltFire() {
-            yield return null;
-        }
-
-        public override IEnumerator Fire() {
-            yield return new WaitForSeconds(preshotDelay);
-            Damage(GetEnemy());
-            isFiring = false;
-            yield return null;
-        }
-
-        protected IEnumerator Reload() {
-            yield return new WaitForSeconds(transform.GetComponentInParent<Animator>().runtimeAnimatorController
-                                                .animationClips[0].length);
-            clipAmount--;
-            currentAmmo = maxAmmo;
-            isReloading = false;
-            yield return null;
         }
     }
 }

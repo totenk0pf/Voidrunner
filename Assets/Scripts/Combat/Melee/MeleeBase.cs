@@ -1,65 +1,52 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using Core.Events;
+using Core.Logging;
 using UnityEngine;
 using Sirenix.OdinInspector;
+using UI;
+using EventType = Core.Events.EventType;
 
 namespace Combat {
-    [RequireComponent(typeof(Rigidbody))]
-    [RequireComponent(typeof(BoxCollider))]
     public class MeleeBase : WeaponBase {
-        [TitleGroup("Melee settings")]
-        public float attackSpeed;
-        public float attackRadius;
-        public float attackSpeedModifier = 1f;
-        
-        [TitleGroup("Melee states")]
-        protected bool isAttacking;
-        protected bool canAttack;
-
-        protected List<EnemyBase> enemies = new();
 
         protected void Awake() {
-            StartCoroutine(Fire());
-            StartCoroutine(AltFire());
+            base.Awake();
+            this.AddListener(EventType.MeleeEnemyDamageEvent, dmgData => ApplyDamageOnEnemy((AnimData) dmgData));
+            
+            canAttack = true;
         }
 
         protected void Update() {
-            if (Input.GetMouseButtonDown(0)) {
-                if (canAttack) {
-                    isAttacking = true;
-                }
+            if (Input.GetKeyDown(entry.key) && canAttack && entry.type == WeaponType.Melee) {
+
+                this.FireEvent(EventType.WeaponMeleeFiredEvent);
             }
         }
 
-        protected void OnTriggerEnter(Collider col) {
-            var enemy = col.GetComponent<EnemyBase>();
-            if (!enemy) return;
-            enemies.Add(enemy);
-        }
-
-        protected void OnTriggerExit(Collider col) {
-            var enemy = col.GetComponent<EnemyBase>();
-            if (!enemy) return;
-            if (enemies.Contains(enemy)) enemies.Remove(enemy);
-        }
-
-        public override IEnumerator Fire() {
-            if (isAttacking) {
-                canAttack = false;
-                for (int i = 0; i < enemies.Count; i++) {
-                    if (Vector3.Distance(enemies[i].transform.position, transform.position) > attackRadius) continue;
-                    Damage(enemies[i]);
-                }
-
-                yield return new WaitForSeconds(attackSpeed / attackSpeedModifier);
-                canAttack = true;
+        protected void ApplyDamageOnEnemy(AnimData dmgData) {
+            if(dmgData == null) return;
+            var enemies = dmgData.Enemies;
+            if (enemies == null) return;
+            foreach (var enemy in enemies) {
+                if (enemies.Count < 1) return;
+                var playerToEnemyVector3 = (enemy.transform.root.position - dmgData.playerTransform.position);
+                var knockbackDir = playerToEnemyVector3.magnitude <= 1
+                    ? dmgData.playerTransform.forward.normalized
+                    : playerToEnemyVector3.normalized;
+                knockbackDir.y = 0;
+                Damage(enemy, dmgData.Damage);
+                KnockBack(enemy, dmgData.KnockbackDuration, knockbackDir * dmgData.KnockbackRange);
+                //NCLogger.Log($"dmg: {dmgData.Damage}");
             }
-
-            yield return null;
-        }
-
-        public override IEnumerator AltFire() {
-            yield return null;
+            
+            this.FireEvent(EventType.WeaponFiredEvent, new WeaponFireUIMsg {
+                    type = WeaponType.Melee,
+                    rechargeDuration = dmgData.animDuration //default value
+            });
+            //waiting for recharge time is handled in CombatManager
+            this.FireEvent(EventType.WeaponRechargedEvent);
+            //resetting atk attributes is handled in CombatManager
         }
     }
 }

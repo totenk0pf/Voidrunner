@@ -1,5 +1,8 @@
+using Core.Events;
 using System.Timers;
+using UI;
 using UnityEngine;
+using EventType = Core.Events.EventType;
 
 public class Oxygen : MonoBehaviour {
     //Oxygen pool player has throughout the game
@@ -11,9 +14,12 @@ public class Oxygen : MonoBehaviour {
     //Oxygen regen multipiler
     public float regenMultipiler;
 
-    [Space]
-    public float permanentOxygen;
+    [Space] public float permanentOxygen;
     public float tempOxygen;
+
+    [Space] public float totalOxygen; //sum of perm and temp oxygen\
+    public float currentOxygen;
+    public float oxygenRatio; //for UI
 
     //Check if can regenerate temp oxygen 
     private bool _canRegenOxygen = true;
@@ -22,17 +28,23 @@ public class Oxygen : MonoBehaviour {
     private int _currentRegenTimer;
 
     //System.Timers.Timer for regeneration
-    private Timer _regenTimer; 
-    
-    private void Start() {
+    private Timer _regenTimer;
+
+    private void Awake() {
         permanentOxygen = oxygenPool;
-        tempOxygen = permanentOxygen;
+        tempOxygen      = permanentOxygen;
 
         _currentRegenTimer = regenerateTime;
 
+        totalOxygen   = permanentOxygen + tempOxygen;
+        currentOxygen = totalOxygen;
+        oxygenRatio   = currentOxygen / totalOxygen;
+    }
+
+    private void Start() {
         //Timer with interval of 1s 
-        _regenTimer = new System.Timers.Timer(1000);
-        _regenTimer.Enabled = true;
+        _regenTimer         =  new Timer(1000);
+        _regenTimer.Enabled =  true;
         _regenTimer.Elapsed += OnTimedEvent;
 
         //Just in case
@@ -47,57 +59,52 @@ public class Oxygen : MonoBehaviour {
 
         //Regenerate Oxygen with multiplier adds up overtime
         if (_currentRegenTimer <= 0) {
-            _canRegenOxygen = true;
-
-            tempOxygen += (regenMultipiler * Time.fixedDeltaTime);
+            _canRegenOxygen =  true;
+            tempOxygen      += (regenMultipiler * Time.fixedDeltaTime);
         }
     }
 
-    /// <summary>
-    /// Reduce Permanent Oxygen
-    /// </summary>
-    /// <param name="amount">Amount to decrease</param>
+    //For UI
+    private float GetOxygenRatio() {
+        currentOxygen = permanentOxygen + tempOxygen;
+        oxygenRatio   = currentOxygen / totalOxygen;
+        return oxygenRatio;
+    }
+
+    public void FireUIEvent() {
+        EventDispatcher.Instance.FireEvent(EventType.UIBarChangedEvent, new BarUIMsg {
+            type  = BarUI.BarType.Oxygen,
+            value = GetOxygenRatio()
+        });
+    }
+
     public void ReducePermanentOxygen(float amount) {
         permanentOxygen -= amount;
+        if (permanentOxygen <= 0) {
+            EventDispatcher.Instance.FireEvent(EventType.OnPlayerDie);
+        }
+        FireUIEvent();
     }
 
-    /// <summary>
-    /// Reduce Temp Oxygen
-    /// </summary>
-    /// <param name="amount">Amount to decrease</param>
     public void ReduceTempOxygen(float amount) {
         tempOxygen -= amount;
-
-        _canRegenOxygen = false;
+        _canRegenOxygen    = false;
         _currentRegenTimer = regenerateTime;
+        FireUIEvent();
     }
-
-    /// <summary>
-    /// Adds Permanent Oxygen
-    /// </summary>
-    /// <param name="amount">Amount to add</param>
+    
     public void AddPermanentOxygen(float amount) {
         permanentOxygen += amount;
+        FireUIEvent();
     }
-
-    /// <summary>
-    /// Adds Temp Oxygen
-    /// </summary>
-    /// <param name="amount">Amount to add</param>
+    
     public void AddTempOxygen(float amount) {
         tempOxygen += amount;
+        FireUIEvent();
     }
 
-    /// <summary>
-    /// Check if enough temp oxygen to preform an action
-    /// </summary>
-    /// <param name="actionAmount">Oxygen cost to perform</param>
-    /// <returns>(temp oxygen - actionAmount) > 0.1f</returns>
-    public bool EnoughTempOxygen(float actionAmount) {
-        return (tempOxygen - actionAmount) > 0.1f;
-    }
-
-    //For System.Timers.Timer _regenTimer
+    public bool EnoughTempOxygen(float actionAmount) => tempOxygen - actionAmount > 0.1f;
+    
     private void OnTimedEvent(object source, ElapsedEventArgs e) {
         if (!_canRegenOxygen) {
             _currentRegenTimer--;

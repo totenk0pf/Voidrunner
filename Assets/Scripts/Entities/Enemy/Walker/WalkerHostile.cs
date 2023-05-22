@@ -1,47 +1,54 @@
 using System.Collections;
 using System.Collections.Generic;
+using Core.Collections;
+using Entities.Enemy;
+using Sirenix.OdinInspector;
 using UnityEngine;
 
 public class WalkerHostile : EnemyState
 {
-    public float fastChaseSpeed;
-    [SerializeField] private EnemyState _nextState;
+    [Title("Data")]
+    [SerializeField] private WalkerAttack _nextState;
+    [SerializeField] private AnimSerializedData _animData;
+    
+    [SerializeField] private EnemyMovelistData _hostileAnimData;
 
-    private Vector3 target; 
-    private enum HostileStyle
-    {
-        Slow,
-        Fast
-    }
-
-    private HostileStyle chaseType;
-
+    private bool _canSwitchChaseState = true;
+    private bool _canSwitchState = true;
+    
+    private AnimParam _currAnim; 
+    
     public override EnemyState RunCurrentState() {
-        Agent.SetDestination(target);
-        Agent.isStopped = false;
-
-        if (chaseType == HostileStyle.Slow) {
-            Agent.speed = eBase.enemySpeed;
+        Agent.SetDestination(target.transform.position);
+        if (_canSwitchChaseState) {
+            StartCoroutine(SwitchChaseState());
         }
-
-        else Agent.speed = fastChaseSpeed;
-
-        if (Agent.remainingDistance < 2f) {
-            Agent.isStopped = true;
+        
+        if (_nextState.inRange && _canSwitchState) {
+            _canSwitchState = false;
+            TriggerAnim(_currAnim);
+            Agent.ResetPath();
             return _nextState;
         }
+        
         return this;
     }
 
-    public override void OnTriggerEnter(Collider other) {
-        if (other.tag == "Player") {
-            chaseType = (HostileStyle)Random.Range(0, 1);
-        }
+    public void ResetState() {
+        _canSwitchState = true;
+        _canSwitchChaseState = true;
     }
 
-    public override void OnTriggerStay(Collider other) {
-        if (other.tag == "Player") {
-            target = other.transform.position;
+    private IEnumerator SwitchChaseState() {
+        _canSwitchChaseState = false;
+
+        //reset anims
+        foreach (var animParam in _animData.hostileAnim) {
+            ResetAnim(animParam);
         }
+
+        _currAnim = GetItemFromMoveList(_hostileAnimData.moveList);
+        TriggerAnim(_currAnim);
+        yield return null;
     }
 }

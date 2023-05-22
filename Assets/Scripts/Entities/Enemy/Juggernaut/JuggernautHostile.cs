@@ -1,31 +1,28 @@
-using System.Collections;
-using System.Collections.Generic;
+using Entities.Enemy;
+using Entities.Enemy.Juggernaut;
+using Sirenix.OdinInspector;
 using UnityEngine;
+using UnityEngine.Serialization;
 
-public class JuggernautHostile : EnemyState
-{
-    public float fastChaseSpeed;
-    [SerializeField] private EnemyState _nextState;
+public class JuggernautHostile : EnemyState {
+    [Title("Data")]
+    [SerializeField] private JuggernautAttack _nextState;
+    [SerializeField] private AnimSerializedData animData;
 
-    private Vector3 target;
+    [HideInInspector] public bool canSwitch = true;
+
     public override EnemyState RunCurrentState() {
-        Agent.SetDestination(target);
-        Agent.isStopped = false;
-        Agent.speed = fastChaseSpeed;
+        if (!animator.GetBool(animData.hostileAnim[0].name)) TriggerAnim(animData.hostileAnim[0]);
 
-        if (Agent.remainingDistance < 2f) {
-            Agent.isStopped = true;
+        Agent.SetDestination(target.transform.position);
+
+        if (_nextState.inRange && canSwitch) {
+            canSwitch = false;
+            Agent.ResetPath();
+            TriggerAnim(animData.hostileAnim[0]);
             return _nextState;
         }
+        
         return this;
-    }
-
-    public override void OnTriggerEnter(Collider other) {
-    }
-
-    public override void OnTriggerStay(Collider other) {
-        if (other.tag == "Player") {
-            target = other.transform.position;
-        }
     }
 }
