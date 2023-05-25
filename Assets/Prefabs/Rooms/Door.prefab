@@ -340,9 +340,10 @@ MonoBehaviour:
     Room1: {fileID: 0}
     Room2: {fileID: 0}
   doorMesh: {fileID: 2717664283202022517}
-  yOffset: 3
-  duration: 1.2
+  yOffset: -3
+  duration: 1
   easeType: 22
+  isCheckpoint: 0
   canOpen: 1
 --- !u!1 &8406391674173348663
 GameObject:

@@ -6,11 +6,23 @@
   <component name="ChangeListManager">
     <list default="true" id="c180c223-9eca-45b2-b2a1-c0f4028aa4d0" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/.idea.Voidrunner/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.Voidrunner/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/Particle/DeathParticle.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Prefabs/Particle/DeathParticle.prefab" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/Particle/ParticleBloodRed.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Prefabs/Particle/ParticleBloodRed.prefab" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Combat/CombatManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Combat/CombatManager.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Pooling/ParticleSpecifics/PooledObjectClass/ParticleBase.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Pooling/ParticleSpecifics/PooledObjectClass/ParticleBase.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Pooling/PoolingManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Pooling/PoolingManager.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/PolygonSciFiAssets/PolygonSciFiSpace/Materials/FX_Materials/FX_HUD.mat" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/PolygonSciFiAssets/PolygonSciFiSpace/Materials/FX_Materials/FX_HUD.mat" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/PolygonSciFiAssets/PolygonSciFiSpace/Materials/Misc/Weapons_Energy.mat" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/PolygonSciFiAssets/PolygonSciFiSpace/Materials/Misc/Weapons_Energy.mat" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/PolygonSciFiAssets/PolygonSciFiSpace/Materials/PolygonScifiSpace_Material_Glass.mat" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/PolygonSciFiAssets/PolygonSciFiSpace/Materials/PolygonScifiSpace_Material_Glass.mat" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/PolygonSciFiAssets/PolygonSciFiSpace/Prefabs/Room/Hallway Variants/Hallway_1.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/PolygonSciFiAssets/PolygonSciFiSpace/Prefabs/Room/Hallway Variants/Hallway_1.prefab" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/PolygonSciFiAssets/PolygonSciFiSpace/Prefabs/Room/Hallway Variants/Hallway_4.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/PolygonSciFiAssets/PolygonSciFiSpace/Prefabs/Room/Hallway Variants/Hallway_4.prefab" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/PolygonSciFiAssets/PolygonSciFiSpace/Prefabs/Room/Hallway Variants/Hallway_7.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/PolygonSciFiAssets/PolygonSciFiSpace/Prefabs/Room/Hallway Variants/Hallway_7.prefab" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/PolygonSciFiAssets/PolygonSciFiSpace/Prefabs/Room/Hallway Variants/Hallway_8.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/PolygonSciFiAssets/PolygonSciFiSpace/Prefabs/Room/Hallway Variants/Hallway_8.prefab" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/Rooms/Door.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Prefabs/Rooms/Door.prefab" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scenes/Prototype.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scenes/Prototype.unity" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Level/Door.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Level/Door.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Level/Room.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Level/Room.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Player/PlayerProgression.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Player/PlayerProgression.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Rooms.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Rooms/RoomManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Level/RoomManager.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Rooms/RoomManager.cs.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Level/RoomManager.cs.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Rooms/RoomObject.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Rooms/RoomObject.cs.meta" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/ProjectSettings/Packages/com.unity.probuilder/Settings.json" beforeDir="false" afterPath="$PROJECT_DIR$/ProjectSettings/Packages/com.unity.probuilder/Settings.json" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -32,10 +44,6 @@
     <option name="onto" value="bf6ac582a23917f976b01caba001f6f835dc7b0b" />
   </component>
   <component name="HighlightingSettingsPerFile">
-    <setting file="file://$PROJECT_DIR$/Assets/AnimationSequencer/Editor/Core/AnimationSequencerControllerCustomEditor.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/Assets/Scripts/Combat/CombatAnimationSequenceController.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/Assets/Scripts/Entities/Enemy/AnimSerializedData.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/Assets/Scripts/Extensions/Extensions.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Library/PackageCache/com.unity.probuilder@5.0.6/Editor/EditorCore/UVEditor.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Library/PackageCache/com.unity.probuilder@5.0.6/Samples~/Runtime/Icosphere FFT/Scripts/IcoBumpin.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Library/PackageCache/com.unity.render-pipelines.core@12.1.7/Editor/Lighting/IESReader.cs" root0="SKIP_HIGHLIGHTING" />
@@ -60,22 +68,37 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "Discover.Launch.Via.Unity": "true",
-    "RunOnceActivity.OpenProjectViewOnStart": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "WebServerToolWindowFactoryState": "false",
-    "XThreadsFramesViewSplitterKey": "0.3059514",
-    "node.js.detected.package.eslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;Discover.Launch.Via.Unity&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
+    &quot;XThreadsFramesViewSplitterKey&quot;: &quot;0.3059514&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  },
+  &quot;keyToStringList&quot;: {
+    &quot;rider.external.source.directories&quot;: [
+      &quot;C:\\Users\\ADMIN\\AppData\\Roaming\\JetBrains\\Rider2022.3\\resharper-host\\DecompilerCache&quot;,
+      &quot;C:\\Users\\ADMIN\\AppData\\Roaming\\JetBrains\\Rider2022.3\\resharper-host\\SourcesCache&quot;,
+      &quot;C:\\Users\\ADMIN\\AppData\\Local\\Symbols\\src&quot;
+    ]
   }
-}]]></component>
+}</component>
   <component name="RunManager" selected="Attach to Unity Editor.Attach to Unity Editor">
+    <configuration name="Start Unity" type="RunUnityExe" factoryName="Unity Executable">
+      <option name="EXE_PATH" value="D:\Unity\2021.3.10f1\Editor\Unity.exe" />
+      <option name="PROGRAM_PARAMETERS" value="-projectPath &quot;D:\Unity projects\Voidrunner&quot; -debugCodeOptimization" />
+      <option name="WORKING_DIRECTORY" value="D:\Unity projects\Voidrunner" />
+      <option name="PASS_PARENT_ENVS" value="1" />
+      <option name="USE_EXTERNAL_CONSOLE" value="0" />
+      <method v="2" />
+    </configuration>
     <configuration name="UnitTests (batch mode)" type="RunUnityExe" factoryName="Unity Executable">
-      <option name="EXE_PATH" value="C:\Program Files\Unity\Hub\Editor\2021.3.10f1\Editor\Unity.exe" />
+      <option name="EXE_PATH" value="D:\Unity\2021.3.10f1\Editor\Unity.exe" />
       <option name="PROGRAM_PARAMETERS" value="-runTests -batchmode -projectPath D:\Users\duong.lc\Documents\GitHub\Voidrunner -testResults Logs/results.xml -testPlatform EditMode -debugCodeOptimization" />
       <option name="WORKING_DIRECTORY" value="D:\Users\duong.lc\Documents\GitHub\Voidrunner" />
       <option name="PASS_PARENT_ENVS" value="1" />
@@ -92,10 +115,10 @@
       </option>
       <method v="2" />
     </configuration>
-    <configuration name="Attach to Unity Editor" type="UNITY_DEBUG_RUN_CONFIGURATION" factoryName="Unity Debug" show_console_on_std_err="false" show_console_on_std_out="false" port="50000" address="localhost">
+    <configuration name="Attach to Unity Editor" type="UNITY_DEBUG_RUN_CONFIGURATION" factoryName="Unity Debug" show_console_on_std_err="false" show_console_on_std_out="false" port="50000" address="localhost" ignored-value-for-modified-check="84360">
       <option name="allowRunningInParallel" value="false" />
       <option name="listenPortForConnections" value="false" />
-      <option name="pid" />
+      <option name="pid" value="84360" />
       <option name="projectPathOnTarget" />
       <option name="selectedOptions">
         <list />
@@ -118,6 +141,8 @@
       <workItem from="1681657615118" duration="664000" />
       <workItem from="1683598237152" duration="952000" />
       <workItem from="1683611146637" duration="4473000" />
+      <workItem from="1684878026957" duration="5827000" />
+      <workItem from="1684945190201" duration="1570000" />
     </task>
     <servers />
   </component>

@@ -2,7 +2,7 @@ using System;
 using System.Collections;
 using Core.Events;
 using DG.Tweening;
-using Rooms;
+using Level;
 using Sirenix.OdinInspector;
 using StaticClass;
 using UnityEngine;
@@ -36,23 +36,23 @@ namespace Level {
         private Tween _currentTween;
         private bool _canRunTween = true;
         
-        private RoomObject _currentRoom;
-        private RoomObject _nextRoom;
+        private Room _currentRoom;
+        private Room _nextRoom;
         
         private void Start() {
-            _currentRoom = roomInfo.Room1;
-            _nextRoom = roomInfo.Room2;
+            _currentRoom = roomInfo.previousRoom;
+            _nextRoom = roomInfo.nextRoom;
             
             EventDispatcher.Instance.AddListener(EventType.DoorInvoked, cb => CheckDoor());
             CheckDoor();
         }
 
-        public void ResetDoor(RoomObject exception = null) {
+        public void ResetDoor(Room exception = null) {
             _canRunTween = false;
             _currentTween?.Kill();
             
-            _currentRoom = roomInfo.Room1;
-            _nextRoom = roomInfo.Room2;
+            _currentRoom = roomInfo.previousRoom;
+            _nextRoom = roomInfo.nextRoom;
             
             var t = doorMesh.transform.localPosition;
             doorMesh.transform.localPosition = new Vector3(t.x, 0, t.z);
@@ -114,7 +114,7 @@ namespace Level {
             _currentTween = doorMesh.transform.DOLocalMoveY(0, duration)
                 .SetEase(easeType)
                 .OnComplete(() => {
-                    if (_currentRoom.isInRoom) {
+                    if (_currentRoom.IsInRoom) {
                         EventDispatcher.Instance.FireEvent(EventType.DisableRoom, _nextRoom);
                         EventDispatcher.Instance.FireEvent(EventType.DoorInvoked);
                     }
@@ -123,13 +123,12 @@ namespace Level {
                         EventDispatcher.Instance.FireEvent(EventType.DoorInvoked);
                         
                         if (isBacktrackDisabled) return;
-                        if (_currentRoom == roomInfo.Room1) {
-                            _currentRoom = roomInfo.Room2;
-                            _nextRoom = roomInfo.Room1;
-                        }
-                        else {
-                            _currentRoom = roomInfo.Room1;
-                            _nextRoom = roomInfo.Room2;
+                        if (_currentRoom == roomInfo.previousRoom) {
+                            _currentRoom = roomInfo.nextRoom;
+                            _nextRoom = roomInfo.previousRoom;
+                        } else {
+                            _currentRoom = roomInfo.previousRoom;
+                            _nextRoom = roomInfo.nextRoom;
                         }
                     }
                     _currentTween = null;

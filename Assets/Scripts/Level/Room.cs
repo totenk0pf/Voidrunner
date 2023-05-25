@@ -24,10 +24,12 @@ namespace Level {
 
     [RequireComponent(typeof(BoxCollider))]
     public class Room : MonoBehaviour {
+        public RoomType type;
+        public bool IsInRoom { get; private set; }
+
         [ReadOnly] public List<Tuple<Vector2Int, Quaternion>> Rotations { get; private set; }
         [SerializeField] private BoxCollider col;
         [SerializeField] private List<EntryInfo> entries;
-        [SerializeField] private RoomType type;
         [ReadOnly] [ShowInInspector] private Vector3 _pivot;
         private Bounds _worldSpaceBounds;
 
@@ -41,15 +43,11 @@ namespace Level {
 
             var hasBounds = false;
             var tempBounds     = new Bounds();
-            // var childColliders = transform.GetComponentsInChildren<Collider>();
-            // for (int i = 0; i < childColliders.Length; i++) {
-            //     if (childColliders[i] == col) continue;
-            //     if (i == 1) tempBounds = childColliders[i].bounds;
-            //     tempBounds.Encapsulate(childColliders[i].bounds);
-            // }
+
+            var renderers = GetComponentsInChildren<Renderer>();
             
-            for (var i = 0; i < transform.childCount; ++i) {
-                Renderer childRenderer = transform.GetChild(i).GetComponent<Renderer>();
+            for (var i = 0; i < renderers.Length; ++i) {
+                Renderer childRenderer = renderers[i];
                 if (childRenderer == null) continue;
                 if (hasBounds) {
                     tempBounds.Encapsulate(childRenderer.bounds);
@@ -94,12 +92,25 @@ namespace Level {
             Validate();
         }
 
-
         [Button("Rotate collider")]
         private void RotateCollider() {
             var currentSize = col.size;
             var rotated = new Vector3(currentSize.z, currentSize.y, currentSize.x);
             col.size = rotated;
+        }
+
+        private void Awake() {
+            // if (type == RoomType.Hub) IsInRoom = true;
+        }
+
+        private void OnTriggerEnter(Collider other) {
+            if (other.gameObject.layer != LayerMask.NameToLayer("Player")) return;
+            IsInRoom = true;
+
+        }
+        private void OnTriggerExit(Collider other) {
+            if (other.gameObject.layer != LayerMask.NameToLayer("Player")) return;
+            IsInRoom = false;
         }
 
 #if UNITY_EDITOR
