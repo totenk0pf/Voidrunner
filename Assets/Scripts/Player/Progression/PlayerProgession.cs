@@ -10,41 +10,40 @@ public class PlayerProgression {
     
     public PlayerProgression(PlayerProgressionData data) {
         _progressionData = data;
+        CurrentSpec = new() {
+            {SpecType.Vigor, 1},
+            {SpecType.Endurance, 1},
+            {SpecType.Strength, 1},
+            {SpecType.Dexterity, 1}
+        };
     }
     
-    public enum SpecType
-    {
+    public enum SpecType {
         Vigor,
         Endurance,
         Strength,
         Dexterity
     }
 
-    private int _currentLevel;
-    public int CurrentLevel => _currentLevel;
-    private Dictionary<SpecType, int> _currentSpec = new Dictionary<SpecType, int>() {
-        {SpecType.Vigor, 1},
-        {SpecType.Endurance, 1},
-        {SpecType.Strength, 1},
-        {SpecType.Dexterity, 1}
-    };
+    public int CurrentLevel { get; private set; }
+
+    public Dictionary<SpecType, int> CurrentSpec { get; private set; }
     private int _specCap;
     
-    private float _currentXP;
-    private float _currentXpCap;
-
-    private int _skillPoints;
-    public int SkillPoints => _skillPoints;
+    public float CurrentXp { get; private set; }
+    public float CurrentXpCap { get; private set; }
+    
+    public int SkillPoints { get; private set; }
 
     public void AddXP(float amount) {
-        if (_currentXP + amount >= _currentXpCap) {
-            _currentXP = _currentXP + amount - _currentXpCap;
-            _currentXpCap = 50 * Mathf.Pow(_progressionData.XPGainMod, _currentLevel);
-            _currentLevel++;
-            _skillPoints++;
-            EventDispatcher.Instance.FireEvent(EventType.LevelUpEvent, _currentLevel);
+        if (CurrentXp + amount >= CurrentXpCap) {
+            CurrentXp = CurrentXp + amount - CurrentXpCap;
+            CurrentXpCap = 50 * Mathf.Pow(_progressionData.XPGainMod, CurrentLevel);
+            CurrentLevel++;
+            SkillPoints++;
+            EventDispatcher.Instance.FireEvent(EventType.LevelUpEvent, CurrentLevel);
         } else {
-            _currentXP += amount;
+            CurrentXp += amount;
         }
         EventDispatcher.Instance.FireEvent(EventType.XPGainEvent, amount);
         EventDispatcher.Instance.FireEvent(EventType.UIBarChangedEvent, new BarUIMsg {
@@ -55,14 +54,14 @@ public class PlayerProgression {
     
     public void AddXP(string enemyType) {
         var amt = _progressionData.enemyExperienceData.Find(x => x.tag == enemyType).gain;
-        if (_currentXP + amt >= _currentXpCap) {
-            _currentXP    = _currentXP + amt - _currentXpCap;
-            _currentXpCap = 50 * Mathf.Pow(_progressionData.XPGainMod, _currentLevel);
-            _currentLevel++;
-            _skillPoints++;
-            EventDispatcher.Instance.FireEvent(EventType.LevelUpEvent, _currentLevel);
+        if (CurrentXp + amt >= CurrentXpCap) {
+            CurrentXp    = CurrentXp + amt - CurrentXpCap;
+            CurrentXpCap = 50 * Mathf.Pow(_progressionData.XPGainMod, CurrentLevel);
+            CurrentLevel++;
+            SkillPoints++;
+            EventDispatcher.Instance.FireEvent(EventType.LevelUpEvent, CurrentLevel);
         } else {
-            _currentXP += amt;
+            CurrentXp += amt;
         }
         EventDispatcher.Instance.FireEvent(EventType.XPGainEvent, amt);
         EventDispatcher.Instance.FireEvent(EventType.UIBarChangedEvent, new BarUIMsg {
@@ -89,6 +88,6 @@ public class PlayerProgression {
         }
     }
 
-    public int GetSpecByType(SpecType type) => _currentSpec[type];
-    private float GetXpRatio() => _currentXP / _currentXpCap;
+    public int GetSpecByType(SpecType type) => CurrentSpec[type];
+    private float GetXpRatio() => CurrentXp / CurrentXpCap;
 }

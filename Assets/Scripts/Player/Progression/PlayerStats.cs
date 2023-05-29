@@ -1,7 +1,9 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Combat;
+using Core.Debug;
 using Core.Events;
 using Player.Progression;
 using Sirenix.OdinInspector;
@@ -21,6 +23,24 @@ public class PlayerStats : MonoBehaviour
 
     private void Start() {
         this.FireEvent(EventType.RefreshModifiersEvent);
+        DebugGUI.Instance.AddText(nameof(PlayerStats), "");
+    }
+
+    private void Update() {
+#if UNITY_EDITOR
+        DebugGUI.Instance.UpdateText(nameof(PlayerStats),
+        "Progression \n" + 
+            $"XP: {progression.CurrentXp}\n" +
+            $"XP cap: {progression.CurrentXpCap}\n" +
+            $"Level: {progression.CurrentLevel}\n" +
+            $"Skill points: {progression.SkillPoints}\n" +
+            $"\nSpec types\n" +
+            $"Vigor: {progression.CurrentSpec[PlayerProgression.SpecType.Vigor]}\n"+
+            $"Endurance: {progression.CurrentSpec[PlayerProgression.SpecType.Endurance]}\n" +
+            $"Strength: {progression.CurrentSpec[PlayerProgression.SpecType.Strength]}\n" +
+            $"Dexterity: {progression.CurrentSpec[PlayerProgression.SpecType.Dexterity]}"        
+            );
+#endif
     }
 
     private void UpdateCombatModifiers(MeleeSequenceData meleeData)
