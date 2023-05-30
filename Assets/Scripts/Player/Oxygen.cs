@@ -1,5 +1,6 @@
 using Core.Events;
 using System.Timers;
+using Core.Debug;
 using UI;
 using UnityEngine;
 using UnityEngine.Serialization;
@@ -63,6 +64,19 @@ public class Oxygen : MonoBehaviour {
             _canRegenOxygen =  true;
             tempOxygen      += (regenMultipiler * Time.fixedDeltaTime);
         }
+#if UNITY_EDITOR
+        DebugText();        
+#endif
+    }
+
+    private void DebugText() {
+        DebugGUI.Instance.UpdateText(nameof(Oxygen),
+            "\nOxygen\n" +
+            $"Permanent: {permanentOxygen}\n" +
+            $"Temp: {tempOxygen}\n" +
+            $"Total: {totalOxygen}\n" +
+            $"Current: {currentOxygen}\n"
+        );
     }
 
     //For UI

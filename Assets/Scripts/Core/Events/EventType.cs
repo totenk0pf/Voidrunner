@@ -9,19 +9,12 @@ namespace Core.Events {
         ItemRemoveEvent,
         ItemAddEvent,
         ItemPickEvent,
-        InventoryHUDEvent,
-        InventoryToggleEvent,
-        InventoryUpdateEvent,
-        UIBarChangedEvent,
         OxygenChangeEvent,
         XPGainEvent,
         LevelUpEvent,
         SpecUpEvent,
         WeaponChangedEvent,
         WeaponRechargedEvent,
-        AugmentChangedEvent,
-        AugmentChargeEvent,
-        AugmentDrainEvent,
         EmpowerDamageEnemyEvent,
         RequestMovementStateEvent,
         ReceiveMovementStateEvent,
@@ -84,6 +77,16 @@ namespace Core.Events {
         ReceiveCurrentGrappleTypeEvent,
         
         // Entity update events
-        EntityDeathEvent
+        EntityDeathEvent,
+        
+        // UI events
+        InventoryHUDEvent,
+        AugmentChangedEvent,
+        AugmentChargeEvent,
+        AugmentDrainEvent,
+        InventoryToggleEvent,
+        InventoryUpdateEvent,
+        UIBarChangedEvent,
+        SkillPointGainedEvent
     }
 }

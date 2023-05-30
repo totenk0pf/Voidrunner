@@ -36,13 +36,14 @@ public class MeleeSequenceAttribute : IAnimDataConvertable {
     public bool canDamageMod;
     [ShowIf("canDamageMod")] [SerializeField] private float damageScale = 1;
     [ShowIf("canDamageMod")] [SerializeField] private float damageModifier = 0;
+    [ShowIf("canDamageMod")] [SerializeField] public float modifierScale = 1;
     [ShowIf("canDamageMod")] [SerializeField] private float attackSpeedModifier = 1;
     public ComboAnimContainer ComboAnim;
     
     
     //Getters
     public float NextSeqInputWindow => nextSeqInputWindow;
-    public float Damage => canDamageMod ? (damage + damageModifier) * damageScale : damage;
+    public float Damage => canDamageMod ? (damage + damageModifier * modifierScale) * damageScale : damage;
     public PlayerAnimState State => state;
     public float KnockbackRange => knockBackRange;
     public float KnockbackDuration => knockBackDuration;
@@ -211,7 +212,8 @@ public class CombatManager : MonoBehaviour
         //Receive Refs
         this.AddListener(EventType.ReceivePlayerAnimatorEvent, animator => _playerAnimator = (PlayerAnimator) animator);
         this.AddListener(EventType.ReceiveMovementStateEvent, state => _moveState = (PlayerMovementController.MovementState) state);
-        
+        // Progression
+        this.AddListener(EventType.UpdateCombatData, spec => UpdateMeleeData((int) spec));
         if(!MeleeSequence) NCLogger.Log($"Missing Melee Sequence Data", LogLevel.ERROR);
         if(!RangedData) NCLogger.Log($"Missing Ranged Data", LogLevel.ERROR);
         if(!EntriesData) NCLogger.Log($"Missing Entries Data", LogLevel.ERROR);        
@@ -222,7 +224,12 @@ public class CombatManager : MonoBehaviour
         if(!MeleeSequence.ValidateColliders()) NCLogger.Log($"Collider Validation Failed", LogLevel.ERROR);
     }
 
-    
+    private void UpdateMeleeData(int spec) {
+        var data = MeleeSequence.OrderToAttributes.Values;
+        foreach (var i in data) {
+            i.modifierScale = spec;
+        }
+    }
     
     private void Start()
     {

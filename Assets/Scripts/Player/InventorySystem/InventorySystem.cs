@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using Core.Debug;
 using UnityEngine;
 using Core.Events;
 using Sirenix.OdinInspector;
@@ -21,6 +22,7 @@ public class InventorySystem : SerializedMonoBehaviour {
     [SerializeField] private float maxWeight;
     [SerializeField] private float weightPerLevel;
     [SerializeField] private float weightModifier;
+    [SerializeField] private float defaultWeight;
     
     private bool _isUIActive;
     private bool _canUseItem;
@@ -28,6 +30,7 @@ public class InventorySystem : SerializedMonoBehaviour {
     private void Awake() {
         _isUIActive = false;
         _canUseItem = true;
+        maxWeight   = defaultWeight;
         inventory   = new List<InventoryItem>();
         this.AddListener(EventType.ItemAddEvent, data => Add((ItemMsg) data));
         this.AddListener(EventType.ItemPickEvent, data => Pick((ItemMsg) data));
@@ -62,6 +65,14 @@ public class InventorySystem : SerializedMonoBehaviour {
                 itemOnly      = false
             });
         }
+#if UNITY_EDITOR
+        DebugGUI.Instance.UpdateText(nameof(InventorySystem),
+            "\nInventory\n" +
+            $"Weight: {_currentWeight}\n" + 
+            $"Max weight: {maxWeight}\n" +
+            $"Weight mod: {weightModifier}\n"
+        );
+#endif
     }
 
     public void UpdateUI(InventoryToggleMsg msg) {

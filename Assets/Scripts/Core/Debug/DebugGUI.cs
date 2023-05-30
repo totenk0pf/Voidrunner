@@ -8,10 +8,6 @@ namespace Core.Debug {
     public class DebugGUI : Singleton<DebugGUI> {
         [SerializeField] private TextMeshProUGUI debugText;
         private Dictionary<string, string> _debugItems = new();
-        
-        public void AddText(string id, string text) {
-            _debugItems.Add(id, text);
-        }
 
         public void UpdateText(string id, string text) {
             _debugItems[id] = text;

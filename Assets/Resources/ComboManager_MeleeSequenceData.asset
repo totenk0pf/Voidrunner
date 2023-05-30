@@ -20,6 +20,7 @@ MonoBehaviour:
     - {fileID: 0}
     - {fileID: 0}
     - {fileID: 0}
+    - {fileID: 0}
     SerializedBytesString: 
     Prefab: {fileID: 0}
     PrefabModificationsReferencedUnityObjects: []
@@ -83,6 +84,9 @@ MonoBehaviour:
       Data: 1
     - Name: damageModifier
       Entry: 4
+      Data: 1
+    - Name: modifierScale
+      Entry: 4
       Data: 0
     - Name: attackSpeedModifier
       Entry: 4
@@ -98,13 +102,13 @@ MonoBehaviour:
       Data: UnityEngine.Vector3, UnityEngine.CoreModule
     - Name: 
       Entry: 4
-      Data: -0.7767147
+      Data: 0.861573637
     - Name: 
       Entry: 4
       Data: 0
     - Name: 
       Entry: 4
-      Data: 0.629852533
+      Data: -0.507633
     - Name: 
       Entry: 8
       Data: 
@@ -164,6 +168,9 @@ MonoBehaviour:
       Data: 1
     - Name: damageModifier
       Entry: 4
+      Data: 1
+    - Name: modifierScale
+      Entry: 4
       Data: 0
     - Name: attackSpeedModifier
       Entry: 4
@@ -172,20 +179,20 @@ MonoBehaviour:
       Entry: 7
       Data: 5|ComboAnimContainer, Assembly-CSharp
     - Name: transform
-      Entry: 6
-      Data: 
+      Entry: 10
+      Data: 3
     - Name: direction
       Entry: 7
       Data: UnityEngine.Vector3, UnityEngine.CoreModule
     - Name: 
       Entry: 4
-      Data: 0.918499649
+      Data: 0.9995411
     - Name: 
       Entry: 4
       Data: 0
     - Name: 
       Entry: 4
-      Data: 0.395421982
+      Data: -0.0302921534
     - Name: 
       Entry: 8
       Data: 
@@ -236,7 +243,7 @@ MonoBehaviour:
       Data: 
     - Name: collider
       Entry: 10
-      Data: 3
+      Data: 4
     - Name: canDamageMod
       Entry: 5
       Data: true
@@ -244,6 +251,9 @@ MonoBehaviour:
       Entry: 4
       Data: 1
     - Name: damageModifier
+      Entry: 4
+      Data: 1
+    - Name: modifierScale
       Entry: 4
       Data: 0
     - Name: attackSpeedModifier
@@ -253,20 +263,20 @@ MonoBehaviour:
       Entry: 7
       Data: 7|ComboAnimContainer, Assembly-CSharp
     - Name: transform
-      Entry: 6
-      Data: 
+      Entry: 10
+      Data: 3
     - Name: direction
       Entry: 7
       Data: UnityEngine.Vector3, UnityEngine.CoreModule
     - Name: 
       Entry: 4
-      Data: 0.8433146
+      Data: -0.565919
     - Name: 
       Entry: 4
       Data: 0
     - Name: 
       Entry: 4
-      Data: 0.5374203
+      Data: 0.824460864
     - Name: 
       Entry: 8
       Data: 

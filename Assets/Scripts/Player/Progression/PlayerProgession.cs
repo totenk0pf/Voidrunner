@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using Player.Progression;
 using UI;
@@ -10,7 +11,9 @@ public class PlayerProgression {
     
     public PlayerProgression(PlayerProgressionData data) {
         _progressionData = data;
-        CurrentSpec = new() {
+        CurrentLevel     = 1;
+        CurrentXp        = 0;
+        CurrentSpec = new Dictionary<SpecType, int> {
             {SpecType.Vigor, 1},
             {SpecType.Endurance, 1},
             {SpecType.Strength, 1},
@@ -60,6 +63,7 @@ public class PlayerProgression {
             CurrentLevel++;
             SkillPoints++;
             EventDispatcher.Instance.FireEvent(EventType.LevelUpEvent, CurrentLevel);
+            EventDispatcher.Instance.FireEvent(EventType.SkillPointGainedEvent, SkillPoints);
         } else {
             CurrentXp += amt;
         }
@@ -70,7 +74,7 @@ public class PlayerProgression {
         });
     }
 
-    private void AddSkillType(SpecType type) {
+    public void AddSkillType(SpecType type) {
         var specAmt = GetSpecByType(type);
         specAmt++;
         EventDispatcher.Instance.FireEvent(EventType.SpecUpEvent, type);
@@ -85,6 +89,8 @@ public class PlayerProgression {
             case SpecType.Dexterity:
                 EventDispatcher.Instance.FireEvent(EventType.UpdateCombatData, specAmt);
                 break;
+            default:
+                throw new ArgumentOutOfRangeException(nameof(type), type, null);
         }
     }
 
