@@ -6,6 +6,7 @@ using Combat;
 using Core.Events;
 using Core.Logging;
 using DG.Tweening;
+using Sirenix.OdinInspector;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -47,7 +48,7 @@ public class PlayerMovementController : MonoBehaviour
     [SerializeField] private float accelForce;
     [SerializeField] private float maxSpeed;
 
-    private bool _canGravity = true;
+    [ReadOnly] public bool canGravity = true;
     [Header("Custom Gravity and Ground Check")] 
     [SerializeField] private float gravityAcceleration;
     [SerializeField] private float gravityScale;
@@ -96,7 +97,7 @@ public class PlayerMovementController : MonoBehaviour
             KeyCode.W, KeyCode.S, KeyCode.A, KeyCode.D
         };
         moveState = MovementState.Normal;
-        _canGravity = true;
+        canGravity = true;
         Rb.useGravity = false;
     }
     
@@ -107,7 +108,7 @@ public class PlayerMovementController : MonoBehaviour
             if(moveState == MovementState.Normal) UpdateStrafe();
         }
         if (canDrag) ApplyDrag();
-        if(_canGravity) CustomGravity();
+        if(canGravity) CustomGravity();
     }
 
     private void Update()
@@ -219,7 +220,7 @@ public class PlayerMovementController : MonoBehaviour
     {
         if (!OnSlope()) {
             Rb.drag = groundDrag;
-            _canGravity = true;
+            canGravity = true;
             //Rb.useGravity = true;
             return;
         }
@@ -228,17 +229,17 @@ public class PlayerMovementController : MonoBehaviour
         //going down
         if (value < 0) { 
             Rb.drag = slopeDrag;
-            _canGravity = false;
+            canGravity = false;
             //Rb.useGravity = false;
         }
         else {
             Rb.drag = groundDrag;
-            _canGravity = true;
+            canGravity = true;
             //Rb.useGravity = true;
         }
 
         if (Rb.velocity.magnitude < 0.3f)
-            _canGravity = true;
+            canGravity = true;
             //Rb.useGravity = true;
 
     }
