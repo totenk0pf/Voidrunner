@@ -100,6 +100,7 @@ namespace Level {
                 EventDispatcher.Instance.FireEvent(EventType.SetCheckpoint, _currentRoom);
             }
             
+            _currentTween?.Pause();
             _currentTween = doorMesh.transform.DOLocalMoveY(yOffset, duration)
                 .SetEase(easeType)
                 .OnComplete(() => {
