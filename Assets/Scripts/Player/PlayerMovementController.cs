@@ -198,7 +198,7 @@ public class PlayerMovementController : MonoBehaviour
         if (vect.magnitude <= 0.01f && _moveID != 0)
         {
             _moveID = 0;
-            NCLogger.Log($"Idle");
+            NCLogger.Log($"(Movement) Idle");
             this.FireEvent(EventType.PlayAnimationEvent, new AnimData(PlayerAnimState.Idle, 1));
         }
         //NCLogger.Log($"{new Vector2 (Input.GetAxis("Horizontal"), Input.GetAxis("Vertical"))}");
@@ -433,11 +433,13 @@ public class PlayerMovementController : MonoBehaviour
         float time = 0;
     
         if (toggleProtoDodge && moveState == MovementState.Dodge) {
-            playerVisualProto.Rotate(rollAxis, -30f, Space.Self);
+            //playerVisualProto.Rotate(rollAxis, -30f, Space.Self);
+            ;
         }else if(moveState == MovementState.Dodge)
             NCLogger.Log($"movestate is not Dodge: movestate = {moveState}");
         
         NCLogger.Log($"dodge");
+        this.FireEvent(EventType.PlayAnimationEvent, new AnimData(PlayerAnimState.Dodge, 1f));
         this.FireEvent(EventType.SetMovementStateEvent, moveState);
         this.FireEvent(EventType.CancelAttackEvent, WeaponType.Melee);
         this.FireEvent(EventType.NotifyStopAllComboSequenceEvent);
@@ -460,7 +462,7 @@ public class PlayerMovementController : MonoBehaviour
         }
 
         transform.position = dest;
-        playerVisualProto.up = Vector3.up;
+        //playerVisualProto.up = Vector3.up;
         moveState = MovementState.Normal;
         Rb.velocity = velMag * Rb.velocity.normalized;
         this.FireEvent(EventType.NotifyResumeAllComboSequenceEvent);

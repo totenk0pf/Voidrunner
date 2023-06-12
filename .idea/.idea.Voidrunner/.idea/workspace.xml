@@ -7,14 +7,11 @@
     <list default="true" id="ded29cb8-0298-4ab6-84c2-a9fa8090f9fe" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/.idea.Voidrunner/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.Voidrunner/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Models/Player/AnimController_Player.controller" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Models/Player/AnimController_Player.controller" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Models/Player/final.fbx" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Models/Player/final.fbx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Models/Player/final.fbx.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Models/Player/final.fbx.meta" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/PolygonSciFiAssets/PolygonSciFiSpace/URP_ExtractMe.unitypackage.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/PolygonSciFiAssets/PolygonSciFiSpace/Materials/FX_Materials/FX_HUD.mat" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/PolygonSciFiAssets/PolygonSciFiSpace/Materials/FX_Materials/FX_HUD.mat" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/PolygonSciFiAssets/PolygonSciFiSpace/Materials/PolygonScifiSpace_Material_Glass.mat" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/PolygonSciFiAssets/PolygonSciFiSpace/Materials/PolygonScifiSpace_Material_Glass.mat" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Resources/AnimationParamData_Player.asset" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Resources/AnimationParamData_Player.asset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Resources/ComboManager_MeleeSequenceData.asset" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Resources/ComboManager_MeleeSequenceData.asset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Resources/HardRefAnimData_Player.asset" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Resources/HardRefAnimData_Player.asset.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scenes/CombatScene.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scenes/CombatScene.unity" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Combat/CombatManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Combat/CombatManager.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Grapple/GrappleController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Grapple/GrappleController.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Scripts/Player/AnimationSystem/PlayerAnimator.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Player/AnimationSystem/PlayerAnimator.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Scripts/Player/PlayerMovementController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Player/PlayerMovementController.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/ProjectSettings/Packages/com.unity.probuilder/Settings.json" beforeDir="false" afterPath="$PROJECT_DIR$/ProjectSettings/Packages/com.unity.probuilder/Settings.json" afterDir="false" />
@@ -67,6 +64,7 @@
     "node.js.detected.package.eslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
     "node.js.selected.package.tslint": "(autodetect)",
+    "rider.run.widget.enabled.cache": "false",
     "vue.rearranger.settings.migration": "true"
   }
 }]]></component>
@@ -114,6 +112,7 @@
       <workItem from="1681532113564" duration="18963000" />
       <workItem from="1681657615118" duration="664000" />
       <workItem from="1686543279461" duration="11369000" />
+      <workItem from="1686578516981" duration="2780000" />
     </task>
     <servers />
   </component>
@@ -139,7 +138,7 @@
       <breakpoints>
         <line-breakpoint type="DotNet Breakpoints">
           <url>file://$PROJECT_DIR$/Assets/Scripts/Combat/CombatManager.cs</url>
-          <line>405</line>
+          <line>422</line>
           <properties documentPath="E:\_School Projects\Voidrunner\Assets\Scripts\Combat\CombatManager.cs" initialLine="393" containingFunctionPresentation="method 'ResetWeaponAttackState'" />
           <option name="timeStamp" value="34" />
         </line-breakpoint>

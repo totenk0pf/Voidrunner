@@ -377,8 +377,16 @@ public class CombatManager : MonoBehaviour
                     //this.FireEvent(EventType.ResumeMovementEvent);
                 
                 //If canceled due to movement (activeWeapon = NONE), check moveState
-                if(_moveState == PlayerMovementController.MovementState.Dodge || !isCancel)
+                if (_moveState == PlayerMovementController.MovementState.Dodge )
+                {
+                    NCLogger.Log($"(Combat) Dodge");
+                    this.FireEvent(EventType.PlayAnimationEvent, new AnimData(PlayerAnimState.Dodge, 1));
+                }
+                else if (!isCancel)
+                {
+                    NCLogger.Log($"(Combat) Anim Cancel -> Idle");
                     this.FireEvent(EventType.PlayAnimationEvent, new AnimData(PlayerAnimState.Idle, 1));
+                }
                 break;
             case WeaponType.Melee:
                 //StopAllCoroutines();
@@ -398,8 +406,17 @@ public class CombatManager : MonoBehaviour
                 else
                 {
                     //If canceled due to movement (activeWeapon = NONE), check moveState
-                    if((_activeWeapon == WeaponType.Melee && _moveState == PlayerMovementController.MovementState.Dodge) || !isCancel)
+                    if ((_activeWeapon == WeaponType.Melee &&
+                         _moveState == PlayerMovementController.MovementState.Dodge))
+                    {
+                        NCLogger.Log($"(Combat) Dodge");
+                        this.FireEvent(EventType.PlayAnimationEvent, new AnimData(PlayerAnimState.Dodge, 1));
+                    }
+                    else if (!isCancel)
+                    {
+                        NCLogger.Log($"(Combat) Anim Cancel -> Idle");
                         this.FireEvent(EventType.PlayAnimationEvent, new AnimData(PlayerAnimState.Idle, 1));
+                    }
                     _activeWeapon = WeaponType.None;
                 }
                 
@@ -422,8 +439,16 @@ public class CombatManager : MonoBehaviour
                 this.FireEvent(EventType.ResumeMovementEvent);
                 this.FireEvent(EventType.RequestMovementStateEvent);
                 //If canceled due to movement (activeWeapon = NONE), check moveState
-                if(_moveState == PlayerMovementController.MovementState.Dodge || !isCancel)
+                if (_moveState == PlayerMovementController.MovementState.Dodge)
+                {
+                    NCLogger.Log($"(Combat) Dodge");
+                    this.FireEvent(EventType.PlayAnimationEvent, new AnimData(PlayerAnimState.Dodge, 1));
+                }
+                else if (!isCancel)
+                {
+                    NCLogger.Log($"(Combat) Anim Cancel -> Idle");
                     this.FireEvent(EventType.PlayAnimationEvent, new AnimData(PlayerAnimState.Idle, 1));
+                }
                 break;
             default:
                 throw new ArgumentOutOfRangeException();
@@ -469,7 +494,8 @@ public class CombatManager : MonoBehaviour
 
     private void OnAttackEnd()
     {
-        this.FireEvent(EventType.PlayAnimationEvent, new AnimData(PlayerAnimState.Idle, 1));
+        NCLogger.Log($"(Combat) Idle");
+        //this.FireEvent(EventType.PlayAnimationEvent, new AnimData(PlayerAnimState.Idle, 1));
         if (_activeWeapon == WeaponType.Melee)
             OnAttackEndMelee();
         else if (_activeWeapon == WeaponType.Ranged)
