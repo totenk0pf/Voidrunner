@@ -33,6 +33,12 @@ ModelImporter:
   - first:
       74: -8246991622216026384
     second: Character|RunSideRight
+  - first:
+      74: -7015940763091730175
+    second: Character|Attack3 (2)
+  - first:
+      74: 4730508535527506765
+    second: Character|Attack2 (1)
   externalObjects: {}
   materials:
     materialImportMode: 2

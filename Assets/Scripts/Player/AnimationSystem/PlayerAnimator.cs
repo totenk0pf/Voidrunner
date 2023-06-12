@@ -17,8 +17,12 @@ public enum PlayerAnimState {
     MeleeAttack3,
     RangedAttack,
     Idle,
-    Run,
-    Dash
+    RunForward,
+    RunBackward,
+    RunRight,
+    RunLeft,
+    Dash,
+    Grapple
 }
 
 public class AnimData {
@@ -74,7 +78,7 @@ public class PlayerAnimator : MonoBehaviour, IInteractiveAnimator, ICombatAnimat
 {
     private Animator _animator;
     private AnimData _animData;
-   // private WeaponEntry _curWeaponEntry;
+    //private WeaponEntry _curWeaponEntry;
     //private WeaponType _curWeaponType => _curWeaponEntry.type;
     [SerializeField] private AnimationParamData animationParamData;
     [SerializeField] private int mainAnimLayer = 0;
@@ -123,7 +127,10 @@ public class PlayerAnimator : MonoBehaviour, IInteractiveAnimator, ICombatAnimat
         if (_activeType == WeaponType.Ranged) {
             SetParam(PlayerAnimState.RangedAttack, false);
         }
-        
+    }
+
+    public void OnAnimationAttackEnd()
+    {
         this.FireEvent(EventType.AttackEndEvent, GetAnimator());
     }
     #endregion

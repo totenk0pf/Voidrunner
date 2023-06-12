@@ -90,7 +90,7 @@ MonoBehaviour:
       Data: 0
     - Name: attackSpeedModifier
       Entry: 4
-      Data: 1.5
+      Data: 1
     - Name: ComboAnim
       Entry: 7
       Data: 3|ComboAnimContainer, Assembly-CSharp
@@ -102,13 +102,13 @@ MonoBehaviour:
       Data: UnityEngine.Vector3, UnityEngine.CoreModule
     - Name: 
       Entry: 4
-      Data: 0.861573637
+      Data: 0.177044645
     - Name: 
       Entry: 4
       Data: 0
     - Name: 
       Entry: 4
-      Data: -0.507633
+      Data: 0.9842028
     - Name: 
       Entry: 8
       Data: 
@@ -174,7 +174,7 @@ MonoBehaviour:
       Data: 0
     - Name: attackSpeedModifier
       Entry: 4
-      Data: 1
+      Data: 2
     - Name: ComboAnim
       Entry: 7
       Data: 5|ComboAnimContainer, Assembly-CSharp
@@ -186,13 +186,13 @@ MonoBehaviour:
       Data: UnityEngine.Vector3, UnityEngine.CoreModule
     - Name: 
       Entry: 4
-      Data: 0.9995411
+      Data: 0.9658518
     - Name: 
       Entry: 4
       Data: 0
     - Name: 
       Entry: 4
-      Data: -0.0302921534
+      Data: 0.2590952
     - Name: 
       Entry: 8
       Data: 
@@ -258,7 +258,7 @@ MonoBehaviour:
       Data: 0
     - Name: attackSpeedModifier
       Entry: 4
-      Data: 0.75
+      Data: 2
     - Name: ComboAnim
       Entry: 7
       Data: 7|ComboAnimContainer, Assembly-CSharp
@@ -270,13 +270,13 @@ MonoBehaviour:
       Data: UnityEngine.Vector3, UnityEngine.CoreModule
     - Name: 
       Entry: 4
-      Data: -0.565919
+      Data: 0.9995707
     - Name: 
       Entry: 4
       Data: 0
     - Name: 
       Entry: 4
-      Data: 0.824460864
+      Data: 0.0292966962
     - Name: 
       Entry: 8
       Data: 

@@ -9,8 +9,8 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4fbc56399ede4471a58f96992e62225d, type: 3}
-  m_Name: HardRefAnimData_Player
+  m_Script: {fileID: 11500000, guid: c5d877de8f6aa564e9e964cee834dbd0, type: 3}
+  m_Name: HardRefAnimData_PlayerNew
   m_EditorClassIdentifier: 
   serializationData:
     SerializedFormat: 2
@@ -37,4 +37,19 @@ MonoBehaviour:
   - type: 4
     name: Fire
     hash: -118708495
-  controller: {fileID: 9100000, guid: 8f1ddedd75fca354aaf41768a6b60426, type: 2}
+  - type: 9
+    name: Grapple
+    hash: 891690766
+  - type: 9
+    name: RunForward
+    hash: -1803631756
+  - type: 9
+    name: RunBackward
+    hash: 21299085
+  - type: 9
+    name: RunLeft
+    hash: -1344608780
+  - type: 9
+    name: RunRight
+    hash: 1302730617
+  controller: {fileID: 9100000, guid: 898c0b80456498543a4353fa85b8b5c5, type: 2}

@@ -66,6 +66,7 @@ public class PlayerMovementController : MonoBehaviour
     private RaycastHit _slopeHit;
     
     private Vector3 _moveDir;
+    private int _moveID = 0;
     
     [Header("Dodge Attributes")] 
     public bool toggleProtoDodge = true;
@@ -83,7 +84,8 @@ public class PlayerMovementController : MonoBehaviour
     private float _horiz;
     private float _vert;
     private bool _isGrounded;
-
+    private bool _runOnce;
+    
     private void Awake()
     {
         this.AddListener(EventType.RequestMovementStateEvent, param => this.FireEvent(EventType.ReceiveMovementStateEvent, moveState));
@@ -120,29 +122,87 @@ public class PlayerMovementController : MonoBehaviour
         foreach (var input in _inputKeyList.Where(Input.GetKey)) {
             switch (input) {
                 case KeyCode.W:
+                    //_runOnce = true;
                     _dodgeDir += transform.forward;
+                    //NCLogger.Log($"forward");
+                    //this.FireEvent(EventType.PlayAnimationEvent, new AnimData(PlayerAnimState.RunForward, 1f, transform.root));
                     break;
                 case KeyCode.S:
+                    //_runOnce = true;
                     _dodgeDir += -transform.forward; 
+                    //NCLogger.Log($"backward");
+                    //this.FireEvent(EventType.PlayAnimationEvent, new AnimData(PlayerAnimState.RunBackward, 1f, transform.root));
                     break;
                 case KeyCode.A:
+                    //_runOnce = true;
                     _dodgeDir += -transform.right; 
+                    //NCLogger.Log($"left");
+                    //this.FireEvent(EventType.PlayAnimationEvent, new AnimData(PlayerAnimState.RunLeft, 1f, transform.root));
                     break;
                 case KeyCode.D:
+                    //_runOnce = true;
                     _dodgeDir += transform.right; 
+                    //NCLogger.Log($"right");
+                    //this.FireEvent(EventType.PlayAnimationEvent, new AnimData(PlayerAnimState.RunRight, 1f, transform.root));
                     break;
                 default:
                     throw new ArgumentOutOfRangeException();
             }
         }
         _dodgeDir = _dodgeDir.normalized;
-        
+
         if (Input.GetKeyDown(dodgeKey) && Time.time >= _nextDodgeTimeStamp)
         {
             NCLogger.Log($"dodging");
             _nextDodgeTimeStamp = Time.time + dodgeCooldown;
             ActionDodge();
         }
+    }
+
+    private void LateUpdate()
+    {
+        //NCLogger.Log($"mag = {_moveDir.magnitude}");
+        var vect = new Vector2(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical"));
+        if (Input.GetKeyDown(KeyCode.W) && _moveID != 1)
+        {
+            _moveID = 1;
+            NCLogger.Log($"Forward");
+            this.FireEvent(EventType.PlayAnimationEvent, new AnimData(PlayerAnimState.RunForward, 1f));
+            return;
+        }
+        if (Input.GetKeyDown(KeyCode.S) && _moveID != -1)
+        {
+            _moveID = -1;
+            NCLogger.Log($"Backward");
+            this.FireEvent(EventType.PlayAnimationEvent, new AnimData(PlayerAnimState.RunBackward, 1f));
+            return;
+        }
+        if (Input.GetKeyDown(KeyCode.A) && _moveID != -2)
+        {
+            _moveID = -2;
+            NCLogger.Log($"Left");
+            this.FireEvent(EventType.PlayAnimationEvent, new AnimData(PlayerAnimState.RunLeft, 1f));
+            return;
+        }
+        if (Input.GetKeyDown(KeyCode.D) && _moveID != 2)
+        {
+            _moveID = 2;
+            NCLogger.Log($"Right");
+            this.FireEvent(EventType.PlayAnimationEvent, new AnimData(PlayerAnimState.RunRight, 1f));
+            return;
+        }
+
+        if (Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.S) || Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.D))
+            return;
+        
+        if (vect.magnitude <= 0.01f && _moveID != 0)
+        {
+            _moveID = 0;
+            NCLogger.Log($"Idle");
+            this.FireEvent(EventType.PlayAnimationEvent, new AnimData(PlayerAnimState.Idle, 1));
+        }
+        //NCLogger.Log($"{new Vector2 (Input.GetAxis("Horizontal"), Input.GetAxis("Vertical"))}");
+        
     }
 
     #region Movement Base
