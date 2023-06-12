@@ -38,7 +38,7 @@ public class MeleeSequenceAttribute : IAnimDataConvertable {
     [ShowIf("canDamageMod")] [SerializeField] private float damageModifier = 0;
     [ShowIf("canDamageMod")] [SerializeField] public float modifierScale = 1;
     [ShowIf("canDamageMod")] [SerializeField] private float attackSpeedModifier = 1;
-    public ComboAnimContainer ComboAnim;
+    public List<ComboAnimContainer> ComboAnim;
     
     
     //Getters
@@ -469,8 +469,11 @@ public class CombatManager : MonoBehaviour
     {
         var playerT = transform.root;
         var container = MeleeSequence.OrderToAttributes[_curMeleeOrder].ComboAnim;
-        container.transform = playerT;
-        container.direction = playerT.forward;
+        foreach (var anim in container)
+        {
+            anim.transform = playerT;
+            //anim.rootOffset = playerT.transform.position + anim.rootOffset;
+        }
             
         this.FireEvent(EventType.RunPlayerComboSequenceEvent, container);
     }    
