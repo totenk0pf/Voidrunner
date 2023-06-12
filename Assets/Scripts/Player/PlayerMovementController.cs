@@ -93,7 +93,8 @@ public class PlayerMovementController : MonoBehaviour
         this.AddListener(EventType.RequestIsOnGroundEvent, param => EventDispatcher.Instance.FireEvent(EventType.ReceiveIsOnGroundEvent, _isGrounded));
         //this.AddListener(EventType.StopMovementEvent, param => ToggleMovement(false));
         this.AddListener(EventType.ResumeMovementEvent, param => ToggleMovement(true));
-
+        this.AddListener(EventType.ReUpdateMovementAnimEvent, param => ReUpdateMovement());
+        
         _inputKeyList = new List<KeyCode>() {
             KeyCode.W, KeyCode.S, KeyCode.A, KeyCode.D
         };
@@ -163,6 +164,12 @@ public class PlayerMovementController : MonoBehaviour
     {
         //NCLogger.Log($"mag = {_moveDir.magnitude}");
         var vect = new Vector2(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical"));
+        if (moveState != MovementState.Normal)
+        {
+            _moveID = 99;
+            return;
+        }
+
         if (Input.GetKeyDown(KeyCode.W) && _moveID != 1)
         {
             _moveID = 1;
@@ -467,7 +474,8 @@ public class PlayerMovementController : MonoBehaviour
         Rb.velocity = velMag * Rb.velocity.normalized;
         this.FireEvent(EventType.NotifyResumeAllComboSequenceEvent);
         this.FireEvent(EventType.SetMovementStateEvent, moveState);
-        
+        ReUpdateMovement();
+
     }
     #endregion
     
@@ -520,6 +528,50 @@ public class PlayerMovementController : MonoBehaviour
             }
             gravityScale = originalScale;
             yield return null;  
+        }
+    }
+
+
+    public void ReUpdateMovement()
+    {
+        var vect = new Vector2(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical"));
+        if (Input.GetKey(KeyCode.W) && _moveID != 1)
+        {
+            _moveID = 1;
+            NCLogger.Log($"Forward");
+            this.FireEvent(EventType.PlayAnimationEvent, new AnimData(PlayerAnimState.RunForward, 1f));
+            return;
+        }
+        if (Input.GetKey(KeyCode.S) && _moveID != -1)
+        {
+            _moveID = -1;
+            NCLogger.Log($"Backward");
+            this.FireEvent(EventType.PlayAnimationEvent, new AnimData(PlayerAnimState.RunBackward, 1f));
+            return;
+        }
+        if (Input.GetKey(KeyCode.A) && _moveID != -2)
+        {
+            _moveID = -2;
+            NCLogger.Log($"Left");
+            this.FireEvent(EventType.PlayAnimationEvent, new AnimData(PlayerAnimState.RunLeft, 1f));
+            return;
+        }
+        if (Input.GetKey(KeyCode.D) && _moveID != 2)
+        {
+            _moveID = 2;
+            NCLogger.Log($"Right");
+            this.FireEvent(EventType.PlayAnimationEvent, new AnimData(PlayerAnimState.RunRight, 1f));
+            return;
+        }
+
+        if (Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.S) || Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.D))
+            return;
+        
+        if (vect.magnitude <= 0.01f && _moveID != 0)
+        {
+            _moveID = 0;
+            NCLogger.Log($"(Movement) Idle");
+            this.FireEvent(EventType.PlayAnimationEvent, new AnimData(PlayerAnimState.Idle, 1));
         }
     }
     

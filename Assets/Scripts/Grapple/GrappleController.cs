@@ -208,13 +208,13 @@ namespace Grapple {
                     this.FireEvent(EventType.RequestIsOnGroundEvent);
                     if (!_isOnGround) return false;
                     this.FireEvent(EventType.SetMovementStateEvent, PlayerMovementController.MovementState.Grappling);
-                    this.FireEvent(EventType.PlayAnimationEvent, new AnimData(PlayerAnimState.Grapple, 3f));
+                    this.FireEvent(EventType.PlayAnimationEvent, new AnimData(PlayerAnimState.GrappleEnemy, 3f));
                     //_enemyToPlayerRoutine = EnemyToPlayerRoutine();
                     _enemyToPlayerRoutine = StartCoroutine(EnemyToPlayerRoutine());
                      return true;
                 case GrappleType.PlayerToPoint:
                     this.FireEvent(EventType.SetMovementStateEvent, PlayerMovementController.MovementState.Grappling);
-                    this.FireEvent(EventType.PlayAnimationEvent, new AnimData(PlayerAnimState.Grapple, 3f));
+                    this.FireEvent(EventType.PlayAnimationEvent, new AnimData(PlayerAnimState.GrapplePoint, 3f));
                     //_playerToPointRoutine = PlayerToPointRoutine();
                     _playerToPointRoutine = StartCoroutine(PlayerToPointRoutine());
                     return true;
@@ -249,8 +249,11 @@ namespace Grapple {
                 var dir = (transform.position - _currentGrappledEnemy.transform.position).normalized;
                 _currentGrappledEnemy.Rigidbody.AddForce(dir*enemyMomentumForce, enemyForceMode);
             }
+            else
+            {
+                this.FireEvent(EventType.ReUpdateMovementAnimEvent);
+            }
             
-            this.FireEvent(EventType.PlayAnimationEvent, new AnimData(PlayerAnimState.Idle, 1f));
             EventDispatcher.Instance.FireEvent(EventType.SetMovementStateEvent, PlayerMovementController.MovementState.Normal);
             _currentGrappleHit = new RaycastHit();
             _lr.enabled = false;
@@ -272,9 +275,9 @@ namespace Grapple {
             else //TODO: This is hardcoded, fix this later.
             {
                 Rigidbody.AddForce(Vector3.up*momentumForce/3, forceMode);
+                this.FireEvent(EventType.ReUpdateMovementAnimEvent);
             }
             
-            this.FireEvent(EventType.PlayAnimationEvent, new AnimData(PlayerAnimState.Idle, 1f));
             EventDispatcher.Instance.FireEvent(EventType.SetMovementStateEvent, PlayerMovementController.MovementState.Normal);
             //damping fall velocity
             StartCoroutine(_controller.GravityDampRoutine(gravityDampDuration));

@@ -38,8 +38,11 @@ MonoBehaviour:
     name: Fire
     hash: -118708495
   - type: 9
-    name: Grapple
-    hash: 891690766
+    name: GrapplePoint
+    hash: 1608506732
+  - type: 9
+    name: GrappleEnemy
+    hash: 333804769
   - type: 9
     name: RunForward
     hash: -1803631756

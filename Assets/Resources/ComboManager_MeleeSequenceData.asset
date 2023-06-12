@@ -20,7 +20,6 @@ MonoBehaviour:
     - {fileID: 0}
     - {fileID: 0}
     - {fileID: 0}
-    - {fileID: 0}
     SerializedBytesString: 
     Prefab: {fileID: 0}
     PrefabModificationsReferencedUnityObjects: []
@@ -60,7 +59,7 @@ MonoBehaviour:
       Data: 0
     - Name: nextSeqInputWindow
       Entry: 4
-      Data: 0.5
+      Data: 1.5
     - Name: damage
       Entry: 4
       Data: 15
@@ -90,7 +89,7 @@ MonoBehaviour:
       Data: 0
     - Name: attackSpeedModifier
       Entry: 4
-      Data: 1
+      Data: 2
     - Name: ComboAnim
       Entry: 7
       Data: 3|ComboAnimContainer, Assembly-CSharp
@@ -102,13 +101,13 @@ MonoBehaviour:
       Data: UnityEngine.Vector3, UnityEngine.CoreModule
     - Name: 
       Entry: 4
-      Data: 0.177044645
+      Data: -0.55517894
     - Name: 
       Entry: 4
       Data: 0
     - Name: 
       Entry: 4
-      Data: 0.9842028
+      Data: -0.831730962
     - Name: 
       Entry: 8
       Data: 
@@ -180,19 +179,19 @@ MonoBehaviour:
       Data: 5|ComboAnimContainer, Assembly-CSharp
     - Name: transform
       Entry: 10
-      Data: 3
+      Data: 1
     - Name: direction
       Entry: 7
       Data: UnityEngine.Vector3, UnityEngine.CoreModule
     - Name: 
       Entry: 4
-      Data: 0.9658518
+      Data: -0.644066632
     - Name: 
       Entry: 4
       Data: 0
     - Name: 
       Entry: 4
-      Data: 0.2590952
+      Data: -0.764969468
     - Name: 
       Entry: 8
       Data: 
@@ -243,7 +242,7 @@ MonoBehaviour:
       Data: 
     - Name: collider
       Entry: 10
-      Data: 4
+      Data: 3
     - Name: canDamageMod
       Entry: 5
       Data: true
@@ -264,19 +263,19 @@ MonoBehaviour:
       Data: 7|ComboAnimContainer, Assembly-CSharp
     - Name: transform
       Entry: 10
-      Data: 3
+      Data: 1
     - Name: direction
       Entry: 7
       Data: UnityEngine.Vector3, UnityEngine.CoreModule
     - Name: 
       Entry: 4
-      Data: 0.9995707
+      Data: -0.972818
     - Name: 
       Entry: 4
       Data: 0
     - Name: 
       Entry: 4
-      Data: 0.0292966962
+      Data: -0.2315712
     - Name: 
       Entry: 8
       Data: 

@@ -303,7 +303,7 @@ public class CombatManager : MonoBehaviour
             yield return null;
         }
         
-        //NCLogger.Log($"fail the chain");
+        NCLogger.Log($"fail the chain");
         //When exceeds window input time - reset combo chain
         if(_activeWeapon != WeaponType.Melee) NCLogger.Log($"_activeWeapon should be Melee when it's {_activeWeapon}", LogLevel.ERROR);
         ResetWeaponAttackState(false, _activeWeapon);
@@ -385,7 +385,7 @@ public class CombatManager : MonoBehaviour
                 else if (!isCancel)
                 {
                     NCLogger.Log($"(Combat) Anim Cancel -> Idle");
-                    this.FireEvent(EventType.PlayAnimationEvent, new AnimData(PlayerAnimState.Idle, 1));
+                    this.FireEvent(EventType.ReUpdateMovementAnimEvent);
                 }
                 break;
             case WeaponType.Melee:
@@ -415,7 +415,7 @@ public class CombatManager : MonoBehaviour
                     else if (!isCancel)
                     {
                         NCLogger.Log($"(Combat) Anim Cancel -> Idle");
-                        this.FireEvent(EventType.PlayAnimationEvent, new AnimData(PlayerAnimState.Idle, 1));
+                        this.FireEvent(EventType.ReUpdateMovementAnimEvent);
                     }
                     _activeWeapon = WeaponType.None;
                 }
@@ -447,7 +447,7 @@ public class CombatManager : MonoBehaviour
                 else if (!isCancel)
                 {
                     NCLogger.Log($"(Combat) Anim Cancel -> Idle");
-                    this.FireEvent(EventType.PlayAnimationEvent, new AnimData(PlayerAnimState.Idle, 1));
+                    this.FireEvent(EventType.ReUpdateMovementAnimEvent);
                 }
                 break;
             default:
@@ -506,7 +506,8 @@ public class CombatManager : MonoBehaviour
 
     private void OnAttackEndMelee()
     {
-        
+        // NCLogger.Log($"fail the chain? End of Attack");
+        // this.FireEvent(EventType.ReUpdateMovementAnimEvent);
     }
     
     private IEnumerator OnAttackEndRangedRoutine() {

@@ -49,6 +49,7 @@ namespace Core.Events {
         ResumeMovementEvent, //resume movement after melee window
         StopMovementEvent, //stop movement on melee atk
         CancelAttackEvent,
+        ReUpdateMovementAnimEvent,
         
         //Animation Clips Combat Events
         AttackBeginEvent,

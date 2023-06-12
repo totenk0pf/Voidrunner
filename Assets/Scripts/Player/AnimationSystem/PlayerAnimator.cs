@@ -22,7 +22,8 @@ public enum PlayerAnimState {
     RunRight,
     RunLeft,
     Dodge,
-    Grapple
+    GrapplePoint,
+    GrappleEnemy
 }
 
 public class AnimData {
