@@ -6,17 +6,10 @@
   <component name="ChangeListManager">
     <list default="true" id="ded29cb8-0298-4ab6-84c2-a9fa8090f9fe" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/.idea.Voidrunner/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.Voidrunner/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Models/Player/AnimController_Player.controller" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Models/Player/AnimController_Player.controller" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Models/Player/Character_Grapple.anim" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Models/Player/Character_Grapple.anim" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Resources/AnimationParamData_Player.asset" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Resources/AnimationParamData_Player.asset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Models/Player/Character_Fire.anim" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Models/Player/Character_Fire.anim" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Resources/ComboManager_MeleeSequenceData.asset" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Resources/ComboManager_MeleeSequenceData.asset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Resources/HardRefAnimData_PlayerNew.asset" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Resources/HardRefAnimData_PlayerNew.asset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Resources/ComboManager_RangedData.asset" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Resources/ComboManager_RangedData.asset" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Scenes/CombatScene.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scenes/CombatScene.unity" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Combat/CombatManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Combat/CombatManager.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Core/Events/EventType.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Core/Events/EventType.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Grapple/GrappleController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Grapple/GrappleController.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Player/AnimationSystem/PlayerAnimator.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Player/AnimationSystem/PlayerAnimator.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Player/PlayerMovementController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Player/PlayerMovementController.cs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -121,7 +114,7 @@
       <workItem from="1681532113564" duration="18963000" />
       <workItem from="1681657615118" duration="664000" />
       <workItem from="1686543279461" duration="11369000" />
-      <workItem from="1686578516981" duration="6314000" />
+      <workItem from="1686578516981" duration="7329000" />
     </task>
     <servers />
   </component>

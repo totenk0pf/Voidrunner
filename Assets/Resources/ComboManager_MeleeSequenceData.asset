@@ -59,7 +59,7 @@ MonoBehaviour:
       Data: 0
     - Name: nextSeqInputWindow
       Entry: 4
-      Data: 1.5
+      Data: 0.5
     - Name: damage
       Entry: 4
       Data: 15
@@ -101,13 +101,13 @@ MonoBehaviour:
       Data: UnityEngine.Vector3, UnityEngine.CoreModule
     - Name: 
       Entry: 4
-      Data: -0.55517894
+      Data: -0.942540944
     - Name: 
       Entry: 4
       Data: 0
     - Name: 
       Entry: 4
-      Data: -0.831730962
+      Data: 0.33409065
     - Name: 
       Entry: 8
       Data: 
@@ -185,13 +185,13 @@ MonoBehaviour:
       Data: UnityEngine.Vector3, UnityEngine.CoreModule
     - Name: 
       Entry: 4
-      Data: -0.644066632
+      Data: 0.6740366
     - Name: 
       Entry: 4
       Data: 0
     - Name: 
       Entry: 4
-      Data: -0.764969468
+      Data: 0.7386979
     - Name: 
       Entry: 8
       Data: 
@@ -269,13 +269,13 @@ MonoBehaviour:
       Data: UnityEngine.Vector3, UnityEngine.CoreModule
     - Name: 
       Entry: 4
-      Data: -0.972818
+      Data: 0.8116872
     - Name: 
       Entry: 4
       Data: 0
     - Name: 
       Entry: 4
-      Data: -0.2315712
+      Data: 0.5840924
     - Name: 
       Entry: 8
       Data: 
