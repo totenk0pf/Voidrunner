@@ -732,7 +732,7 @@ MonoBehaviour:
   enemyLayer:
     serializedVersion: 2
     m_Bits: 256
-  largeEnemyLayer:
+  grapplePointLayer:
     serializedVersion: 2
     m_Bits: 0
   gravityDampDuration: 0.3
@@ -1095,11 +1095,6 @@ MonoBehaviour:
   firePoint: {fileID: 6037325520643900592}
   MeleeSequence: {fileID: 11400000, guid: 547072da3b9b3482dba78e7aaab8264f, type: 2}
   _playerAnimator: {fileID: 0}
-  enemyLayer:
-    serializedVersion: 2
-    m_Bits: 0
-  particlePerEnemy: 0
-  halfExtents: {x: 0, y: 0, z: 0}
 --- !u!1001 &655749898248857391
 PrefabInstance:
   m_ObjectHideFlags: 0

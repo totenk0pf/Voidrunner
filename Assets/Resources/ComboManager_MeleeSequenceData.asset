@@ -112,10 +112,10 @@ MonoBehaviour:
       Data: 2
     - Name: time
       Entry: 4
-      Data: 0.3
+      Data: 0.2
     - Name: easeType
       Entry: 3
-      Data: 8
+      Data: 9
     - Name: 
       Entry: 8
       Data: 
@@ -194,10 +194,10 @@ MonoBehaviour:
       Data: 4
     - Name: time
       Entry: 4
-      Data: 0.3
+      Data: 0.2
     - Name: easeType
       Entry: 3
-      Data: 8
+      Data: 9
     - Name: 
       Entry: 8
       Data: 
@@ -276,7 +276,7 @@ MonoBehaviour:
       Data: 6
     - Name: time
       Entry: 4
-      Data: 0.5
+      Data: 0.3
     - Name: easeType
       Entry: 3
       Data: 12
@@ -294,10 +294,10 @@ MonoBehaviour:
       Data: 7
     - Name: time
       Entry: 4
-      Data: 0.3
+      Data: 0.1
     - Name: easeType
       Entry: 3
-      Data: 14
+      Data: 15
     - Name: 
       Entry: 8
       Data: 
