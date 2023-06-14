@@ -36,13 +36,14 @@ public class MeleeSequenceAttribute : IAnimDataConvertable {
     public bool canDamageMod;
     [ShowIf("canDamageMod")] [SerializeField] private float damageScale = 1;
     [ShowIf("canDamageMod")] [SerializeField] private float damageModifier = 0;
+    [ShowIf("canDamageMod")] [SerializeField] public float modifierScale = 1;
     [ShowIf("canDamageMod")] [SerializeField] private float attackSpeedModifier = 1;
-    public ComboAnimContainer ComboAnim;
+    public List<ComboAnimContainer> ComboAnim;
     
     
     //Getters
     public float NextSeqInputWindow => nextSeqInputWindow;
-    public float Damage => canDamageMod ? (damage + damageModifier) * damageScale : damage;
+    public float Damage => canDamageMod ? (damage + damageModifier * modifierScale) * damageScale : damage;
     public PlayerAnimState State => state;
     public float KnockbackRange => knockBackRange;
     public float KnockbackDuration => knockBackDuration;
@@ -191,14 +192,6 @@ public class CombatManager : MonoBehaviour
     private void IncrementMeleeOrder() => _curMeleeOrder = _curMeleeOrder.Next();
     private Coroutine _onHoldInputRoutine;
     private GrappleType _currentGrappleType;
-
-    [TitleGroup("Blood VFX settings")] 
-    [SerializeField] private LayerMask enemyLayer;
-    [SerializeField] private int particlePerEnemy;
-    [SerializeField] private Vector3 halfExtents;
-    // [SerializeField] private Transform boxCastStart;
-    // [SerializeField] private Transform boxCastEnd;
-    
     private void Awake() {
         //Init Ref
         //this.AddListener(EventType.InitWeaponRefEvent, param => InitWeaponRef( (List<WeaponEntry>) param));
@@ -219,9 +212,8 @@ public class CombatManager : MonoBehaviour
         //Receive Refs
         this.AddListener(EventType.ReceivePlayerAnimatorEvent, animator => _playerAnimator = (PlayerAnimator) animator);
         this.AddListener(EventType.ReceiveMovementStateEvent, state => _moveState = (PlayerMovementController.MovementState) state);
-        
-        this.AddListener(EventType.SpawnBloodEvent, param => SpawnBloodOnEnemy());
-        
+        // Progression
+        this.AddListener(EventType.UpdateCombatData, spec => UpdateMeleeData((int) spec));
         if(!MeleeSequence) NCLogger.Log($"Missing Melee Sequence Data", LogLevel.ERROR);
         if(!RangedData) NCLogger.Log($"Missing Ranged Data", LogLevel.ERROR);
         if(!EntriesData) NCLogger.Log($"Missing Entries Data", LogLevel.ERROR);        
@@ -232,7 +224,12 @@ public class CombatManager : MonoBehaviour
         if(!MeleeSequence.ValidateColliders()) NCLogger.Log($"Collider Validation Failed", LogLevel.ERROR);
     }
 
-    
+    private void UpdateMeleeData(int spec) {
+        var data = MeleeSequence.OrderToAttributes.Values;
+        foreach (var i in data) {
+            i.modifierScale = spec;
+        }
+    }
     
     private void Start()
     {
@@ -306,7 +303,7 @@ public class CombatManager : MonoBehaviour
             yield return null;
         }
         
-        //NCLogger.Log($"fail the chain");
+        NCLogger.Log($"fail the chain");
         //When exceeds window input time - reset combo chain
         if(_activeWeapon != WeaponType.Melee) NCLogger.Log($"_activeWeapon should be Melee when it's {_activeWeapon}", LogLevel.ERROR);
         ResetWeaponAttackState(false, _activeWeapon);
@@ -380,8 +377,16 @@ public class CombatManager : MonoBehaviour
                     //this.FireEvent(EventType.ResumeMovementEvent);
                 
                 //If canceled due to movement (activeWeapon = NONE), check moveState
-                if(_moveState == PlayerMovementController.MovementState.Dodge || !isCancel)
-                    this.FireEvent(EventType.PlayAnimationEvent, new AnimData(PlayerAnimState.Idle, 1));
+                if (_moveState == PlayerMovementController.MovementState.Dodge )
+                {
+                    NCLogger.Log($"(Combat) Dodge");
+                    this.FireEvent(EventType.PlayAnimationEvent, new AnimData(PlayerAnimState.Dodge, 1));
+                }
+                else if (!isCancel)
+                {
+                    NCLogger.Log($"(Combat) Anim Cancel -> Idle");
+                    this.FireEvent(EventType.ReUpdateMovementAnimEvent);
+                }
                 break;
             case WeaponType.Melee:
                 //StopAllCoroutines();
@@ -401,8 +406,17 @@ public class CombatManager : MonoBehaviour
                 else
                 {
                     //If canceled due to movement (activeWeapon = NONE), check moveState
-                    if((_activeWeapon == WeaponType.Melee && _moveState == PlayerMovementController.MovementState.Dodge) || !isCancel)
-                        this.FireEvent(EventType.PlayAnimationEvent, new AnimData(PlayerAnimState.Idle, 1));
+                    if ((_activeWeapon == WeaponType.Melee &&
+                         _moveState == PlayerMovementController.MovementState.Dodge))
+                    {
+                        NCLogger.Log($"(Combat) Dodge");
+                        this.FireEvent(EventType.PlayAnimationEvent, new AnimData(PlayerAnimState.Dodge, 1));
+                    }
+                    else if (!isCancel)
+                    {
+                        NCLogger.Log($"(Combat) Anim Cancel -> Idle");
+                        this.FireEvent(EventType.ReUpdateMovementAnimEvent);
+                    }
                     _activeWeapon = WeaponType.None;
                 }
                 
@@ -425,8 +439,16 @@ public class CombatManager : MonoBehaviour
                 this.FireEvent(EventType.ResumeMovementEvent);
                 this.FireEvent(EventType.RequestMovementStateEvent);
                 //If canceled due to movement (activeWeapon = NONE), check moveState
-                if(_moveState == PlayerMovementController.MovementState.Dodge || !isCancel)
-                    this.FireEvent(EventType.PlayAnimationEvent, new AnimData(PlayerAnimState.Idle, 1));
+                if (_moveState == PlayerMovementController.MovementState.Dodge)
+                {
+                    NCLogger.Log($"(Combat) Dodge");
+                    this.FireEvent(EventType.PlayAnimationEvent, new AnimData(PlayerAnimState.Dodge, 1));
+                }
+                else if (!isCancel)
+                {
+                    NCLogger.Log($"(Combat) Anim Cancel -> Idle");
+                    this.FireEvent(EventType.ReUpdateMovementAnimEvent);
+                }
                 break;
             default:
                 throw new ArgumentOutOfRangeException();
@@ -447,8 +469,11 @@ public class CombatManager : MonoBehaviour
     {
         var playerT = transform.root;
         var container = MeleeSequence.OrderToAttributes[_curMeleeOrder].ComboAnim;
-        container.transform = playerT;
-        container.direction = playerT.forward;
+        foreach (var anim in container)
+        {
+            anim.transform = playerT;
+            //anim.rootOffset = playerT.transform.position + anim.rootOffset;
+        }
             
         this.FireEvent(EventType.RunPlayerComboSequenceEvent, container);
     }    
@@ -472,7 +497,8 @@ public class CombatManager : MonoBehaviour
 
     private void OnAttackEnd()
     {
-        this.FireEvent(EventType.PlayAnimationEvent, new AnimData(PlayerAnimState.Idle, 1));
+        NCLogger.Log($"(Combat) Idle");
+        //this.FireEvent(EventType.PlayAnimationEvent, new AnimData(PlayerAnimState.Idle, 1));
         if (_activeWeapon == WeaponType.Melee)
             OnAttackEndMelee();
         else if (_activeWeapon == WeaponType.Ranged)
@@ -483,7 +509,8 @@ public class CombatManager : MonoBehaviour
 
     private void OnAttackEndMelee()
     {
-        
+        // NCLogger.Log($"fail the chain? End of Attack");
+        // this.FireEvent(EventType.ReUpdateMovementAnimEvent);
     }
     
     private IEnumerator OnAttackEndRangedRoutine() {
@@ -491,39 +518,6 @@ public class CombatManager : MonoBehaviour
         yield return new WaitForSeconds(RangedData.Attribute.AftershotDelay);
         if(_activeWeapon != WeaponType.Ranged) NCLogger.Log($"_activeWeapon should be RANGED when it's {_activeWeapon}", LogLevel.ERROR);
         ResetWeaponAttackState(false, _activeWeapon);
-    }
-    #endregion
-    
-    #region VFX Methods
-    private void SpawnBloodOnEnemy()
-    {
-        NCLogger.Log($"Spawning Blood");
-        // var vect = (boxCastEnd.position - boxCastStart.position);
-        // var raycastHits = Physics.BoxCastAll(boxCastStart.position, halfExtents, vect.normalized, Quaternion.identity, vect.magnitude, enemyLayer);
-        //
-        // foreach (var hit in raycastHits)
-        // {
-        //     NCLogger.Log($"hit.point {hit.point} enemy.transform.position {hit.collider.transform.position}");
-        //     // Debug.DrawLine(hit.point, hit.point + Vector3.up * 100, Color.white, 15);
-        //     for (var i = 0; i < particlePerEnemy; i++) {
-        //         this.FireEvent(EventType.SpawnParticleREDEvent, new ParticleCallbackData(hit.normal, hit.point, hit.collider.transform));
-        //     }
-        // }
-
-        var enemies = MeleeSequence.OrderToAttributes[_curMeleeOrder].collider.Enemies;
-        foreach (var enemy in enemies)
-        {
-            var vect = transform.position - enemy.transform.position;
-            var ogPos = enemy.transform.position;
-            var pos = ogPos + new Vector3(0, 0.4f * enemy.transform.localScale.y, 0);
-            // for (var i = 0; i < particlePerEnemy; i++) {
-            //     this.FireEvent(EventType.SpawnParticleREDEvent, new ParticleCallbackData(Random.onUnitSphere,pos , enemy.transform));
-            // }
-            this.FireEvent(EventType.SpawnParticleREDEvent, new ParticleCallbackData(Random.onUnitSphere,pos + enemy.transform.right * 0.1f, enemy.transform));
-            this.FireEvent(EventType.SpawnParticleREDEvent, new ParticleCallbackData(Random.onUnitSphere,pos - enemy.transform.right * 0.1f, enemy.transform));
-            this.FireEvent(EventType.SpawnParticleREDEvent, new ParticleCallbackData(Random.onUnitSphere,pos, enemy.transform));
-        }
-
     }
     #endregion
     
@@ -542,12 +536,5 @@ public class CombatManager : MonoBehaviour
         }
     }
    #endregion
-
-   private void OnDrawGizmos()
-   {
-       // Gizmos.color = Color.green;
-       // Gizmos.DrawWireCube(boxCastStart.position, halfExtents);
-       // Gizmos.DrawWireCube(boxCastEnd.position, halfExtents);
-   }
 }
 
