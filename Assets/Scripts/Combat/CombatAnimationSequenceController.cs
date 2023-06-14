@@ -16,16 +16,15 @@ using EventType = Core.Events.EventType;
 public class ComboAnimContainer
 {
     [ReadOnly] public Transform transform;
-    //[ReadOnly] public Vector3 direction;
-    public Transform destTransform;
+    [ReadOnly] public Vector3 direction;
+    public float distance;
     public float time;
     public Ease easeType;
 
-    public ComboAnimContainer(Transform transform, Transform destTransform, float time, Ease easeType) {
+    public ComboAnimContainer(Transform transform, Vector3 direction, float distance, float time, Ease easeType) {
         this.transform = transform;
-        //this.direction = direction;
-        //this.distance = distance;
-        this.destTransform = destTransform;
+        this.direction = direction;
+        this.distance = distance;
         this.time = time;
         this.easeType = easeType;
     }
@@ -41,7 +40,7 @@ public class CombatAnimationSequenceController : MonoBehaviour
     private PlayerMovementController.MovementState _moveState;
 
     private void Awake() {
-        this.AddListener(EventType.RunPlayerComboSequenceEvent, param => PlayComboAnimation((List<ComboAnimContainer>) param));
+        this.AddListener(EventType.RunPlayerComboSequenceEvent, param => PlayComboAnimation((ComboAnimContainer) param));
         // this.AddListener(EventType.NotifyResumeAllComboSequenceEvent, param => _canPlay = true);
         this.AddListener(EventType.NotifyStopAllComboSequenceEvent, param => StopAllComboSequence());
         this.AddListener(EventType.UpdateActiveWeaponEvent, param => _activeWeapon = (WeaponType)param);
@@ -59,78 +58,34 @@ public class CombatAnimationSequenceController : MonoBehaviour
          DOTween.Kill(_tweenObj);
      }
     
-    private void PlayComboAnimation(List<ComboAnimContainer> param)
+    private void PlayComboAnimation(ComboAnimContainer param)
     {
         //if(!_canPlay) return;
         if (_moveState != PlayerMovementController.MovementState.Locked) return;
         if (_activeWeapon != WeaponType.Melee) return;
-
-        var sequence = DOTween.Sequence();
-        foreach (var anim in param)
-        {
-            if (anim.transform == null) {
-                NCLogger.Log($"param.transform: {anim.transform}", LogLevel.ERROR);
-                return;
-            }
-
-            // if (anim.direction == Vector3.zero) {
-            //     NCLogger.Log($"param.direction: {anim.direction}", LogLevel.ERROR);
-            //     return;
-            // }
-            if (anim.destTransform == null) {
-                NCLogger.Log($"param.direction: {anim.destTransform}", LogLevel.ERROR);
-                return;
-            }
-            
-            
-            _tweenObj = anim.transform;
-            //change this into a coroutine so you can cancel it
-            var origin = anim.transform.position;
-            var dest = anim.destTransform.position;
-            var isHit = Physics.Linecast(origin, dest, out var hit, ~tweenSafetyIgnoreLayer);
-            if (isHit && !hit.collider.isTrigger) {
-                dest = hit.point;
-                Debug.DrawLine(transform.position, dest, Color.red, 5f);
-                //NCLogger.Log($"dodge hit {hit.collider.name}");
-            }
-            else {
-                Debug.DrawLine(transform.position, dest, Color.red, 5f);
-            }
-            sequence.Append(anim.transform.DOMove(dest , anim.time).SetEase(anim.easeType));
+        
+        if (param.transform == null) {
+            NCLogger.Log($"param.transform: {param.transform}", LogLevel.ERROR);
+            return;
         }
 
-        sequence.Play();
+        if (param.direction == Vector3.zero) {
+            NCLogger.Log($"param.direction: {param.direction}", LogLevel.ERROR);
+            return;
+        }
+
+        _tweenObj = param.transform;
+        //change this into a coroutine so you can cancel it
+        Vector3 dest = param.transform.position + param.direction * param.distance;
+        var isHit = Physics.Raycast(transform.position, param.direction, out var hit,  param.distance, ~tweenSafetyIgnoreLayer);
+        if (isHit && !hit.collider.isTrigger) {
+            dest = hit.point;
+            Debug.DrawLine(transform.position, dest, Color.red, 5f);
+            //NCLogger.Log($"dodge hit {hit.collider.name}");
+        }
+        else {
+            Debug.DrawLine(transform.position, dest, Color.red, 5f);
+        }
+        _tween = param.transform.DOMove(dest , param.time).SetEase(param.easeType);
     }
-    
-    
-    // private void PlayComboAnimation(ComboAnimContainer param)
-    // {
-    //     //if(!_canPlay) return;
-    //     if (_moveState != PlayerMovementController.MovementState.Locked) return;
-    //     if (_activeWeapon != WeaponType.Melee) return;
-    //     
-    //     if (param.transform == null) {
-    //         NCLogger.Log($"param.transform: {param.transform}", LogLevel.ERROR);
-    //         return;
-    //     }
-    //
-    //     if (param.direction == Vector3.zero) {
-    //         NCLogger.Log($"param.direction: {param.direction}", LogLevel.ERROR);
-    //         return;
-    //     }
-    //
-    //     _tweenObj = param.transform;
-    //     //change this into a coroutine so you can cancel it
-    //     Vector3 dest = param.transform.position + param.direction * param.distance;
-    //     var isHit = Physics.Raycast(transform.position, param.direction, out var hit,  param.distance, ~tweenSafetyIgnoreLayer);
-    //     if (isHit && !hit.collider.isTrigger) {
-    //         dest = hit.point;
-    //         Debug.DrawLine(transform.position, dest, Color.red, 5f);
-    //         //NCLogger.Log($"dodge hit {hit.collider.name}");
-    //     }
-    //     else {
-    //         Debug.DrawLine(transform.position, dest, Color.red, 5f);
-    //     }
-    //     _tween = param.transform.DOMove(dest , param.time).SetEase(param.easeType);
-    // }
 }

@@ -21,9 +21,6 @@ namespace Core.Patterns {
                         var instances = FindObjectsOfType<T>();
                         if (instances.Length > 1) {
                             NCLogger.Log("More than one instance of singleton found in scene!", LogLevel.WARNING);
-                        }
-
-                        if (instances.Length > 0) {
                             _instance = instances[0];
                             DontDestroyOnLoad(_instance);
                         }

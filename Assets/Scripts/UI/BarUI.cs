@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using Core.Events;
 using DG.Tweening;
 using UnityEngine;
-using UnityEngine.Events;
 using UnityEngine.UI;
 using EventType = Core.Events.EventType;
 
@@ -27,7 +26,6 @@ namespace UI {
 
         [SerializeField] private float lerpDuration;
         [SerializeField] private List<BarItem> barItems;
-        [SerializeField] private Ease easeType;
 
         private void Awake() {
             EventDispatcher.Instance.AddListener(EventType.UIBarChangedEvent, msg => UpdateBar((BarUIMsg) msg));
@@ -36,32 +34,7 @@ namespace UI {
         private void UpdateBar(BarUIMsg msg) {
             var slider = barItems.Find(x => x.type == msg.type).slider;
             if (!slider) return;
-            switch (msg.type) {
-                case BarType.Experience:
-                    if (msg.value < slider.value) {
-                        LerpSliderValue(slider, 
-                                        1f, 
-                                        () => ResetValue(slider, 
-                                                         () => LerpSliderValue(slider, 
-                                                                               msg.value - slider.value)
-                                        ));
-                        break;
-                    }
-                    LerpSliderValue(slider, msg.value);
-                    break;
-                case BarType.Oxygen:
-                    LerpSliderValue(slider, msg.value);
-                    break;
-            }
-        }
-
-        private void LerpSliderValue(Slider slider, float value, Action callback = null) {
-            DOTween.To(() => slider.value, x => slider.value = x, value, lerpDuration).SetEase(easeType).OnComplete(() => callback());
-        }
-
-        private void ResetValue(Slider slider, Action callback = null) {
-            slider.value = 0f;
-            callback();
+            DOTween.To(() => slider.value, x => slider.value = x, msg.value, lerpDuration).SetEase(Ease.InOutExpo);
         }
     }
 }
