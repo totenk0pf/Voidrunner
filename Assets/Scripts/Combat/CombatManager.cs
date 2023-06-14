@@ -196,8 +196,8 @@ public class CombatManager : MonoBehaviour
     [SerializeField] private LayerMask enemyLayer;
     [SerializeField] private int particlePerEnemy;
     [SerializeField] private Vector3 halfExtents;
-    [SerializeField] private Transform boxCastStart;
-    [SerializeField] private Transform boxCastEnd;
+    // [SerializeField] private Transform boxCastStart;
+    // [SerializeField] private Transform boxCastEnd;
     
     private void Awake() {
         //Init Ref
@@ -545,9 +545,9 @@ public class CombatManager : MonoBehaviour
 
    private void OnDrawGizmos()
    {
-       Gizmos.color = Color.green;
-       Gizmos.DrawWireCube(boxCastStart.position, halfExtents);
-       Gizmos.DrawWireCube(boxCastEnd.position, halfExtents);
+       // Gizmos.color = Color.green;
+       // Gizmos.DrawWireCube(boxCastStart.position, halfExtents);
+       // Gizmos.DrawWireCube(boxCastEnd.position, halfExtents);
    }
 }
 
