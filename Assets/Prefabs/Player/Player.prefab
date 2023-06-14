@@ -442,8 +442,8 @@ GameObject:
   - component: {fileID: 7264022383706710101}
   - component: {fileID: 166455798467986143}
   - component: {fileID: 929311467}
-  - component: {fileID: 4044656339745552635}
   - component: {fileID: 3246652650168086534}
+  - component: {fileID: 2072302959703469181}
   m_Layer: 3
   m_Name: Player
   m_TagString: Player
@@ -518,6 +518,7 @@ MonoBehaviour:
   accelRate: 2
   accelForce: 12
   maxSpeed: 6
+  canGravity: 1
   gravityAcceleration: 15
   gravityScale: 3
   ignoreMask:
@@ -566,12 +567,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 21266a94bd55c9f45983402752aa60cb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  regenDelay: 5
+  oxygenPool: 0
+  regenerateTime: 0
   regenMultipiler: 1
-  defaultOxygen: 100
   permanentOxygen: 0
   tempOxygen: 20
-  oxygenGainMod: 5
   totalOxygen: 0
   currentOxygen: 0
   oxygenRatio: 0
@@ -604,9 +604,9 @@ MonoBehaviour:
   enemyLayer:
     serializedVersion: 2
     m_Bits: 256
-  grapplePointLayer:
+  largeEnemyLayer:
     serializedVersion: 2
-    m_Bits: 8704
+    m_Bits: 0
   gravityDampDuration: 0.3
   momentumForce: 2500
   forceMode: 5
@@ -727,19 +727,6 @@ MonoBehaviour:
   tweenSafetyIgnoreLayer:
     serializedVersion: 2
     m_Bits: 396
---- !u!114 &4044656339745552635
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6037325520723149425}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 641622d0253a27b4cac58dd103ed19bf, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  progressionData: {fileID: 11400000, guid: 03f90e0da287c764a972c5e0237f20b4, type: 2}
 --- !u!114 &3246652650168086534
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -767,6 +754,19 @@ MonoBehaviour:
   weightPerLevel: 0
   weightModifier: 0
   defaultWeight: 5
+--- !u!114 &2072302959703469181
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6037325520723149425}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6d36912778206b246b63b848bb8dfb6c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  progressionData: {fileID: 0}
 --- !u!1 &7834365267116934081
 GameObject:
   m_ObjectHideFlags: 0
@@ -967,6 +967,13 @@ MonoBehaviour:
   firePoint: {fileID: 6037325520643900592}
   MeleeSequence: {fileID: 11400000, guid: 547072da3b9b3482dba78e7aaab8264f, type: 2}
   _playerAnimator: {fileID: 0}
+  enemyLayer:
+    serializedVersion: 2
+    m_Bits: 0
+  particlePerEnemy: 0
+  halfExtents: {x: 0, y: 0, z: 0}
+  boxCastStart: {fileID: 0}
+  boxCastEnd: {fileID: 0}
 --- !u!1001 &655749898248857391
 PrefabInstance:
   m_ObjectHideFlags: 0
