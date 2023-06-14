@@ -36,14 +36,13 @@ public class MeleeSequenceAttribute : IAnimDataConvertable {
     public bool canDamageMod;
     [ShowIf("canDamageMod")] [SerializeField] private float damageScale = 1;
     [ShowIf("canDamageMod")] [SerializeField] private float damageModifier = 0;
-    [ShowIf("canDamageMod")] [SerializeField] public float modifierScale = 1;
     [ShowIf("canDamageMod")] [SerializeField] private float attackSpeedModifier = 1;
-    public List<ComboAnimContainer> ComboAnim;
+    public ComboAnimContainer ComboAnim;
     
     
     //Getters
     public float NextSeqInputWindow => nextSeqInputWindow;
-    public float Damage => canDamageMod ? (damage + damageModifier * modifierScale) * damageScale : damage;
+    public float Damage => canDamageMod ? (damage + damageModifier) * damageScale : damage;
     public PlayerAnimState State => state;
     public float KnockbackRange => knockBackRange;
     public float KnockbackDuration => knockBackDuration;
@@ -223,8 +222,6 @@ public class CombatManager : MonoBehaviour
         
         this.AddListener(EventType.SpawnBloodEvent, param => SpawnBloodOnEnemy());
         
-        // Progression
-        this.AddListener(EventType.UpdateCombatData, spec => UpdateMeleeData((int) spec));
         if(!MeleeSequence) NCLogger.Log($"Missing Melee Sequence Data", LogLevel.ERROR);
         if(!RangedData) NCLogger.Log($"Missing Ranged Data", LogLevel.ERROR);
         if(!EntriesData) NCLogger.Log($"Missing Entries Data", LogLevel.ERROR);        
@@ -235,12 +232,7 @@ public class CombatManager : MonoBehaviour
         if(!MeleeSequence.ValidateColliders()) NCLogger.Log($"Collider Validation Failed", LogLevel.ERROR);
     }
 
-    private void UpdateMeleeData(int spec) {
-        var data = MeleeSequence.OrderToAttributes.Values;
-        foreach (var i in data) {
-            i.modifierScale = spec;
-        }
-    }
+    
     
     private void Start()
     {
@@ -314,7 +306,7 @@ public class CombatManager : MonoBehaviour
             yield return null;
         }
         
-        NCLogger.Log($"fail the chain");
+        //NCLogger.Log($"fail the chain");
         //When exceeds window input time - reset combo chain
         if(_activeWeapon != WeaponType.Melee) NCLogger.Log($"_activeWeapon should be Melee when it's {_activeWeapon}", LogLevel.ERROR);
         ResetWeaponAttackState(false, _activeWeapon);
@@ -388,16 +380,8 @@ public class CombatManager : MonoBehaviour
                     //this.FireEvent(EventType.ResumeMovementEvent);
                 
                 //If canceled due to movement (activeWeapon = NONE), check moveState
-                if (_moveState == PlayerMovementController.MovementState.Dodge )
-                {
-                    NCLogger.Log($"(Combat) Dodge");
-                    this.FireEvent(EventType.PlayAnimationEvent, new AnimData(PlayerAnimState.Dodge, 1));
-                }
-                else if (!isCancel)
-                {
-                    NCLogger.Log($"(Combat) Anim Cancel -> Idle");
-                    this.FireEvent(EventType.ReUpdateMovementAnimEvent);
-                }
+                if(_moveState == PlayerMovementController.MovementState.Dodge || !isCancel)
+                    this.FireEvent(EventType.PlayAnimationEvent, new AnimData(PlayerAnimState.Idle, 1));
                 break;
             case WeaponType.Melee:
                 //StopAllCoroutines();
@@ -417,17 +401,8 @@ public class CombatManager : MonoBehaviour
                 else
                 {
                     //If canceled due to movement (activeWeapon = NONE), check moveState
-                    if ((_activeWeapon == WeaponType.Melee &&
-                         _moveState == PlayerMovementController.MovementState.Dodge))
-                    {
-                        NCLogger.Log($"(Combat) Dodge");
-                        this.FireEvent(EventType.PlayAnimationEvent, new AnimData(PlayerAnimState.Dodge, 1));
-                    }
-                    else if (!isCancel)
-                    {
-                        NCLogger.Log($"(Combat) Anim Cancel -> Idle");
-                        this.FireEvent(EventType.ReUpdateMovementAnimEvent);
-                    }
+                    if((_activeWeapon == WeaponType.Melee && _moveState == PlayerMovementController.MovementState.Dodge) || !isCancel)
+                        this.FireEvent(EventType.PlayAnimationEvent, new AnimData(PlayerAnimState.Idle, 1));
                     _activeWeapon = WeaponType.None;
                 }
                 
@@ -450,16 +425,8 @@ public class CombatManager : MonoBehaviour
                 this.FireEvent(EventType.ResumeMovementEvent);
                 this.FireEvent(EventType.RequestMovementStateEvent);
                 //If canceled due to movement (activeWeapon = NONE), check moveState
-                if (_moveState == PlayerMovementController.MovementState.Dodge)
-                {
-                    NCLogger.Log($"(Combat) Dodge");
-                    this.FireEvent(EventType.PlayAnimationEvent, new AnimData(PlayerAnimState.Dodge, 1));
-                }
-                else if (!isCancel)
-                {
-                    NCLogger.Log($"(Combat) Anim Cancel -> Idle");
-                    this.FireEvent(EventType.ReUpdateMovementAnimEvent);
-                }
+                if(_moveState == PlayerMovementController.MovementState.Dodge || !isCancel)
+                    this.FireEvent(EventType.PlayAnimationEvent, new AnimData(PlayerAnimState.Idle, 1));
                 break;
             default:
                 throw new ArgumentOutOfRangeException();
@@ -480,11 +447,8 @@ public class CombatManager : MonoBehaviour
     {
         var playerT = transform.root;
         var container = MeleeSequence.OrderToAttributes[_curMeleeOrder].ComboAnim;
-        foreach (var anim in container)
-        {
-            anim.transform = playerT;
-            //anim.rootOffset = playerT.transform.position + anim.rootOffset;
-        }
+        container.transform = playerT;
+        container.direction = playerT.forward;
             
         this.FireEvent(EventType.RunPlayerComboSequenceEvent, container);
     }    
@@ -508,8 +472,7 @@ public class CombatManager : MonoBehaviour
 
     private void OnAttackEnd()
     {
-        NCLogger.Log($"(Combat) Idle");
-        //this.FireEvent(EventType.PlayAnimationEvent, new AnimData(PlayerAnimState.Idle, 1));
+        this.FireEvent(EventType.PlayAnimationEvent, new AnimData(PlayerAnimState.Idle, 1));
         if (_activeWeapon == WeaponType.Melee)
             OnAttackEndMelee();
         else if (_activeWeapon == WeaponType.Ranged)
@@ -520,8 +483,7 @@ public class CombatManager : MonoBehaviour
 
     private void OnAttackEndMelee()
     {
-        // NCLogger.Log($"fail the chain? End of Attack");
-        // this.FireEvent(EventType.ReUpdateMovementAnimEvent);
+        
     }
     
     private IEnumerator OnAttackEndRangedRoutine() {
