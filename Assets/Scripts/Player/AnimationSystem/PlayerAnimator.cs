@@ -165,7 +165,6 @@ public class PlayerAnimator : MonoBehaviour, IInteractiveAnimator, ICombatAnimat
         }else if(_activeType == WeaponType.Ranged) {
             this.FireEvent(EventType.RangedEnemyDamageEvent, _animData);
         }
-        this.FireEvent(EventType.SpawnBloodEvent);
     }
 
     public void HoldAnimationOnFrame() {
