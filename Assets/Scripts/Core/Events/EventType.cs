@@ -9,12 +9,23 @@ namespace Core.Events {
         ItemRemoveEvent,
         ItemAddEvent,
         ItemPickEvent,
+        InventoryHUDEvent,
+        InventoryToggleEvent,
+        InventoryUpdateEvent,
+        UIBarChangedEvent,
+        UITextChangedEvent,
         OxygenChangeEvent,
         XPGainEvent,
         LevelUpEvent,
         SpecUpEvent,
         WeaponChangedEvent,
         WeaponRechargedEvent,
+        AugmentChangedEvent,
+        AugmentChargeEvent,
+        AugmentDrainEvent,
+        DamageEnemyEvent,
+        RangedShotEvent,
+        GetMovementStateEvent,
         EmpowerDamageEnemyEvent,
         RequestMovementStateEvent,
         ReceiveMovementStateEvent,
@@ -76,18 +87,24 @@ namespace Core.Events {
         //
         RequestCurrentGrappleTypeEvent,
         ReceiveCurrentGrappleTypeEvent,
+        SpawnParticleEnemyDeadEvent,
+        SpawnBloodEvent,
+        SpawnParticleREDEvent,
+        
+        //Room Events
+        EnableRoom,
+        DisableRoom,
+        DoorInvoked, 
+        SetCheckpoint,
+        
+        //Player Events
+        OnPlayerDie,
+        OnPlayerEnterDoor,
+        AddXP, 
+        AddSkillLevel,
         
         // Entity update events
         EntityDeathEvent,
-        
-        // UI events
-        InventoryHUDEvent,
-        AugmentChangedEvent,
-        AugmentChargeEvent,
-        AugmentDrainEvent,
-        InventoryToggleEvent,
-        InventoryUpdateEvent,
-        UIBarChangedEvent,
         SkillPointGainedEvent
     }
 }

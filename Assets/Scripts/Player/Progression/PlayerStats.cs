@@ -2,7 +2,6 @@ using UnityEngine;
 using Combat;
 using Core.Debug;
 using Core.Events;
-using Player.Progression;
 using Sirenix.OdinInspector;
 using EventType = Core.Events.EventType;
 

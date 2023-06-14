@@ -4,6 +4,7 @@ using Core.Logging;
 using UnityEngine;
 using Sirenix.OdinInspector;
 using UnityEditor;
+using MagicLightProbes;
 
 namespace Level {
     public enum RoomType {
@@ -23,10 +24,12 @@ namespace Level {
 
     [RequireComponent(typeof(BoxCollider))]
     public class Room : MonoBehaviour {
+        public RoomType type;
+        public bool IsInRoom { get; private set; }
+
         [ReadOnly] public List<Tuple<Vector2Int, Quaternion>> Rotations { get; private set; }
         [SerializeField] private BoxCollider col;
         [SerializeField] private List<EntryInfo> entries;
-        [SerializeField] private RoomType type;
         [ReadOnly] [ShowInInspector] private Vector3 _pivot;
         private Bounds _worldSpaceBounds;
 
@@ -38,12 +41,20 @@ namespace Level {
                 return;
             }
 
+            var hasBounds = false;
             var tempBounds     = new Bounds();
-            var childColliders = transform.GetComponentsInChildren<Collider>();
-            for (int i = 0; i < childColliders.Length; i++) {
-                if (childColliders[i] == col) continue;
-                if (i == 1) tempBounds = childColliders[i].bounds;
-                tempBounds.Encapsulate(childColliders[i].bounds);
+
+            var renderers = GetComponentsInChildren<Renderer>();
+            
+            for (var i = 0; i < renderers.Length; ++i) {
+                Renderer childRenderer = renderers[i];
+                if (childRenderer == null) continue;
+                if (hasBounds) {
+                    tempBounds.Encapsulate(childRenderer.bounds);
+                } else {
+                    tempBounds = childRenderer.bounds;
+                    hasBounds  = true;
+                }
             }
 
             _worldSpaceBounds = tempBounds;
@@ -64,19 +75,11 @@ namespace Level {
                 entry.offset = offset;
             }
         }
-
-
+        
         [HorizontalGroup("Generate")]
-        [Button("Generate rotations")]
-        private void GenerateRotation() {
-            foreach (var entry in entries) {
-                var normal          = entry.offset.normalized;
-                var currentRotation = transform.rotation;
-                for (int i = 1; i < 4; i++) {
-                    var rotatedNormal = Quaternion.Euler(0, 90 * i, 0) * normal;
-                    
-                }
-            }
+        [Button("Generate probes")]
+        private void GenerateProbes() {
+            
         }
 
         [Button("Validate")]
@@ -89,6 +92,27 @@ namespace Level {
             Validate();
         }
 
+        [Button("Rotate collider")]
+        private void RotateCollider() {
+            var currentSize = col.size;
+            var rotated = new Vector3(currentSize.z, currentSize.y, currentSize.x);
+            col.size = rotated;
+        }
+
+        private void Awake() {
+            // if (type == RoomType.Hub) IsInRoom = true;
+        }
+
+        private void OnTriggerEnter(Collider other) {
+            if (other.gameObject.layer != LayerMask.NameToLayer("Player")) return;
+            IsInRoom = true;
+
+        }
+        private void OnTriggerExit(Collider other) {
+            if (other.gameObject.layer != LayerMask.NameToLayer("Player")) return;
+            IsInRoom = false;
+        }
+
 #if UNITY_EDITOR
         private void OnValidate() {
             if (!col) {
@@ -96,7 +120,7 @@ namespace Level {
             }
         }
 
-        private void OnDrawGizmos() {
+        private void OnDrawGizmosSelected() {
             if (!Application.isPlaying) {
                 EditorApplication.QueuePlayerLoopUpdate();
                 SceneView.RepaintAll();

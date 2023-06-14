@@ -4,13 +4,34 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="ded29cb8-0298-4ab6-84c2-a9fa8090f9fe" name="Changes" comment="">
+    <list default="true" id="c180c223-9eca-45b2-b2a1-c0f4028aa4d0" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/.idea.Voidrunner/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.Voidrunner/.idea/workspace.xml" afterDir="false" />
+<<<<<<< HEAD
       <change beforePath="$PROJECT_DIR$/Assets/Models/Player/Character_Attack3.anim" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Models/Player/Character_Attack3.anim" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Resources/ComboManager_MeleeSequenceData.asset" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Resources/ComboManager_MeleeSequenceData.asset" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Scenes/CombatScene.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scenes/CombatScene.unity" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Scripts/Combat/CombatAnimationSequenceController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Combat/CombatAnimationSequenceController.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Scripts/Combat/CombatManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Combat/CombatManager.cs" afterDir="false" />
+=======
+      <change beforePath="$PROJECT_DIR$/Assets/PolygonSciFiAssets/PolygonSciFiSpace/Materials/FX_Materials/FX_HUD.mat" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/PolygonSciFiAssets/PolygonSciFiSpace/Materials/FX_Materials/FX_HUD.mat" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/PolygonSciFiAssets/PolygonSciFiSpace/Materials/Misc/Weapons_Energy.mat" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/PolygonSciFiAssets/PolygonSciFiSpace/Materials/Misc/Weapons_Energy.mat" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/PolygonSciFiAssets/PolygonSciFiSpace/Materials/PolygonScifiSpace_Material_Glass.mat" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/PolygonSciFiAssets/PolygonSciFiSpace/Materials/PolygonScifiSpace_Material_Glass.mat" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/PolygonSciFiAssets/PolygonSciFiSpace/Prefabs/Room/Hallway Variants/Hallway_1.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/PolygonSciFiAssets/PolygonSciFiSpace/Prefabs/Room/Hallway Variants/Hallway_1.prefab" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/PolygonSciFiAssets/PolygonSciFiSpace/Prefabs/Room/Hallway Variants/Hallway_4.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/PolygonSciFiAssets/PolygonSciFiSpace/Prefabs/Room/Hallway Variants/Hallway_4.prefab" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/PolygonSciFiAssets/PolygonSciFiSpace/Prefabs/Room/Hallway Variants/Hallway_7.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/PolygonSciFiAssets/PolygonSciFiSpace/Prefabs/Room/Hallway Variants/Hallway_7.prefab" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/PolygonSciFiAssets/PolygonSciFiSpace/Prefabs/Room/Hallway Variants/Hallway_8.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/PolygonSciFiAssets/PolygonSciFiSpace/Prefabs/Room/Hallway Variants/Hallway_8.prefab" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/Rooms/Door.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Prefabs/Rooms/Door.prefab" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scenes/Prototype.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scenes/Prototype.unity" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Level/Door.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Level/Door.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Level/Room.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Level/Room.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Player/PlayerProgression.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Player/PlayerProgression.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Rooms.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Rooms/RoomManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Level/RoomManager.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Rooms/RoomManager.cs.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Level/RoomManager.cs.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Rooms/RoomObject.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Rooms/RoomObject.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ProjectSettings/Packages/com.unity.probuilder/Settings.json" beforeDir="false" afterPath="$PROJECT_DIR$/ProjectSettings/Packages/com.unity.probuilder/Settings.json" afterDir="false" />
+>>>>>>> 34_import_synty_asset
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -20,19 +41,36 @@
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
+  <component name="GitRewordedCommitMessages">
+    <option name="commitMessagesMapping">
+      <RewordedCommitMessageMapping>
+        <option name="originalMessage" value="phong moi da den, weapon room" />
+        <option name="rewordedMessage" value="Finished Key Room&#10;&#10;&#10;[VOID-34] Lighting pass (WIP)&#10;&#10;&#10;Control Room Finished&#10;&#10;&#10;cringe&#10;&#10;crtngr&#10;&#10;&#10;Finished Boss Room&#10;&#10;me me me&#10;&#10;&#10;Cringe commit&#10;&#10;urgh&#10;&#10;&#10;Finishing boss room ceiling&#10;&#10;Cringe&#10;&#10;&#10;rescale controller room, added wall and floor, added some props into it&#10;&#10;&#10;Tuong tuong quen save scene&#10;&#10;&#10;Finished adding wall and celling for the boss room&#10;&#10;cOcK&#10;&#10;&#10;cringe cringe, fix and add more things inside EmergencyRoom&#10;&#10;&#10;Xep Lai Phong, organise ur mom room, Put all room into the prefabs file&#10;&#10;edsasdadsad&#10;&#10;&#10;Sửa nhiều phòng thêm nhiều thứ vãi lồn&#10;&#10;urrgh urrgh urrhg urgrh&#10;&#10;&#10;Changes:&#10;- Rescaled control bay room&#10;&#10;&#10;Progress on Boss Room - Add more prefab of some human body part&#10;&#10;&#10;- Rescaled controlbay room&#10;- Added few control board into controlbay room&#10;&#10;&#10;Boss room - wall and floor with interiors&#10;&#10;chim&#10;&#10;&#10;start building control bay&#10;&#10;&#10;bat dau xay boss room&#10;&#10;&#10;phong moi da den, weapon room" />
+      </RewordedCommitMessageMapping>
+    </option>
+    <option name="currentCommit" value="1" />
+    <option name="onto" value="bf6ac582a23917f976b01caba001f6f835dc7b0b" />
+  </component>
   <component name="HighlightingSettingsPerFile">
+<<<<<<< HEAD
     <setting file="file://$PROJECT_DIR$/Assets/AnimationSequencer/Editor/Core/AnimationSequencerControllerCustomEditor.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/Combat/CombatAnimationSequenceController.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/Entities/Enemy/AnimSerializedData.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/Extensions/Extensions.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Library/PackageCache/com.unity.2d.sprite@1.0.0/Editor/ShapeEditor/ShapeEditor.cs" root0="SKIP_HIGHLIGHTING" />
+=======
+>>>>>>> 34_import_synty_asset
     <setting file="file://$PROJECT_DIR$/Library/PackageCache/com.unity.probuilder@5.0.6/Editor/EditorCore/UVEditor.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Library/PackageCache/com.unity.probuilder@5.0.6/Samples~/Runtime/Icosphere FFT/Scripts/IcoBumpin.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Library/PackageCache/com.unity.render-pipelines.core@12.1.7/Editor/Lighting/IESReader.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Library/PackageCache/com.unity.render-pipelines.universal@12.1.7/Editor/2D/ShapeEditor/GUIFramework/ClickAction.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Library/PackageCache/com.unity.render-pipelines.universal@12.1.7/Editor/2D/ShapeEditor/GUIFramework/SliderAction.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Library/PackageCache/com.unity.render-pipelines.universal@12.1.7/Editor/ShaderGraph/UniversalStructs.cs" root0="SKIP_HIGHLIGHTING" />
+<<<<<<< HEAD
     <setting file="file://$PROJECT_DIR$/Library/PackageCache/com.unity.render-pipelines.universal@12.1.7/Samples~/URPPackageSamples/SharedAssets/Scripts/FirstPersonController.cs" root0="SKIP_HIGHLIGHTING" />
+=======
+    <setting file="file://$PROJECT_DIR$/Library/PackageCache/com.unity.render-pipelines.universal@12.1.7/Runtime/Data/UniversalRenderPipelineAsset.cs" root0="SKIP_HIGHLIGHTING" />
+>>>>>>> 34_import_synty_asset
     <setting file="file://$PROJECT_DIR$/Library/PackageCache/com.unity.shadergraph@12.1.7/Editor/Data/Nodes/Artistic/Blend/BlendMode.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Library/PackageCache/com.unity.textmeshpro@3.0.6/Scripts/Runtime/TMP_Text.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Library/PackageCache/com.unity.timeline@1.6.4/Editor/Window/TimelineWindow.cs" root0="SKIP_HIGHLIGHTING" />
@@ -57,6 +95,7 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
+<<<<<<< HEAD
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
     "Discover.Launch.Via.Unity": "true",
@@ -69,11 +108,39 @@
     "node.js.selected.package.tslint": "(autodetect)",
     "rider.run.widget.enabled.cache": "false",
     "vue.rearranger.settings.migration": "true"
+=======
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;Discover.Launch.Via.Unity&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
+    &quot;XThreadsFramesViewSplitterKey&quot;: &quot;0.3059514&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  },
+  &quot;keyToStringList&quot;: {
+    &quot;rider.external.source.directories&quot;: [
+      &quot;C:\\Users\\ADMIN\\AppData\\Roaming\\JetBrains\\Rider2022.3\\resharper-host\\DecompilerCache&quot;,
+      &quot;C:\\Users\\ADMIN\\AppData\\Roaming\\JetBrains\\Rider2022.3\\resharper-host\\SourcesCache&quot;,
+      &quot;C:\\Users\\ADMIN\\AppData\\Local\\Symbols\\src&quot;
+    ]
+>>>>>>> 34_import_synty_asset
   }
 }]]></component>
   <component name="RunManager" selected="Attach to Unity Editor.Attach to Unity Editor">
+    <configuration name="Start Unity" type="RunUnityExe" factoryName="Unity Executable">
+      <option name="EXE_PATH" value="D:\Unity\2021.3.10f1\Editor\Unity.exe" />
+      <option name="PROGRAM_PARAMETERS" value="-projectPath &quot;D:\Unity projects\Voidrunner&quot; -debugCodeOptimization" />
+      <option name="WORKING_DIRECTORY" value="D:\Unity projects\Voidrunner" />
+      <option name="PASS_PARENT_ENVS" value="1" />
+      <option name="USE_EXTERNAL_CONSOLE" value="0" />
+      <method v="2" />
+    </configuration>
     <configuration name="UnitTests (batch mode)" type="RunUnityExe" factoryName="Unity Executable">
-      <option name="EXE_PATH" value="C:\Program Files\Unity\Hub\Editor\2021.3.10f1\Editor\Unity.exe" />
+      <option name="EXE_PATH" value="D:\Unity\2021.3.10f1\Editor\Unity.exe" />
       <option name="PROGRAM_PARAMETERS" value="-runTests -batchmode -projectPath D:\Users\duong.lc\Documents\GitHub\Voidrunner -testResults Logs/results.xml -testPlatform EditMode -debugCodeOptimization" />
       <option name="WORKING_DIRECTORY" value="D:\Users\duong.lc\Documents\GitHub\Voidrunner" />
       <option name="PASS_PARENT_ENVS" value="1" />
@@ -90,10 +157,10 @@
       </option>
       <method v="2" />
     </configuration>
-    <configuration name="Attach to Unity Editor" type="UNITY_DEBUG_RUN_CONFIGURATION" factoryName="Unity Debug" show_console_on_std_err="false" show_console_on_std_out="false" port="50000" address="localhost">
+    <configuration name="Attach to Unity Editor" type="UNITY_DEBUG_RUN_CONFIGURATION" factoryName="Unity Debug" show_console_on_std_err="false" show_console_on_std_out="false" port="50000" address="localhost" ignored-value-for-modified-check="84360">
       <option name="allowRunningInParallel" value="false" />
       <option name="listenPortForConnections" value="false" />
-      <option name="pid" />
+      <option name="pid" value="84360" />
       <option name="projectPathOnTarget" />
       <option name="selectedOptions">
         <list />
@@ -104,7 +171,7 @@
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
-      <changelist id="ded29cb8-0298-4ab6-84c2-a9fa8090f9fe" name="Changes" comment="" />
+      <changelist id="c180c223-9eca-45b2-b2a1-c0f4028aa4d0" name="Changes" comment="" />
       <created>1681373178302</created>
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
@@ -114,8 +181,15 @@
       <workItem from="1681481970618" duration="5226000" />
       <workItem from="1681532113564" duration="18963000" />
       <workItem from="1681657615118" duration="664000" />
+<<<<<<< HEAD
       <workItem from="1686543279461" duration="11369000" />
       <workItem from="1686578516981" duration="11003000" />
+=======
+      <workItem from="1683598237152" duration="952000" />
+      <workItem from="1683611146637" duration="4473000" />
+      <workItem from="1684878026957" duration="5827000" />
+      <workItem from="1684945190201" duration="1570000" />
+>>>>>>> 34_import_synty_asset
     </task>
     <servers />
   </component>
@@ -136,12 +210,19 @@
       </map>
     </option>
   </component>
+  <component name="VcsManagerConfiguration">
+    <option name="CLEAR_INITIAL_COMMIT_MESSAGE" value="true" />
+  </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
       <breakpoints>
         <line-breakpoint type="DotNet Breakpoints">
           <url>file://$PROJECT_DIR$/Assets/Scripts/Combat/CombatManager.cs</url>
+<<<<<<< HEAD
           <line>422</line>
+=======
+          <line>431</line>
+>>>>>>> 34_import_synty_asset
           <properties documentPath="E:\_School Projects\Voidrunner\Assets\Scripts\Combat\CombatManager.cs" initialLine="393" containingFunctionPresentation="method 'ResetWeaponAttackState'" />
           <option name="timeStamp" value="34" />
         </line-breakpoint>

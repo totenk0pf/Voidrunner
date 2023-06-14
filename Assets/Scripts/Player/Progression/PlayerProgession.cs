@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using Player.Progression;
 using UI;
 using UnityEngine;
 using EventDispatcher = Core.Events.EventDispatcher;
