@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using Core.Debug;
 using UnityEngine;
 using Core.Events;
 using Sirenix.OdinInspector;
@@ -11,19 +12,29 @@ public struct ItemMsg {
 
 public class InventorySystem : SerializedMonoBehaviour {
     [ReadOnly] public List<InventoryItem> inventory;
+    
+    [TitleGroup("Items")]
     private InventoryItem _activeItem;
     [SerializeField] private ItemData defaultItem;
+    
+    [TitleGroup("Weight")]
     private float _currentWeight;
     [SerializeField] private float maxWeight;
+    [SerializeField] private float weightPerLevel;
+    [SerializeField] private float weightModifier;
+    [SerializeField] private float defaultWeight;
+    
     private bool _isUIActive;
     private bool _canUseItem;
 
     private void Awake() {
         _isUIActive = false;
         _canUseItem = true;
+        maxWeight   = defaultWeight;
         inventory   = new List<InventoryItem>();
         this.AddListener(EventType.ItemAddEvent, data => Add((ItemMsg) data));
         this.AddListener(EventType.ItemPickEvent, data => Pick((ItemMsg) data));
+        this.AddListener(EventType.UpdateInventoryData, specAmt => SetMaxWeight((int) specAmt * weightPerLevel * weightModifier));
         Add(new ItemMsg {
             data  = defaultItem
         });
@@ -54,6 +65,14 @@ public class InventorySystem : SerializedMonoBehaviour {
                 itemOnly      = false
             });
         }
+#if UNITY_EDITOR
+        DebugGUI.Instance.UpdateText(nameof(InventorySystem),
+            "\nInventory\n" +
+            $"Weight: {_currentWeight}\n" + 
+            $"Max weight: {maxWeight}\n" +
+            $"Weight mod: {weightModifier}\n"
+        );
+#endif
     }
 
     public void UpdateUI(InventoryToggleMsg msg) {
@@ -104,5 +123,13 @@ public class InventorySystem : SerializedMonoBehaviour {
             count = _activeItem.itemCount,
             countOnly = true
         });
+    }
+
+    public void SetMaxWeight(float amount) {
+        maxWeight = amount;
+    }
+    
+    public void IncreaseMaxWeight(float amount) {
+        maxWeight += weightModifier + amount;
     }
 }

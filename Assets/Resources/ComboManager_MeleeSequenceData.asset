@@ -20,6 +20,10 @@ MonoBehaviour:
     - {fileID: 0}
     - {fileID: 0}
     - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
     SerializedBytesString: 
     Prefab: {fileID: 0}
     PrefabModificationsReferencedUnityObjects: []
@@ -83,40 +87,41 @@ MonoBehaviour:
       Data: 1
     - Name: damageModifier
       Entry: 4
+      Data: 1
+    - Name: modifierScale
+      Entry: 4
       Data: 0
     - Name: attackSpeedModifier
       Entry: 4
-      Data: 1.5
+      Data: 2
     - Name: ComboAnim
       Entry: 7
-      Data: 3|ComboAnimContainer, Assembly-CSharp
+      Data: 3|System.Collections.Generic.List`1[[ComboAnimContainer, Assembly-CSharp]],
+        mscorlib
+    - Name: 
+      Entry: 12
+      Data: 1
+    - Name: 
+      Entry: 7
+      Data: 4|ComboAnimContainer, Assembly-CSharp
     - Name: transform
       Entry: 10
       Data: 1
-    - Name: direction
-      Entry: 7
-      Data: UnityEngine.Vector3, UnityEngine.CoreModule
-    - Name: 
+    - Name: destTransform
+      Entry: 10
+      Data: 2
+    - Name: time
       Entry: 4
-      Data: -0.7767147
-    - Name: 
-      Entry: 4
-      Data: 0
-    - Name: 
-      Entry: 4
-      Data: 0.629852533
+      Data: 0.3
+    - Name: easeType
+      Entry: 3
+      Data: 9
     - Name: 
       Entry: 8
       Data: 
-    - Name: distance
-      Entry: 4
-      Data: 3
-    - Name: time
-      Entry: 4
-      Data: 0.5
-    - Name: easeType
-      Entry: 3
-      Data: 21
+    - Name: 
+      Entry: 13
+      Data: 
     - Name: 
       Entry: 8
       Data: 
@@ -134,7 +139,7 @@ MonoBehaviour:
       Data: 1
     - Name: $v
       Entry: 7
-      Data: 4|MeleeSequenceAttribute, Assembly-CSharp
+      Data: 5|MeleeSequenceAttribute, Assembly-CSharp
     - Name: state
       Entry: 3
       Data: 1
@@ -155,7 +160,7 @@ MonoBehaviour:
       Data: 
     - Name: collider
       Entry: 10
-      Data: 2
+      Data: 3
     - Name: canDamageMod
       Entry: 5
       Data: true
@@ -164,40 +169,41 @@ MonoBehaviour:
       Data: 1
     - Name: damageModifier
       Entry: 4
+      Data: 1
+    - Name: modifierScale
+      Entry: 4
       Data: 0
     - Name: attackSpeedModifier
       Entry: 4
-      Data: 1
+      Data: 2
     - Name: ComboAnim
       Entry: 7
-      Data: 5|ComboAnimContainer, Assembly-CSharp
-    - Name: transform
-      Entry: 6
-      Data: 
-    - Name: direction
+      Data: 6|System.Collections.Generic.List`1[[ComboAnimContainer, Assembly-CSharp]],
+        mscorlib
+    - Name: 
+      Entry: 12
+      Data: 1
+    - Name: 
       Entry: 7
-      Data: UnityEngine.Vector3, UnityEngine.CoreModule
-    - Name: 
+      Data: 7|ComboAnimContainer, Assembly-CSharp
+    - Name: transform
+      Entry: 10
+      Data: 1
+    - Name: destTransform
+      Entry: 10
+      Data: 4
+    - Name: time
       Entry: 4
-      Data: 0.918499649
-    - Name: 
-      Entry: 4
-      Data: 0
-    - Name: 
-      Entry: 4
-      Data: 0.395421982
+      Data: 1
+    - Name: easeType
+      Entry: 3
+      Data: 12
     - Name: 
       Entry: 8
       Data: 
-    - Name: distance
-      Entry: 4
-      Data: 2
-    - Name: time
-      Entry: 4
-      Data: 0.3
-    - Name: easeType
-      Entry: 3
-      Data: 9
+    - Name: 
+      Entry: 13
+      Data: 
     - Name: 
       Entry: 8
       Data: 
@@ -215,7 +221,7 @@ MonoBehaviour:
       Data: 2
     - Name: $v
       Entry: 7
-      Data: 6|MeleeSequenceAttribute, Assembly-CSharp
+      Data: 8|MeleeSequenceAttribute, Assembly-CSharp
     - Name: state
       Entry: 3
       Data: 2
@@ -236,7 +242,7 @@ MonoBehaviour:
       Data: 
     - Name: collider
       Entry: 10
-      Data: 3
+      Data: 5
     - Name: canDamageMod
       Entry: 5
       Data: true
@@ -245,40 +251,59 @@ MonoBehaviour:
       Data: 1
     - Name: damageModifier
       Entry: 4
+      Data: 1
+    - Name: modifierScale
+      Entry: 4
       Data: 0
     - Name: attackSpeedModifier
       Entry: 4
-      Data: 0.75
+      Data: 2
     - Name: ComboAnim
       Entry: 7
-      Data: 7|ComboAnimContainer, Assembly-CSharp
-    - Name: transform
-      Entry: 6
-      Data: 
-    - Name: direction
+      Data: 9|System.Collections.Generic.List`1[[ComboAnimContainer, Assembly-CSharp]],
+        mscorlib
+    - Name: 
+      Entry: 12
+      Data: 2
+    - Name: 
       Entry: 7
-      Data: UnityEngine.Vector3, UnityEngine.CoreModule
-    - Name: 
+      Data: 10|ComboAnimContainer, Assembly-CSharp
+    - Name: transform
+      Entry: 10
+      Data: 1
+    - Name: destTransform
+      Entry: 10
+      Data: 6
+    - Name: time
       Entry: 4
-      Data: 0.8433146
-    - Name: 
-      Entry: 4
-      Data: 0
-    - Name: 
-      Entry: 4
-      Data: 0.5374203
+      Data: 0.2
+    - Name: easeType
+      Entry: 3
+      Data: 12
     - Name: 
       Entry: 8
       Data: 
-    - Name: distance
-      Entry: 4
-      Data: 3.5
+    - Name: 
+      Entry: 7
+      Data: 11|ComboAnimContainer, Assembly-CSharp
+    - Name: transform
+      Entry: 10
+      Data: 1
+    - Name: destTransform
+      Entry: 10
+      Data: 7
     - Name: time
       Entry: 4
-      Data: 0.4
+      Data: 0.2
     - Name: easeType
       Entry: 3
-      Data: 9
+      Data: 11
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 13
+      Data: 
     - Name: 
       Entry: 8
       Data: 

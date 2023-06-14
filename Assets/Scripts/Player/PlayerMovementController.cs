@@ -67,6 +67,7 @@ public class PlayerMovementController : MonoBehaviour
     private RaycastHit _slopeHit;
     
     private Vector3 _moveDir;
+    private int _moveID = 0;
     
     [Header("Dodge Attributes")] 
     public bool toggleProtoDodge = true;
@@ -84,7 +85,8 @@ public class PlayerMovementController : MonoBehaviour
     private float _horiz;
     private float _vert;
     private bool _isGrounded;
-
+    private bool _runOnce;
+    
     private void Awake()
     {
         this.AddListener(EventType.RequestMovementStateEvent, param => this.FireEvent(EventType.ReceiveMovementStateEvent, moveState));
@@ -92,7 +94,8 @@ public class PlayerMovementController : MonoBehaviour
         this.AddListener(EventType.RequestIsOnGroundEvent, param => EventDispatcher.Instance.FireEvent(EventType.ReceiveIsOnGroundEvent, _isGrounded));
         //this.AddListener(EventType.StopMovementEvent, param => ToggleMovement(false));
         this.AddListener(EventType.ResumeMovementEvent, param => ToggleMovement(true));
-
+        this.AddListener(EventType.ReUpdateMovementAnimEvent, param => ReUpdateMovement());
+        
         _inputKeyList = new List<KeyCode>() {
             KeyCode.W, KeyCode.S, KeyCode.A, KeyCode.D
         };
@@ -121,29 +124,93 @@ public class PlayerMovementController : MonoBehaviour
         foreach (var input in _inputKeyList.Where(Input.GetKey)) {
             switch (input) {
                 case KeyCode.W:
+                    //_runOnce = true;
                     _dodgeDir += transform.forward;
+                    //NCLogger.Log($"forward");
+                    //this.FireEvent(EventType.PlayAnimationEvent, new AnimData(PlayerAnimState.RunForward, 1f, transform.root));
                     break;
                 case KeyCode.S:
+                    //_runOnce = true;
                     _dodgeDir += -transform.forward; 
+                    //NCLogger.Log($"backward");
+                    //this.FireEvent(EventType.PlayAnimationEvent, new AnimData(PlayerAnimState.RunBackward, 1f, transform.root));
                     break;
                 case KeyCode.A:
+                    //_runOnce = true;
                     _dodgeDir += -transform.right; 
+                    //NCLogger.Log($"left");
+                    //this.FireEvent(EventType.PlayAnimationEvent, new AnimData(PlayerAnimState.RunLeft, 1f, transform.root));
                     break;
                 case KeyCode.D:
+                    //_runOnce = true;
                     _dodgeDir += transform.right; 
+                    //NCLogger.Log($"right");
+                    //this.FireEvent(EventType.PlayAnimationEvent, new AnimData(PlayerAnimState.RunRight, 1f, transform.root));
                     break;
                 default:
                     throw new ArgumentOutOfRangeException();
             }
         }
         _dodgeDir = _dodgeDir.normalized;
-        
+
         if (Input.GetKeyDown(dodgeKey) && Time.time >= _nextDodgeTimeStamp)
         {
             NCLogger.Log($"dodging");
             _nextDodgeTimeStamp = Time.time + dodgeCooldown;
             ActionDodge();
         }
+    }
+
+    private void LateUpdate()
+    {
+        //NCLogger.Log($"mag = {_moveDir.magnitude}");
+        var vect = new Vector2(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical"));
+        if (moveState != MovementState.Normal)
+        {
+            _moveID = 99;
+            return;
+        }
+
+        if (Input.GetKeyDown(KeyCode.W) && _moveID != 1)
+        {
+            _moveID = 1;
+            NCLogger.Log($"Forward");
+            this.FireEvent(EventType.PlayAnimationEvent, new AnimData(PlayerAnimState.RunForward, 1f));
+            return;
+        }
+        if (Input.GetKeyDown(KeyCode.S) && _moveID != -1)
+        {
+            _moveID = -1;
+            NCLogger.Log($"Backward");
+            this.FireEvent(EventType.PlayAnimationEvent, new AnimData(PlayerAnimState.RunBackward, 1f));
+            return;
+        }
+        if (Input.GetKeyDown(KeyCode.A) && _moveID != -2)
+        {
+            _moveID = -2;
+            NCLogger.Log($"Left");
+            this.FireEvent(EventType.PlayAnimationEvent, new AnimData(PlayerAnimState.RunLeft, 1f));
+            return;
+        }
+        if (Input.GetKeyDown(KeyCode.D) && _moveID != 2)
+        {
+            _moveID = 2;
+            NCLogger.Log($"Right");
+            this.FireEvent(EventType.PlayAnimationEvent, new AnimData(PlayerAnimState.RunRight, 1f));
+            return;
+        }
+
+        if (Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.S) || Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.D))
+            return;
+        
+        if (vect.magnitude <= 0.01f && _moveID != 0)
+        {
+            _moveID = 0;
+            NCLogger.Log($"(Movement) Idle");
+            this.FireEvent(EventType.PlayAnimationEvent, new AnimData(PlayerAnimState.Idle, 1));
+        }
+        //NCLogger.Log($"{new Vector2 (Input.GetAxis("Horizontal"), Input.GetAxis("Vertical"))}");
+        
     }
 
     #region Movement Base
@@ -374,11 +441,13 @@ public class PlayerMovementController : MonoBehaviour
         float time = 0;
     
         if (toggleProtoDodge && moveState == MovementState.Dodge) {
-            playerVisualProto.Rotate(rollAxis, -30f, Space.Self);
+            //playerVisualProto.Rotate(rollAxis, -30f, Space.Self);
+            ;
         }else if(moveState == MovementState.Dodge)
             NCLogger.Log($"movestate is not Dodge: movestate = {moveState}");
         
         NCLogger.Log($"dodge");
+        this.FireEvent(EventType.PlayAnimationEvent, new AnimData(PlayerAnimState.Dodge, 1f));
         this.FireEvent(EventType.SetMovementStateEvent, moveState);
         this.FireEvent(EventType.CancelAttackEvent, WeaponType.Melee);
         this.FireEvent(EventType.NotifyStopAllComboSequenceEvent);
@@ -401,12 +470,13 @@ public class PlayerMovementController : MonoBehaviour
         }
 
         transform.position = dest;
-        playerVisualProto.up = Vector3.up;
+        //playerVisualProto.up = Vector3.up;
         moveState = MovementState.Normal;
         Rb.velocity = velMag * Rb.velocity.normalized;
         this.FireEvent(EventType.NotifyResumeAllComboSequenceEvent);
         this.FireEvent(EventType.SetMovementStateEvent, moveState);
-        
+        ReUpdateMovement();
+
     }
     #endregion
     
@@ -459,6 +529,50 @@ public class PlayerMovementController : MonoBehaviour
             }
             gravityScale = originalScale;
             yield return null;  
+        }
+    }
+
+
+    public void ReUpdateMovement()
+    {
+        var vect = new Vector2(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical"));
+        if (Input.GetKey(KeyCode.W) && _moveID != 1)
+        {
+            _moveID = 1;
+            NCLogger.Log($"Forward");
+            this.FireEvent(EventType.PlayAnimationEvent, new AnimData(PlayerAnimState.RunForward, 1f));
+            return;
+        }
+        if (Input.GetKey(KeyCode.S) && _moveID != -1)
+        {
+            _moveID = -1;
+            NCLogger.Log($"Backward");
+            this.FireEvent(EventType.PlayAnimationEvent, new AnimData(PlayerAnimState.RunBackward, 1f));
+            return;
+        }
+        if (Input.GetKey(KeyCode.A) && _moveID != -2)
+        {
+            _moveID = -2;
+            NCLogger.Log($"Left");
+            this.FireEvent(EventType.PlayAnimationEvent, new AnimData(PlayerAnimState.RunLeft, 1f));
+            return;
+        }
+        if (Input.GetKey(KeyCode.D) && _moveID != 2)
+        {
+            _moveID = 2;
+            NCLogger.Log($"Right");
+            this.FireEvent(EventType.PlayAnimationEvent, new AnimData(PlayerAnimState.RunRight, 1f));
+            return;
+        }
+
+        if (Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.S) || Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.D))
+            return;
+        
+        if (vect.magnitude <= 0.01f && _moveID != 0)
+        {
+            _moveID = 0;
+            NCLogger.Log($"(Movement) Idle");
+            this.FireEvent(EventType.PlayAnimationEvent, new AnimData(PlayerAnimState.Idle, 1));
         }
     }
     

@@ -1,36 +1,21 @@
+using System.Collections.Generic;
+using System.Linq;
+using Core.Patterns;
+using TMPro;
 using UnityEngine;
-// using UImGui;
 
 namespace Core.Debug {
-    // public class DebugGUI : MonoBehaviour {
-    //     private void Awake()
-    //     {
-    //         UImGuiUtility.Layout         += OnLayout;
-    //         UImGuiUtility.OnInitialize   += OnInitialize;
-    //         UImGuiUtility.OnDeinitialize += OnDeinitialize;
-    //     }
-    //
-    //     private void OnLayout(UImGui.UImGui obj)
-    //     {
-    //         // Unity Update method. 
-    //         // Your code belongs here! Like ImGui.Begin... etc.
-    //     }
-    //
-    //     private void OnInitialize(UImGui.UImGui obj)
-    //     {
-    //         // runs after UImGui.OnEnable();
-    //     }
-    //
-    //     private void OnDeinitialize(UImGui.UImGui obj)
-    //     {
-    //         // runs after UImGui.OnDisable();
-    //     }
-    //
-    //     private void OnDisable()
-    //     {
-    //         UImGuiUtility.Layout         -= OnLayout;
-    //         UImGuiUtility.OnInitialize   -= OnInitialize;
-    //         UImGuiUtility.OnDeinitialize -= OnDeinitialize;
-    //     }
-    // }
+    public class DebugGUI : Singleton<DebugGUI> {
+        [SerializeField] private TextMeshProUGUI debugText;
+        private Dictionary<string, string> _debugItems = new();
+
+        public void UpdateText(string id, string text) {
+            _debugItems[id] = text;
+        }
+#if UNITY_EDITOR
+        private void Update() {
+            debugText.text = string.Concat(_debugItems.Values.ToList());
+        }
+#endif
+    }
 }

@@ -1,0 +1,58 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c5d877de8f6aa564e9e964cee834dbd0, type: 3}
+  m_Name: HardRefAnimData_PlayerNew
+  m_EditorClassIdentifier: 
+  serializationData:
+    SerializedFormat: 2
+    SerializedBytes: 
+    ReferencedUnityObjects: []
+    SerializedBytesString: 
+    Prefab: {fileID: 0}
+    PrefabModificationsReferencedUnityObjects: []
+    PrefabModifications: []
+    SerializationNodes: []
+  animParams:
+  - type: 9
+    name: Idle
+    hash: 2081823275
+  - type: 9
+    name: Attack1
+    hash: -47317214
+  - type: 9
+    name: Attack2
+    hash: 1680125592
+  - type: 9
+    name: Attack3
+    hash: 321101326
+  - type: 4
+    name: Fire
+    hash: -118708495
+  - type: 9
+    name: GrapplePoint
+    hash: 1608506732
+  - type: 9
+    name: GrappleEnemy
+    hash: 333804769
+  - type: 9
+    name: RunForward
+    hash: -1803631756
+  - type: 9
+    name: RunBackward
+    hash: 21299085
+  - type: 9
+    name: RunLeft
+    hash: -1344608780
+  - type: 9
+    name: RunRight
+    hash: 1302730617
+  controller: {fileID: 9100000, guid: 898c0b80456498543a4353fa85b8b5c5, type: 2}

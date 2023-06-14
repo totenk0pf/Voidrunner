@@ -9,67 +9,88 @@ namespace Core.Events {
         ItemRemoveEvent,
         ItemAddEvent,
         ItemPickEvent,
-        InventoryHUDEvent,
-        InventoryToggleEvent,
-        InventoryUpdateEvent,
-        UIBarChangedEvent,
-        UITextChangedEvent,
         OxygenChangeEvent,
+        XPGainEvent,
+        LevelUpEvent,
+        SpecUpEvent,
         WeaponChangedEvent,
         WeaponRechargedEvent,
-        AugmentChangedEvent,
-        AugmentChargeEvent,
-        AugmentDrainEvent,
-        DamageEnemyEvent,
-        RangedShotEvent,
-        GetMovementStateEvent,
         EmpowerDamageEnemyEvent,
         RequestMovementStateEvent,
         ReceiveMovementStateEvent,
         SetMovementStateEvent,
         RequestIsOnGroundEvent,
         ReceiveIsOnGroundEvent,
+        
         //Grapple Based Events
         CancelGrappleEvent,
+        
         //Weapon Init Events
         RefreshRangedAttributesEvent,
+        
         //Weapon Attack/Activation Events
         WeaponFiredEvent, //common for melee & ranged
         UpdateActiveWeaponEvent,
         WeaponMeleeFiredEvent, //only for melee
         WeaponRangedFiredEvent, //only for ranged
         WeaponPostRangedFiredEvent, //only for ranged (UI/UX handle)
+        
         //Modifiers Events
         RefreshModifiersEvent,
         UpdateCombatModifiersEvent,
         UpdateOxygenModifiersEvent,
+        UpdateOxygenData,
+        UpdateCombatData,
+        UpdateInventoryData,
+
         //Animation Events
         PlayAnimationEvent,
         PlayAttackEvent,
         ResumeMovementEvent, //resume movement after melee window
         StopMovementEvent, //stop movement on melee atk
         CancelAttackEvent,
+        ReUpdateMovementAnimEvent,
+        
         //Animation Clips Combat Events
         AttackBeginEvent,
         OnInputWindowHold,
         AttackEndEvent,
         MeleeEnemyDamageEvent, //duplicate of DamageEnemyEvent (testing purposes, may update later)
         RangedEnemyDamageEvent,
+        
         //Player Animator Init Events
         RequestPlayerAnimatorEvent,
         ReceivePlayerAnimatorEvent,
+        
         //
         NotifyPlayerComboSequenceEvent,
         RunPlayerComboSequenceEvent,
         NotifyStopAllComboSequenceEvent,
         NotifyResumeAllComboSequenceEvent,
         InitWeaponRefEvent,
+        
         //
         LockInputEvent,
         UnlockInputEvent,
+        
         //
         RequestCurrentGrappleTypeEvent,
         ReceiveCurrentGrappleTypeEvent,
+        
+        // Entity update events
+        EntityDeathEvent,
+        
+        // UI events
+        InventoryHUDEvent,
+        AugmentChangedEvent,
+        AugmentChargeEvent,
+        AugmentDrainEvent,
+        InventoryToggleEvent,
+        InventoryUpdateEvent,
+        UIBarChangedEvent,
+        SkillPointGainedEvent,
+        UITextChangedEvent,
+        
         SpawnParticleEnemyDeadEvent,
         SpawnBloodEvent,
         SpawnParticleREDEvent,
