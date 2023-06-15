@@ -21,7 +21,10 @@ public enum PlayerAnimState {
     RunBackward,
     RunRight,
     RunLeft,
-    Dodge,
+    DodgeForward,
+    DodgeBackward,
+    DodgeRight,
+    DodgeLeft,
     GrapplePoint,
     GrappleEnemy
 }

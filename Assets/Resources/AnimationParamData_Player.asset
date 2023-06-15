@@ -41,7 +41,7 @@ MonoBehaviour:
       Data: 
     - Name: 
       Entry: 12
-      Data: 12
+      Data: 13
     - Name: 
       Entry: 7
       Data: 
@@ -440,10 +440,10 @@ MonoBehaviour:
       Data: 9
     - Name: name
       Entry: 1
-      Data: GrapplePoint
+      Data: DodgeBackward
     - Name: hash
       Entry: 3
-      Data: 1608506732
+      Data: 596922096
     - Name: 
       Entry: 8
       Data: 
@@ -482,10 +482,10 @@ MonoBehaviour:
       Data: 9
     - Name: name
       Entry: 1
-      Data: GrappleEnemy
+      Data: DodgeForward
     - Name: hash
       Entry: 3
-      Data: 333804769
+      Data: 1188628418
     - Name: 
       Entry: 8
       Data: 
@@ -524,10 +524,52 @@ MonoBehaviour:
       Data: 9
     - Name: name
       Entry: 1
-      Data: GrappleEnemy
+      Data: DodgeRight
     - Name: hash
       Entry: 3
-      Data: 333804769
+      Data: 111242775
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: floatParam
+      Entry: 4
+      Data: 0
+    - Name: intParam
+      Entry: 3
+      Data: 0
+    - Name: boolParam
+      Entry: 5
+      Data: false
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 3
+      Data: 12
+    - Name: $v
+      Entry: 7
+      Data: 14|AnimParamContainer, Assembly-CSharp
+    - Name: data
+      Entry: 10
+      Data: 0
+    - Name: param
+      Entry: 7
+      Data: AnimParam, Assembly-CSharp
+    - Name: type
+      Entry: 3
+      Data: 9
+    - Name: name
+      Entry: 1
+      Data: DodgeLeft
+    - Name: hash
+      Entry: 3
+      Data: -1401434927
     - Name: 
       Entry: 8
       Data: 

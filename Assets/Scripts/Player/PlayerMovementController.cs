@@ -425,7 +425,8 @@ public class PlayerMovementController : MonoBehaviour
             dodgeDuration = dodgeTime * (hit.distance / dodgeDistance);
             dest = hit.point;
         }
-        
+
+        if (new Vector2(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical")).magnitude <= .01f) return;
         Vector3 rollAxis = Vector3.Cross(_dodgeDir, transform.root.up);
     
         StartCoroutine(LerpDodgeRoutine(dest, rollAxis, dodgeDuration));
@@ -447,7 +448,27 @@ public class PlayerMovementController : MonoBehaviour
             NCLogger.Log($"movestate is not Dodge: movestate = {moveState}");
         
         NCLogger.Log($"dodge");
-        this.FireEvent(EventType.PlayAnimationEvent, new AnimData(PlayerAnimState.Dodge, 1f));
+        ReUpdateMovement();
+        // switch (_moveID)
+        // {
+        //     case 1:
+        //         this.FireEvent(EventType.PlayAnimationEvent, new AnimData(PlayerAnimState.DodgeForward, 1f));
+        //         break;
+        //     case -1:
+        //         this.FireEvent(EventType.PlayAnimationEvent, new AnimData(PlayerAnimState.DodgeBackward, 1f));
+        //         break;
+        //     case 2:
+        //         this.FireEvent(EventType.PlayAnimationEvent, new AnimData(PlayerAnimState.DodgeRight, 1f));
+        //         break;
+        //     case -2:
+        //         this.FireEvent(EventType.PlayAnimationEvent, new AnimData(PlayerAnimState.DodgeLeft, 1f));
+        //         break;
+        //     default:
+        //         // if(_dodgeDir.normalized == Vector3.zero)
+        //         //     this.FireEvent(EventType.PlayAnimationEvent, new AnimData(PlayerAnimState.DodgeForward, 1f));
+        //         break;
+        // }
+        
         this.FireEvent(EventType.SetMovementStateEvent, moveState);
         this.FireEvent(EventType.CancelAttackEvent, WeaponType.Melee);
         this.FireEvent(EventType.NotifyStopAllComboSequenceEvent);
@@ -540,28 +561,40 @@ public class PlayerMovementController : MonoBehaviour
         {
             _moveID = 1;
             NCLogger.Log($"Forward");
-            this.FireEvent(EventType.PlayAnimationEvent, new AnimData(PlayerAnimState.RunForward, 1f));
+            if(moveState == MovementState.Normal) 
+                this.FireEvent(EventType.PlayAnimationEvent, new AnimData(PlayerAnimState.RunForward, 1f));
+            else if (moveState == MovementState.Dodge)
+                this.FireEvent(EventType.PlayAnimationEvent, new AnimData(PlayerAnimState.DodgeForward, 1f));
             return;
         }
         if (Input.GetKey(KeyCode.S) && _moveID != -1)
         {
             _moveID = -1;
             NCLogger.Log($"Backward");
-            this.FireEvent(EventType.PlayAnimationEvent, new AnimData(PlayerAnimState.RunBackward, 1f));
+            if(moveState == MovementState.Normal) 
+                this.FireEvent(EventType.PlayAnimationEvent, new AnimData(PlayerAnimState.RunBackward, 1f));
+            else if (moveState == MovementState.Dodge)
+                this.FireEvent(EventType.PlayAnimationEvent, new AnimData(PlayerAnimState.DodgeBackward, 1f));
             return;
         }
         if (Input.GetKey(KeyCode.A) && _moveID != -2)
         {
             _moveID = -2;
             NCLogger.Log($"Left");
-            this.FireEvent(EventType.PlayAnimationEvent, new AnimData(PlayerAnimState.RunLeft, 1f));
+            if(moveState == MovementState.Normal) 
+                this.FireEvent(EventType.PlayAnimationEvent, new AnimData(PlayerAnimState.RunLeft, 1f));
+            else if (moveState == MovementState.Dodge)
+                this.FireEvent(EventType.PlayAnimationEvent, new AnimData(PlayerAnimState.DodgeLeft, 1f));
             return;
         }
         if (Input.GetKey(KeyCode.D) && _moveID != 2)
         {
             _moveID = 2;
             NCLogger.Log($"Right");
-            this.FireEvent(EventType.PlayAnimationEvent, new AnimData(PlayerAnimState.RunRight, 1f));
+            if(moveState == MovementState.Normal) 
+                this.FireEvent(EventType.PlayAnimationEvent, new AnimData(PlayerAnimState.RunRight, 1f));
+            else if (moveState == MovementState.Dodge)
+                this.FireEvent(EventType.PlayAnimationEvent, new AnimData(PlayerAnimState.DodgeRight, 1f));
             return;
         }
 

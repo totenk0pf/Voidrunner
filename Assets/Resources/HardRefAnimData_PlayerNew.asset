@@ -55,4 +55,16 @@ MonoBehaviour:
   - type: 9
     name: RunRight
     hash: 1302730617
+  - type: 9
+    name: DodgeLeft
+    hash: -1401434927
+  - type: 9
+    name: DodgeRight
+    hash: 111242775
+  - type: 9
+    name: DodgeForward
+    hash: 1188628418
+  - type: 9
+    name: DodgeBackward
+    hash: 596922096
   controller: {fileID: 9100000, guid: 898c0b80456498543a4353fa85b8b5c5, type: 2}

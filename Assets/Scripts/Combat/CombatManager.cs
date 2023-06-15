@@ -380,7 +380,8 @@ public class CombatManager : MonoBehaviour
                 if (_moveState == PlayerMovementController.MovementState.Dodge )
                 {
                     NCLogger.Log($"(Combat) Dodge");
-                    this.FireEvent(EventType.PlayAnimationEvent, new AnimData(PlayerAnimState.Dodge, 1));
+                    this.FireEvent(EventType.ReUpdateMovementAnimEvent);
+                   // this.FireEvent(EventType.PlayAnimationEvent, new AnimData(PlayerAnimState.Dodge, 1));
                 }
                 else if (!isCancel)
                 {
@@ -410,7 +411,8 @@ public class CombatManager : MonoBehaviour
                          _moveState == PlayerMovementController.MovementState.Dodge))
                     {
                         NCLogger.Log($"(Combat) Dodge");
-                        this.FireEvent(EventType.PlayAnimationEvent, new AnimData(PlayerAnimState.Dodge, 1));
+                        this.FireEvent(EventType.ReUpdateMovementAnimEvent);
+                        //this.FireEvent(EventType.PlayAnimationEvent, new AnimData(PlayerAnimState.Dodge, 1));
                     }
                     else if (!isCancel)
                     {
@@ -442,7 +444,8 @@ public class CombatManager : MonoBehaviour
                 if (_moveState == PlayerMovementController.MovementState.Dodge)
                 {
                     NCLogger.Log($"(Combat) Dodge");
-                    this.FireEvent(EventType.PlayAnimationEvent, new AnimData(PlayerAnimState.Dodge, 1));
+                    this.FireEvent(EventType.ReUpdateMovementAnimEvent);
+                    //this.FireEvent(EventType.PlayAnimationEvent, new AnimData(PlayerAnimState.Dodge, 1));
                 }
                 else if (!isCancel)
                 {
@@ -510,7 +513,8 @@ public class CombatManager : MonoBehaviour
     private void OnAttackEndMelee()
     {
         // NCLogger.Log($"fail the chain? End of Attack");
-        // this.FireEvent(EventType.ReUpdateMovementAnimEvent);
+        if(_curMeleeOrder == MeleeOrder.First) 
+            this.FireEvent(EventType.ReUpdateMovementAnimEvent);
     }
     
     private IEnumerator OnAttackEndRangedRoutine() {
