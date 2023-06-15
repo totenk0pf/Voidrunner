@@ -30,8 +30,10 @@ public class EnemyBase : EntityBase {
     [SerializeField] private AnimSerializedData animData;
     [SerializeField] private EnemyMoveRootMotion enemyRootMotion;
     [SerializeField] private Animator animator;
-    
-    [TitleGroup("Layers")]
+
+    [TitleGroup("Knockback Settings")] 
+    public float stopOffset;
+    public Ease knockbackEaseType;
     public LayerMask stopKnockbackLayers;
     
     [TitleGroup("Debug")]
@@ -170,6 +172,16 @@ public class EnemyBase : EntityBase {
     }
 
     private IEnumerator KnockbackCoroutine(Vector3 dir, float duration) {
+        var isHit =
+            Physics.Raycast(
+                transform.position,
+                -transform.forward,
+                out var test,
+                10f,
+                stopKnockbackLayers);
+
+        if (isHit && test.distance <= stopOffset) yield break;
+        
         enemyRootMotion.OnMoveChange(false);
         isStunned = true;
 
@@ -178,6 +190,7 @@ public class EnemyBase : EntityBase {
         animator.speed = animator.GetCurrentAnimatorStateInfo(0).length / duration;
         _currentTween = transform.root
             .DOMove(dir + transform.position, duration)
+            .SetEase(knockbackEaseType)
             .OnUpdate(() => {
                 var isHit =
                     Physics.Raycast(
@@ -188,7 +201,7 @@ public class EnemyBase : EntityBase {
                         stopKnockbackLayers);
 
                 if (!isHit) return;
-                if (!(hit.distance <= 1f)) return;
+                if (!(hit.distance <= stopOffset)) return;
                 
                 _currentTween.Kill();
                     
