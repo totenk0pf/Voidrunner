@@ -87,12 +87,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   type: 0
   enemyDamage: 10
-  enemySpeed: 5
   enemyHP: 100
   ui: {fileID: 907737044374819495}
   animData: {fileID: 11400000, guid: cb0b6e593aa29d741b115bb5825fccdb, type: 2}
   enemyRootMotion: {fileID: 2345367977018875063}
   animator: {fileID: 3703614446501467867}
+  stopKnockbackLayers:
+    serializedVersion: 2
+    m_Bits: 1025
   isStunned: 0
   IsGrounded: 0
   checkDist: 0

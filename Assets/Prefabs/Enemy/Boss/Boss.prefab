@@ -89,6 +89,9 @@ MonoBehaviour:
   animData: {fileID: 11400000, guid: 7e424ba713b89b94d94843999e0cc043, type: 2}
   enemyRootMotion: {fileID: 1769574224910183250}
   animator: {fileID: 8996152075190202655}
+  stopKnockbackLayers:
+    serializedVersion: 2
+    m_Bits: 1025
   isStunned: 0
   IsGrounded: 0
   checkDist: 0

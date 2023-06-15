@@ -31,6 +31,9 @@ public class EnemyBase : EntityBase {
     [SerializeField] private EnemyMoveRootMotion enemyRootMotion;
     [SerializeField] private Animator animator;
     
+    [TitleGroup("Layers")]
+    public LayerMask stopKnockbackLayers;
+    
     [TitleGroup("Debug")]
     [ReadOnly] public bool isStunned;
     protected float currentHp;
@@ -173,15 +176,35 @@ public class EnemyBase : EntityBase {
         foreach (var anim in animData.attackAnim) {ResetAnim(anim);}
         animator.SetTrigger(animData.hitAnim[0].name);
         animator.speed = animator.GetCurrentAnimatorStateInfo(0).length / duration;
-        _currentTween = transform.root.DOMove(dir + transform.position, duration).OnComplete(() => {
-            _currentTween = null;
-        });
+        _currentTween = transform.root
+            .DOMove(dir + transform.position, duration)
+            .OnUpdate(() => {
+                var isHit =
+                    Physics.Raycast(
+                        transform.position,
+                        -transform.forward,
+                        out var hit,
+                        10f,
+                        stopKnockbackLayers);
 
-        yield return new WaitForSeconds(duration);
-        
-        animator.speed = 1;
-        enemyRootMotion.OnMoveChange(true);
-        isStunned = false;
+                if (!isHit) return;
+                if (!(hit.distance <= 1f)) return;
+                
+                _currentTween.Kill();
+                    
+                animator.speed = 1;
+                enemyRootMotion.OnMoveChange(true);
+                isStunned = false;
+            })
+            .OnComplete(() => {
+                _currentTween = null;
+                
+                animator.speed = 1;
+                enemyRootMotion.OnMoveChange(true);
+                isStunned = false; 
+            });
+
+        yield return null;
     }
     #endregion
 
