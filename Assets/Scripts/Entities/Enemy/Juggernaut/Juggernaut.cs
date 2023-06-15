@@ -1,3 +1,5 @@
+using Audio;
+using DG.Tweening;
 using UnityEngine;
 
 namespace Entities.Enemy.Juggernaut {
@@ -13,6 +15,15 @@ namespace Entities.Enemy.Juggernaut {
         
         public override void OnRelease() {
             //neko arc
+        }
+        
+        public override void TakeDamage(float amount) {
+            base.TakeDamage(amount);
+            
+            AudioManager.Instance.PlayClip(transform.position, GetAudioClip(EnemyAudioType.GoreLight));
+            DOVirtual.DelayedCall(Random.Range(0.4f, 0.9f), () => {
+                AudioManager.Instance.PlayClip(transform.position, GetAudioClip(EnemyAudioType.Hit));
+            });
         }
     }
 }

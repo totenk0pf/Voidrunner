@@ -1,3 +1,5 @@
+using Audio;
+using DG.Tweening;
 using UnityEngine;
 
 namespace Entities.Enemy.Boss {
@@ -13,6 +15,15 @@ namespace Entities.Enemy.Boss {
         
         public override void OnRelease() {
             //if you reading this, you are entitled to give me free stuff
+        }
+        
+        public override void TakeDamage(float amount) {
+            base.TakeDamage(amount);
+            
+            AudioManager.Instance.PlayClip(transform.position, GetAudioClip(EnemyAudioType.GoreLight));
+            DOVirtual.DelayedCall(Random.Range(0.4f, 0.9f), () => {
+                AudioManager.Instance.PlayClip(transform.position, GetAudioClip(EnemyAudioType.Hit));
+            });
         }
     }
 }
