@@ -89,9 +89,12 @@ MonoBehaviour:
   enemyDamage: 10
   enemyHP: 100
   ui: {fileID: 907737044374819495}
+  audios: {fileID: 11400000, guid: 44fcdc3ba55075f4d8ff7d52e1044412, type: 2}
   animData: {fileID: 11400000, guid: cb0b6e593aa29d741b115bb5825fccdb, type: 2}
   enemyRootMotion: {fileID: 2345367977018875063}
   animator: {fileID: 3703614446501467867}
+  stopOffset: 0
+  knockbackEaseType: 0
   stopKnockbackLayers:
     serializedVersion: 2
     m_Bits: 1025
@@ -617,6 +620,19 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: 813606c7e61c9af419604ff6e41ac46a, type: 3}
   m_PrefabInstance: {fileID: 7065994015106739018}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1225563076
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7984351966206891547}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2f8f84aff840a0f4a96591b1bca3e79e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  enemyAudioData: {fileID: 11400000, guid: 44fcdc3ba55075f4d8ff7d52e1044412, type: 2}
 --- !u!114 &2345367977018875063
 MonoBehaviour:
   m_ObjectHideFlags: 0

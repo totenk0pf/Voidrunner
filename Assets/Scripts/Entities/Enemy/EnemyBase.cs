@@ -111,14 +111,14 @@ public class EnemyBase : EntityBase {
 
     #region Update Methods
 
+    private bool _hasDied;
     public virtual void Die() {
-        if (currentHp <= 0)
-        {
+        if (currentHp <= 0 && !_hasDied) {
+            _hasDied = true;
             var bloods = GetComponentsInChildren<ParticleBase>();
             foreach (var blood in bloods) {
                 blood.ForceRelease();
             }
-            
             this.FireEvent(EventType.SpawnParticleEnemyDeadEvent, new ParticleCallbackData(Vector3.up, transform.position + Vector3.up));
             AudioManager.Instance.PlayClip(transform.position, GetAudioClip(EnemyAudioType.GoreHard));
             Destroy(gameObject);
