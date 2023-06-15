@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using Combat;
 using Core.Events;
 using Level;
-using Rooms;
 using Sirenix.OdinInspector;
 using UI;
 using Unity.VisualScripting;
@@ -35,7 +34,7 @@ namespace Player {
         public Dictionary<SkillType, SkillValue> skillValues = new();
         public int level;
         public float xp;
-        public RoomObject roomToReset;
+        public Room roomToReset;
     }
 
     public class PlayerProgression : MonoBehaviour {
@@ -64,12 +63,13 @@ namespace Player {
 
         private void Start() {
             _oxygen.oxygenPool = 100 + 5 * skillValues[SkillType.Vigor].level;
+            _oxygen.currentOxygen = _oxygen.oxygenPool;
             
             this.AddListener(EventType.UpdateCombatModifiersEvent
                 , param => UpdateCombatModifiers((MeleeSequenceData) param));
             
             EventDispatcher.Instance.AddListener(EventType.SetCheckpoint
-                ,room => SetCheckpoint((RoomObject) room));
+                ,room => SetCheckpoint((Room) room));
             
             EventDispatcher.Instance.AddListener(EventType.AddXP
                 ,xp => AddXP((float) xp));
@@ -78,7 +78,7 @@ namespace Player {
                 ,type => AddSkillLevel((SkillType) type));
             
             EventDispatcher.Instance.AddListener(EventType.SetCheckpoint
-                ,room => SetCheckpoint((RoomObject) room));
+                ,room => SetCheckpoint((Room) room));
             
             EventDispatcher.Instance.AddListener(EventType.OnPlayerEnterDoor
                 ,door => HandlePlayerEnterDoor((Door) door));
@@ -109,7 +109,7 @@ namespace Player {
             //meleeBase.attackSpeedModifier = dexterity;
         }
 
-        private void SetCheckpoint(RoomObject currentRoom) {
+        private void SetCheckpoint(Room currentRoom) {
             _currCPdata.skillValues = skillValues;
             _currCPdata.level = level;
             _currCPdata.roomToReset = currentRoom;
@@ -129,7 +129,7 @@ namespace Player {
             //temp
             var doorTransform = _currCPdata.roomToReset.gameObject.transform;
             gameObject.transform.position = doorTransform.position + new Vector3(0, doorTransform.localScale.y, 0);
-            _oxygen.permanentOxygen = _oxygen.oxygenPool;
+            _oxygen.currentOxygen = _oxygen.oxygenPool;
             _oxygen.FireUIEvent();
         }
 

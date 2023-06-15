@@ -80,7 +80,7 @@ public abstract class EnemyState : MonoBehaviour
 
     public virtual void DealDamage(){
         var oxygenComp = target.GetComponent<Oxygen>();
-        oxygenComp.ReducePermanentOxygen(enemyBase.enemyDamage);
+        oxygenComp.ReduceOxygen(enemyBase.enemyDamage);
     }
     
     protected static float GetPathRemainingDistance(NavMeshAgent navMeshAgent)
