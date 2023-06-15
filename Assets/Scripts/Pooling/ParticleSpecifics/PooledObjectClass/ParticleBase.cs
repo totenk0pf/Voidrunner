@@ -38,6 +38,12 @@ public class ParticleBase : PooledObjectBase
     public ParticleData particleData;
 
 
+    protected void Awake()
+    {
+        ParticleSystem.Stop(true, ParticleSystemStopBehavior.StopEmittingAndClear);
+        _ogParent = transform.parent;
+    }
+
     protected virtual void Start()
     {
         ParticleSystem.Stop(true, ParticleSystemStopBehavior.StopEmittingAndClear);
@@ -56,9 +62,11 @@ public class ParticleBase : PooledObjectBase
         try {
             transform.position = (data as ParticleCallbackData).position;
             transform.up = (data as ParticleCallbackData).normal;
-            
-            if((data as ParticleCallbackData).tempParent != null)
+
+            if ((data as ParticleCallbackData).tempParent != null)
+            {
                 transform.parent = (data as ParticleCallbackData).tempParent;
+            }
         } catch {
             NCLogger.Log($"particle call back data is null", LogLevel.ERROR);
         }
@@ -67,13 +75,25 @@ public class ParticleBase : PooledObjectBase
         ParticleSystem.Play();
         StartCoroutine(RunRoutine());
     }
+
+    public void ForceRelease()
+    {
+        canRelease = true;
+    }
     
     public override IEnumerator RunRoutine()
     {
         while (ParticleSystem.isPlaying)
         {
             //transform.up = UnityEngine.Random.onUnitSphere;
+            NCLogger.Log($"Running");
             yield return null;
+            if (canRelease)
+            {
+                NCLogger.Log($"ForceReleased");
+                ParticleSystem.Stop();
+                break;
+            }
         }
 
         transform.parent = _ogParent;

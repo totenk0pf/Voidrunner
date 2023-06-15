@@ -25,4 +25,12 @@ public class ObjectPool : PoolBase<PooledObjectBase>
     {
         return Instantiate(_prefabRef, transform);
     }
+
+    public void PrewarmAllParticle(int cycle)
+    {
+        for (var i = 0; i < cycle; i++)
+        {
+            this.Get().Init( new ParticleCallbackData(transform.up, transform.position), this.Release);
+        }
+    }
 }
