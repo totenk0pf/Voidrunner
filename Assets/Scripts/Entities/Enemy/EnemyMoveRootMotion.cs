@@ -16,8 +16,8 @@ namespace Entities.Enemy {
         private Vector2 _lastVelocity;
 
         private void Awake() {
-            _animator = this.gameObject.GetComponent<Animator>();
-            _agent = this.gameObject.GetComponentInParent<NavMeshAgent>();
+            _animator = gameObject.GetComponent<Animator>();
+            _agent = transform.parent.GetComponent<NavMeshAgent>();
 
             //Since speed is not accounted in cuz root motion movement 
             //Can set acceleration = angular speed for nearly instant rotate
@@ -26,13 +26,13 @@ namespace Entities.Enemy {
 
         private void Update() {
             var parent = transform.root;
-            var worldDeltaPosition = _agent.nextPosition - parent.position;
+            var worldDeltaPosition = _agent.nextPosition - parent.localPosition;
             worldDeltaPosition.y = 0;
 
             //avoid hitting pillars and other crap
             var deltaMagnitude = worldDeltaPosition.magnitude;
             if (deltaMagnitude > _agent.radius / 2f) {
-                parent.position = Vector3.Lerp(_animator.rootPosition, _agent.nextPosition, Math.Min(1, Time.deltaTime / 0.1f));
+                parent.localPosition = Vector3.Lerp(_animator.rootPosition, _agent.nextPosition, Math.Min(1, Time.deltaTime / 0.1f));
             }
         }
 
@@ -41,17 +41,17 @@ namespace Entities.Enemy {
                 if (useNavAgent) {
                     if (_agent.updatePosition) _agent.updatePosition = false;
                     
-                    var parent = transform.root;
+                    var parent = transform.parent;
                     var rootPos = _animator.rootPosition;
                     rootPos.y = _agent.nextPosition.y;
                     
-                    parent.position = rootPos;
+                    parent.localPosition = rootPos;
                     _agent.nextPosition = rootPos;
                 }
 
                 else {
                     if (!_agent.updatePosition) _agent.updatePosition = true;
-                    transform.root.position += _animator.deltaPosition;
+                    transform.parent.localPosition += _animator.deltaPosition;
                 }
             }
         }

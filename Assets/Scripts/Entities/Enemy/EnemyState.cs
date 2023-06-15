@@ -11,7 +11,7 @@ public abstract class EnemyState : MonoBehaviour
     protected NavMeshAgent _agent;
     public NavMeshAgent Agent {
         get {
-            if (!_agent) _agent = transform.root.GetComponent<NavMeshAgent>();
+            if (!_agent) _agent = transform.parent.parent.GetComponent<NavMeshAgent>();
             return _agent;
         }
     }
@@ -19,7 +19,7 @@ public abstract class EnemyState : MonoBehaviour
     protected EnemyBase _enemyBase;
     protected EnemyBase enemyBase {
         get {
-            if (!_enemyBase) _enemyBase = transform.root.GetComponent<EnemyBase>();
+            if (!_enemyBase) _enemyBase = transform.parent.parent.GetComponent<EnemyBase>();
             return _enemyBase;
         }
     }
@@ -28,7 +28,7 @@ public abstract class EnemyState : MonoBehaviour
 
     protected Animator animator {
         get{
-            if (!_animator) _animator = transform.root.GetComponentInChildren<Animator>();
+            if (!_animator) _animator = transform.parent.parent.GetComponentInChildren<Animator>();
             return _animator;
         }
     }
