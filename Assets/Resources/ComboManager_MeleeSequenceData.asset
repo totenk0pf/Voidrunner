@@ -21,6 +21,9 @@ MonoBehaviour:
     - {fileID: 0}
     - {fileID: 0}
     - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
     SerializedBytesString: 
     Prefab: {fileID: 0}
     PrefabModificationsReferencedUnityObjects: []
@@ -105,8 +108,8 @@ MonoBehaviour:
       Entry: 10
       Data: 1
     - Name: destTransform
-      Entry: 6
-      Data: 
+      Entry: 10
+      Data: 2
     - Name: time
       Entry: 4
       Data: 0.2
@@ -157,7 +160,7 @@ MonoBehaviour:
       Data: 
     - Name: collider
       Entry: 10
-      Data: 2
+      Data: 3
     - Name: canDamageMod
       Entry: 5
       Data: true
@@ -172,7 +175,7 @@ MonoBehaviour:
       Data: 0
     - Name: attackSpeedModifier
       Entry: 4
-      Data: 2
+      Data: 1.3
     - Name: ComboAnim
       Entry: 7
       Data: 6|System.Collections.Generic.List`1[[ComboAnimContainer, Assembly-CSharp]],
@@ -184,11 +187,11 @@ MonoBehaviour:
       Entry: 7
       Data: 7|ComboAnimContainer, Assembly-CSharp
     - Name: transform
-      Entry: 10
-      Data: 1
-    - Name: destTransform
       Entry: 6
       Data: 
+    - Name: destTransform
+      Entry: 10
+      Data: 4
     - Name: time
       Entry: 4
       Data: 0.2
@@ -239,7 +242,7 @@ MonoBehaviour:
       Data: 
     - Name: collider
       Entry: 10
-      Data: 3
+      Data: 5
     - Name: canDamageMod
       Entry: 5
       Data: true
@@ -254,7 +257,7 @@ MonoBehaviour:
       Data: 0
     - Name: attackSpeedModifier
       Entry: 4
-      Data: 2
+      Data: 1
     - Name: ComboAnim
       Entry: 7
       Data: 9|System.Collections.Generic.List`1[[ComboAnimContainer, Assembly-CSharp]],
@@ -266,11 +269,11 @@ MonoBehaviour:
       Entry: 7
       Data: 10|ComboAnimContainer, Assembly-CSharp
     - Name: transform
-      Entry: 10
-      Data: 4
-    - Name: destTransform
       Entry: 6
       Data: 
+    - Name: destTransform
+      Entry: 10
+      Data: 6
     - Name: time
       Entry: 4
       Data: 0.3
@@ -284,17 +287,17 @@ MonoBehaviour:
       Entry: 7
       Data: 11|ComboAnimContainer, Assembly-CSharp
     - Name: transform
-      Entry: 10
-      Data: 4
-    - Name: destTransform
       Entry: 6
       Data: 
+    - Name: destTransform
+      Entry: 10
+      Data: 7
     - Name: time
       Entry: 4
-      Data: 0
+      Data: 0.2
     - Name: easeType
       Entry: 3
-      Data: 0
+      Data: 11
     - Name: 
       Entry: 8
       Data: 

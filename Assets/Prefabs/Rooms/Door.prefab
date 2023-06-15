@@ -283,7 +283,7 @@ GameObject:
   - component: {fileID: 8406391673385237857}
   - component: {fileID: 8406391673385237858}
   - component: {fileID: 8406391673385237859}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Door
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -337,8 +337,8 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 8
   roomInfo:
-    Room1: {fileID: 0}
-    Room2: {fileID: 0}
+    previousRoom: {fileID: 0}
+    nextRoom: {fileID: 0}
   doorMesh: {fileID: 2717664283202022517}
   yOffset: -3
   duration: 1

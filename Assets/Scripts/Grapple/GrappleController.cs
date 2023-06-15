@@ -113,9 +113,11 @@ namespace Grapple {
         private void Update() {
             if (_currentGrappleHit.collider) currGrappleObj = _currentGrappleHit.collider.gameObject;
             if (Input.GetKeyDown(grappleKey)) {
+                NCLogger.Log($"I am trying to Grapple");
                 if (_moveState != PlayerMovementController.MovementState.Grappling) {
                     //NCLogger.Log($"to grapple");
                     if(!CastToGetGrappleLocation()) return;
+                    NCLogger.Log($"cast to get grapple loc success");
                     Grapple();
                 }
                 else//is during grappling
@@ -129,6 +131,7 @@ namespace Grapple {
 
         private bool CastToGetGrappleLocation() {
             this.FireEvent(EventType.RequestMovementStateEvent);
+            NCLogger.Log($"when casted move state is {_moveState}");
             if (_moveState != PlayerMovementController.MovementState.Normal) return false;
 
             var lookDir = _mainCam.transform.forward;
@@ -142,6 +145,7 @@ namespace Grapple {
                                                  ~ignoreLayer);
             if (results.Length <= 0) {
                 _collisionPos = Vector3.zero;
+                NCLogger.Log($"Grapple casted but No Object in Range");
                 return false;
             }
 
@@ -152,6 +156,7 @@ namespace Grapple {
             var checkIndex = 0;
 
             for (var i = 0; i < results.Length; i++) {
+                NCLogger.Log($"Grapple tem {i} name: {results[i].transform.name}");
                 if (!IsInGrappleMask(results[i].collider.gameObject.layer)) continue;
                 if (!IsObjectAvailable(results[i])) continue;
 
@@ -160,11 +165,16 @@ namespace Grapple {
                 break;
             }
 
-            if (!hit.collider) return false;
+            if (!hit.collider)
+            {
+                NCLogger.Log($"No Grapple Point or enemy is Found in Array");
+                return false;
+            }
             var tuple = GetHitPointAimAssisted(hit, checkIndex, lookDir);
 
             _collisionPos = tuple.Item1 ? tuple.Item2 : Vector3.zero;
 
+            NCLogger.Log($"Grapple point is {tuple.Item1} and returning");
             return tuple.Item1;
         }
 
@@ -174,15 +184,24 @@ namespace Grapple {
             var hit2 = new RaycastHit();
             _currentGrappleHit = hit1;
 
-            //if grapple point is closest -> success
+            //if grapple point is closest -> success 
             if (checkIndex == 0) return tupleSuccess;
 
             //secondary raycast to make sure the grapple point is in field of vision
             if (!Physics.Linecast(_castOrigin, hit1.collider.transform.position, out hit2, ~ignoreLayer))
+            {
+                NCLogger.Log($"Grapple raycast is blocked");
                 return tupleFail;
+            }
+
             if (hit2.collider)
+            {
                 if (!IsInGrappleMask(hit2.collider.gameObject.layer))
+                {
+                    NCLogger.Log($"Grapple Point is not same layer | hit2 = {hit2.transform.name}");
                     return tupleFail;
+                }
+            }
 
             //angle between cam.fwd and direction(cam to hit1.point)
             var angle = Vector3.Angle(hit1.point - _castOrigin, _mainCam.transform.forward);
@@ -194,8 +213,10 @@ namespace Grapple {
 
         private bool Grapple() {
             if (!_currentGrappleHit.collider) return false;
+            NCLogger.Log($"grapple collider found");
             var type = GetGrappleType(_currentGrappleHit.collider.gameObject.layer);
             if (type == GrappleType.None) return false;
+            NCLogger.Log($"grapple type valid");
             
             if(_enemyToPlayerRoutine != null) StopCoroutine(_enemyToPlayerRoutine);
             if(_playerToPointRoutine != null) StopCoroutine(_playerToPointRoutine);
@@ -213,6 +234,7 @@ namespace Grapple {
                     _enemyToPlayerRoutine = StartCoroutine(EnemyToPlayerRoutine());
                      return true;
                 case GrappleType.PlayerToPoint:
+                    NCLogger.Log($"grapple success");
                     this.FireEvent(EventType.SetMovementStateEvent, PlayerMovementController.MovementState.Grappling);
                     this.FireEvent(EventType.PlayAnimationEvent, new AnimData(PlayerAnimState.GrapplePoint, 3f));
                     //_playerToPointRoutine = PlayerToPointRoutine();
