@@ -1,5 +1,6 @@
 using System;
 using System.Collections;
+using Audio;
 using DG.Tweening;
 using Entities.Enemy;
 using Sirenix.OdinInspector;
@@ -70,6 +71,7 @@ public class WalkerIdle : EnemyState {
             (Parent.rotation * Quaternion.Euler
                 (0, Random.Range(Parent.rotation.y - 20, Parent.rotation.y + 20), 0).eulerAngles), rotateDuration);
         yield return new WaitForSeconds(rotateDuration);
+        AudioManager.Instance.PlayClip(Parent.position, enemyBase.GetAudioClip(EnemyAudioType.Move));
         TriggerAnim(_walkingAnim);
         yield return new WaitForSeconds(animator.GetCurrentAnimatorStateInfo(0).length * Random.Range(minWalkSteps, maxWalkSteps));
         TriggerAnim(_walkingAnim);
