@@ -35,7 +35,7 @@ namespace Combat {
                     ? dmgData.playerTransform.forward.normalized
                     : playerToEnemyVector3.normalized;
                 knockbackDir.y = 0;
-                Damage(enemy, dmgData.Damage);
+                Damage(enemy, dmgData.Damage, dmgData.playerTransform);
                 KnockBack(enemy, dmgData.KnockbackDuration, knockbackDir * dmgData.KnockbackRange);
                 //NCLogger.Log($"dmg: {dmgData.Damage}");
             }

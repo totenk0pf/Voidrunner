@@ -102,6 +102,7 @@ public class PoolingManager : MonoBehaviour
             obj.transform.SetParent(poolGO.transform, false);
             pool.Release(obj);
         }
+        pool.PrewarmAllParticle(kvp.Value.initialPoolSize);
     }
     
    #region Overrides

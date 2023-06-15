@@ -48,7 +48,7 @@ MonoBehaviour:
       Data: 
     - Name: $k
       Entry: 3
-      Data: 56
+      Data: 64
     - Name: $v
       Entry: 7
       Data: 2|PooledData, Assembly-CSharp
@@ -72,7 +72,7 @@ MonoBehaviour:
       Data: 
     - Name: $k
       Entry: 3
-      Data: 57
+      Data: 63
     - Name: $v
       Entry: 7
       Data: 3|PooledData, Assembly-CSharp

@@ -83,7 +83,8 @@ namespace Combat {
                     ? dmgData.playerTransform.forward.normalized
                     : playerToEnemyVector3.normalized;
                 knockbackDir.y = 0;
-                Damage(enemy.Key, dmgData.Damage * enemy.Value);
+                
+                Damage(enemy.Key, dmgData.Damage * enemy.Value, dmgData.playerTransform);
                 var range = Mathf.Clamp(dmgData.KnockbackRange * enemy.Value, dmgData.KnockbackRange,
                     dmgData.KnockbackCap);
                 KnockBack(enemy.Key, dmgData.KnockbackDuration, knockbackDir * range);

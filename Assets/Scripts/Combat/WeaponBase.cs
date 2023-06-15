@@ -23,10 +23,13 @@ namespace Combat
             entry = EntriesData.HookReference(this, type);
         }
 
-        protected virtual void Damage(EnemyBase enemy, float damage) {
+        protected virtual void Damage(EnemyBase enemy, float damage, Transform playerT) {
             if (!enemy) return;
             enemy.TakeDamage(damage);
-            
+            this.FireEvent(EventType.SpawnBloodEvent, 
+                new ParticleCallbackData(( playerT.position - enemy.transform.position).normalized,
+                    enemy.transform.position + enemy.transform.forward * .5f + enemy.transform.up * .3f,
+                    enemy.transform));
             EventDispatcher.Instance.FireEvent(EventType.EmpowerDamageEnemyEvent, enemy);
         }
 

@@ -97,7 +97,13 @@ public class EnemyBase : EntityBase {
     #region Update Methods
 
     public virtual void Die() {
-        if (currentHp <= 0) {
+        if (currentHp <= 0)
+        {
+            var bloods = GetComponentsInChildren<ParticleBase>();
+            foreach (var blood in bloods) {
+                blood.ForceRelease();
+            }
+            
             this.FireEvent(EventType.SpawnParticleEnemyDeadEvent, new ParticleCallbackData(Vector3.up, transform.position + Vector3.up));
             Destroy(gameObject);
         }
