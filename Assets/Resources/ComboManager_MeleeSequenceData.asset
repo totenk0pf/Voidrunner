@@ -21,9 +21,6 @@ MonoBehaviour:
     - {fileID: 0}
     - {fileID: 0}
     - {fileID: 0}
-    - {fileID: 0}
-    - {fileID: 0}
-    - {fileID: 0}
     SerializedBytesString: 
     Prefab: {fileID: 0}
     PrefabModificationsReferencedUnityObjects: []
@@ -69,10 +66,10 @@ MonoBehaviour:
       Data: 15
     - Name: knockBackRange
       Entry: 4
-      Data: 6
+      Data: 2
     - Name: knockBackDuration
       Entry: 4
-      Data: 1
+      Data: 0.4
     - Name: playerTransform
       Entry: 6
       Data: 
@@ -108,8 +105,8 @@ MonoBehaviour:
       Entry: 10
       Data: 1
     - Name: destTransform
-      Entry: 10
-      Data: 2
+      Entry: 6
+      Data: 
     - Name: time
       Entry: 4
       Data: 0.2
@@ -151,16 +148,16 @@ MonoBehaviour:
       Data: 20
     - Name: knockBackRange
       Entry: 4
-      Data: 3
+      Data: 1.5
     - Name: knockBackDuration
       Entry: 4
-      Data: 2
+      Data: 0.2
     - Name: playerTransform
       Entry: 6
       Data: 
     - Name: collider
       Entry: 10
-      Data: 3
+      Data: 2
     - Name: canDamageMod
       Entry: 5
       Data: true
@@ -187,11 +184,11 @@ MonoBehaviour:
       Entry: 7
       Data: 7|ComboAnimContainer, Assembly-CSharp
     - Name: transform
+      Entry: 10
+      Data: 1
+    - Name: destTransform
       Entry: 6
       Data: 
-    - Name: destTransform
-      Entry: 10
-      Data: 4
     - Name: time
       Entry: 4
       Data: 0.2
@@ -233,16 +230,16 @@ MonoBehaviour:
       Data: 25
     - Name: knockBackRange
       Entry: 4
-      Data: 9
+      Data: 1
     - Name: knockBackDuration
       Entry: 4
-      Data: 3
+      Data: 0.1
     - Name: playerTransform
       Entry: 6
       Data: 
     - Name: collider
       Entry: 10
-      Data: 5
+      Data: 3
     - Name: canDamageMod
       Entry: 5
       Data: true
@@ -269,11 +266,11 @@ MonoBehaviour:
       Entry: 7
       Data: 10|ComboAnimContainer, Assembly-CSharp
     - Name: transform
+      Entry: 10
+      Data: 4
+    - Name: destTransform
       Entry: 6
       Data: 
-    - Name: destTransform
-      Entry: 10
-      Data: 6
     - Name: time
       Entry: 4
       Data: 0.3
@@ -287,11 +284,11 @@ MonoBehaviour:
       Entry: 7
       Data: 11|ComboAnimContainer, Assembly-CSharp
     - Name: transform
+      Entry: 10
+      Data: 4
+    - Name: destTransform
       Entry: 6
       Data: 
-    - Name: destTransform
-      Entry: 10
-      Data: 7
     - Name: time
       Entry: 4
       Data: 0
