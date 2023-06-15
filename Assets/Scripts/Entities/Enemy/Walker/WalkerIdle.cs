@@ -44,7 +44,7 @@ public class WalkerIdle : EnemyState {
 
         if (!_canWalk) {
             if (NavMesh.FindClosestEdge(transform.position, out var hit, NavMesh.AllAreas)) {
-                var dot = Vector3.Dot(transform.root.forward, (hit.position - transform.root.position).normalized);
+                var dot = Vector3.Dot(Parent.forward, (hit.position - Parent.position).normalized);
                 var dist = hit.distance;
 
                 if (dot > 0.6f && dist < minimumDistanceToEdge && _canRotate) {
@@ -66,9 +66,9 @@ public class WalkerIdle : EnemyState {
         _canWalk = false;
         if (_walkingAnim.name == null) _walkingAnim = _animData.hostileAnim.Find(anim => anim.name == "isWalking");
         yield return DelayedStart();
-        transform.root.DORotate(
-            (transform.root.rotation * Quaternion.Euler
-                (0, Random.Range(transform.root.rotation.y - 20, transform.root.rotation.y + 20), 0).eulerAngles), rotateDuration);
+        Parent.DORotate(
+            (Parent.rotation * Quaternion.Euler
+                (0, Random.Range(Parent.rotation.y - 20, Parent.rotation.y + 20), 0).eulerAngles), rotateDuration);
         yield return new WaitForSeconds(rotateDuration);
         TriggerAnim(_walkingAnim);
         yield return new WaitForSeconds(animator.GetCurrentAnimatorStateInfo(0).length * Random.Range(minWalkSteps, maxWalkSteps));
@@ -92,7 +92,7 @@ public class WalkerIdle : EnemyState {
         _canRotate = false;
         //offset = 180 - 40 : 180 + 40 
         //180 is opposite axis 
-        transform.root.DORotate((Quaternion.AngleAxis(Random.Range(140, 220), Vector3.up) * transform.root.rotation).eulerAngles, rotateDuration);
+        Parent.DORotate((Quaternion.AngleAxis(Random.Range(140, 220), Vector3.up) * Parent.rotation).eulerAngles, rotateDuration);
         yield return new WaitForSeconds(rotateDuration);
         _canRotate = true;
     }

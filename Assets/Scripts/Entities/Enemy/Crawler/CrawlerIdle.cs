@@ -30,9 +30,8 @@ namespace Entities.Enemy.Crawler {
         private IEnumerator Rotate() {
             _canRotate = false;
             yield return new WaitForSeconds(Random.Range(minDelay, maxDelay));
-            var parent = transform.root;
-            parent.DORotate(parent.rotation * Quaternion.Euler
-                (0, Random.Range(parent.rotation.y - 60, parent.rotation.y + 60), 0).eulerAngles, rotateDuration);
+            Parent.DORotate(Parent.rotation * Quaternion.Euler
+                (0, Random.Range(Parent.rotation.y - 60, Parent.rotation.y + 60), 0).eulerAngles, rotateDuration);
             yield return new WaitForSeconds(rotateDuration);
             _canRotate = true;
         }

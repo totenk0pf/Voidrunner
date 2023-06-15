@@ -33,6 +33,15 @@ public abstract class EnemyState : MonoBehaviour
         }
     }
 
+    protected Transform _parent;
+
+    protected Transform Parent {
+        get {
+            if (!_parent) _parent = transform.parent.parent;
+            return _parent;
+        }
+    }
+
     public LayerMask playerMask;
 
     [ReadOnly] public GameObject target;
