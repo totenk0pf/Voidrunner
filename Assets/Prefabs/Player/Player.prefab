@@ -855,6 +855,25 @@ MonoBehaviour:
   tweenSafetyIgnoreLayer:
     serializedVersion: 2
     m_Bits: 396
+  anim1:
+  - transform: {fileID: 6037325520723149429}
+    destTransform: {fileID: 628827139}
+    time: 0.2
+    easeType: 9
+  anim2:
+  - transform: {fileID: 6037325520723149429}
+    destTransform: {fileID: 1203241411}
+    time: 0.2
+    easeType: 9
+  anim3:
+  - transform: {fileID: 6037325520723149429}
+    destTransform: {fileID: 1357005610}
+    time: 0.5
+    easeType: 12
+  - transform: {fileID: 6037325520723149429}
+    destTransform: {fileID: 1047519042}
+    time: 0.2
+    easeType: 11
 --- !u!114 &3246652650168086534
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3191,7 +3210,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1961436908758434525, guid: 60e86fce881ae2a44af9c058ca63706d, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 137.5
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1961436908758434525, guid: 60e86fce881ae2a44af9c058ca63706d, type: 3}
       propertyPath: m_AnchoredPosition.y
@@ -4007,7 +4026,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5343456865991583229, guid: 60e86fce881ae2a44af9c058ca63706d, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 155
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5343456865991583229, guid: 60e86fce881ae2a44af9c058ca63706d, type: 3}
       propertyPath: m_AnchoredPosition.y

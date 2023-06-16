@@ -187,8 +187,8 @@ MonoBehaviour:
       Entry: 7
       Data: 7|ComboAnimContainer, Assembly-CSharp
     - Name: transform
-      Entry: 6
-      Data: 
+      Entry: 10
+      Data: 1
     - Name: destTransform
       Entry: 10
       Data: 4
@@ -269,14 +269,14 @@ MonoBehaviour:
       Entry: 7
       Data: 10|ComboAnimContainer, Assembly-CSharp
     - Name: transform
-      Entry: 6
-      Data: 
+      Entry: 10
+      Data: 1
     - Name: destTransform
       Entry: 10
       Data: 6
     - Name: time
       Entry: 4
-      Data: 0.3
+      Data: 0.5
     - Name: easeType
       Entry: 3
       Data: 12
@@ -287,8 +287,8 @@ MonoBehaviour:
       Entry: 7
       Data: 11|ComboAnimContainer, Assembly-CSharp
     - Name: transform
-      Entry: 6
-      Data: 
+      Entry: 10
+      Data: 1
     - Name: destTransform
       Entry: 10
       Data: 7

@@ -477,8 +477,24 @@ public class CombatManager : MonoBehaviour
             anim.transform = playerT;
             //anim.rootOffset = playerT.transform.position + anim.rootOffset;
         }
-            
-        this.FireEvent(EventType.RunPlayerComboSequenceEvent, container);
+
+        var integer = 0;
+        switch (_curMeleeOrder)
+        {
+            case MeleeOrder.First:
+                integer = 1;
+                break;
+            case MeleeOrder.Second:
+                integer = 2;
+                break;
+            case MeleeOrder.Third:
+                integer = 3;
+                break;
+            default:
+                throw new ArgumentOutOfRangeException();
+        }
+        
+        this.FireEvent(EventType.RunPlayerComboSequenceEvent, integer);
     }    
     
     private void OnInputWindowHold()
