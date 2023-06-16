@@ -16,8 +16,7 @@ namespace Level {
         
         [TitleGroup("Room Config")] 
         public bool isBacktrackDisabled; //set if door open on previous room
-        [SerializeField] private LayerMask playerLayer;
-        [Space] 
+        [SerializeField] protected LayerMask playerLayer;
         public RoomInfo roomInfo = new();
         
         [TitleGroup("Anim Config")] 
@@ -31,7 +30,7 @@ namespace Level {
         private bool _hasCheckPointSet;
 
         [Space] 
-        [ReadOnly] public bool canOpen = true;
+        [ReadOnly] public bool canOpen;
         
         private Tween _currentTween;
         private bool _canRunTween = true;
@@ -39,9 +38,10 @@ namespace Level {
         private Room _currentRoom;
         private Room _nextRoom;
         
-        private void Start() {
+        protected void Start() {
             _currentRoom = roomInfo.previousRoom;
-            _nextRoom = roomInfo.nextRoom;
+            _nextRoom    = roomInfo.nextRoom;
+            canOpen      = true;
             
             EventDispatcher.Instance.AddListener(EventType.DoorInvoked, cb => CheckDoor());
             CheckDoor();
@@ -79,17 +79,17 @@ namespace Level {
             if (!_currentRoom.gameObject.activeInHierarchy && !_nextRoom.gameObject.activeInHierarchy) {
                 doorContainer.SetActive(false);
             }
-
             else {
                 if (!doorContainer.activeInHierarchy) doorContainer.SetActive(true);
             }
         }
 
-        private void OnTriggerEnter(Collider other) {
+        protected void OnTriggerEnter(Collider other) {
             if (!CheckLayerMask.IsInLayerMask(other.gameObject, playerLayer) && _canRunTween) return;
             if (!_canRunTween) return;
             if (_nextRoom.gameObject.activeInHierarchy && isBacktrackDisabled) return;
             if (!canOpen) return;
+            if (!InheritedCheck(other)) return;
             
             EventDispatcher.Instance.FireEvent(EventType.EnableRoom, _nextRoom);
             EventDispatcher.Instance.FireEvent(EventType.OnPlayerEnterDoor, this);
@@ -108,7 +108,11 @@ namespace Level {
                 });
         }
 
-        private void OnTriggerExit(Collider other) {
+        protected virtual bool InheritedCheck(Collider other) {
+            return true;
+        }
+
+        protected void OnTriggerExit(Collider other) {
             if (!CheckLayerMask.IsInLayerMask(other.gameObject, playerLayer)) return;
             if (!_canRunTween) return;
             _currentTween?.Pause();

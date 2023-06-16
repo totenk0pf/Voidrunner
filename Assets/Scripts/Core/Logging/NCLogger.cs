@@ -18,7 +18,7 @@ namespace Core.Logging {
             {LogLevel.ERROR, "red"},
         };
 
-        public static void Log(string message, LogLevel level = LogLevel.INFO) {
+        public static void Log(object message, LogLevel level = LogLevel.INFO) {
             string content = $"<color={_colors[level]}>[{GetClassName()}]</color> {message}";
             UnityEngine.Debug.Log(content);
         }

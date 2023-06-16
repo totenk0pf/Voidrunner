@@ -442,7 +442,7 @@ Camera:
   m_GameObject: {fileID: 6037325520195106353}
   m_Enabled: 1
   serializedVersion: 2
-  m_ClearFlags: 2
+  m_ClearFlags: 1
   m_BackGroundColor: {r: 0.0751157, g: 0.07525414, b: 0.0754717, a: 0}
   m_projectionMatrixMode: 1
   m_GateFitMode: 2
@@ -464,7 +464,7 @@ Camera:
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
-    m_Bits: 991
+    m_Bits: 30687
   m_RenderingPath: -1
   m_TargetTexture: {fileID: 0}
   m_TargetDisplay: 0
@@ -682,7 +682,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   lookSpeed: 100
   isInverted: 0
-  camLimit: 25
+  camLimit: 45
   gimbal: {fileID: 6037325518991385936}
 --- !u!114 &7445117665404585877
 MonoBehaviour:
@@ -716,7 +716,7 @@ MonoBehaviour:
   maxAngleAA: 5
   grappleLayer:
     serializedVersion: 2
-    m_Bits: 8960
+    m_Bits: 13056
   ignoreLayer:
     serializedVersion: 2
     m_Bits: 232
@@ -889,7 +889,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6d36912778206b246b63b848bb8dfb6c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  progressionData: {fileID: 0}
+  progressionData: {fileID: 11400000, guid: baaed20f46c5bd046a897d9fa47ceca5, type: 2}
 --- !u!114 &5827963346180814841
 MonoBehaviour:
   m_ObjectHideFlags: 0

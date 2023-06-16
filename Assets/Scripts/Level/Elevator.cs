@@ -39,6 +39,7 @@ namespace Level {
         private void OnTriggerEnter(Collider other) {
             if (!CheckLayerMask.IsInLayerMask(other.gameObject, playerLayer)) return;
             other.gameObject.transform.SetParent(gameObject.transform);
+            var consistentY = other.gameObject.transform.localPosition.y;
             other.gameObject.GetComponent<PlayerMovementController>().canGravity = false;
             other.gameObject.GetComponent<Rigidbody>().useGravity = false;
 
@@ -53,7 +54,11 @@ namespace Level {
                 .Append(DOVirtual.DelayedCall(doorCloseDuration, () => {
                     door1.transform.DOLocalMoveX(_originalDoor1Pos.x, doorCloseDuration).SetEase(doorEaseType);
                     door2.transform.DOLocalMoveX(_originalDoor2Pos.x, doorCloseDuration).SetEase(doorEaseType);
-                }));
+                }))
+                .OnUpdate(() => {
+                    other.transform.localPosition
+                        = new Vector3(other.transform.localPosition.x, consistentY, other.transform.localPosition.z);
+                });
         }
         
         private void OnTriggerExit(Collider other) {

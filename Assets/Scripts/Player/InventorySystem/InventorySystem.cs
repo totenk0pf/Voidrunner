@@ -16,6 +16,7 @@ public class InventorySystem : SerializedMonoBehaviour {
     [TitleGroup("Items")]
     private InventoryItem _activeItem;
     [SerializeField] private ItemData defaultItem;
+    public ItemData DefaultItem => defaultItem;
     
     [TitleGroup("Weight")]
     private float _currentWeight;

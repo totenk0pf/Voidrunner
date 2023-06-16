@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 2711923488023190663}
   - component: {fileID: 2721761875251824131}
   - component: {fileID: 2729664257440589355}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Container
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -97,7 +97,7 @@ GameObject:
   - component: {fileID: 2721984461698231341}
   - component: {fileID: 2731226170508718451}
   - component: {fileID: 2721984461698231343}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: DoorMesh
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -192,7 +192,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8406391673149293302}
   - component: {fileID: 8406391673149293303}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Collider (2)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -237,7 +237,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8406391673334347716}
   - component: {fileID: 8406391673334347717}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Collider (3)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -283,7 +283,7 @@ GameObject:
   - component: {fileID: 8406391673385237857}
   - component: {fileID: 8406391673385237858}
   - component: {fileID: 8406391673385237859}
-  m_Layer: 2
+  m_Layer: 10
   m_Name: Door
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -355,7 +355,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8406391674173348656}
   - component: {fileID: 8406391674173348657}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Collider (4)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -400,7 +400,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8406391674312708398}
   - component: {fileID: 8406391674312708399}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Collider (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -444,7 +444,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8406391674459324647}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: FrameColliders
   m_TagString: Untagged
   m_Icon: {fileID: 0}
