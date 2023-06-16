@@ -2,13 +2,16 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using Audio;
 using Core.Events;
 using Core.Logging;
 using DG.Tweening;
+using Player.Audio;
 using Sirenix.OdinInspector;
 using Unity.VisualScripting;
 using UnityEngine;
 using EventType = Core.Events.EventType;
+using Sequence = DG.Tweening.Sequence;
 
 namespace Grapple {
     [Serializable]
@@ -20,8 +23,8 @@ namespace Grapple {
 
     //[RequireComponent(typeof(LineRenderer))]
     [RequireComponent(typeof(PlayerMovementController))]
-    public class GrappleController : MonoBehaviour
-    {
+    public class GrappleController : MonoBehaviour {
+        public PlayerAudioPlayer audioPlayer;
         [Space]
         [SerializeField] private KeyCode grappleKey;
 
@@ -74,6 +77,7 @@ namespace Grapple {
         private Coroutine _enemyToPlayerRoutine;
         private Coroutine _playerToPointRoutine;
         private EnemyBase _currentGrappledEnemy;
+        private Sequence _grappleAudioSequence;
         private Vector3 PlayerHeightOffset => new Vector3(0, 1, 0) * transform.localScale.y;
         private int test = 0;
 
@@ -217,9 +221,25 @@ namespace Grapple {
             var type = GetGrappleType(_currentGrappleHit.collider.gameObject.layer);
             if (type == GrappleType.None) return false;
             NCLogger.Log($"grapple type valid");
-            
+
+            var startGrappleClip = audioPlayer.GetAudioClipFromType(PlayerAudioType.GrappleStart);
+            audioPlayer.PlayAudio(startGrappleClip);
+
             if(_enemyToPlayerRoutine != null) StopCoroutine(_enemyToPlayerRoutine);
             if(_playerToPointRoutine != null) StopCoroutine(_playerToPointRoutine);
+
+            DOVirtual.DelayedCall(startGrappleClip.length / 3f, () => {
+                var grappleLoopClip = audioPlayer.GetAudioClipFromType(PlayerAudioType.GrappleLoop);
+                audioPlayer.PlayAudio(grappleLoopClip);
+                _grappleAudioSequence?.Kill();
+                _grappleAudioSequence = DOTween.Sequence();
+                _grappleAudioSequence
+                    .Append(DOVirtual.DelayedCall(grappleLoopClip.length / 2f, () => {
+                        audioPlayer.PlayAudio(grappleLoopClip);
+                    }))
+                    .SetLoops(-1, LoopType.Restart);
+            });
+            
             switch (type)
             {
                 case GrappleType.EnemyToPlayer:
@@ -243,7 +263,6 @@ namespace Grapple {
                 default:
                     return false;
             }
-
             return false;
         }
 
@@ -262,10 +281,12 @@ namespace Grapple {
                 ResetGrapple_EnemyToPlayer(isCanceled: true);
             }   
             _lr.enabled = false;
+            _grappleAudioSequence?.Kill();
         }
 
         private void ResetGrapple_EnemyToPlayer(bool isCanceled = false)
         {
+            _grappleAudioSequence?.Kill();
             NCLogger.Log($"cancel enemy to player grapple | isCanceled: {isCanceled}");
             if (isCanceled) {
                 var dir = (transform.position - _currentGrappledEnemy.transform.position).normalized;
@@ -289,6 +310,7 @@ namespace Grapple {
 
         private void ResetGrapple_PlayerToPoint(bool isCanceled = false)
         {
+            _grappleAudioSequence?.Kill();
             if (isCanceled) {
                 NCLogger.Log($"'cancel2");
                 var dir = (_currentGrappleHit.point - transform.position).normalized;
@@ -299,7 +321,6 @@ namespace Grapple {
                 Rigidbody.AddForce(Vector3.up*momentumForce/3, forceMode);
                 this.FireEvent(EventType.ReUpdateMovementAnimEvent);
             }
-            
             EventDispatcher.Instance.FireEvent(EventType.SetMovementStateEvent, PlayerMovementController.MovementState.Normal);
             //damping fall velocity
             StartCoroutine(_controller.GravityDampRoutine(gravityDampDuration));
@@ -333,6 +354,7 @@ namespace Grapple {
                 {
                     NCLogger.Log($"Grappling but move state is: {_moveState}");
                     this.FireEvent(EventType.SetMovementStateEvent, PlayerMovementController.MovementState.Grappling);
+                    audioPlayer.PlayAudio(PlayerAudioType.GrappleEnd);
                     NCLogger.Log($"Grappling but move state is: {_moveState} [after]");
                 }
                 _lr.SetPosition(1, _currentGrappleHit.transform.position);
@@ -342,6 +364,7 @@ namespace Grapple {
             }
             
             ResetGrapple_EnemyToPlayer();
+            audioPlayer.PlayAudio(PlayerAudioType.GrappleEnd);
 
             yield return null;
         }
@@ -369,6 +392,7 @@ namespace Grapple {
             }
             
             ResetGrapple_PlayerToPoint();
+            audioPlayer.PlayAudio(PlayerAudioType.GrappleEnd);
 
             yield return null;
         }

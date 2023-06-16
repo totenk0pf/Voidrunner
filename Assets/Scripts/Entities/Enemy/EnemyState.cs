@@ -1,10 +1,13 @@
+using System;
 using System.Collections.Generic;
+using Audio;
 using Core.Collections;
 using Entities.Enemy;
 using Sirenix.OdinInspector;
 using UnityEngine;
 using UnityEngine.AI;
 using StaticClass;
+using Random = UnityEngine.Random;
 
 public abstract class EnemyState : MonoBehaviour
 {

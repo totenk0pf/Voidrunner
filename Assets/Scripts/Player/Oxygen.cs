@@ -1,6 +1,7 @@
 using Core.Events;
 using System.Timers;
 using Core.Debug;
+using Player.Audio;
 using UI;
 using UnityEngine;
 using EventType = Core.Events.EventType;
@@ -9,6 +10,8 @@ public class Oxygen : MonoBehaviour {
     //Oxygen pool player has throughout the game
     public float oxygenPool;
     public float currentOxygen;
+
+    [Space] public PlayerAudioPlayer audioPlayer;
 
     private void Start() {
         //Just in case
@@ -39,6 +42,10 @@ public class Oxygen : MonoBehaviour {
         currentOxygen -= amount;
         if (currentOxygen <= 0) {
             EventDispatcher.Instance.FireEvent(EventType.OnPlayerDie);
+            audioPlayer.PlayAudio(PlayerAudioType.PlayerDie);
+        }
+        else {
+            audioPlayer.PlayAudio(PlayerAudioType.PlayerHurt);
         }
         FireUIEvent();
     }

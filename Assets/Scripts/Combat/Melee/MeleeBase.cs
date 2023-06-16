@@ -1,7 +1,11 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
+using Audio;
 using Core.Events;
 using Core.Logging;
+using DG.Tweening;
+using Player.Audio;
 using UnityEngine;
 using Sirenix.OdinInspector;
 using UI;
@@ -10,17 +14,32 @@ using EventType = Core.Events.EventType;
 namespace Combat {
     public class MeleeBase : WeaponBase {
 
+        private AudioSource _audioSource;
+
         protected void Awake() {
             base.Awake();
             this.AddListener(EventType.MeleeEnemyDamageEvent, dmgData => ApplyDamageOnEnemy((AnimData) dmgData));
             
             canAttack = true;
+            _audioSource = transform.GetComponent<AudioSource>();
+        }
+
+        private void Start() {
+            var startUpClip = audioPlayer.GetAudioClipFromType(PlayerAudioType.MeleeStart);
+            AudioManager.Instance.PlayClip(transform.position, startUpClip);
+
+            DOVirtual.DelayedCall(startUpClip.length, () => {
+                var chainsawLoopClip = audioPlayer.GetAudioClipFromType(PlayerAudioType.MeleeIdle);
+                _audioSource.clip = chainsawLoopClip;
+                _audioSource.Play();
+            });
         }
 
         protected void Update() {
             if (Input.GetKeyDown(entry.key) && canAttack && entry.type == WeaponType.Melee) {
 
                 this.FireEvent(EventType.WeaponMeleeFiredEvent);
+                audioPlayer.PlayAudio(PlayerAudioType.MeleeAttack);
             }
         }
 

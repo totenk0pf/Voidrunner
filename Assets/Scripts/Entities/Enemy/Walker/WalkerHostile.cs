@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
+using Audio;
 using Core.Collections;
+using DG.Tweening;
 using Entities.Enemy;
 using Sirenix.OdinInspector;
 using UnityEngine;
@@ -16,8 +18,8 @@ public class WalkerHostile : EnemyState
     private bool _canSwitchChaseState = true;
     private bool _canSwitchState = true;
     
-    private AnimParam _currAnim; 
-    
+    private AnimParam _currAnim;
+
     public override EnemyState RunCurrentState() {
         Agent.SetDestination(target.transform.position);
         if (_canSwitchChaseState) {

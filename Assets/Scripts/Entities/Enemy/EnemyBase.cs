@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Audio;
 using Core.Events;
 using Core.Logging;
 using DG.Tweening;
@@ -10,6 +11,7 @@ using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.Serialization;
 using EventType = Core.Events.EventType;
+using Random = UnityEngine.Random;
 
 [Flags]
 [Serializable]
@@ -19,6 +21,16 @@ public enum EnemyType {
     Armor
 }
 
+[Serializable]
+public enum EnemyAudioType {
+    Footsteps,
+    Attack,
+    Move,
+    Hit,
+    GoreLight,
+    GoreHard,
+}
+
 public class EnemyBase : EntityBase {
     [TitleGroup("Config")]
     public EnemyType type;
@@ -26,7 +38,8 @@ public class EnemyBase : EntityBase {
     public float enemyHP;
     [SerializeField] private EnemyUI ui;
 
-    [TitleGroup("Refs")]
+    [TitleGroup("Refs")] 
+    public EnemyAudioData audios;
     [SerializeField] private AnimSerializedData animData;
     [SerializeField] private EnemyMoveRootMotion enemyRootMotion;
     [SerializeField] private Animator animator;
@@ -98,15 +111,16 @@ public class EnemyBase : EntityBase {
 
     #region Update Methods
 
+    private bool _hasDied;
     public virtual void Die() {
-        if (currentHp <= 0)
-        {
+        if (currentHp <= 0 && !_hasDied) {
+            _hasDied = true;
             var bloods = GetComponentsInChildren<ParticleBase>();
             foreach (var blood in bloods) {
                 blood.ForceRelease();
             }
-            
             this.FireEvent(EventType.SpawnParticleEnemyDeadEvent, new ParticleCallbackData(Vector3.up, transform.position + Vector3.up));
+            AudioManager.Instance.PlayClip(transform.position, GetAudioClip(EnemyAudioType.GoreHard));
             Destroy(gameObject);
         }
     }
@@ -256,6 +270,19 @@ public class EnemyBase : EntityBase {
         StateMachine.enabled = false;
         NavMeshAgent.enabled = false;
         Rigidbody.useGravity = CanPull;
+    }
+    
+    public AudioClip GetAudioClip(EnemyAudioType audioType) {
+        var list = audioType switch {
+            EnemyAudioType.Footsteps => audios.enemyAudio.footstepAudios,
+            EnemyAudioType.Attack => audios.enemyAudio.attackAudios,
+            EnemyAudioType.Move => audios.enemyAudio.movementAudios,
+            EnemyAudioType.Hit => audios.enemyAudio.hitAudios,
+            EnemyAudioType.GoreLight => audios.enemyAudio.goreLightAudios,
+            EnemyAudioType.GoreHard => audios.enemyAudio.goreHardAudios
+        };
+
+        return list[Random.Range(0, list.Count)];
     }
     #endregion
 }
