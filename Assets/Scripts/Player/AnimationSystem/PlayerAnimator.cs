@@ -131,6 +131,14 @@ public class PlayerAnimator : MonoBehaviour, IInteractiveAnimator, ICombatAnimat
         if (_activeType == WeaponType.Ranged) {
             SetParam(PlayerAnimState.RangedAttack, false);
         }
+
+        if (_animData.State != PlayerAnimState.MeleeAttack1 ||
+            _animData.State != PlayerAnimState.MeleeAttack2 ||
+            _animData.State != PlayerAnimState.MeleeAttack3)
+        {
+            this.FireEvent(EventType.SetMovementStateEvent, PlayerMovementController.MovementState.Normal);
+            this.FireEvent(EventType.CancelAttackEvent, WeaponType.Melee);
+        }
     }
 
     public void OnAnimationAttackEnd()
