@@ -7,6 +7,7 @@ using UnityEngine.Events;
 namespace UI.MainMenu {
     public class MainMenuManager : MonoBehaviour {
         private bool _settingsEnabled;
+        [SerializeField] private MainMenuAudioHelper _audioHelper;
         [SerializeField] private GameObject settingsUI;
         [SerializeField] private DOTweenAnimation settingsAnim;
         [SerializeField] private MainMenuTooltip tooltip;
@@ -23,6 +24,14 @@ namespace UI.MainMenu {
         public void ToggleStates() {
             _settingsEnabled = !_settingsEnabled;
             tooltip.disabled = !tooltip.disabled;
+        }
+
+        public void PlayPanelOpenSound() {
+            _audioHelper.PlayButtonSound(MainMenuAudioHelper.UISelection.PanelOpen);
+        }
+
+        public void PlayButtonDenySound() {
+            _audioHelper.PlayButtonSound(MainMenuAudioHelper.UISelection.ButtonDeny);
         }
     }
 }
