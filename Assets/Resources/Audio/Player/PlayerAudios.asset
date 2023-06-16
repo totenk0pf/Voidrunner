@@ -1,0 +1,59 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3798e70f8e1849cca9c169b2e0c7b27f, type: 3}
+  m_Name: PlayerAudios
+  m_EditorClassIdentifier: 
+  playerAudio:
+    rangeAttackAudios:
+    - {fileID: 8300000, guid: 13936ae8094f70940b5eb2669259a07b, type: 3}
+    - {fileID: 8300000, guid: 6d1bf6b56dc757f4788a87eb41189bb3, type: 3}
+    - {fileID: 8300000, guid: 3478687f06d657a48a8f8b068931cd21, type: 3}
+    rangeEffectAudios:
+      reload:
+      - {fileID: 8300000, guid: 3193951b64979a648a3ffc72102665c7, type: 3}
+      shellDrops:
+      - {fileID: 8300000, guid: 2608bb3309d608442a6455d7846f791d, type: 3}
+      - {fileID: 8300000, guid: 5733a84c916400b4184b0b46b4af0b24, type: 3}
+      - {fileID: 8300000, guid: 6f314b7ccd3f1b64cb968415d8c6c568, type: 3}
+      pump:
+      - {fileID: 8300000, guid: bd5452e7148225e409b5cd9fd723d754, type: 3}
+    meleeAttackAudios:
+    - {fileID: 8300000, guid: 9987c720bfc46ac43b672afff58a84cc, type: 3}
+    - {fileID: 8300000, guid: 462a37f19db59144e9818152eb81417e, type: 3}
+    meleeEffectAudios:
+      chainsawStartup:
+      - {fileID: 8300000, guid: f76e854ad5716064c93f647c18bc744b, type: 3}
+      chainsawIdle:
+      - {fileID: 8300000, guid: 20d2d15cd6456be418c58b63a2dfc04d, type: 3}
+      - {fileID: 8300000, guid: bd4435a7d5bbc034fa1a6f5ef76489c8, type: 3}
+      leapChainsaw:
+      - {fileID: 8300000, guid: f71e8e49640296446b1e07457dd5a83a, type: 3}
+    footstepAudios:
+    - {fileID: 8300000, guid: a0f7866a0936be944a14b32a41a09825, type: 3}
+    - {fileID: 8300000, guid: 12d5459952b3ede49a3bac9525d160f8, type: 3}
+    - {fileID: 8300000, guid: 0ffe987b1c6ad9742ab3818c8b37e560, type: 3}
+    - {fileID: 8300000, guid: 59c0e5a2e60610a4ab5a7e2c0f088eba, type: 3}
+    dashAudios:
+    - {fileID: 8300000, guid: ea4efa1bbd4f46440b4906293cb7e587, type: 3}
+    grappleStartAudios:
+    - {fileID: 8300000, guid: 2215028987cd8204f91c3d0ecdd669cb, type: 3}
+    grappleLoopAudios:
+    - {fileID: 8300000, guid: a65c3560df477f540842ad05a6469a20, type: 3}
+    grappleEndAudios:
+    - {fileID: 8300000, guid: c3184c43c6a7da845a29f0b38dd3b182, type: 3}
+    playerHurtAudios:
+    - {fileID: 8300000, guid: 0a71a4c6ecdf4c94d8a114914919b7fd, type: 3}
+    - {fileID: 8300000, guid: 0721537cf271e974e8bdaf7c14e9f052, type: 3}
+    - {fileID: 8300000, guid: 9bc2ab52d8ad64c459e9a612029de578, type: 3}
+    - {fileID: 8300000, guid: 35330b4ce972acb478059de674968e2e, type: 3}
+    playerDeathAudios:
+    - {fileID: 8300000, guid: b53781aad4d5fcc47830d4c336d5eb95, type: 3}

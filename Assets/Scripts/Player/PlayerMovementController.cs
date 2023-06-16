@@ -6,6 +6,7 @@ using Combat;
 using Core.Events;
 using Core.Logging;
 using DG.Tweening;
+using Player.Audio;
 using Sirenix.OdinInspector;
 using Unity.VisualScripting;
 using UnityEngine;
@@ -37,8 +38,8 @@ public class PlayerMovementController : MonoBehaviour
         }
     }
 
+    [SerializeField] private PlayerAudioPlayer _audioPlayer;
     [SerializeField] private MovementState moveState;
-
     [SerializeField] private Transform playerVisualProto;
     
     [Space]
@@ -157,6 +158,7 @@ public class PlayerMovementController : MonoBehaviour
         {
             NCLogger.Log($"dodging");
             _nextDodgeTimeStamp = Time.time + dodgeCooldown;
+            _audioPlayer.PlayAudio(PlayerAudioType.MovementDash);
             ActionDodge();
         }
     }

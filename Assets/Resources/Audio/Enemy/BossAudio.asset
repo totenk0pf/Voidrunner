@@ -26,10 +26,8 @@ MonoBehaviour:
     attackAudios:
     - {fileID: 8300000, guid: 8f11d6f2c588a56479eaf45511964fff, type: 3}
     goreLightAudios:
-    - {fileID: 8300000, guid: e464b85629d2394478376846ce494172, type: 3}
-    - {fileID: 8300000, guid: c168089ea10c8934c9b69fbcf3f0b691, type: 3}
-    - {fileID: 8300000, guid: 4c305bca27b560f4c932547007c5c36b, type: 3}
-    - {fileID: 8300000, guid: 63e13a3c018129b48b4824b4e5620a5e, type: 3}
+    - {fileID: 8300000, guid: 8a2b7f03f5346ac4cab9fe49be6258d7, type: 3}
+    - {fileID: 8300000, guid: 4ab6b6814faceee46b878b4484c9be5b, type: 3}
     goreHardAudios:
     - {fileID: 8300000, guid: 8a2b7f03f5346ac4cab9fe49be6258d7, type: 3}
     - {fileID: 8300000, guid: 4ab6b6814faceee46b878b4484c9be5b, type: 3}

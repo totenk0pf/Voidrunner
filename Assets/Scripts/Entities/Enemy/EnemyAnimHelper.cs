@@ -12,7 +12,7 @@ namespace Entities.Enemy {
 
         public void PlayAudio(EnemyAudioType type) {
             var audios = GetAudioType(type);
-            var clipToPlay = audios[Random.Range(0, audios.Count - 1)];
+            var clipToPlay = audios[Random.Range(0, audios.Count)];
             AudioManager.Instance.PlayClip(transform.position, clipToPlay);
         }
         
@@ -21,7 +21,7 @@ namespace Entities.Enemy {
 
             _isRepeatAudioPlaying = true;
             var audios = GetAudioType(type);
-            var clipToPlay = audios[Random.Range(0, audios.Count - 1)];
+            var clipToPlay = audios[Random.Range(0, audios.Count)];
             AudioManager.Instance.PlayClip(transform.position, clipToPlay);
             DOVirtual.DelayedCall(Random.Range(1.2f, 2.4f), () => _isRepeatAudioPlaying = false);
         }

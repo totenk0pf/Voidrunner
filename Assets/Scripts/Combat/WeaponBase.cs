@@ -5,12 +5,14 @@ using System.Linq;
 using Core.Events;
 using Core.Logging;
 using DG.Tweening;
+using Player.Audio;
 using UnityEngine;
 using EventType = Core.Events.EventType;
 
 namespace Combat
 {
     public abstract class WeaponBase : MonoBehaviour, IWeapon {
+        public PlayerAudioPlayer audioPlayer;
         [SerializeField] protected WeaponEntriesData EntriesData;
         [SerializeField] protected WeaponType type;
         protected WeaponEntry entry;

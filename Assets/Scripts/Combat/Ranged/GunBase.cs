@@ -1,6 +1,8 @@
 using System.Collections;
 using Core.Events;
 using Core.Logging;
+using DG.Tweening;
+using Player.Audio;
 using UnityEngine;
 using Sirenix.OdinInspector;
 using UI;
@@ -70,6 +72,16 @@ namespace Combat {
                 type = WeaponType.Ranged,
                 rechargeDuration = _cooldown
             });
+
+            var reloadSequenceAudio = DOTween.Sequence();
+            reloadSequenceAudio
+                .Append(DOVirtual.DelayedCall(_cooldown, null))
+                .Insert(0.4f, DOVirtual.DelayedCall(0, () => {
+                    audioPlayer.PlayAudio(PlayerAudioType.RangeReload);
+                }))
+                .Insert(1f, DOVirtual.DelayedCall(0, () => {
+                    audioPlayer.PlayAudio(PlayerAudioType.RangePump);
+                }));
                
             this.FireEvent(EventType.WeaponRechargedEvent);
             

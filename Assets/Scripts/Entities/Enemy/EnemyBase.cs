@@ -282,7 +282,7 @@ public class EnemyBase : EntityBase {
             EnemyAudioType.GoreHard => audios.enemyAudio.goreHardAudios
         };
 
-        return list[Random.Range(0, list.Count - 1)];
+        return list[Random.Range(0, list.Count)];
     }
     #endregion
 }
