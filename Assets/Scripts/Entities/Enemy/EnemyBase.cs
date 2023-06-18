@@ -53,12 +53,12 @@ public class EnemyBase : EntityBase {
     [ReadOnly] public bool isStunned;
     protected float currentHp;
 
+    private Vector3 _originalPosition;
+    private Quaternion _originalRotation;
     private NavMeshAgent _navAgent;
     private EnemyStateMachine _stateMachine;
     private Rigidbody _rb;
-    
     private bool _canPull;
-
     private Tween _currentTween;
     
     //Ground check Attributes
@@ -102,11 +102,21 @@ public class EnemyBase : EntityBase {
             Debug.LogWarning("No NavMesh is bound to Enemy");
         }
         currentHp = enemyHP;
+        _originalPosition = transform.position;
+        _originalRotation = transform.rotation;
+        EventDispatcher.Instance.AddListener(EventType.OnPlayerRespawn, _=>ResetEnemy());
     }
 
     private void Update() {
         Die();
         AirborneUpdate();
+    }
+
+    private void ResetEnemy() {
+        transform.position = _originalPosition;
+        transform.rotation = _originalRotation;
+        currentHp = enemyHP;
+        ui.UpdateBar(1);
     }
 
     #region Update Methods

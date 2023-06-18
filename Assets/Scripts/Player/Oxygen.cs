@@ -10,6 +10,7 @@ public class Oxygen : MonoBehaviour {
     //Oxygen pool player has throughout the game
     public float oxygenPool;
     public float currentOxygen;
+    public bool hasDied;
 
     [Space] public PlayerAudioPlayer audioPlayer;
 
@@ -39,8 +40,10 @@ public class Oxygen : MonoBehaviour {
     }
 
     public void ReduceOxygen(float amount) {
+        if (hasDied) return;
         currentOxygen -= amount;
         if (currentOxygen <= 0) {
+            hasDied = true;
             EventDispatcher.Instance.FireEvent(EventType.OnPlayerDie);
             audioPlayer.PlayAudio(PlayerAudioType.PlayerDie);
         }
