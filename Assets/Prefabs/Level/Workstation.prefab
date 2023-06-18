@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 169964839968034257}
   - component: {fileID: 169964839968034254}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Workstation
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -57,6 +57,10 @@ PrefabInstance:
     - target: {fileID: 1086769926625362, guid: 998bc3d7ba2e6684fbd7ca1a9d17ba9c, type: 3}
       propertyPath: m_Name
       value: SM_Prop_Desk_Small_01 (2)
+      objectReference: {fileID: 0}
+    - target: {fileID: 1086769926625362, guid: 998bc3d7ba2e6684fbd7ca1a9d17ba9c, type: 3}
+      propertyPath: m_Layer
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 1086769926625362, guid: 998bc3d7ba2e6684fbd7ca1a9d17ba9c, type: 3}
       propertyPath: m_IsActive
@@ -136,6 +140,10 @@ PrefabInstance:
     - target: {fileID: 1793141761196618, guid: 553a5c3889b3ac94685552c962d2d57b, type: 3}
       propertyPath: m_Name
       value: SM_Prop_Stool_02 (12)
+      objectReference: {fileID: 0}
+    - target: {fileID: 1793141761196618, guid: 553a5c3889b3ac94685552c962d2d57b, type: 3}
+      propertyPath: m_Layer
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 1793141761196618, guid: 553a5c3889b3ac94685552c962d2d57b, type: 3}
       propertyPath: m_IsActive

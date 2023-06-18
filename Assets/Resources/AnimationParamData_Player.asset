@@ -24,8 +24,8 @@ MonoBehaviour:
     SerializationNodes:
     - Name: animationStates
       Entry: 7
-      Data: 0|System.Collections.Generic.Dictionary`2[[PlayerAnimState, Assembly-CSharp],[AnimParamContainer,
-        Assembly-CSharp]], mscorlib
+      Data: 0|System.Collections.Generic.Dictionary`2[[PlayerAnimState, Assembly-CSharp],[System.Collections.Generic.List`1[[AnimParamContainer,
+        Assembly-CSharp]], mscorlib]], mscorlib
     - Name: comparer
       Entry: 7
       Data: 1|System.Collections.Generic.EnumEqualityComparer`1[[PlayerAnimState,
@@ -41,7 +41,7 @@ MonoBehaviour:
       Data: 
     - Name: 
       Entry: 12
-      Data: 15
+      Data: 17
     - Name: 
       Entry: 7
       Data: 
@@ -50,7 +50,14 @@ MonoBehaviour:
       Data: 0
     - Name: $v
       Entry: 7
-      Data: 2|AnimParamContainer, Assembly-CSharp
+      Data: 2|System.Collections.Generic.List`1[[AnimParamContainer, Assembly-CSharp]],
+        mscorlib
+    - Name: 
+      Entry: 12
+      Data: 2
+    - Name: 
+      Entry: 7
+      Data: 3|AnimParamContainer, Assembly-CSharp
     - Name: data
       Entry: 10
       Data: 0
@@ -82,6 +89,45 @@ MonoBehaviour:
       Entry: 8
       Data: 
     - Name: 
+      Entry: 7
+      Data: 4|AnimParamContainer, Assembly-CSharp
+    - Name: data
+      Entry: 10
+      Data: 0
+    - Name: param
+      Entry: 7
+      Data: AnimParam, Assembly-CSharp
+    - Name: type
+      Entry: 3
+      Data: 4
+    - Name: name
+      Entry: 1
+      Data: CanChainAttack
+    - Name: hash
+      Entry: 3
+      Data: -580600789
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: floatParam
+      Entry: 4
+      Data: 0
+    - Name: intParam
+      Entry: 3
+      Data: 0
+    - Name: boolParam
+      Entry: 5
+      Data: true
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
       Entry: 8
       Data: 
     - Name: 
@@ -92,7 +138,14 @@ MonoBehaviour:
       Data: 1
     - Name: $v
       Entry: 7
-      Data: 3|AnimParamContainer, Assembly-CSharp
+      Data: 5|System.Collections.Generic.List`1[[AnimParamContainer, Assembly-CSharp]],
+        mscorlib
+    - Name: 
+      Entry: 12
+      Data: 2
+    - Name: 
+      Entry: 7
+      Data: 6|AnimParamContainer, Assembly-CSharp
     - Name: data
       Entry: 10
       Data: 0
@@ -124,6 +177,45 @@ MonoBehaviour:
       Entry: 8
       Data: 
     - Name: 
+      Entry: 7
+      Data: 7|AnimParamContainer, Assembly-CSharp
+    - Name: data
+      Entry: 10
+      Data: 0
+    - Name: param
+      Entry: 7
+      Data: AnimParam, Assembly-CSharp
+    - Name: type
+      Entry: 3
+      Data: 4
+    - Name: name
+      Entry: 1
+      Data: CanChainAttack
+    - Name: hash
+      Entry: 3
+      Data: -580600789
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: floatParam
+      Entry: 4
+      Data: 0
+    - Name: intParam
+      Entry: 3
+      Data: 0
+    - Name: boolParam
+      Entry: 5
+      Data: true
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
       Entry: 8
       Data: 
     - Name: 
@@ -134,7 +226,14 @@ MonoBehaviour:
       Data: 2
     - Name: $v
       Entry: 7
-      Data: 4|AnimParamContainer, Assembly-CSharp
+      Data: 8|System.Collections.Generic.List`1[[AnimParamContainer, Assembly-CSharp]],
+        mscorlib
+    - Name: 
+      Entry: 12
+      Data: 2
+    - Name: 
+      Entry: 7
+      Data: 9|AnimParamContainer, Assembly-CSharp
     - Name: data
       Entry: 10
       Data: 0
@@ -166,6 +265,45 @@ MonoBehaviour:
       Entry: 8
       Data: 
     - Name: 
+      Entry: 7
+      Data: 10|AnimParamContainer, Assembly-CSharp
+    - Name: data
+      Entry: 10
+      Data: 0
+    - Name: param
+      Entry: 7
+      Data: AnimParam, Assembly-CSharp
+    - Name: type
+      Entry: 3
+      Data: 4
+    - Name: name
+      Entry: 1
+      Data: CanChainAttack
+    - Name: hash
+      Entry: 3
+      Data: -580600789
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: floatParam
+      Entry: 4
+      Data: 0
+    - Name: intParam
+      Entry: 3
+      Data: 0
+    - Name: boolParam
+      Entry: 5
+      Data: true
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
       Entry: 8
       Data: 
     - Name: 
@@ -176,7 +314,14 @@ MonoBehaviour:
       Data: 3
     - Name: $v
       Entry: 7
-      Data: 5|AnimParamContainer, Assembly-CSharp
+      Data: 11|System.Collections.Generic.List`1[[AnimParamContainer, Assembly-CSharp]],
+        mscorlib
+    - Name: 
+      Entry: 12
+      Data: 1
+    - Name: 
+      Entry: 7
+      Data: 12|AnimParamContainer, Assembly-CSharp
     - Name: data
       Entry: 10
       Data: 0
@@ -185,7 +330,7 @@ MonoBehaviour:
       Data: AnimParam, Assembly-CSharp
     - Name: type
       Entry: 3
-      Data: 4
+      Data: 9
     - Name: name
       Entry: 1
       Data: Fire
@@ -208,242 +353,45 @@ MonoBehaviour:
       Entry: 8
       Data: 
     - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
       Entry: 8
       Data: 
     - Name: 
       Entry: 7
       Data: 
     - Name: $k
+      Entry: 3
+      Data: 4
+    - Name: $v
+      Entry: 7
+      Data: 13|System.Collections.Generic.List`1[[AnimParamContainer, Assembly-CSharp]],
+        mscorlib
+    - Name: 
+      Entry: 12
+      Data: 1
+    - Name: 
+      Entry: 7
+      Data: 14|AnimParamContainer, Assembly-CSharp
+    - Name: data
+      Entry: 10
+      Data: 0
+    - Name: param
+      Entry: 7
+      Data: AnimParam, Assembly-CSharp
+    - Name: type
       Entry: 3
       Data: 4
-    - Name: $v
-      Entry: 7
-      Data: 6|AnimParamContainer, Assembly-CSharp
-    - Name: data
-      Entry: 10
-      Data: 0
-    - Name: param
-      Entry: 7
-      Data: AnimParam, Assembly-CSharp
-    - Name: type
-      Entry: 3
-      Data: 9
-    - Name: name
-      Entry: 1
-      Data: Idle
-    - Name: hash
-      Entry: 3
-      Data: 2081823275
-    - Name: 
-      Entry: 8
-      Data: 
-    - Name: floatParam
-      Entry: 4
-      Data: 0
-    - Name: intParam
-      Entry: 3
-      Data: 0
-    - Name: boolParam
-      Entry: 5
-      Data: false
-    - Name: 
-      Entry: 8
-      Data: 
-    - Name: 
-      Entry: 8
-      Data: 
-    - Name: 
-      Entry: 7
-      Data: 
-    - Name: $k
-      Entry: 3
-      Data: 5
-    - Name: $v
-      Entry: 7
-      Data: 7|AnimParamContainer, Assembly-CSharp
-    - Name: data
-      Entry: 10
-      Data: 0
-    - Name: param
-      Entry: 7
-      Data: AnimParam, Assembly-CSharp
-    - Name: type
-      Entry: 3
-      Data: 9
     - Name: name
       Entry: 1
       Data: RunForward
     - Name: hash
       Entry: 3
       Data: -1803631756
-    - Name: 
-      Entry: 8
-      Data: 
-    - Name: floatParam
-      Entry: 4
-      Data: 0
-    - Name: intParam
-      Entry: 3
-      Data: 1
-    - Name: boolParam
-      Entry: 5
-      Data: false
-    - Name: 
-      Entry: 8
-      Data: 
-    - Name: 
-      Entry: 8
-      Data: 
-    - Name: 
-      Entry: 7
-      Data: 
-    - Name: $k
-      Entry: 3
-      Data: 6
-    - Name: $v
-      Entry: 7
-      Data: 8|AnimParamContainer, Assembly-CSharp
-    - Name: data
-      Entry: 10
-      Data: 0
-    - Name: param
-      Entry: 7
-      Data: AnimParam, Assembly-CSharp
-    - Name: type
-      Entry: 3
-      Data: 9
-    - Name: name
-      Entry: 1
-      Data: RunBackward
-    - Name: hash
-      Entry: 3
-      Data: 21299085
-    - Name: 
-      Entry: 8
-      Data: 
-    - Name: floatParam
-      Entry: 4
-      Data: 0
-    - Name: intParam
-      Entry: 3
-      Data: -1
-    - Name: boolParam
-      Entry: 5
-      Data: false
-    - Name: 
-      Entry: 8
-      Data: 
-    - Name: 
-      Entry: 8
-      Data: 
-    - Name: 
-      Entry: 7
-      Data: 
-    - Name: $k
-      Entry: 3
-      Data: 7
-    - Name: $v
-      Entry: 7
-      Data: 9|AnimParamContainer, Assembly-CSharp
-    - Name: data
-      Entry: 10
-      Data: 0
-    - Name: param
-      Entry: 7
-      Data: AnimParam, Assembly-CSharp
-    - Name: type
-      Entry: 3
-      Data: 9
-    - Name: name
-      Entry: 1
-      Data: RunRight
-    - Name: hash
-      Entry: 3
-      Data: 1302730617
-    - Name: 
-      Entry: 8
-      Data: 
-    - Name: floatParam
-      Entry: 4
-      Data: 0
-    - Name: intParam
-      Entry: 3
-      Data: 2
-    - Name: boolParam
-      Entry: 5
-      Data: false
-    - Name: 
-      Entry: 8
-      Data: 
-    - Name: 
-      Entry: 8
-      Data: 
-    - Name: 
-      Entry: 7
-      Data: 
-    - Name: $k
-      Entry: 3
-      Data: 8
-    - Name: $v
-      Entry: 7
-      Data: 10|AnimParamContainer, Assembly-CSharp
-    - Name: data
-      Entry: 10
-      Data: 0
-    - Name: param
-      Entry: 7
-      Data: AnimParam, Assembly-CSharp
-    - Name: type
-      Entry: 3
-      Data: 9
-    - Name: name
-      Entry: 1
-      Data: RunLeft
-    - Name: hash
-      Entry: 3
-      Data: -1344608780
-    - Name: 
-      Entry: 8
-      Data: 
-    - Name: floatParam
-      Entry: 4
-      Data: 0
-    - Name: intParam
-      Entry: 3
-      Data: -2
-    - Name: boolParam
-      Entry: 5
-      Data: false
-    - Name: 
-      Entry: 8
-      Data: 
-    - Name: 
-      Entry: 8
-      Data: 
-    - Name: 
-      Entry: 7
-      Data: 
-    - Name: $k
-      Entry: 3
-      Data: 10
-    - Name: $v
-      Entry: 7
-      Data: 11|AnimParamContainer, Assembly-CSharp
-    - Name: data
-      Entry: 10
-      Data: 0
-    - Name: param
-      Entry: 7
-      Data: AnimParam, Assembly-CSharp
-    - Name: type
-      Entry: 3
-      Data: 9
-    - Name: name
-      Entry: 1
-      Data: DodgeBackward
-    - Name: hash
-      Entry: 3
-      Data: 596922096
     - Name: 
       Entry: 8
       Data: 
@@ -460,6 +408,331 @@ MonoBehaviour:
       Entry: 8
       Data: 
     - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 3
+      Data: 5
+    - Name: $v
+      Entry: 7
+      Data: 15|System.Collections.Generic.List`1[[AnimParamContainer, Assembly-CSharp]],
+        mscorlib
+    - Name: 
+      Entry: 12
+      Data: 1
+    - Name: 
+      Entry: 7
+      Data: 16|AnimParamContainer, Assembly-CSharp
+    - Name: data
+      Entry: 10
+      Data: 0
+    - Name: param
+      Entry: 7
+      Data: AnimParam, Assembly-CSharp
+    - Name: type
+      Entry: 3
+      Data: 4
+    - Name: name
+      Entry: 1
+      Data: RunBackward
+    - Name: hash
+      Entry: 3
+      Data: 21299085
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: floatParam
+      Entry: 4
+      Data: 0
+    - Name: intParam
+      Entry: 3
+      Data: 0
+    - Name: boolParam
+      Entry: 5
+      Data: true
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 3
+      Data: 6
+    - Name: $v
+      Entry: 7
+      Data: 17|System.Collections.Generic.List`1[[AnimParamContainer, Assembly-CSharp]],
+        mscorlib
+    - Name: 
+      Entry: 12
+      Data: 1
+    - Name: 
+      Entry: 7
+      Data: 18|AnimParamContainer, Assembly-CSharp
+    - Name: data
+      Entry: 10
+      Data: 0
+    - Name: param
+      Entry: 7
+      Data: AnimParam, Assembly-CSharp
+    - Name: type
+      Entry: 3
+      Data: 4
+    - Name: name
+      Entry: 1
+      Data: RunRight
+    - Name: hash
+      Entry: 3
+      Data: 1302730617
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: floatParam
+      Entry: 4
+      Data: 0
+    - Name: intParam
+      Entry: 3
+      Data: 0
+    - Name: boolParam
+      Entry: 5
+      Data: true
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 3
+      Data: 7
+    - Name: $v
+      Entry: 7
+      Data: 19|System.Collections.Generic.List`1[[AnimParamContainer, Assembly-CSharp]],
+        mscorlib
+    - Name: 
+      Entry: 12
+      Data: 1
+    - Name: 
+      Entry: 7
+      Data: 20|AnimParamContainer, Assembly-CSharp
+    - Name: data
+      Entry: 10
+      Data: 0
+    - Name: param
+      Entry: 7
+      Data: AnimParam, Assembly-CSharp
+    - Name: type
+      Entry: 3
+      Data: 4
+    - Name: name
+      Entry: 1
+      Data: RunLeft
+    - Name: hash
+      Entry: 3
+      Data: -1344608780
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: floatParam
+      Entry: 4
+      Data: 0
+    - Name: intParam
+      Entry: 3
+      Data: 0
+    - Name: boolParam
+      Entry: 5
+      Data: true
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 3
+      Data: 8
+    - Name: $v
+      Entry: 7
+      Data: 21|System.Collections.Generic.List`1[[AnimParamContainer, Assembly-CSharp]],
+        mscorlib
+    - Name: 
+      Entry: 12
+      Data: 4
+    - Name: 
+      Entry: 7
+      Data: 22|AnimParamContainer, Assembly-CSharp
+    - Name: data
+      Entry: 10
+      Data: 0
+    - Name: param
+      Entry: 7
+      Data: AnimParam, Assembly-CSharp
+    - Name: type
+      Entry: 3
+      Data: 4
+    - Name: name
+      Entry: 1
+      Data: RunForward
+    - Name: hash
+      Entry: 3
+      Data: -1803631756
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: floatParam
+      Entry: 4
+      Data: 0
+    - Name: intParam
+      Entry: 3
+      Data: 0
+    - Name: boolParam
+      Entry: 5
+      Data: false
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 23|AnimParamContainer, Assembly-CSharp
+    - Name: data
+      Entry: 10
+      Data: 0
+    - Name: param
+      Entry: 7
+      Data: AnimParam, Assembly-CSharp
+    - Name: type
+      Entry: 3
+      Data: 4
+    - Name: name
+      Entry: 1
+      Data: RunBackward
+    - Name: hash
+      Entry: 3
+      Data: 21299085
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: floatParam
+      Entry: 4
+      Data: 0
+    - Name: intParam
+      Entry: 3
+      Data: 0
+    - Name: boolParam
+      Entry: 5
+      Data: false
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 24|AnimParamContainer, Assembly-CSharp
+    - Name: data
+      Entry: 10
+      Data: 0
+    - Name: param
+      Entry: 7
+      Data: AnimParam, Assembly-CSharp
+    - Name: type
+      Entry: 3
+      Data: 4
+    - Name: name
+      Entry: 1
+      Data: RunLeft
+    - Name: hash
+      Entry: 3
+      Data: -1344608780
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: floatParam
+      Entry: 4
+      Data: 0
+    - Name: intParam
+      Entry: 3
+      Data: 0
+    - Name: boolParam
+      Entry: 5
+      Data: false
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 25|AnimParamContainer, Assembly-CSharp
+    - Name: data
+      Entry: 10
+      Data: 0
+    - Name: param
+      Entry: 7
+      Data: AnimParam, Assembly-CSharp
+    - Name: type
+      Entry: 3
+      Data: 4
+    - Name: name
+      Entry: 1
+      Data: RunRight
+    - Name: hash
+      Entry: 3
+      Data: 1302730617
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: floatParam
+      Entry: 4
+      Data: 0
+    - Name: intParam
+      Entry: 3
+      Data: 0
+    - Name: boolParam
+      Entry: 5
+      Data: false
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
       Entry: 8
       Data: 
     - Name: 
@@ -470,7 +743,14 @@ MonoBehaviour:
       Data: 9
     - Name: $v
       Entry: 7
-      Data: 12|AnimParamContainer, Assembly-CSharp
+      Data: 26|System.Collections.Generic.List`1[[AnimParamContainer, Assembly-CSharp]],
+        mscorlib
+    - Name: 
+      Entry: 12
+      Data: 1
+    - Name: 
+      Entry: 7
+      Data: 27|AnimParamContainer, Assembly-CSharp
     - Name: data
       Entry: 10
       Data: 0
@@ -502,6 +782,67 @@ MonoBehaviour:
       Entry: 8
       Data: 
     - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 3
+      Data: 10
+    - Name: $v
+      Entry: 7
+      Data: 28|System.Collections.Generic.List`1[[AnimParamContainer, Assembly-CSharp]],
+        mscorlib
+    - Name: 
+      Entry: 12
+      Data: 1
+    - Name: 
+      Entry: 7
+      Data: 29|AnimParamContainer, Assembly-CSharp
+    - Name: data
+      Entry: 10
+      Data: 0
+    - Name: param
+      Entry: 7
+      Data: AnimParam, Assembly-CSharp
+    - Name: type
+      Entry: 3
+      Data: 9
+    - Name: name
+      Entry: 1
+      Data: DodgeBackward
+    - Name: hash
+      Entry: 3
+      Data: 596922096
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: floatParam
+      Entry: 4
+      Data: 0
+    - Name: intParam
+      Entry: 3
+      Data: 0
+    - Name: boolParam
+      Entry: 5
+      Data: false
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
       Entry: 8
       Data: 
     - Name: 
@@ -512,7 +853,14 @@ MonoBehaviour:
       Data: 11
     - Name: $v
       Entry: 7
-      Data: 13|AnimParamContainer, Assembly-CSharp
+      Data: 30|System.Collections.Generic.List`1[[AnimParamContainer, Assembly-CSharp]],
+        mscorlib
+    - Name: 
+      Entry: 12
+      Data: 1
+    - Name: 
+      Entry: 7
+      Data: 31|AnimParamContainer, Assembly-CSharp
     - Name: data
       Entry: 10
       Data: 0
@@ -544,6 +892,12 @@ MonoBehaviour:
       Entry: 8
       Data: 
     - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
       Entry: 8
       Data: 
     - Name: 
@@ -554,7 +908,14 @@ MonoBehaviour:
       Data: 12
     - Name: $v
       Entry: 7
-      Data: 14|AnimParamContainer, Assembly-CSharp
+      Data: 32|System.Collections.Generic.List`1[[AnimParamContainer, Assembly-CSharp]],
+        mscorlib
+    - Name: 
+      Entry: 12
+      Data: 1
+    - Name: 
+      Entry: 7
+      Data: 33|AnimParamContainer, Assembly-CSharp
     - Name: data
       Entry: 10
       Data: 0
@@ -586,6 +947,12 @@ MonoBehaviour:
       Entry: 8
       Data: 
     - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
       Entry: 8
       Data: 
     - Name: 
@@ -596,7 +963,14 @@ MonoBehaviour:
       Data: 13
     - Name: $v
       Entry: 7
-      Data: 15|AnimParamContainer, Assembly-CSharp
+      Data: 34|System.Collections.Generic.List`1[[AnimParamContainer, Assembly-CSharp]],
+        mscorlib
+    - Name: 
+      Entry: 12
+      Data: 1
+    - Name: 
+      Entry: 7
+      Data: 35|AnimParamContainer, Assembly-CSharp
     - Name: data
       Entry: 10
       Data: 0
@@ -605,7 +979,117 @@ MonoBehaviour:
       Data: AnimParam, Assembly-CSharp
     - Name: type
       Entry: 3
-      Data: 9
+      Data: 4
+    - Name: name
+      Entry: 1
+      Data: GrapplePoint
+    - Name: hash
+      Entry: 3
+      Data: 1608506732
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: floatParam
+      Entry: 4
+      Data: 0
+    - Name: intParam
+      Entry: 3
+      Data: 0
+    - Name: boolParam
+      Entry: 5
+      Data: true
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 3
+      Data: 14
+    - Name: $v
+      Entry: 7
+      Data: 36|System.Collections.Generic.List`1[[AnimParamContainer, Assembly-CSharp]],
+        mscorlib
+    - Name: 
+      Entry: 12
+      Data: 1
+    - Name: 
+      Entry: 7
+      Data: 37|AnimParamContainer, Assembly-CSharp
+    - Name: data
+      Entry: 10
+      Data: 0
+    - Name: param
+      Entry: 7
+      Data: AnimParam, Assembly-CSharp
+    - Name: type
+      Entry: 3
+      Data: 4
+    - Name: name
+      Entry: 1
+      Data: GrappleEnemy
+    - Name: hash
+      Entry: 3
+      Data: 333804769
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: floatParam
+      Entry: 4
+      Data: 0
+    - Name: intParam
+      Entry: 3
+      Data: 0
+    - Name: boolParam
+      Entry: 5
+      Data: true
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 3
+      Data: 15
+    - Name: $v
+      Entry: 7
+      Data: 38|System.Collections.Generic.List`1[[AnimParamContainer, Assembly-CSharp]],
+        mscorlib
+    - Name: 
+      Entry: 12
+      Data: 2
+    - Name: 
+      Entry: 7
+      Data: 39|AnimParamContainer, Assembly-CSharp
+    - Name: data
+      Entry: 10
+      Data: 0
+    - Name: param
+      Entry: 7
+      Data: AnimParam, Assembly-CSharp
+    - Name: type
+      Entry: 3
+      Data: 4
     - Name: name
       Entry: 1
       Data: GrapplePoint
@@ -628,17 +1112,8 @@ MonoBehaviour:
       Entry: 8
       Data: 
     - Name: 
-      Entry: 8
-      Data: 
-    - Name: 
       Entry: 7
-      Data: 
-    - Name: $k
-      Entry: 3
-      Data: 14
-    - Name: $v
-      Entry: 7
-      Data: 16|AnimParamContainer, Assembly-CSharp
+      Data: 40|AnimParamContainer, Assembly-CSharp
     - Name: data
       Entry: 10
       Data: 0
@@ -647,7 +1122,7 @@ MonoBehaviour:
       Data: AnimParam, Assembly-CSharp
     - Name: type
       Entry: 3
-      Data: 9
+      Data: 4
     - Name: name
       Entry: 1
       Data: GrappleEnemy
@@ -666,6 +1141,67 @@ MonoBehaviour:
     - Name: boolParam
       Entry: 5
       Data: false
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 3
+      Data: 16
+    - Name: $v
+      Entry: 7
+      Data: 41|System.Collections.Generic.List`1[[AnimParamContainer, Assembly-CSharp]],
+        mscorlib
+    - Name: 
+      Entry: 12
+      Data: 1
+    - Name: 
+      Entry: 7
+      Data: 42|AnimParamContainer, Assembly-CSharp
+    - Name: data
+      Entry: 10
+      Data: 0
+    - Name: param
+      Entry: 7
+      Data: AnimParam, Assembly-CSharp
+    - Name: type
+      Entry: 3
+      Data: 4
+    - Name: name
+      Entry: 1
+      Data: CanChainAttack
+    - Name: hash
+      Entry: 3
+      Data: -580600789
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: floatParam
+      Entry: 4
+      Data: 0
+    - Name: intParam
+      Entry: 3
+      Data: 0
+    - Name: boolParam
+      Entry: 5
+      Data: false
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 13
+      Data: 
     - Name: 
       Entry: 8
       Data: 

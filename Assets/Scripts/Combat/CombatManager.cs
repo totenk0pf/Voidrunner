@@ -529,8 +529,10 @@ public class CombatManager : MonoBehaviour
     private void OnAttackEndMelee()
     {
         // NCLogger.Log($"fail the chain? End of Attack");
-        if(_curMeleeOrder == MeleeOrder.First) 
+        if (_curMeleeOrder == MeleeOrder.First)
+        {
             this.FireEvent(EventType.ReUpdateMovementAnimEvent);
+        }
     }
     
     private IEnumerator OnAttackEndRangedRoutine() {

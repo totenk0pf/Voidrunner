@@ -47,7 +47,7 @@ GameObject:
   - component: {fileID: 5714819504090998441}
   m_Layer: 13
   m_Name: Boss
-  m_TagString: Untagged
+  m_TagString: Boss
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -86,9 +86,12 @@ MonoBehaviour:
   enemyDamage: 20
   enemyHP: 500
   ui: {fileID: 2970694111892148635}
+  audios: {fileID: 0}
   animData: {fileID: 11400000, guid: 7e424ba713b89b94d94843999e0cc043, type: 2}
   enemyRootMotion: {fileID: 1769574224910183250}
   animator: {fileID: 8996152075190202655}
+  stopOffset: 0
+  knockbackEaseType: 0
   stopKnockbackLayers:
     serializedVersion: 2
     m_Bits: 1025
