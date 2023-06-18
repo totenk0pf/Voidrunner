@@ -20,8 +20,12 @@ public class Oxygen : MonoBehaviour {
 
     private void Update() {
 #if UNITY_EDITOR
-        DebugText();        
+        DebugText();
 #endif
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            ReduceOxygen(10f);
+        }
     }
 
     private void DebugText() {
@@ -45,6 +49,9 @@ public class Oxygen : MonoBehaviour {
             audioPlayer.PlayAudio(PlayerAudioType.PlayerDie);
         }
         else {
+            this.FireEvent(EventType.SpawnBloodEvent, new ParticleCallbackData(-transform.forward,
+                transform.position + -transform.forward * .5f + transform.up * .6f,
+                transform));
             audioPlayer.PlayAudio(PlayerAudioType.PlayerHurt);
         }
         FireUIEvent();
