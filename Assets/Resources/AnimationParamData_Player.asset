@@ -41,7 +41,7 @@ MonoBehaviour:
       Data: 
     - Name: 
       Entry: 12
-      Data: 17
+      Data: 18
     - Name: 
       Entry: 7
       Data: 
@@ -1184,6 +1184,61 @@ MonoBehaviour:
     - Name: hash
       Entry: 3
       Data: -580600789
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: floatParam
+      Entry: 4
+      Data: 0
+    - Name: intParam
+      Entry: 3
+      Data: 0
+    - Name: boolParam
+      Entry: 5
+      Data: false
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 3
+      Data: 17
+    - Name: $v
+      Entry: 7
+      Data: 43|System.Collections.Generic.List`1[[AnimParamContainer, Assembly-CSharp]],
+        mscorlib
+    - Name: 
+      Entry: 12
+      Data: 1
+    - Name: 
+      Entry: 7
+      Data: 44|AnimParamContainer, Assembly-CSharp
+    - Name: data
+      Entry: 10
+      Data: 0
+    - Name: param
+      Entry: 7
+      Data: AnimParam, Assembly-CSharp
+    - Name: type
+      Entry: 3
+      Data: 9
+    - Name: name
+      Entry: 1
+      Data: Hurt
+    - Name: hash
+      Entry: 3
+      Data: 1740614436
     - Name: 
       Entry: 8
       Data: 

@@ -31,7 +31,8 @@ public enum PlayerAnimState {
     GrapplePoint,
     GrappleEnemy,
     DeGrappleEverything,
-    StopAttackChain
+    StopAttackChain,
+    HurtByJohnnyCash
 }
 
 public class AnimData {
@@ -152,6 +153,11 @@ public class PlayerAnimator : MonoBehaviour, IInteractiveAnimator, ICombatAnimat
     public void OnAnimationAttackEnd()
     {
         this.FireEvent(EventType.AttackEndEvent, GetAnimator());
+    }
+
+    public void RecheckMovement()
+    {
+        this.FireEvent(EventType.ReUpdateMovementAnimEvent);
     }
     #endregion
     

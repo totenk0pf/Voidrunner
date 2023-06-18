@@ -1,5 +1,6 @@
 using Core.Events;
 using System.Timers;
+using Combat;
 using Core.Debug;
 using Player.Audio;
 using UI;
@@ -52,6 +53,10 @@ public class Oxygen : MonoBehaviour {
             this.FireEvent(EventType.SpawnBloodEvent, new ParticleCallbackData(-transform.forward,
                 transform.position + -transform.forward * .5f + transform.up * .6f,
                 transform));
+            this.FireEvent(EventType.PlayAnimationEvent, new AnimData(PlayerAnimState.HurtByJohnnyCash, 1f));
+            this.FireEvent(EventType.CancelAttackEvent, WeaponType.Melee);
+            this.FireEvent(EventType.CancelAttackEvent, WeaponType.Ranged);
+            this.FireEvent(EventType.CancelGrappleEvent, true);
             audioPlayer.PlayAudio(PlayerAudioType.PlayerHurt);
         }
         FireUIEvent();
