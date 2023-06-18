@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2169451557470553385}
   - component: {fileID: 7484112561959398342}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Medical_Bed
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -58,6 +58,10 @@ PrefabInstance:
     - target: {fileID: 1593630791686608, guid: 3ffba0a652fdfa84eab3e616969bb3f6, type: 3}
       propertyPath: m_Name
       value: SM_Prop_Screen_Small_02 (8)
+      objectReference: {fileID: 0}
+    - target: {fileID: 1593630791686608, guid: 3ffba0a652fdfa84eab3e616969bb3f6, type: 3}
+      propertyPath: m_Layer
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 1593630791686608, guid: 3ffba0a652fdfa84eab3e616969bb3f6, type: 3}
       propertyPath: m_IsActive
@@ -139,8 +143,16 @@ PrefabInstance:
       value: SM_Prop_Bed_Medical_01 (16)
       objectReference: {fileID: 0}
     - target: {fileID: 1702668941876556, guid: 749d56d0f8a95ef43b423b2da92f480a, type: 3}
+      propertyPath: m_Layer
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 1702668941876556, guid: 749d56d0f8a95ef43b423b2da92f480a, type: 3}
       propertyPath: m_StaticEditorFlags
       value: 2147483647
+      objectReference: {fileID: 0}
+    - target: {fileID: 1862389521156330, guid: 749d56d0f8a95ef43b423b2da92f480a, type: 3}
+      propertyPath: m_Layer
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 1862389521156330, guid: 749d56d0f8a95ef43b423b2da92f480a, type: 3}
       propertyPath: m_StaticEditorFlags
@@ -214,8 +226,16 @@ PrefabInstance:
       value: SM_Prop_Bed_Medical_01 (15)
       objectReference: {fileID: 0}
     - target: {fileID: 1702668941876556, guid: 749d56d0f8a95ef43b423b2da92f480a, type: 3}
+      propertyPath: m_Layer
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 1702668941876556, guid: 749d56d0f8a95ef43b423b2da92f480a, type: 3}
       propertyPath: m_StaticEditorFlags
       value: 2147483647
+      objectReference: {fileID: 0}
+    - target: {fileID: 1862389521156330, guid: 749d56d0f8a95ef43b423b2da92f480a, type: 3}
+      propertyPath: m_Layer
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 1862389521156330, guid: 749d56d0f8a95ef43b423b2da92f480a, type: 3}
       propertyPath: m_StaticEditorFlags

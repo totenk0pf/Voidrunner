@@ -50,7 +50,7 @@ GameObject:
   - component: {fileID: 8848387838451286161}
   m_Layer: 8
   m_Name: Crawler
-  m_TagString: Untagged
+  m_TagString: Crawler
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -93,8 +93,8 @@ MonoBehaviour:
   animData: {fileID: 11400000, guid: cb0b6e593aa29d741b115bb5825fccdb, type: 2}
   enemyRootMotion: {fileID: 2345367977018875063}
   animator: {fileID: 3703614446501467867}
-  stopOffset: 0
-  knockbackEaseType: 0
+  stopOffset: 0.1
+  knockbackEaseType: 18
   stopKnockbackLayers:
     serializedVersion: 2
     m_Bits: 1025
@@ -128,9 +128,9 @@ NavMeshAgent:
   m_AgentTypeID: 0
   m_Radius: 0.5
   m_Speed: 3
-  m_Acceleration: 0
+  m_Acceleration: 2
   avoidancePriority: 50
-  m_AngularSpeed: 300
+  m_AngularSpeed: 360
   m_StoppingDistance: 1
   m_AutoTraverseOffMeshLink: 1
   m_AutoBraking: 1
