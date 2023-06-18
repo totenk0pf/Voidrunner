@@ -16,17 +16,22 @@ public enum PlayerAnimState {
     MeleeAttack2,
     MeleeAttack3,
     RangedAttack,
-    Idle,
+
     RunForward,
     RunBackward,
     RunRight,
     RunLeft,
+    HaltAllMovement,
+    
     DodgeForward,
     DodgeBackward,
     DodgeRight,
     DodgeLeft,
+    
     GrapplePoint,
-    GrappleEnemy
+    GrappleEnemy,
+    DeGrappleEverything,
+    StopAttackChain
 }
 
 public class AnimData {
@@ -98,7 +103,7 @@ public class PlayerAnimator : MonoBehaviour, IInteractiveAnimator, ICombatAnimat
 
     private void UpdateAnimAttribute(AnimData data) {
         _animData = data;
-        if (data.State == PlayerAnimState.Idle)
+        if (data.State == PlayerAnimState.HaltAllMovement)
         {
             _animData = data;
         }
@@ -113,7 +118,7 @@ public class PlayerAnimator : MonoBehaviour, IInteractiveAnimator, ICombatAnimat
     #region IInteractiveAnimator
     public void OnAnimationStart()
     {
-        if (_animData is { State: PlayerAnimState.Idle })
+        if (_animData is { State: PlayerAnimState.HaltAllMovement })
         {
             this.FireEvent(EventType.CancelAttackEvent, WeaponType.Melee);
             this.FireEvent(EventType.CancelAttackEvent, WeaponType.Ranged);
@@ -127,7 +132,10 @@ public class PlayerAnimator : MonoBehaviour, IInteractiveAnimator, ICombatAnimat
         this.FireEvent(EventType.AttackBeginEvent, GetAnimator());
     }
 
-    public void OnAnimationEnd() {
+    public void OnAnimationEnd()
+    {
+        if (_animData == null) return;
+        
         if (_activeType == WeaponType.Ranged) {
             SetParam(PlayerAnimState.RangedAttack, false);
         }
@@ -218,8 +226,8 @@ public class PlayerAnimator : MonoBehaviour, IInteractiveAnimator, ICombatAnimat
 
             //this specific if statement was added due to previous system did not support multiple params,
             //delete this when you've updated the Anim Param Data
-            if (state == PlayerAnimState.Idle) {
-                SetParam(PlayerAnimState.RangedAttack, false);
+            if (state == PlayerAnimState.HaltAllMovement) {
+                // SetParam(PlayerAnimState.RangedAttack, false);
             }
         }
     }

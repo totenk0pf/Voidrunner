@@ -177,6 +177,7 @@ public class PlayerMovementController : MonoBehaviour
         {
             _moveID = 1;
             NCLogger.Log($"Forward");
+            this.FireEvent(EventType.PlayAnimationEvent, new AnimData(PlayerAnimState.HaltAllMovement, 1f));
             this.FireEvent(EventType.PlayAnimationEvent, new AnimData(PlayerAnimState.RunForward, 1f));
             return;
         }
@@ -184,6 +185,7 @@ public class PlayerMovementController : MonoBehaviour
         {
             _moveID = -1;
             NCLogger.Log($"Backward");
+            this.FireEvent(EventType.PlayAnimationEvent, new AnimData(PlayerAnimState.HaltAllMovement, 1f));
             this.FireEvent(EventType.PlayAnimationEvent, new AnimData(PlayerAnimState.RunBackward, 1f));
             return;
         }
@@ -191,6 +193,7 @@ public class PlayerMovementController : MonoBehaviour
         {
             _moveID = -2;
             NCLogger.Log($"Left");
+            this.FireEvent(EventType.PlayAnimationEvent, new AnimData(PlayerAnimState.HaltAllMovement, 1f));
             this.FireEvent(EventType.PlayAnimationEvent, new AnimData(PlayerAnimState.RunLeft, 1f));
             return;
         }
@@ -198,6 +201,7 @@ public class PlayerMovementController : MonoBehaviour
         {
             _moveID = 2;
             NCLogger.Log($"Right");
+            this.FireEvent(EventType.PlayAnimationEvent, new AnimData(PlayerAnimState.HaltAllMovement, 1f));
             this.FireEvent(EventType.PlayAnimationEvent, new AnimData(PlayerAnimState.RunRight, 1f));
             return;
         }
@@ -209,7 +213,7 @@ public class PlayerMovementController : MonoBehaviour
         {
             _moveID = 0;
             NCLogger.Log($"(Movement) Idle");
-            this.FireEvent(EventType.PlayAnimationEvent, new AnimData(PlayerAnimState.Idle, 1));
+            this.FireEvent(EventType.PlayAnimationEvent, new AnimData(PlayerAnimState.HaltAllMovement, 1));
         }
         //NCLogger.Log($"{new Vector2 (Input.GetAxis("Horizontal"), Input.GetAxis("Vertical"))}");
         
@@ -563,6 +567,8 @@ public class PlayerMovementController : MonoBehaviour
         {
             _moveID = 1;
             NCLogger.Log($"Forward");
+            this.FireEvent(EventType.PlayAnimationEvent, new AnimData(PlayerAnimState.StopAttackChain, 1f));
+            this.FireEvent(EventType.PlayAnimationEvent, new AnimData(PlayerAnimState.HaltAllMovement, 1f));
             if(moveState == MovementState.Normal) 
                 this.FireEvent(EventType.PlayAnimationEvent, new AnimData(PlayerAnimState.RunForward, 1f));
             else if (moveState == MovementState.Dodge)
@@ -573,6 +579,8 @@ public class PlayerMovementController : MonoBehaviour
         {
             _moveID = -1;
             NCLogger.Log($"Backward");
+            this.FireEvent(EventType.PlayAnimationEvent, new AnimData(PlayerAnimState.StopAttackChain, 1f));
+            this.FireEvent(EventType.PlayAnimationEvent, new AnimData(PlayerAnimState.HaltAllMovement, 1f));
             if(moveState == MovementState.Normal) 
                 this.FireEvent(EventType.PlayAnimationEvent, new AnimData(PlayerAnimState.RunBackward, 1f));
             else if (moveState == MovementState.Dodge)
@@ -583,6 +591,8 @@ public class PlayerMovementController : MonoBehaviour
         {
             _moveID = -2;
             NCLogger.Log($"Left");
+            this.FireEvent(EventType.PlayAnimationEvent, new AnimData(PlayerAnimState.StopAttackChain, 1f));
+            this.FireEvent(EventType.PlayAnimationEvent, new AnimData(PlayerAnimState.HaltAllMovement, 1f));
             if(moveState == MovementState.Normal) 
                 this.FireEvent(EventType.PlayAnimationEvent, new AnimData(PlayerAnimState.RunLeft, 1f));
             else if (moveState == MovementState.Dodge)
@@ -593,6 +603,8 @@ public class PlayerMovementController : MonoBehaviour
         {
             _moveID = 2;
             NCLogger.Log($"Right");
+            this.FireEvent(EventType.PlayAnimationEvent, new AnimData(PlayerAnimState.StopAttackChain, 1f));
+            this.FireEvent(EventType.PlayAnimationEvent, new AnimData(PlayerAnimState.HaltAllMovement, 1f));
             if(moveState == MovementState.Normal) 
                 this.FireEvent(EventType.PlayAnimationEvent, new AnimData(PlayerAnimState.RunRight, 1f));
             else if (moveState == MovementState.Dodge)
@@ -607,7 +619,9 @@ public class PlayerMovementController : MonoBehaviour
         {
             _moveID = 0;
             NCLogger.Log($"(Movement) Idle");
-            this.FireEvent(EventType.PlayAnimationEvent, new AnimData(PlayerAnimState.Idle, 1));
+            this.FireEvent(EventType.PlayAnimationEvent, new AnimData(PlayerAnimState.StopAttackChain, 1f));
+            this.FireEvent(EventType.PlayAnimationEvent, new AnimData(PlayerAnimState.HaltAllMovement, 1f));
+            // this.FireEvent(EventType.PlayAnimationEvent, new AnimData(PlayerAnimState.Idle, 1));
         }
     }
     
