@@ -297,6 +297,7 @@ namespace Grapple {
                 this.FireEvent(EventType.ReUpdateMovementAnimEvent);
             }
             
+            this.FireEvent(EventType.PlayAnimationEvent, new AnimData(PlayerAnimState.DeGrappleEverything, 1f));
             EventDispatcher.Instance.FireEvent(EventType.SetMovementStateEvent, PlayerMovementController.MovementState.Normal);
             _currentGrappleHit = new RaycastHit();
             _lr.enabled = false;
@@ -321,10 +322,11 @@ namespace Grapple {
                 Rigidbody.AddForce(Vector3.up*momentumForce/3, forceMode);
                 this.FireEvent(EventType.ReUpdateMovementAnimEvent);
             }
+            this.FireEvent(EventType.PlayAnimationEvent, new AnimData(PlayerAnimState.DeGrappleEverything, 1f));
+            this.FireEvent(EventType.ReUpdateMovementAnimEvent);
             EventDispatcher.Instance.FireEvent(EventType.SetMovementStateEvent, PlayerMovementController.MovementState.Normal);
             //damping fall velocity
             StartCoroutine(_controller.GravityDampRoutine(gravityDampDuration));
-
             currentGrappleType = GrappleType.None;
             currGrappleObj = null;
             _currentGrappleHit = new RaycastHit();
