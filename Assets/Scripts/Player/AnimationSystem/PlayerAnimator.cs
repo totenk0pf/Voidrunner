@@ -191,44 +191,58 @@ public class PlayerAnimator : MonoBehaviour, IInteractiveAnimator, ICombatAnimat
     #region IAnimator
     public void SetParam(PlayerAnimState state)
     {
-        var param = animationParamData.GetAnimParam(state);
+        var containerList = animationParamData.GetAnimParam(state);
         //NCLogger.Log($"{param.paramName}");
         GetAnimator().speed = _animData?.AnimSpeed ?? 1;
-        var id = param.Hash;
-
-        switch (param.Type)
+        foreach (var param in containerList)
         {
-            case AnimatorControllerParameterType.Trigger:
-                GetAnimator().SetTrigger(id);
-                break;
-            case AnimatorControllerParameterType.Float:
-                GetAnimator().SetFloat(id, param.floatParam);
-                break;
-            case AnimatorControllerParameterType.Int:
-                GetAnimator().SetFloat(id, param.intParam);
-                break;
-            case AnimatorControllerParameterType.Bool:
-                GetAnimator().SetBool(id, param.boolParam);
-                break;
-            default:
-                throw new ArgumentOutOfRangeException();
-        }
+            var id = param.Hash;
 
-        if (state == PlayerAnimState.Idle) {
-            SetParam(PlayerAnimState.RangedAttack, false);
+            switch (param.Type)
+            {
+                case AnimatorControllerParameterType.Trigger:
+                    GetAnimator().SetTrigger(id);
+                    break;
+                case AnimatorControllerParameterType.Float:
+                    GetAnimator().SetFloat(id, param.floatParam);
+                    break;
+                case AnimatorControllerParameterType.Int:
+                    GetAnimator().SetFloat(id, param.intParam);
+                    break;
+                case AnimatorControllerParameterType.Bool:
+                    GetAnimator().SetBool(id, param.boolParam);
+                    break;
+                default:
+                    throw new ArgumentOutOfRangeException();
+            }
+
+            //this specific if statement was added due to previous system did not support multiple params,
+            //delete this when you've updated the Anim Param Data
+            if (state == PlayerAnimState.Idle) {
+                SetParam(PlayerAnimState.RangedAttack, false);
+            }
         }
     }
 
+    //this specific if statement was added due to previous system did not support multiple params,
+    //delete this when you've updated the Anim Param Data
     public void SetParam(PlayerAnimState state, bool value)
     {
-        var param = animationParamData.GetAnimParam(state);
+        var containerList = animationParamData.GetAnimParam(state);
         GetAnimator().speed = _animData?.AnimSpeed ?? 1;
-        var id = param.Hash;
 
-        if (param.Type == AnimatorControllerParameterType.Bool) {
-            GetAnimator().SetBool(id, value);
-        } else {
-            NCLogger.Log($"Anim State: {state} uses {param.Type} not Bool", LogLevel.ERROR);
+        foreach (var param in containerList)
+        {
+            var id = param.Hash;
+
+            if (param.Type == AnimatorControllerParameterType.Bool)
+            {
+                GetAnimator().SetBool(id, value);
+            }
+            else
+            {
+                NCLogger.Log($"Anim State: {state} uses {param.Type} not Bool", LogLevel.ERROR);
+            }
         }
     }
     
@@ -242,12 +256,16 @@ public class PlayerAnimator : MonoBehaviour, IInteractiveAnimator, ICombatAnimat
         this.FireEvent(EventType.ReceivePlayerAnimatorEvent, this);
     }
     public void ResetTrigger(PlayerAnimState state) {
-        var param = animationParamData.GetAnimParam(state);
-        if (param.Type != AnimatorControllerParameterType.Trigger) {
-            NCLogger.Log($"Not Trigger Param -> Not Reset-able", LogLevel.INFO);
-            return;
+        var containerList = animationParamData.GetAnimParam(state);
+
+        foreach (var param in containerList)
+        {
+            if (param.Type != AnimatorControllerParameterType.Trigger) {
+                NCLogger.Log($"Not Trigger Param -> Not Reset-able", LogLevel.INFO);
+                continue;
+            }
+            GetAnimator().ResetTrigger(param.Hash);
         }
-        GetAnimator().ResetTrigger(param.Hash);
     }
 
     public void PauseAnimator(float speed = 0.01f) {

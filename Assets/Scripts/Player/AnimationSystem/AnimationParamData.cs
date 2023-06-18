@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using Core.Logging;
 using Sirenix.OdinInspector;
 using UnityEngine;
@@ -11,16 +12,20 @@ namespace Player.AnimationSystem
     public class AnimationParamData : SerializedScriptableObject, IHardReferenceAnim
     {
         [SerializeField] private HardReferenceAnimData data;
-        [SerializeField] private Dictionary<PlayerAnimState, AnimParamContainer> animationStates;
+        [SerializeField] private Dictionary<PlayerAnimState, List<AnimParamContainer>> animationStates;
 
-        public Dictionary<PlayerAnimState, AnimParamContainer> AnimationStates => animationStates;
+        public Dictionary<PlayerAnimState, List<AnimParamContainer>> AnimationStates => animationStates;
 
-        public AnimParamContainer GetAnimParam(PlayerAnimState state)
+        public List<AnimParamContainer> GetAnimParam(PlayerAnimState state)
         {
             var container = animationStates[state];
-            if (container != null && !string.IsNullOrEmpty(container.param.name)) return container;
-            NCLogger.Log($"AnimParam doesn't exist", LogLevel.ERROR);
-            return null;
+
+            if (container.Count == 0 || container.Any(param => string.IsNullOrEmpty(param.param.name))) {
+                NCLogger.Log($"AnimParam doesn't exist", LogLevel.ERROR);
+                return null;
+            }
+            
+            return container;
         }
 
         private void OnEnable() {
@@ -34,7 +39,9 @@ namespace Player.AnimationSystem
             data.ValidateData();
             //Populate ref later
             foreach (var val in animationStates.Values) {
-                val.data = data;
+                foreach (var container in val) {
+                    container.data = data;
+                }
             }
         }
     }
