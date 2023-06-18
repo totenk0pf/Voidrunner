@@ -86,7 +86,7 @@ public class ParticleBase : PooledObjectBase
         while (ParticleSystem.isPlaying)
         {
             //transform.up = UnityEngine.Random.onUnitSphere;
-            NCLogger.Log($"Running");
+            // NCLogger.Log($"Running");
             yield return null;
             if (canRelease)
             {

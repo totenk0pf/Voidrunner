@@ -516,7 +516,7 @@ public class CombatManager : MonoBehaviour
 
     private void OnAttackEnd()
     {
-        NCLogger.Log($"(Combat) Idle");
+        // NCLogger.Log($"(Combat) Idle");
         //this.FireEvent(EventType.PlayAnimationEvent, new AnimData(PlayerAnimState.Idle, 1));
         if (_activeWeapon == WeaponType.Melee)
             OnAttackEndMelee();
@@ -531,6 +531,7 @@ public class CombatManager : MonoBehaviour
         // NCLogger.Log($"fail the chain? End of Attack");
         if (_curMeleeOrder == MeleeOrder.First)
         {
+            this.FireEvent(EventType.PlayAnimationEvent, new AnimData(PlayerAnimState.StopAttackChain, 1f));
             this.FireEvent(EventType.ReUpdateMovementAnimEvent);
         }
     }
