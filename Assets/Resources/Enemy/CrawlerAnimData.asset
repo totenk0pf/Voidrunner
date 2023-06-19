@@ -22,19 +22,16 @@ MonoBehaviour:
     PrefabModifications: []
     SerializationNodes: []
   animParams:
-  - type: 4
-    name: isIdle
-    hash: 2098831385
   - type: 9
     name: Hit
     hash: 1654612129
-  - type: 4
-    name: isRunning
-    hash: 1239866031
   - type: 9
     name: Kick
     hash: -1092128709
   - type: 9
     name: Sweep
     hash: 1240087862
-  controller: {fileID: 9100000, guid: 4c1ff995a8827df4aaed34fce68a3101, type: 2}
+  - type: 4
+    name: Running
+    hash: -526601997
+  controller: {fileID: 9100000, guid: 5a443af47bb5ce54e8452146ccd142d5, type: 2}
