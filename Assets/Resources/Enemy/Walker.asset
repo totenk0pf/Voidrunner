@@ -32,11 +32,11 @@ MonoBehaviour:
     hash: 1654612129
   hostileAnim:
   - type: 4
-    name: isWalking
-    hash: -830007593
+    name: Running
+    hash: -526601997
   - type: 4
-    name: isRunning
-    hash: 1239866031
+    name: Walking
+    hash: 1744665739
   attackAnim:
   - type: 9
     name: Attack

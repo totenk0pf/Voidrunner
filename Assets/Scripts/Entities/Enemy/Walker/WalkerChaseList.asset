@@ -39,16 +39,16 @@ MonoBehaviour:
       Data: 4
     - Name: name
       Entry: 1
-      Data: isWalking
+      Data: Running
     - Name: hash
       Entry: 3
-      Data: -830007593
+      Data: -526601997
     - Name: 
       Entry: 8
       Data: 
     - Name: weight
       Entry: 4
-      Data: 0
+      Data: 0.5
     - Name: 
       Entry: 8
       Data: 
@@ -63,10 +63,10 @@ MonoBehaviour:
       Data: 4
     - Name: name
       Entry: 1
-      Data: isRunning
+      Data: Walking
     - Name: hash
       Entry: 3
-      Data: 1239866031
+      Data: 1744665739
     - Name: 
       Entry: 8
       Data: 
@@ -85,8 +85,8 @@ MonoBehaviour:
   data: {fileID: 11400000, guid: 9c5d40d875951d3498ef3dabc3596dfc, type: 2}
   moves:
   - type: 4
-    name: isWalking
-    hash: -830007593
+    name: Running
+    hash: -526601997
   - type: 4
-    name: isRunning
-    hash: 1239866031
+    name: Walking
+    hash: 1744665739
