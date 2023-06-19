@@ -201,6 +201,7 @@ namespace Player {
                     _currentXP = (_currentXP + amount) - _levelUpXP;
                     _levelUpXP = 50 * Mathf.Pow(1.2f, level);
                     level++;
+                    this.FireEvent(EventType.LevelUpEvent, level);
                     _currSkillPoints++;
                     break;
                 
