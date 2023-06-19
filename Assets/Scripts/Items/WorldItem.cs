@@ -1,3 +1,4 @@
+using Audio;
 using Core.Events;
 using Unity.Mathematics;
 using UnityEngine;
@@ -6,6 +7,7 @@ using EventType = Core.Events.EventType;
 namespace Items {
     public class WorldItem : MonoBehaviour, IItems {
         public ItemData itemRef;
+        public AudioClip pickupSound;
         [SerializeField] private MeshFilter filter;
         [SerializeField] private MeshRenderer renderer;
         [SerializeField] private GameObject fxPrefab;
@@ -15,6 +17,7 @@ namespace Items {
                 data = itemRef
             });
             if (fxPrefab) Instantiate(fxPrefab, transform.position, Quaternion.identity, null);
+            AudioManager.Instance.PlayClip(transform.position, pickupSound);
             Destroy(gameObject);
         }
 

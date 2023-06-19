@@ -79,6 +79,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   itemRef: {fileID: 11400000, guid: fbc4f28fdcc814c4d8b3e94cde49eb0f, type: 2}
+  pickupSound: {fileID: 8300000, guid: 3a5da21b55cfbe8489e33b02fec945fc, type: 3}
   filter: {fileID: 4867136567029789311}
   renderer: {fileID: 4867136567029789308}
   fxPrefab: {fileID: 0}
