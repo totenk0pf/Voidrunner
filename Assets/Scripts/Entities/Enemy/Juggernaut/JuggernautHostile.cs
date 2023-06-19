@@ -25,4 +25,8 @@ public class JuggernautHostile : EnemyState {
         
         return this;
     }
+
+    protected override void RestartState() {
+        canSwitch = true;
+    }
 }

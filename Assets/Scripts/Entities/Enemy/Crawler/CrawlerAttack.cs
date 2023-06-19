@@ -58,6 +58,16 @@ public class CrawlerAttack : EnemyState
         _isAttacking = false;
     }
     
+    protected override void RestartState() {
+        StopAllCoroutines();
+        foreach (var anim in _animData.attackAnim) {
+            ResetAnim(anim);
+        }
+                
+        _canAttack = false;
+        inRange = false;
+    }
+    
     public override void OnTriggerExit(Collider other) {
         if (CheckLayerMask.IsInLayerMask(other.gameObject, playerMask)) {
             StopAllCoroutines();

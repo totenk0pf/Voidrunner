@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using Combat;
 using Core.Events;
 using DG.Tweening;
@@ -67,7 +68,7 @@ namespace Player {
 
         private Oxygen _oxygen;
         private CheckpointData _currCPdata = new();
-        private List<Door> _doorWalkedList = new();
+        [ReadOnly] public List<Door> _doorWalkedList = new();
 
         private void Awake() {
             //get save here
@@ -138,20 +139,22 @@ namespace Player {
             skillValues = _currCPdata.skillValues;
             _currentXP = _currCPdata.xp;
             level = _currCPdata.level;
-            ModifyPlayerComponent();
 
-            if (_doorWalkedList.Count > 0) {
-                foreach (var door in _doorWalkedList) {
-                    door.ResetDoor(_currCPdata.roomToReset);
+            Room roomToReset = null;
+            for (var i = _doorWalkedList.Count - 1; i >= 0; i--) {
+                if (_doorWalkedList[i].roomInfo.previousRoom.type == RoomType.Hallway) {
+                    roomToReset = _doorWalkedList[i].roomInfo.previousRoom;
+                    break;
                 }
-                _doorWalkedList.Clear();
             }
             
-            this
-                .FireEvent(EventType.SpawnParticleEnemyDeadEvent, 
+            _currCPdata.roomToReset = roomToReset != null ? roomToReset : _doorWalkedList[0].roomInfo.previousRoom;
+            ModifyPlayerComponent();
+
+            this.FireEvent(EventType.SpawnParticleEnemyDeadEvent, 
                     new ParticleCallbackData(Vector3.up, transform.position + Vector3.up));
 
-            DOVirtual.DelayedCall(1.4f, () => {
+            DOVirtual.DelayedCall(1.5f, () => {
                 this.FireEvent(EventType.ToggleDeathUI);
                 Cursor.lockState = CursorLockMode.None;
             });
@@ -159,8 +162,17 @@ namespace Player {
 
         private void HandlePlayerRespawn() {
             Cursor.lockState = CursorLockMode.Locked;
-            ModifyPlayerComponent(true);
             if (_currCPdata.roomToReset != null) {
+                if (_doorWalkedList.Count > 0) {
+                    foreach (var door in _doorWalkedList) {
+                        door.ResetDoor(_currCPdata.roomToReset);
+                    }
+                
+                    _doorWalkedList.Clear();
+                }
+                
+                EventDispatcher.Instance.FireEvent(EventType.EnableRoom, _currCPdata.roomToReset);
+                EventDispatcher.Instance.FireEvent(EventType.DoorInvoked);
                 var doorTransform = _currCPdata.roomToReset.gameObject.transform;
                 gameObject.transform.position = doorTransform.position + new Vector3(0, doorTransform.localScale.y, 0);
             }
@@ -173,6 +185,7 @@ namespace Player {
             _oxygen.hasDied = false;
             _oxygen.FireUIEvent();
             FireUI();
+            ModifyPlayerComponent(true);
         }
 
         private void HandlePlayerEnterDoor(Door door) {

@@ -82,7 +82,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7d9f9bc60c2f5374f98158e6b53e5c28, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  idleState: {fileID: 0}
+  idleState: {fileID: 7684502359274288927}
   currentState: {fileID: 7684502359274288927}
   isRunning: 1
 --- !u!195 &5173689491316041482
@@ -425,7 +425,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   canMove: 1
-  useNavAgent: 0
 --- !u!4 &1757594019284994758 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 014d773ffa385f740b676cd0ffad99a4, type: 3}

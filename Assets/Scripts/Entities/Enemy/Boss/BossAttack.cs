@@ -62,6 +62,16 @@ namespace Entities.Enemy.Boss {
             yield return new WaitUntil(() => animator.GetCurrentAnimatorStateInfo(0).normalizedTime >= 0.95f);
             _isAttacking = false;
         }
+        
+        protected override void RestartState() {
+            StopAllCoroutines();
+            foreach (var move in animData.moveList) {
+                ResetAnim(move.anim);
+            }
+                
+            _canAttack = false;
+            inRange = false;
+        }
 
         public override void OnTriggerExit(Collider other) {
             if (CheckLayerMask.IsInLayerMask(other.gameObject, playerMask)) {

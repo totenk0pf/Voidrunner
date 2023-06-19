@@ -113,7 +113,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7d9f9bc60c2f5374f98158e6b53e5c28, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  idleState: {fileID: 0}
+  idleState: {fileID: 739630789201594016}
   currentState: {fileID: 739630789201594016}
   isRunning: 1
 --- !u!195 &5173689491316041482
@@ -572,7 +572,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   canMove: 1
-  useNavAgent: 0
 --- !u!114 &8348873772181539459
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -587,6 +586,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   attack: {fileID: 8040179586084284091}
   grabPoint: {fileID: 1806515288677399384}
+--- !u!114 &591612718
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2410337149969199583}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2f8f84aff840a0f4a96591b1bca3e79e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  enemyAudioData: {fileID: 11400000, guid: dc947bef87c881349a4d17ea507a6d30, type: 2}
 --- !u!4 &3042441525182540645 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 1d10bbbc64030294c968c06cbb4ffd52, type: 3}

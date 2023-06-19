@@ -36,6 +36,10 @@ public class WalkerHostile : EnemyState
         return this;
     }
 
+    protected override void RestartState() {
+        ResetState();
+    }
+
     public void ResetState() {
         _canSwitchState = true;
         _canSwitchChaseState = true;

@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using Core.Events;
 using UnityEngine;
 using UnityEngine.AI;
+using EventType = Core.Events.EventType;
 
 namespace Entities.Enemy {
     public class EnemyMoveRootMotion : MonoBehaviour {
@@ -10,7 +12,6 @@ namespace Entities.Enemy {
         private NavMeshAgent _agent;
 
         [HideInInspector] public bool canMove = true;
-        [HideInInspector] public bool useNavAgent = false;
 
         private Vector2 _lastSmoothDeltaPos;
         private Vector2 _lastVelocity;
@@ -21,6 +22,12 @@ namespace Entities.Enemy {
 
             _agent.updatePosition = false;
             _agent.acceleration = _agent.angularSpeed;
+        }
+
+        private void Start() {
+            EventDispatcher.Instance.AddListener(EventType.OnPlayerRespawn, _ => {
+                canMove = true;
+            });
         }
 
         private void Update() {

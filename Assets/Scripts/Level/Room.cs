@@ -58,7 +58,7 @@ namespace Level {
             }
 
             _worldSpaceBounds = tempBounds;
-            col.size          = tempBounds.size;
+            col.size          = new Vector3(tempBounds.size.x, 3, tempBounds.size.z);
             col.center        = transform.worldToLocalMatrix.MultiplyPoint3x4(tempBounds.center);
             _pivot            = new Vector3(tempBounds.center.x, tempBounds.min.y, tempBounds.center.z);
             NCLogger.Log($"Bound generated: size of {col.size.ToString()}");
