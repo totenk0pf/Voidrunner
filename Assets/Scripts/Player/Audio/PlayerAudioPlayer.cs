@@ -32,7 +32,8 @@ namespace Player.Audio {
         
         public void PlayAudio(PlayerAudioType type) {
             var clip = GetAudioClipFromType(type);
-            AudioManager.Instance.PlayClip(transform.position, clip);
+            var boosted = type == PlayerAudioType.MovementWalk;
+            AudioManager.Instance.PlayClip(transform.position, clip, boosted);
         }
         
         public void PlayAudio(AudioClip clip) {

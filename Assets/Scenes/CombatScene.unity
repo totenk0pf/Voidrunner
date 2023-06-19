@@ -130,6 +130,18 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1964551644, guid: 12deb3e0214d891dbb950efb235efcdf, type: 3}
+      propertyPath: Priority
+      value: 128
+      objectReference: {fileID: 0}
+    - target: {fileID: 1964551644, guid: 12deb3e0214d891dbb950efb235efcdf, type: 3}
+      propertyPath: m_Volume
+      value: 0.8
+      objectReference: {fileID: 0}
+    - target: {fileID: 1964551644, guid: 12deb3e0214d891dbb950efb235efcdf, type: 3}
+      propertyPath: OutputAudioMixerGroup
+      value: 
+      objectReference: {fileID: 8740509187952158577, guid: bd3b9827eeffb8143bddf49dc163ce90, type: 2}
     - target: {fileID: 95660451982001573, guid: 12deb3e0214d891dbb950efb235efcdf, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
@@ -1842,6 +1854,18 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7913523146034663733, guid: 12deb3e0214d891dbb950efb235efcdf, type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7913523146034663733, guid: 12deb3e0214d891dbb950efb235efcdf, type: 3}
+      propertyPath: m_audioClip
+      value: 
+      objectReference: {fileID: 8300000, guid: 488d0f170aa5ca94992235a16f63aeed, type: 3}
+    - target: {fileID: 7913523146034663733, guid: 12deb3e0214d891dbb950efb235efcdf, type: 3}
+      propertyPath: OutputAudioMixerGroup
+      value: 
+      objectReference: {fileID: -8751124698146585798, guid: bd3b9827eeffb8143bddf49dc163ce90, type: 2}
     - target: {fileID: 8006827723065509117, guid: 12deb3e0214d891dbb950efb235efcdf, type: 3}
       propertyPath: m_AnchorMax.y
       value: 1

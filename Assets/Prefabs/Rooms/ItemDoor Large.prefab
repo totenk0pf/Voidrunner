@@ -339,13 +339,14 @@ MonoBehaviour:
   roomInfo:
     previousRoom: {fileID: 0}
     nextRoom: {fileID: 0}
-  requiredItems: []
   doorMesh: {fileID: 2717664283202022517}
   yOffset: -3
   duration: 1
   easeType: 22
+  audioData: {fileID: 11400000, guid: 0724f8758c5563e4f967b530d172d20c, type: 2}
   isCheckpoint: 0
   canOpen: 0
+  requiredItems: []
 --- !u!1 &8406391674173348663
 GameObject:
   m_ObjectHideFlags: 0

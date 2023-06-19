@@ -120,7 +120,7 @@ public class EnemyBase : EntityBase {
                 blood.ForceRelease();
             }
             this.FireEvent(EventType.SpawnParticleEnemyDeadEvent, new ParticleCallbackData(Vector3.up, transform.position + Vector3.up));
-            AudioManager.Instance.PlayClip(transform.position, GetAudioClip(EnemyAudioType.GoreHard));
+            AudioManager.Instance.PlayClip(transform.position, GetAudioClip(EnemyAudioType.GoreHard), true);
             Destroy(gameObject);
         }
     }

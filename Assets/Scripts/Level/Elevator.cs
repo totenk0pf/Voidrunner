@@ -25,6 +25,10 @@ namespace Level {
         public float elevatorDuration;
         public Ease elevatorEaseType;
 
+        [TitleGroup("Audio Config")] 
+        public AudioClip elevatorDoorSound;
+        public AudioClip elevatorLoopSound;
+
         private Vector3 _originalDoor1Pos;
         private Vector3 _originalDoor2Pos;
 

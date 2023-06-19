@@ -343,6 +343,7 @@ MonoBehaviour:
   yOffset: -3
   duration: 1
   easeType: 22
+  audioData: {fileID: 11400000, guid: 0724f8758c5563e4f967b530d172d20c, type: 2}
   isCheckpoint: 0
   canOpen: 1
 --- !u!1 &8406391674173348663

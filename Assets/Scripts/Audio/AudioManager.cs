@@ -1,7 +1,9 @@
 using System;
 using Core.Patterns;
+using DG.Tweening;
 using Sirenix.OdinInspector;
 using UnityEngine;
+using UnityEngine.Audio;
 
 namespace Audio {
     public class AudioManager : Singleton<AudioManager> {
@@ -10,14 +12,35 @@ namespace Audio {
             Resume,
             Stop,
         }
+       
         [ReadOnly] public AudioSource audioSource;
+        [ReadOnly] public AudioMixer audioMixer;
 
+        private AudioMixerGroup[] _effectMixerGroup;
+        
         private void Awake() {
             audioSource = gameObject.AddComponent<AudioSource>();
+            audioMixer = Resources.Load<AudioMixer>("Audio/MasterMixer");
+            
+            //0 index is normal, 1 for boost low volume 
+            _effectMixerGroup = audioMixer.FindMatchingGroups("Effects");
         }
         
-        public void PlayClip(Vector3 position, AudioClip audioClip) {
-            AudioSource.PlayClipAtPoint(audioClip, position);
+        public void PlayClip(Vector3 position, AudioClip audioClip, bool isBoost = false) {
+            var audioInst = new GameObject {
+                name = "Audio Instance",
+                transform = {
+                    position = position
+                }
+            };
+
+            var source = audioInst.AddComponent<AudioSource>();
+            source.clip = audioClip;
+            source.outputAudioMixerGroup = isBoost ? _effectMixerGroup[1] : _effectMixerGroup[0];
+            source.Play();
+            DOVirtual.DelayedCall(audioClip.length, () => {
+                Destroy(audioInst);
+            });
         }
 
         public void PlayClip(AudioClip clip) {

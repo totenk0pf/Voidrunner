@@ -1,5 +1,6 @@
 using System;
 using System.Collections;
+using Audio;
 using Core.Events;
 using DG.Tweening;
 using Level;
@@ -8,10 +9,17 @@ using StaticClass;
 using UnityEngine;
 using UnityEngine.Serialization;
 using EventType = Core.Events.EventType;
+using Random = UnityEngine.Random;
 
 namespace Level {
     [RequireComponent(typeof(BoxCollider))]
     public class Door : MonoBehaviour {
+        protected enum AudioType {
+            Open,
+            Close,
+            CloseImpact
+        }
+        
         public GameObject doorContainer;
         
         [TitleGroup("Room Config")] 
@@ -24,6 +32,9 @@ namespace Level {
         public float yOffset;
         public float duration;
         public Ease easeType;
+
+        [TitleGroup("Audio Config")] 
+        public DoorAudioData audioData;
 
         [TitleGroup("Checkpoint Config")] 
         public bool isCheckpoint;
@@ -94,6 +105,7 @@ namespace Level {
             EventDispatcher.Instance.FireEvent(EventType.EnableRoom, _nextRoom);
             EventDispatcher.Instance.FireEvent(EventType.OnPlayerEnterDoor, this);
             EventDispatcher.Instance.FireEvent(EventType.DoorInvoked);
+            PlayAudio(AudioType.Open);
 
             if (isCheckpoint && !_hasCheckPointSet) {
                 _hasCheckPointSet = false;
@@ -115,10 +127,12 @@ namespace Level {
         protected void OnTriggerExit(Collider other) {
             if (!CheckLayerMask.IsInLayerMask(other.gameObject, playerLayer)) return;
             if (!_canRunTween) return;
+            PlayAudio(AudioType.Close);
             _currentTween?.Pause();
             _currentTween = doorMesh.transform.DOLocalMoveY(0, duration)
                 .SetEase(easeType)
                 .OnComplete(() => {
+                    PlayAudio(AudioType.CloseImpact);
                     if (_currentRoom.IsInRoom) {
                         EventDispatcher.Instance.FireEvent(EventType.DisableRoom, _nextRoom);
                         EventDispatcher.Instance.FireEvent(EventType.DoorInvoked);
@@ -138,6 +152,16 @@ namespace Level {
                     }
                     _currentTween = null;
                 });
+        }
+
+        protected void PlayAudio(AudioType type) {
+            var list = type switch {
+                AudioType.Close => audioData.doorAudio.closeAudios,
+                AudioType.CloseImpact => audioData.doorAudio.closeImpactAudios,
+                _=> audioData.doorAudio.openAudios
+            };
+            
+            AudioManager.Instance.PlayClip( transform.position, list[Random.Range(0, list.Count)]);
         }
     }
 }
