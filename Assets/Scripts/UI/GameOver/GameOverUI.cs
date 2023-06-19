@@ -1,6 +1,8 @@
 using System;
+using System.Collections.Generic;
 using Core.Events;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.SceneManagement;
 using EventType = Core.Events.EventType;
 
@@ -14,13 +16,6 @@ namespace UI.GameOver {
             gameObject.SetActive(false);
         }
 
-        private void Update() {
-            if (Input.GetKeyDown(KeyCode.O)) {
-                EventDispatcher.Instance.FireEvent(EventType.OnPlayerRespawn);
-                gameObject.SetActive(false);
-            }
-        }
-
         public void Retry() {
             EventDispatcher.Instance.FireEvent(EventType.OnPlayerRespawn);
             gameObject.SetActive(false);
@@ -29,5 +24,5 @@ namespace UI.GameOver {
         public void ToMenu() {
             SceneManager.LoadScene(0);
         }
-     }
+    }
 }
