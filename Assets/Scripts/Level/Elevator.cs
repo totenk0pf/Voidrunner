@@ -1,9 +1,11 @@
 using System;
+using Audio;
 using DG.Tweening;
 using Sirenix.OdinInspector;
 using StaticClass;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.Audio;
 
 namespace Level {
     public class Elevator : MonoBehaviour {
@@ -28,6 +30,13 @@ namespace Level {
         [TitleGroup("Audio Config")] 
         public AudioClip elevatorDoorSound;
         public AudioClip elevatorLoopSound;
+        public AudioClip elevatorArrivalSound;
+        public AudioClip elevatorImpactSound;
+        [Space] 
+        public AudioSource audioSource;
+        public AudioMixer audioMixer;
+        public float targetLowPassValue;
+        public float maximumVolume;
 
         private Vector3 _originalDoor1Pos;
         private Vector3 _originalDoor2Pos;
@@ -44,20 +53,55 @@ namespace Level {
             if (!CheckLayerMask.IsInLayerMask(other.gameObject, playerLayer)) return;
             other.gameObject.transform.SetParent(gameObject.transform);
             var consistentY = other.gameObject.transform.localPosition.y;
-            other.gameObject.GetComponent<PlayerMovementController>().canGravity = false;
+            var controller = other.gameObject.GetComponent<PlayerMovementController>();
+
+            controller.canGravity = false;
+            controller.UpdateMovementState(PlayerMovementController.MovementState.Locked);
+            
             other.gameObject.GetComponent<Rigidbody>().useGravity = false;
 
             var dest = _currentPoint == pointA ? pointB : pointA;
             _currentPoint = _currentPoint == pointA ? pointB : pointA;
-            
+
+            audioMixer.GetFloat("MusicLowPass", out var currentPassValue);
+            DOVirtual.Float(currentPassValue, targetLowPassValue, elevatorDoorSound.length, value => {
+                audioMixer.SetFloat("MusicLowPass", value);
+            });
+
+            AudioManager.Instance.PlayClip(audioSource.transform.position, elevatorDoorSound);
             var s = DOTween.Sequence();
             s
-                .Append(door1.transform.DOLocalMoveX(-2, doorCloseDuration).SetEase(doorEaseType))
-                .Insert(0, door2.transform.DOLocalMoveX(-2.875f, doorCloseDuration).SetEase(doorEaseType))
-                .Append(transform.DOMoveY(dest.position.y, elevatorDuration).SetEase(elevatorEaseType))
-                .Append(DOVirtual.DelayedCall(doorCloseDuration, () => {
-                    door1.transform.DOLocalMoveX(_originalDoor1Pos.x, doorCloseDuration).SetEase(doorEaseType);
-                    door2.transform.DOLocalMoveX(_originalDoor2Pos.x, doorCloseDuration).SetEase(doorEaseType);
+                .Append(door1.transform.DOLocalMoveX(-2, elevatorDoorSound.length).SetEase(doorEaseType))
+                .Insert(0, door2.transform.DOLocalMoveX(-2.875f, elevatorDoorSound.length).SetEase(doorEaseType))
+                .Append(DOVirtual.DelayedCall(1.2f, null))
+                .Append(transform.DOMoveY(dest.position.y, elevatorDuration)
+                    .SetEase(elevatorEaseType)
+                    .OnStart(() => {
+                        audioSource.clip = elevatorLoopSound;
+                        audioSource.volume = 0;
+                        audioSource.loop = true;
+                        DOVirtual.Float(0, maximumVolume, 1.2f, value => {
+                            audioSource.volume = value;
+                        });
+                        audioSource.Play();
+                    }))
+                .Append(DOVirtual.DelayedCall(elevatorDuration, () => {
+                    audioSource.Stop();
+                    AudioManager.Instance.PlayClip(audioSource.transform.position, elevatorImpactSound);
+                    var s2 = DOTween.Sequence();
+                    s2.Append(DOVirtual.DelayedCall(elevatorImpactSound.length, () => {
+                        AudioManager.Instance.PlayClip(audioSource.transform.position, elevatorArrivalSound);
+                    })).Append(DOVirtual.DelayedCall(elevatorArrivalSound.length / 1.2f, () => {
+                        AudioManager.Instance.PlayClip(audioSource.transform.position, elevatorDoorSound);
+                        door1.transform.DOLocalMoveX(_originalDoor1Pos.x, elevatorDoorSound.length).SetEase(doorEaseType);
+                        door2.transform.DOLocalMoveX(_originalDoor2Pos.x, elevatorDoorSound.length).SetEase(doorEaseType);
+                        DOVirtual.Float(targetLowPassValue, 22000f, elevatorDoorSound.length, value => {
+                            audioMixer.SetFloat("MusicLowPass", value);
+                        });
+                    }).OnComplete(() => {
+                        controller.canGravity = true;
+                        controller.UpdateMovementState(PlayerMovementController.MovementState.Normal);
+                    }));
                 }))
                 .OnUpdate(() => {
                     other.transform.localPosition
@@ -67,7 +111,6 @@ namespace Level {
         
         private void OnTriggerExit(Collider other) {
             if (!CheckLayerMask.IsInLayerMask(other.gameObject, playerLayer)) return;
-            other.gameObject.GetComponent<PlayerMovementController>().canGravity = true;
             other.gameObject.GetComponent<Rigidbody>().useGravity = true;
             other.gameObject.transform.SetParent(null);
         }

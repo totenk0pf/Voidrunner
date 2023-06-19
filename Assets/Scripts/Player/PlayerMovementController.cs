@@ -541,7 +541,7 @@ public class PlayerMovementController : MonoBehaviour
         EventDispatcher.Instance.FireEvent(EventType.SetMovementStateEvent, moveState);
     }
 
-    private void UpdateMovementState(MovementState state)
+    public void UpdateMovementState(MovementState state)
     {
         moveState = state;
         if (state == MovementState.Grappling) {
