@@ -29,12 +29,9 @@ MonoBehaviour:
     name: Hit
     hash: 1654612129
   - type: 4
-    name: isIdle
-    hash: 2098831385
+    name: Running
+    hash: -526601997
   - type: 4
-    name: isRunning
-    hash: 1239866031
-  - type: 4
-    name: isWalking
-    hash: -830007593
-  controller: {fileID: 9100000, guid: 70c82131df8adfa49860203dce270d99, type: 2}
+    name: Walking
+    hash: 1744665739
+  controller: {fileID: 9100000, guid: a1d5580d85a36104f8760ce8020ad5a0, type: 2}

@@ -108,17 +108,20 @@ Material:
     - _Cutoff: 0.5
     - _DetailAlbedoMapScale: 1
     - _DetailNormalMapScale: 1
-    - _Dither_steps: 8
+    - _Dither_steps: 4
     - _DstBlend: 0
     - _Emission_strength: 0
     - _EnvironmentReflections: 1
     - _GlossMapScale: 0
     - _Glossiness: 0
     - _GlossyReflections: 0
-    - _Mask_offset: -21
-    - _Mask_resolution: 4
+    - _Mask_offset: -20
+    - _Mask_resolution: 2
     - _Mask_strength: 0.25
-    - _Metallic: 0
+    - _Metallic: 0.2
+    - _Noise_resolution: 8
+    - _Noise_scale: 32
+    - _Noise_strength: 0.8
     - _OcclusionStrength: 1
     - _Parallax: 0.005
     - _QueueControl: 1
@@ -138,5 +141,6 @@ Material:
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
     - _Emission_color: {r: 0, g: 0, b: 0, a: 1}
     - _Mask_smoothing: {r: 0, g: 1, b: 0, a: 0}
+    - _Noise_range: {r: 0.5, g: 1, b: 0, a: 0}
     - _SpecColor: {r: 0.19999996, g: 0.19999996, b: 0.19999996, a: 1}
   m_BuildTextureStacks: []
