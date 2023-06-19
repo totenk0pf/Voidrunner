@@ -112,6 +112,8 @@ Material:
     - _DstBlend: 0
     - _Emission_strength: 0
     - _EnvironmentReflections: 1
+    - _Floor_shadow: 0.5
+    - _Floor_shadow_strength: 0
     - _GlossMapScale: 0
     - _Glossiness: 0
     - _GlossyReflections: 0

@@ -30,12 +30,16 @@ public class ReplaceMaterialWizard : ScriptableWizard {
         if (!originalMaterial || !newMaterial) return;
         Undo.RecordObjects(_filtered, "Replace materials");
         for (var i = 0; i < _filtered.Length; i++) {
-            _filtered[i].sharedMaterial = newMaterial;
+            var matList = _filtered[i].sharedMaterials;
+            for (var j = 0; j < matList.Length; j++) {
+                if (matList[j] == originalMaterial) matList[j] = newMaterial;
+            }
+            _filtered[i].sharedMaterials = matList;
         }
     }
 
     private void OnWizardUpdate() {
-        _filtered  = _renderers.Where(x => x.sharedMaterial == originalMaterial).ToArray();
+        _filtered  = _renderers.Where(x => x.sharedMaterials.Contains(originalMaterial)).ToArray();
         if (_filtered != null && originalMaterial != null)
         helpString = $"Found {_filtered.Length} objects with {originalMaterial.name} material in scene.";
     }

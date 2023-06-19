@@ -107,7 +107,7 @@ Material:
     - _GlossyReflections: 0
     - _Highlight_power: 6
     - _Highlight_steps: 16
-    - _Highlight_strength: 0.25
+    - _Highlight_strength: 0
     - _Metallic: 0
     - _Normal_Strength: 1
     - _OcclusionStrength: 1
