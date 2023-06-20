@@ -62,7 +62,6 @@ namespace Level {
             }
 
             controller.canGravity = false;
-            controller.StopMovement();
             controller.enabled = false;
 
             other.gameObject.GetComponent<Rigidbody>().useGravity = false;
