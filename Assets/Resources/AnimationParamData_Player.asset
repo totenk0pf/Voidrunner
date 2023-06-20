@@ -41,7 +41,7 @@ MonoBehaviour:
       Data: 
     - Name: 
       Entry: 12
-      Data: 18
+      Data: 22
     - Name: 
       Entry: 7
       Data: 
@@ -1239,6 +1239,226 @@ MonoBehaviour:
     - Name: hash
       Entry: 3
       Data: 1740614436
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: floatParam
+      Entry: 4
+      Data: 0
+    - Name: intParam
+      Entry: 3
+      Data: 0
+    - Name: boolParam
+      Entry: 5
+      Data: false
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 3
+      Data: 18
+    - Name: $v
+      Entry: 7
+      Data: 45|System.Collections.Generic.List`1[[AnimParamContainer, Assembly-CSharp]],
+        mscorlib
+    - Name: 
+      Entry: 12
+      Data: 1
+    - Name: 
+      Entry: 7
+      Data: 46|AnimParamContainer, Assembly-CSharp
+    - Name: data
+      Entry: 10
+      Data: 0
+    - Name: param
+      Entry: 7
+      Data: AnimParam, Assembly-CSharp
+    - Name: type
+      Entry: 3
+      Data: 4
+    - Name: name
+      Entry: 1
+      Data: RunForward
+    - Name: hash
+      Entry: 3
+      Data: -1803631756
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: floatParam
+      Entry: 4
+      Data: 0
+    - Name: intParam
+      Entry: 3
+      Data: 0
+    - Name: boolParam
+      Entry: 5
+      Data: false
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 3
+      Data: 19
+    - Name: $v
+      Entry: 7
+      Data: 47|System.Collections.Generic.List`1[[AnimParamContainer, Assembly-CSharp]],
+        mscorlib
+    - Name: 
+      Entry: 12
+      Data: 1
+    - Name: 
+      Entry: 7
+      Data: 48|AnimParamContainer, Assembly-CSharp
+    - Name: data
+      Entry: 10
+      Data: 0
+    - Name: param
+      Entry: 7
+      Data: AnimParam, Assembly-CSharp
+    - Name: type
+      Entry: 3
+      Data: 4
+    - Name: name
+      Entry: 1
+      Data: RunBackward
+    - Name: hash
+      Entry: 3
+      Data: 21299085
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: floatParam
+      Entry: 4
+      Data: 0
+    - Name: intParam
+      Entry: 3
+      Data: 0
+    - Name: boolParam
+      Entry: 5
+      Data: false
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 3
+      Data: 20
+    - Name: $v
+      Entry: 7
+      Data: 49|System.Collections.Generic.List`1[[AnimParamContainer, Assembly-CSharp]],
+        mscorlib
+    - Name: 
+      Entry: 12
+      Data: 1
+    - Name: 
+      Entry: 7
+      Data: 50|AnimParamContainer, Assembly-CSharp
+    - Name: data
+      Entry: 10
+      Data: 0
+    - Name: param
+      Entry: 7
+      Data: AnimParam, Assembly-CSharp
+    - Name: type
+      Entry: 3
+      Data: 4
+    - Name: name
+      Entry: 1
+      Data: RunRight
+    - Name: hash
+      Entry: 3
+      Data: 1302730617
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: floatParam
+      Entry: 4
+      Data: 0
+    - Name: intParam
+      Entry: 3
+      Data: 0
+    - Name: boolParam
+      Entry: 5
+      Data: false
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 3
+      Data: 21
+    - Name: $v
+      Entry: 7
+      Data: 51|System.Collections.Generic.List`1[[AnimParamContainer, Assembly-CSharp]],
+        mscorlib
+    - Name: 
+      Entry: 12
+      Data: 1
+    - Name: 
+      Entry: 7
+      Data: 52|AnimParamContainer, Assembly-CSharp
+    - Name: data
+      Entry: 10
+      Data: 0
+    - Name: param
+      Entry: 7
+      Data: AnimParam, Assembly-CSharp
+    - Name: type
+      Entry: 3
+      Data: 4
+    - Name: name
+      Entry: 1
+      Data: RunLeft
+    - Name: hash
+      Entry: 3
+      Data: -1344608780
     - Name: 
       Entry: 8
       Data: 

@@ -32,7 +32,12 @@ public enum PlayerAnimState {
     GrappleEnemy,
     DeGrappleEverything,
     StopAttackChain,
-    HurtByJohnnyCash
+    HurtByJohnnyCash,
+    
+    UnRunForward,
+    UnRunBackward,
+    UnRunRight,
+    UnRunLeft
 }
 
 public class AnimData {

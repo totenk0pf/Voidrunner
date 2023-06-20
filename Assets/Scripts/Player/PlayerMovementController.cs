@@ -209,12 +209,41 @@ public class PlayerMovementController : MonoBehaviour
             return;
         }
 
+        if (Input.GetKeyUp(KeyCode.W) && _moveID == 1)
+        {
+            _moveID = 99;
+            this.FireEvent(EventType.PlayAnimationEvent, new AnimData(PlayerAnimState.UnRunForward, 1f));
+            ReUpdateMovement();
+            return;
+        }
+        if (Input.GetKeyUp(KeyCode.S) && _moveID == -1)
+        {
+            _moveID = 99;
+            this.FireEvent(EventType.PlayAnimationEvent, new AnimData(PlayerAnimState.UnRunBackward, 1f));
+            ReUpdateMovement();
+            return;
+        }
+        if (Input.GetKeyUp(KeyCode.A) && _moveID == -2)
+        {
+            _moveID = 99;
+            this.FireEvent(EventType.PlayAnimationEvent, new AnimData(PlayerAnimState.UnRunLeft, 1f));
+            ReUpdateMovement();
+            return;
+        }
+        if (Input.GetKeyUp(KeyCode.D) && _moveID == 2)
+        {
+            _moveID = 99;
+            this.FireEvent(EventType.PlayAnimationEvent, new AnimData(PlayerAnimState.UnRunRight, 1f));
+            ReUpdateMovement();
+            return;
+        }
+
         if (Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.S) || Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.D))
             return;
         
         if (vect.magnitude <= 0.01f && _moveID != 0)
         {
-            _moveID = 0;
+            _moveID = 99;
             //NCLogger.Log($"(Movement) Idle");
             ReUpdateMovement();
             //this.FireEvent(EventType.PlayAnimationEvent, new AnimData(PlayerAnimState.HaltAllMovement, 1));
