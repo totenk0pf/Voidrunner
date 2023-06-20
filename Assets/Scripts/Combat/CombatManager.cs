@@ -261,6 +261,7 @@ public class CombatManager : MonoBehaviour
         
         //if(_activeWeapon != WeaponType.Melee) this.FireEvent(EventType.CancelAttackEvent,_activeWeapon);
         this.FireEvent(EventType.CancelAttackEvent,WeaponType.Ranged);
+        this.FireEvent(EventType.AttackBeginEvent);
         _activeWeapon = WeaponType.Melee;
         _meleeEntry.reference.canAttack = false;
         _meleeEntry.reference.isAttacking = true; 
@@ -366,6 +367,7 @@ public class CombatManager : MonoBehaviour
     private void ResetWeaponAttackState(bool isCancel = false, WeaponType state = WeaponType.None)
     {
         if (state == WeaponType.None) state = _activeWeapon;
+        this.FireEvent(EventType.AttackEndEvent);
         switch (state) {
             case WeaponType.None:
                 NCLogger.Log($"Reset-ing attack state when it's NONE?", LogLevel.WARNING);

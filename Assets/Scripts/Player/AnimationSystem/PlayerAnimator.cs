@@ -134,8 +134,6 @@ public class PlayerAnimator : MonoBehaviour, IInteractiveAnimator, ICombatAnimat
         if (_activeType == WeaponType.Ranged) {
             SetParam(PlayerAnimState.RangedAttack, false);
         }
-        
-        this.FireEvent(EventType.AttackBeginEvent, GetAnimator());
     }
 
     public void OnAnimationEnd()
@@ -157,7 +155,7 @@ public class PlayerAnimator : MonoBehaviour, IInteractiveAnimator, ICombatAnimat
 
     public void OnAnimationAttackEnd()
     {
-        this.FireEvent(EventType.AttackEndEvent, GetAnimator());
+        // this.FireEvent(EventType.AttackEndEvent, GetAnimator());
     }
 
     public void RecheckMovement()
