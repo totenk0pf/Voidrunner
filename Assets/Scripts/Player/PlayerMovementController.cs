@@ -109,6 +109,7 @@ public class PlayerMovementController : MonoBehaviour
     
     private void FixedUpdate()
     {
+        if (moveState == MovementState.Locked) return;
         if (moveState == MovementState.Normal) {
             UpdateMoveDir();
             if(moveState == MovementState.Normal) UpdateStrafe();
