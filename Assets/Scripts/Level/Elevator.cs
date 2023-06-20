@@ -1,5 +1,6 @@
 using System;
 using Audio;
+using Combat;
 using DG.Tweening;
 using Sirenix.OdinInspector;
 using StaticClass;
@@ -54,10 +55,16 @@ namespace Level {
             other.gameObject.transform.SetParent(gameObject.transform);
             var consistentY = other.gameObject.transform.localPosition.y;
             var controller = other.gameObject.GetComponent<PlayerMovementController>();
+            var weapons = other.gameObject.GetComponentsInChildren<WeaponBase>();
+
+            foreach (var weapon in weapons) {
+                weapon.enabled = false;
+            }
 
             controller.canGravity = false;
-            controller.UpdateMovementState(PlayerMovementController.MovementState.Locked);
-            
+            controller.StopMovement();
+            controller.enabled = false;
+
             other.gameObject.GetComponent<Rigidbody>().useGravity = false;
 
             var dest = _currentPoint == pointA ? pointB : pointA;
@@ -84,25 +91,29 @@ namespace Level {
                             audioSource.volume = value;
                         });
                         audioSource.Play();
+                    })
+                    .OnComplete(() => {
+                        audioSource.Stop();
+                        AudioManager.Instance.PlayClip(audioSource.transform.position, elevatorImpactSound);
+                        var s2 = DOTween.Sequence();
+                        s2.Append(DOVirtual.DelayedCall(elevatorImpactSound.length, () => {
+                            AudioManager.Instance.PlayClip(audioSource.transform.position, elevatorArrivalSound);
+                        })).Append(DOVirtual.DelayedCall(elevatorArrivalSound.length / 1.2f, () => {
+                            AudioManager.Instance.PlayClip(audioSource.transform.position, elevatorDoorSound);
+                            door1.transform.DOLocalMoveX(_originalDoor1Pos.x, elevatorDoorSound.length).SetEase(doorEaseType);
+                            door2.transform.DOLocalMoveX(_originalDoor2Pos.x, elevatorDoorSound.length).SetEase(doorEaseType);
+                            DOVirtual.Float(targetLowPassValue, 22000f, elevatorDoorSound.length, value => {
+                                audioMixer.SetFloat("MusicLowPass", value);
+                            });
+                        }).OnComplete(() => {
+                            controller.enabled = true;
+                            controller.canGravity = true;
+                            
+                            foreach (var weapon in weapons) {
+                                weapon.enabled = true;
+                            }
+                        }));
                     }))
-                .Append(DOVirtual.DelayedCall(elevatorDuration, () => {
-                    audioSource.Stop();
-                    AudioManager.Instance.PlayClip(audioSource.transform.position, elevatorImpactSound);
-                    var s2 = DOTween.Sequence();
-                    s2.Append(DOVirtual.DelayedCall(elevatorImpactSound.length, () => {
-                        AudioManager.Instance.PlayClip(audioSource.transform.position, elevatorArrivalSound);
-                    })).Append(DOVirtual.DelayedCall(elevatorArrivalSound.length / 1.2f, () => {
-                        AudioManager.Instance.PlayClip(audioSource.transform.position, elevatorDoorSound);
-                        door1.transform.DOLocalMoveX(_originalDoor1Pos.x, elevatorDoorSound.length).SetEase(doorEaseType);
-                        door2.transform.DOLocalMoveX(_originalDoor2Pos.x, elevatorDoorSound.length).SetEase(doorEaseType);
-                        DOVirtual.Float(targetLowPassValue, 22000f, elevatorDoorSound.length, value => {
-                            audioMixer.SetFloat("MusicLowPass", value);
-                        });
-                    }).OnComplete(() => {
-                        controller.canGravity = true;
-                        controller.UpdateMovementState(PlayerMovementController.MovementState.Normal);
-                    }));
-                }))
                 .OnUpdate(() => {
                     other.transform.localPosition
                         = new Vector3(other.transform.localPosition.x, consistentY, other.transform.localPosition.z);
