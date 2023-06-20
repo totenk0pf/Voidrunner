@@ -88,8 +88,7 @@ public class PlayerMovementController : MonoBehaviour
     private bool _isGrounded;
     private bool _runOnce;
     // private string _animName;
-    private bool _stopLateUpdate = false;
-    
+
     private void Awake()
     {
         this.AddListener(EventType.RequestMovementStateEvent, param => this.FireEvent(EventType.ReceiveMovementStateEvent, moveState));
@@ -168,15 +167,15 @@ public class PlayerMovementController : MonoBehaviour
 
     private void LateUpdate()
     {
-        if (_stopLateUpdate) return;
         //NCLogger.Log($"mag = {_moveDir.magnitude}");
         var vect = new Vector2(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical"));
         if (moveState != MovementState.Normal)
         {
             _moveID = 99;
+            this.FireEvent(EventType.SetMovementStateEvent, MovementState.Locked);
             return;
         }
-
+        this.FireEvent(EventType.SetMovementStateEvent, MovementState.Normal);
         if (Input.GetKeyDown(KeyCode.W) && _moveID != 1)
         {
             _moveID = 1;
@@ -216,8 +215,9 @@ public class PlayerMovementController : MonoBehaviour
         if (vect.magnitude <= 0.01f && _moveID != 0)
         {
             _moveID = 0;
-            NCLogger.Log($"(Movement) Idle");
-            this.FireEvent(EventType.PlayAnimationEvent, new AnimData(PlayerAnimState.HaltAllMovement, 1));
+            //NCLogger.Log($"(Movement) Idle");
+            ReUpdateMovement();
+            //this.FireEvent(EventType.PlayAnimationEvent, new AnimData(PlayerAnimState.HaltAllMovement, 1));
         }
         //NCLogger.Log($"{new Vector2 (Input.GetAxis("Horizontal"), Input.GetAxis("Vertical"))}");
         
@@ -464,7 +464,6 @@ public class PlayerMovementController : MonoBehaviour
         this.FireEvent(EventType.CancelAttackEvent, WeaponType.Melee);
         this.FireEvent(EventType.NotifyStopAllComboSequenceEvent);
         this.FireEvent(EventType.PlayAnimationEvent, new AnimData(PlayerAnimState.HaltAllMovement, 1f));
-        _stopLateUpdate = true;
         ReUpdateMovement();
         if (Input.GetKey(KeyCode.W) && _moveID == 1)
         {
@@ -500,8 +499,7 @@ public class PlayerMovementController : MonoBehaviour
             }
             yield return null;
         }
-
-        _stopLateUpdate = false;
+        
         transform.position = dest;
         //playerVisualProto.up = Vector3.up;
         moveState = MovementState.Normal;
@@ -568,15 +566,15 @@ public class PlayerMovementController : MonoBehaviour
     public void ReUpdateMovement()
     {
         var vect = new Vector2(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical"));
-        NCLogger.Log($" reupdate moveID {_moveID} move right {Input.GetKey(KeyCode.D)} state {moveState}");
+        //var vect = Rb.velocity;
         if (Input.GetKey(KeyCode.W) && _moveID != 1)
         {
             _moveID = 1;
             NCLogger.Log($" reupdate Forward");
             this.FireEvent(EventType.PlayAnimationEvent, new AnimData(PlayerAnimState.StopAttackChain, 1f));
             this.FireEvent(EventType.PlayAnimationEvent, new AnimData(PlayerAnimState.HaltAllMovement, 1f));
-            if(moveState == MovementState.Normal) 
-                this.FireEvent(EventType.PlayAnimationEvent, new AnimData(PlayerAnimState.RunForward, 1f)); 
+            this.FireEvent(EventType.PlayAnimationEvent, new AnimData(PlayerAnimState.RunForward, 1f)); 
+            // if(moveState == MovementState.Normal) 
             
             return;
         }
@@ -587,8 +585,8 @@ public class PlayerMovementController : MonoBehaviour
             NCLogger.Log($"reupdate Backward");
             this.FireEvent(EventType.PlayAnimationEvent, new AnimData(PlayerAnimState.StopAttackChain, 1f));
             this.FireEvent(EventType.PlayAnimationEvent, new AnimData(PlayerAnimState.HaltAllMovement, 1f));
-            if(moveState == MovementState.Normal) 
-                this.FireEvent(EventType.PlayAnimationEvent, new AnimData(PlayerAnimState.RunBackward, 1f));
+            this.FireEvent(EventType.PlayAnimationEvent, new AnimData(PlayerAnimState.RunBackward, 1f));
+            // if(moveState == MovementState.Normal) 
             // else if (moveState == MovementState.Dodge)
             // {
             //     NCLogger.Log($"reupdate dodgebackward");
@@ -604,29 +602,36 @@ public class PlayerMovementController : MonoBehaviour
             NCLogger.Log($"reupdate Left");
             this.FireEvent(EventType.PlayAnimationEvent, new AnimData(PlayerAnimState.StopAttackChain, 1f));
             this.FireEvent(EventType.PlayAnimationEvent, new AnimData(PlayerAnimState.HaltAllMovement, 1f));
-            if(moveState == MovementState.Normal) 
-                this.FireEvent(EventType.PlayAnimationEvent, new AnimData(PlayerAnimState.RunLeft, 1f));
-            else if (moveState == MovementState.Dodge)
-            {
-                NCLogger.Log($"reupdate dodgeleft");
-                this.FireEvent(EventType.PlayAnimationEvent, new AnimData(PlayerAnimState.DodgeLeft, 1f));
-            }
+            this.FireEvent(EventType.PlayAnimationEvent, new AnimData(PlayerAnimState.RunLeft, 1f));
+            // if(moveState == MovementState.Normal) 
+            //     this.FireEvent(EventType.PlayAnimationEvent, new AnimData(PlayerAnimState.RunLeft, 1f));
+            // else
+            // if (moveState == MovementState.Dodge)
+            // {
+            //     NCLogger.Log($"reupdate dodgeleft");
+            //     this.FireEvent(EventType.PlayAnimationEvent, new AnimData(PlayerAnimState.DodgeLeft, 1f));
+            // }
             return;
         }
 
         if (Input.GetKey(KeyCode.D) && _moveID != 2)
         {
             _moveID = 2;
-            NCLogger.Log($"reupdate Right");
+            
             this.FireEvent(EventType.PlayAnimationEvent, new AnimData(PlayerAnimState.StopAttackChain, 1f));
             this.FireEvent(EventType.PlayAnimationEvent, new AnimData(PlayerAnimState.HaltAllMovement, 1f));
-            if(moveState == MovementState.Normal) 
-                this.FireEvent(EventType.PlayAnimationEvent, new AnimData(PlayerAnimState.RunRight, 1f));
-            else if (moveState == MovementState.Dodge)
-            {
-                NCLogger.Log($"reupdate dodgeright");
-                this.FireEvent(EventType.PlayAnimationEvent, new AnimData(PlayerAnimState.DodgeRight, 1f));
-            }
+            this.FireEvent(EventType.PlayAnimationEvent, new AnimData(PlayerAnimState.RunRight, 1f));
+            // if (moveState == MovementState.Normal)
+            // {
+            //     NCLogger.Log($"reupdate Right");
+            //     this.FireEvent(EventType.PlayAnimationEvent, new AnimData(PlayerAnimState.RunRight, 1f));
+            // }
+            // else
+            // if (moveState == MovementState.Dodge)
+            // {
+            //     NCLogger.Log($"reupdate dodgeright");
+            //     this.FireEvent(EventType.PlayAnimationEvent, new AnimData(PlayerAnimState.DodgeRight, 1f));
+            // }
             return;
         }
 
