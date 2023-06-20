@@ -63,7 +63,7 @@ namespace UI {
         [SerializeField] private Ease easeType;
 
 
-        private void Awake() {
+        private void Start() {
             this.AddListener(EventType.ItemAddEvent, msg => UpdateItem((ItemMsg) msg, true));
             this.AddListener(EventType.ItemRemoveEvent, msg => UpdateItem((ItemMsg) msg, false));
             this.AddListener(EventType.InventoryToggleEvent, msg => ShowInventoryUI((InventoryToggleMsg) msg));
