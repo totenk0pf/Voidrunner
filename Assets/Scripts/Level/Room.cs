@@ -1,10 +1,13 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
+using Core.Events;
 using Core.Logging;
 using UnityEngine;
 using Sirenix.OdinInspector;
 using UnityEditor;
 using MagicLightProbes;
+using EventType = UnityEngine.EventType;
 
 namespace Level {
     public enum RoomType {
@@ -26,6 +29,7 @@ namespace Level {
     public class Room : MonoBehaviour {
         public RoomType type;
         public bool IsInRoom { get; private set; }
+        [ReadOnly] public List<EnemyBase> enemiesInRoom;
 
         [ReadOnly] public List<Tuple<Vector2Int, Quaternion>> Rotations { get; private set; }
         [SerializeField] private BoxCollider col;
@@ -92,6 +96,15 @@ namespace Level {
             Validate();
         }
 
+        private void Awake() {
+            enemiesInRoom = GetComponentsInChildren<EnemyBase>().ToList();
+            EventDispatcher.Instance.AddListener(Core.Events.EventType.OnEnemyDie, enemy => HandleEnemyDie((EnemyBase) enemy));
+        }
+
+        private void HandleEnemyDie(EnemyBase enemy) {
+            if (enemiesInRoom.Contains(enemy)) enemiesInRoom.Remove(enemy);
+        }
+
         [Button("Rotate collider")]
         private void RotateCollider() {
             var currentSize = col.size;
@@ -99,13 +112,14 @@ namespace Level {
             col.size = rotated;
         }
 
-        private void Awake() {
-            // if (type == RoomType.Hub) IsInRoom = true;
-        }
-
         private void OnTriggerEnter(Collider other) {
-            if (other.gameObject.layer != LayerMask.NameToLayer("Player")) return;
-            IsInRoom = true;
+            if (other.gameObject.layer == LayerMask.NameToLayer("Player")) {
+                IsInRoom = true;
+            }
+
+            if (other.gameObject.layer == LayerMask.NameToLayer("Enemy")) {
+                Debug.Log($"[ROOM] Enemy in {transform.gameObject.name}");
+            }
 
         }
         private void OnTriggerExit(Collider other) {

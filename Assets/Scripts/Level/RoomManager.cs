@@ -18,16 +18,14 @@ namespace Level {
     
     public class RoomManager : MonoBehaviour {
         private List<Room> _rooms = new();
-
-        private void Awake() {
+        
+        private void Start() {
             _rooms = FindObjectsOfType<Room>().ToList();
             foreach (Room room in _rooms) {
                 if (room.type == RoomType.Hub) continue;
                 room.gameObject.SetActive(false);
             }
-        }
-
-        private void Start() {
+            
             EventDispatcher.Instance.AddListener(EventType.EnableRoom, room => EnableRoom((Room) room));
             EventDispatcher.Instance.AddListener(EventType.DisableRoom, room => DisableRoom((Room) room));
         }
