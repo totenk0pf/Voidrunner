@@ -115,6 +115,7 @@ public class EnemyBase : EntityBase {
     public virtual void Die() {
         if (currentHp <= 0 && !_hasDied) {
             _hasDied = true;
+            EventDispatcher.Instance.FireEvent(EventType.OnEnemyDie, this);
             var bloods = GetComponentsInChildren<ParticleBase>();
             foreach (var blood in bloods) {
                 blood.ForceRelease();

@@ -101,6 +101,7 @@ namespace Level {
             if (_nextRoom.gameObject.activeInHierarchy && isBacktrackDisabled) return;
             if (!canOpen) return;
             if (!InheritedCheck(other)) return;
+            if (_currentRoom.enemiesInRoom.Count > 0) return;
             
             EventDispatcher.Instance.FireEvent(EventType.EnableRoom, _nextRoom);
             EventDispatcher.Instance.FireEvent(EventType.OnPlayerEnterDoor, this);

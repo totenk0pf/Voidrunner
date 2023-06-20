@@ -91,6 +91,8 @@ namespace Core.Events {
         SpawnBloodEvent,
         SpawnParticleREDEvent,
         
+        OnEnemyDie,
+        
         //Room Events
         EnableRoom,
         DisableRoom,
