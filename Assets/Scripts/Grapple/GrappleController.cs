@@ -320,7 +320,7 @@ namespace Grapple {
             else //TODO: This is hardcoded, fix this later.
             {
                 Rigidbody.AddForce(Vector3.up*momentumForce/3, forceMode);
-                this.FireEvent(EventType.ReUpdateMovementAnimEvent);
+                // this.FireEvent(EventType.ReUpdateMovementAnimEvent);
             }
             this.FireEvent(EventType.PlayAnimationEvent, new AnimData(PlayerAnimState.DeGrappleEverything, 1f));
             this.FireEvent(EventType.ReUpdateMovementAnimEvent);
