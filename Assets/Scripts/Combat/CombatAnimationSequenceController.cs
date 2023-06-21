@@ -43,7 +43,15 @@ public class CombatAnimationSequenceController : MonoBehaviour
     public List<ComboAnimContainer> anim1;
     public List<ComboAnimContainer> anim2;
     public List<ComboAnimContainer> anim3;
-    
+
+    private void OnDestroy()
+    {
+        this.RemoveListener(EventType.RunPlayerComboSequenceEvent, param => PlayComboAnimation((int) param));
+        this.RemoveListener(EventType.NotifyStopAllComboSequenceEvent, param => StopAllComboSequence());
+        this.RemoveListener(EventType.UpdateActiveWeaponEvent, param => _activeWeapon = (WeaponType)param);
+        this.RemoveListener(EventType.SetMovementStateEvent, param => _moveState = (PlayerMovementController.MovementState) param );
+    }
+
     private void Awake() {
         this.AddListener(EventType.RunPlayerComboSequenceEvent, param => PlayComboAnimation((int) param));
         // this.AddListener(EventType.NotifyResumeAllComboSequenceEvent, param => _canPlay = true);

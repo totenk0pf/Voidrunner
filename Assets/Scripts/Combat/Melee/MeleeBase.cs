@@ -16,6 +16,11 @@ namespace Combat {
 
         private AudioSource _audioSource;
 
+        protected void OnDestroy()
+        {
+            this.RemoveListener(EventType.MeleeEnemyDamageEvent, dmgData => ApplyDamageOnEnemy((AnimData) dmgData));
+        }
+
         protected void Awake() {
             base.Awake();
             this.AddListener(EventType.MeleeEnemyDamageEvent, dmgData => ApplyDamageOnEnemy((AnimData) dmgData));

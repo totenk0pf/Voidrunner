@@ -45,6 +45,12 @@ namespace Combat {
         [TabGroup("Acid")] [SerializeField] private int intervalNum;
         [TabGroup("Acid")] [SerializeField] private float intervalDuration;
 
+        private void OnDestroy()
+        {
+            this.RemoveListener(EventType.EmpowerDamageEnemyEvent, enemy => DealEmpowerDamage((EnemyBase) enemy));
+            this.RemoveListener(EventType.InventoryToggleEvent, msg => OnInventoryUIEvent((InventoryToggleMsg) msg));
+        }
+
         private void Awake() {
             _empowerIndex = 0;
             // this.AddListener(EventType.WeaponChangedEvent,

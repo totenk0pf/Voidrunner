@@ -192,6 +192,29 @@ public class CombatManager : MonoBehaviour
     private void IncrementMeleeOrder() => _curMeleeOrder = _curMeleeOrder.Next();
     private Coroutine _onHoldInputRoutine;
     private GrappleType _currentGrappleType;
+
+    private void OnDestroy()
+    {
+        this.RemoveListener(EventType.CancelAttackEvent, state => CancelWeaponAttack((WeaponType)state));
+        //Melee Combo Related
+        this.RemoveListener(EventType.AttackBeginEvent, param => OnAttackBegin());
+        this.RemoveListener(EventType.OnInputWindowHold, param => OnInputWindowHold());
+        this.RemoveListener(EventType.AttackEndEvent, param => OnAttackEnd());
+        this.RemoveListener(EventType.WeaponMeleeFiredEvent, param => MeleeAttack());
+        this.RemoveListener(EventType.NotifyPlayerComboSequenceEvent, param => OnAttackAnimation());
+        //Ranged Related
+        this.RemoveListener(EventType.WeaponRangedFiredEvent, param => StartCoroutine(RangedAttackRoutine()));
+        //Movement State
+        this.RemoveListener(EventType.SetMovementStateEvent, state => _moveState = (PlayerMovementController.MovementState) state);
+        this.RemoveListener(EventType.ReceiveIsOnGroundEvent, param => _isGrounded = (bool)param);
+        this.RemoveListener(EventType.ReceiveCurrentGrappleTypeEvent, param => _currentGrappleType = (GrappleType) param);
+        //Receive Refs
+        this.RemoveListener(EventType.ReceivePlayerAnimatorEvent, animator => _playerAnimator = (PlayerAnimator) animator);
+        this.RemoveListener(EventType.ReceiveMovementStateEvent, state => _moveState = (PlayerMovementController.MovementState) state);
+        // Progression
+        this.RemoveListener(EventType.UpdateCombatData, spec => UpdateMeleeData((int) spec));
+    }
+
     private void Awake() {
         //Init Ref
         //this.AddListener(EventType.InitWeaponRefEvent, param => InitWeaponRef( (List<WeaponEntry>) param));

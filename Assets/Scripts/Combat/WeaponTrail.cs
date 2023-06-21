@@ -1,3 +1,4 @@
+using System;
 using Core.Events;
 using UnityEngine;
 using EventType = Core.Events.EventType;
@@ -6,6 +7,12 @@ namespace Combat {
     [RequireComponent(typeof(TrailRenderer))]
     public class WeaponTrail : MonoBehaviour {
         private TrailRenderer _renderer;
+
+        private void OnDestroy()
+        {
+            this.RemoveListener(EventType.AttackBeginEvent, _ => OnTrailUpdate(true));
+            this.RemoveListener(EventType.AttackEndEvent, _ => OnTrailUpdate(false));
+        }
 
         private void Awake() {
             _renderer          = GetComponent<TrailRenderer>();

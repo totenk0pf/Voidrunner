@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using Core.Events;
 using Core.Logging;
@@ -18,6 +19,11 @@ namespace Combat {
         public int clipAmount;
         private float _cooldown;
         private float _cooldownTimeStamp = 0;
+
+        protected void OnDestroy()
+        {
+            this.RemoveListener(EventType.RangedEnemyDamageEvent, dmgData => ApplyDamageOnEnemy((AnimData) dmgData));
+        }
 
         protected void Awake() {
             base.Awake();
