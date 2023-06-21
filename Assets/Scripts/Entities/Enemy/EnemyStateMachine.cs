@@ -1,12 +1,16 @@
 using System;
+using Core.Events;
 using Core.Logging;
+using DG.Tweening;
 using Sirenix.OdinInspector;
 using UnityEngine;
-using UnityEngine.Serialization;
+using EventType = Core.Events.EventType;
 
-public class EnemyStateMachine :MonoBehaviour
-{
-    public EnemyState currentState;
+
+public class EnemyStateMachine :MonoBehaviour {
+    public EnemyState idleState;
+    [ReadOnly] public EnemyState currentState;
+    [ReadOnly] public bool isRunning = true;
     private EnemyBase _enemyBase;
     private EnemyBase enemyBase {
         get {
@@ -16,9 +20,18 @@ public class EnemyStateMachine :MonoBehaviour
     }
 
     private void Awake() {
+        currentState = idleState;
         if (currentState == null) {
             NCLogger.Log($"Initial state not set.", LogLevel.ERROR);
         }
+    }
+
+    private void Start() {
+        EventDispatcher.Instance.AddListener(EventType.OnPlayerRespawn, _=>ResetStateMachine());
+    }
+
+    private void ResetStateMachine() {
+        currentState = idleState;
     }
 
     private void Update() {

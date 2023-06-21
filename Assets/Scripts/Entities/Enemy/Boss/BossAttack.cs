@@ -54,6 +54,16 @@ namespace Entities.Enemy.Boss {
             if (_canSwitchState) return;
             StartCoroutine(DelayAttack());
         }
+        
+        protected override void RestartState() {
+            StopAllCoroutines();
+            foreach (var move in animData.moveList) {
+                ResetAnim(move.anim);
+            }
+                
+            _canAttack = false;
+            inRange = false;
+        }
 
         private IEnumerator DelayAttack() {
             yield return new WaitForSeconds(attackDelay);

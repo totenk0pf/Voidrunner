@@ -1,7 +1,10 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using Combat;
 using Core.Events;
+using DG.Tweening;
+using Grapple;
 using Level;
 using Sirenix.OdinInspector;
 using UI;
@@ -40,6 +43,18 @@ namespace Player {
     public class PlayerProgression : MonoBehaviour {
         [ReadOnly] public int level = 1;
         public int baseLevelUpXP = 50;
+
+        [TitleGroup("Components Modify On Death")]
+        public PlayerMovementController controller;
+        public GrappleController grappleController;
+        public MouseLook mouseLookController;
+        public InventorySystem inventorySystem;
+        public CombatManager combatManager;
+        public GunBase gun;
+        public MeleeBase melee;
+        public GameObject playerMesh;
+        
+        
         public Dictionary<SkillType, SkillValue> skillValues = new() {
             { SkillType.Vigor , new SkillValue(1)},
             { SkillType.Endurance , new SkillValue(1)},
@@ -53,7 +68,7 @@ namespace Player {
 
         private Oxygen _oxygen;
         private CheckpointData _currCPdata = new();
-        private List<Door> _doorWalkedList = new();
+        [ReadOnly] public List<Door> _doorWalkedList = new();
 
         private void Awake() {
             //get save here
@@ -62,7 +77,8 @@ namespace Player {
         }
 
         private void Start() {
-            _oxygen.oxygenPool = 100 + 5 * skillValues[SkillType.Vigor].level;
+            //_oxygen.oxygenPool = 100 + 5 * skillValues[SkillType.Vigor].level;
+            _oxygen.oxygenPool = 5;
             _oxygen.currentOxygen = _oxygen.oxygenPool;
             
             this.AddListener(EventType.UpdateCombatModifiersEvent
@@ -86,6 +102,9 @@ namespace Player {
             //Temp
             EventDispatcher.Instance.AddListener(EventType.OnPlayerDie
                 ,_=>HandlePlayerDie());
+            
+            EventDispatcher.Instance.AddListener(EventType.OnPlayerRespawn  
+                ,_=>HandlePlayerRespawn());
             
             foreach (var skill in skillValues.Keys) {
                 UpdatePlayerStat(skill);
@@ -120,17 +139,53 @@ namespace Player {
             skillValues = _currCPdata.skillValues;
             _currentXP = _currCPdata.xp;
             level = _currCPdata.level;
-            foreach (var door in _doorWalkedList) {
-                door.ResetDoor(_currCPdata.roomToReset);
+
+            Room roomToReset = null;
+            for (var i = _doorWalkedList.Count - 1; i >= 0; i--) {
+                if (_doorWalkedList[i].roomInfo.previousRoom.type == RoomType.Hallway) {
+                    roomToReset = _doorWalkedList[i].roomInfo.previousRoom;
+                    break;
+                }
             }
-            FireUI();
-            _doorWalkedList.Clear();
             
-            //temp
-            var doorTransform = _currCPdata.roomToReset.gameObject.transform;
-            gameObject.transform.position = doorTransform.position + new Vector3(0, doorTransform.localScale.y, 0);
+            _currCPdata.roomToReset = roomToReset != null ? roomToReset : _doorWalkedList[0].roomInfo.previousRoom;
+            ModifyPlayerComponent();
+
+            this.FireEvent(EventType.SpawnParticleEnemyDeadEvent, 
+                    new ParticleCallbackData(Vector3.up, transform.position + Vector3.up));
+
+            DOVirtual.DelayedCall(1.5f, () => {
+                this.FireEvent(EventType.ToggleDeathUI);
+                Cursor.lockState = CursorLockMode.None;
+            });
+        }
+
+        private void HandlePlayerRespawn() {
+            Cursor.lockState = CursorLockMode.Locked;
+            if (_currCPdata.roomToReset != null) {
+                if (_doorWalkedList.Count > 0) {
+                    foreach (var door in _doorWalkedList) {
+                        door.ResetDoor(_currCPdata.roomToReset);
+                    }
+                
+                    _doorWalkedList.Clear();
+                }
+                
+                EventDispatcher.Instance.FireEvent(EventType.EnableRoom, _currCPdata.roomToReset);
+                EventDispatcher.Instance.FireEvent(EventType.DoorInvoked);
+                var doorTransform = _currCPdata.roomToReset.gameObject.transform;
+                gameObject.transform.position = doorTransform.position + new Vector3(0, doorTransform.localScale.y, 0);
+            }
+
+            else {
+                transform.position = new Vector3(0, 2, 0);
+            }
+            
             _oxygen.currentOxygen = _oxygen.oxygenPool;
+            _oxygen.hasDied = false;
             _oxygen.FireUIEvent();
+            FireUI();
+            ModifyPlayerComponent(true);
         }
 
         private void HandlePlayerEnterDoor(Door door) {
@@ -146,6 +201,7 @@ namespace Player {
                     _currentXP = (_currentXP + amount) - _levelUpXP;
                     _levelUpXP = 50 * Mathf.Pow(1.2f, level);
                     level++;
+                    this.FireEvent(EventType.LevelUpEvent, level);
                     _currSkillPoints++;
                     break;
                 
@@ -192,6 +248,17 @@ namespace Player {
                 type  = BarUI.BarType.Experience,
                 value = _currentXP / _levelUpXP,
             });
+        }
+
+        private void ModifyPlayerComponent(bool state = false) {
+            controller.enabled = state;
+            grappleController.enabled = state;
+            mouseLookController.enabled = state;
+            inventorySystem.enabled = state;
+            combatManager.enabled = state;
+            gun.enabled = state;
+            melee.enabled = state;
+            playerMesh.SetActive(state);
         }
         
         #endregion

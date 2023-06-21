@@ -117,7 +117,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7d9f9bc60c2f5374f98158e6b53e5c28, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  idleState: {fileID: 6190139054101900234}
   currentState: {fileID: 6190139054101900234}
+  isRunning: 1
 --- !u!195 &5391198623046352642
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -739,7 +741,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   canMove: 1
-  useNavAgent: 0
 --- !u!4 &7875072309166552271 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 6c7657ceffb3181499eb6e0978ba8874, type: 3}

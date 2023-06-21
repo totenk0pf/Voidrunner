@@ -21,5 +21,9 @@ namespace Entities.Enemy.Crawler {
             
             return this;
         }
+
+        protected override void RestartState() {
+            canSwitchState = true;
+        }
     }
 }

@@ -2,11 +2,13 @@ using System;
 using System.Collections.Generic;
 using Audio;
 using Core.Collections;
+using Core.Events;
 using Entities.Enemy;
 using Sirenix.OdinInspector;
 using UnityEngine;
 using UnityEngine.AI;
 using StaticClass;
+using EventType = Core.Events.EventType;
 using Random = UnityEngine.Random;
 
 public abstract class EnemyState : MonoBehaviour
@@ -49,6 +51,18 @@ public abstract class EnemyState : MonoBehaviour
 
     [ReadOnly] public GameObject target;
     [ReadOnly] public bool detected;
+
+    private void Start() {
+        EventDispatcher.Instance.AddListener(EventType.OnPlayerRespawn, _ => {
+            detected = false;
+            target = null;
+            RestartState();
+        });
+    }
+
+    protected virtual void RestartState() {
+        
+    }
 
     public abstract EnemyState RunCurrentState();
 

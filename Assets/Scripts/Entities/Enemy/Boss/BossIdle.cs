@@ -14,7 +14,6 @@ namespace Entities.Enemy.Boss {
 
         public override EnemyState RunCurrentState(){
             if (detected) {
-                _moveWithRootMotion.useNavAgent = true;
                 return nextState;
             }
 
