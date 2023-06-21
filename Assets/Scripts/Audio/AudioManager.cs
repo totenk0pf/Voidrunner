@@ -20,10 +20,11 @@ namespace Audio {
         
         private void Awake() {
             audioSource = gameObject.AddComponent<AudioSource>();
-            audioMixer = Resources.Load<AudioMixer>("Audio/MasterMixer");
+            audioMixer  = Resources.Load<AudioMixer>("Audio/MasterMixer");
             
             //0 index is normal, 1 for boost low volume 
-            _effectMixerGroup = audioMixer.FindMatchingGroups("Effects");
+            _effectMixerGroup                = audioMixer.FindMatchingGroups("Effects");
+            // audioMixer.outputAudioMixerGroup = _effectMixerGroup[0];
         }
         
         public void PlayClip(Vector3 position, AudioClip audioClip, bool isBoost = false) {
@@ -45,6 +46,10 @@ namespace Audio {
 
         public void PlayClip(AudioClip clip) {
             audioSource.PlayOneShot(clip);
+        }
+        
+        public void PlayClip(AudioClip clip, float vol) {
+            audioSource.PlayOneShot(clip, vol);
         }
 
         public void PlayMusic(AudioClip audioClip) {

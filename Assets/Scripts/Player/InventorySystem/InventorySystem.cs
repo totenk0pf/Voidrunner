@@ -1,3 +1,5 @@
+//#define DEBUG
+
 using System.Collections.Generic;
 using Core.Debug;
 using UnityEngine;
@@ -66,7 +68,7 @@ public class InventorySystem : SerializedMonoBehaviour {
                 itemOnly      = false
             });
         }
-#if UNITY_EDITOR
+#if UNITY_EDITOR && DEBUG
         DebugGUI.Instance.UpdateText(nameof(InventorySystem),
             "\nInventory\n" +
             $"Weight: {_currentWeight}\n" + 

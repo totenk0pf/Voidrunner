@@ -1,3 +1,5 @@
+//#define DEBUG
+
 using Core.Events;
 using System.Timers;
 using Combat;
@@ -20,7 +22,7 @@ public class Oxygen : MonoBehaviour {
     }
 
     private void Update() {
-#if UNITY_EDITOR
+#if UNITY_EDITOR && DEBUG
         DebugText();
 #endif
         if (Input.GetKeyDown(KeyCode.Space))

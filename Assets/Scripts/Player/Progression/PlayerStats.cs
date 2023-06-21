@@ -1,3 +1,5 @@
+//#define DEBUG
+
 using UnityEngine;
 using Combat;
 using Core.Debug;
@@ -23,7 +25,7 @@ public class PlayerStats : MonoBehaviour
     }
 
     private void Update() {
-#if UNITY_EDITOR
+#if UNITY_EDITOR && DEBUG
         DebugGUI.Instance.UpdateText(nameof(PlayerStats),
         "\nProgression\n" + 
             $"XP: {_progression.CurrentXp}\n" +

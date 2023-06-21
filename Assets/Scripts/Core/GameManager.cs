@@ -1,18 +1,22 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using Core.Events;
+using Core.Logging;
 using Core.Patterns;
 using DG.Tweening;
 using Sirenix.OdinInspector;
 using UI;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 using EventType = Core.Events.EventType;
 
 namespace Core {
     public class GameManager : Singleton<GameManager> {
         [SerializeField] private GameManagerData data;
         [ShowInInspector] [ReadOnly] private float _currentScale;
+        private bool _gameLoaded;
 
         private void Awake() {
             this.AddListener(EventType.InventoryToggleEvent, msg => {
@@ -40,7 +44,20 @@ namespace Core {
         }
 
         public void StartGame() {
-            SceneManager.LoadScene(1, LoadSceneMode.Single);
+            StartCoroutine(LoadAsyncScene());
+        }
+
+        private IEnumerator LoadAsyncScene() {
+            AsyncOperation asyncLoad = SceneManager.LoadSceneAsync(1, LoadSceneMode.Single);
+            asyncLoad.allowSceneActivation = false;
+            while (!asyncLoad.isDone) {
+                NCLogger.Log(asyncLoad.progress);
+                if (asyncLoad.progress >= 0.9f) {
+                    asyncLoad.allowSceneActivation = true;
+                }
+                yield return null;
+            }
+            _gameLoaded = true;
         }
     }
 }
