@@ -12,8 +12,13 @@ namespace UI.GameOver {
             this.AddListener(EventType.ToggleDeathUI, _ => {
                 gameObject.SetActive(true);
             });
-            
             gameObject.SetActive(false);
+        }
+
+        private void OnDestroy() {
+            this.RemoveListener(EventType.ToggleDeathUI, _ => {
+                gameObject.SetActive(true);
+            });
         }
 
         public void Retry() {
@@ -22,6 +27,7 @@ namespace UI.GameOver {
         }
 
         public void ToMenu() {
+            EventDispatcher.Instance.ClearListeners();
             SceneManager.LoadScene(0);
         }
     }

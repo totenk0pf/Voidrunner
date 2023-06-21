@@ -12,6 +12,10 @@ namespace UI {
             this.AddListener(EventType.LevelUpEvent, level => UpdateText((int) level));
         }
 
+        private void OnDestroy() {
+            this.RemoveListener(EventType.LevelUpEvent, level => UpdateText((int) level));
+        }
+
         private void UpdateText(int level) {
             levelText.text = level.ToString("D2");
         }

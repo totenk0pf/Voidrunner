@@ -20,6 +20,11 @@ public class PlayerStats : MonoBehaviour
         _progression = new PlayerProgression(progressionData);
     }
 
+    private void OnDestroy() {
+        this.RemoveListener(EventType.UpdateCombatModifiersEvent, param => UpdateCombatModifiers((MeleeSequenceData) param));
+        this.RemoveListener(EventType.EntityDeathEvent, enemyType => _progression.AddXP((string) enemyType));
+    }
+
     private void Start() {
         this.FireEvent(EventType.RefreshModifiersEvent);
     }

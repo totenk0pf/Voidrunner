@@ -6,6 +6,7 @@ using UnityEngine;
 namespace Core.Events {
     public class EventDispatcher : Singleton<EventDispatcher> {
         public Dictionary<EventType, Action<object>> Events = new();
+        private bool _isQuitting;
         
         /// <summary>
         /// Add a listener to an event type.
@@ -50,6 +51,10 @@ namespace Core.Events {
 
         public void ClearListeners() {
             Events.Clear();
+        }
+
+        private void OnApplicationQuit() {
+            _isQuitting = true;
         }
     }
 

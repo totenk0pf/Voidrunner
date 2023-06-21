@@ -21,6 +21,10 @@ public class MouseLook : MonoBehaviour {
         this.AddListener(EventType.InventoryToggleEvent, msg => OnInventoryUIEvent((InventoryToggleMsg) msg));
     }
 
+    private void OnDestroy() {
+        this.RemoveListener(EventType.InventoryToggleEvent, msg => OnInventoryUIEvent((InventoryToggleMsg) msg));
+    }
+
     private void OnInventoryUIEvent(InventoryToggleMsg msg) {
         _canLook = msg.state;
     }

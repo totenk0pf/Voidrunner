@@ -29,6 +29,9 @@ namespace Entities.Enemy {
             });
         }
 
+        private void OnDestroy() {
+        }
+
         private void Update() {
             var parent = transform.parent;
             var worldDeltaPosition = _agent.nextPosition - parent.position;

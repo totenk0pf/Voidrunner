@@ -107,6 +107,9 @@ public class EnemyBase : EntityBase {
         EventDispatcher.Instance.AddListener(EventType.OnPlayerRespawn, _=>ResetEnemy());
     }
 
+    private void OnDestroy() {
+    }
+
     private void Update() {
         Die();
         AirborneUpdate();
@@ -117,6 +120,8 @@ public class EnemyBase : EntityBase {
         transform.rotation = _originalRotation;
         currentHp = enemyHP;
         ui.UpdateBar(1);
+        _hasDied = false;
+        gameObject.SetActive(true);
     }
 
     #region Update Methods
@@ -132,7 +137,7 @@ public class EnemyBase : EntityBase {
             }
             this.FireEvent(EventType.SpawnParticleEnemyDeadEvent, new ParticleCallbackData(Vector3.up, transform.position + Vector3.up));
             AudioManager.Instance.PlayClip(transform.position, GetAudioClip(EnemyAudioType.GoreHard), true);
-            Destroy(gameObject);
+            gameObject.SetActive(false);
         }
     }
 

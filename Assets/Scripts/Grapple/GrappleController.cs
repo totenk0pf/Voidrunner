@@ -101,6 +101,14 @@ namespace Grapple {
             };
         }
 
+        private void OnDestroy() {
+            this.RemoveListener(EventType.ReceiveMovementStateEvent, state => _moveState = (PlayerMovementController.MovementState) state);
+            this.RemoveListener(EventType.ReceiveIsOnGroundEvent, isGrounded => _isOnGround = (bool) isGrounded);
+            this.RemoveListener(EventType.CancelGrappleEvent, param => CancelGrapple((bool) param));
+            this.RemoveListener(EventType.SetMovementStateEvent, param => UpdateMoveState((PlayerMovementController.MovementState) param));
+            this.RemoveListener(EventType.RequestCurrentGrappleTypeEvent, param => this.FireEvent(EventType.ReceiveCurrentGrappleTypeEvent, currentGrappleType));
+        }
+
         private void Start() {
             _mainCam = Camera.main;
             if (!_mainCam) NCLogger.Log("Can't find Camera.Main", LogLevel.ERROR);

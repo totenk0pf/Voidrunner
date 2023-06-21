@@ -106,7 +106,15 @@ public class PlayerMovementController : MonoBehaviour
         canGravity = true;
         Rb.useGravity = false;
     }
-    
+
+    private void OnDestroy() {
+        this.RemoveListener(EventType.RequestMovementStateEvent, param => this.FireEvent(EventType.ReceiveMovementStateEvent, moveState));
+        this.RemoveListener(EventType.SetMovementStateEvent, param => UpdateMovementState((MovementState) param));
+        this.RemoveListener(EventType.RequestIsOnGroundEvent, param => EventDispatcher.Instance.FireEvent(EventType.ReceiveIsOnGroundEvent, _isGrounded));
+        this.RemoveListener(EventType.ResumeMovementEvent, param => ToggleMovement(true));
+        this.RemoveListener(EventType.ReUpdateMovementAnimEvent, param => ReUpdateMovement());
+    }
+
     private void FixedUpdate()
     {
         if (moveState == MovementState.Locked) return;

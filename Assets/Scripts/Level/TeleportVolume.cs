@@ -23,6 +23,7 @@ namespace Level {
             if (teleportFX) teleportFX.Play();
         }
 
+#if UNITY_EDITOR
         private void OnDrawGizmos() {
             Handles.color = Color.white;
             Vector3 target = transform.position + relativeDestination;
@@ -31,5 +32,6 @@ namespace Level {
             Gizmos.DrawWireSphere(target, destinationRadius);
             Gizmos.DrawLine(transform.position, target);
         }
+#endif
     }
 }

@@ -61,6 +61,12 @@ namespace Level {
             CheckDoor();
         }
 
+        private void OnDestroy() {
+            this.RemoveListener(EventType.DoorInvoked, cb => CheckDoor());
+            this.RemoveListener(EventType.RoomLock, room => UpdateLock((Room) room, true));
+            this.RemoveListener(EventType.RoomUnlock, room => UpdateLock((Room) room, false));
+        }
+
         public void ResetDoor(Room exception = null) {
             _canRunTween = false;
             _currentTween?.Kill();

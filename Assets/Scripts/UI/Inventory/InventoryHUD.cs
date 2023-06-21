@@ -23,6 +23,10 @@ namespace UI {
             this.AddListener(EventType.InventoryHUDEvent, msg => OnUpdate((InventoryHUDMsg) msg));
         }
 
+        private void OnDestroy() {
+            this.RemoveListener(EventType.InventoryHUDEvent, msg => OnUpdate((InventoryHUDMsg) msg));
+        }
+
         private void OnUpdate(InventoryHUDMsg msg) {
             if (msg.countOnly) {
                 itemUi.UpdateUI(msg.count);

@@ -30,6 +30,9 @@ public class EnemyStateMachine :MonoBehaviour {
         EventDispatcher.Instance.AddListener(EventType.OnPlayerRespawn, _=>ResetStateMachine());
     }
 
+    private void OnDestroy() {
+    }
+
     private void ResetStateMachine() {
         currentState = idleState;
     }

@@ -107,6 +107,14 @@ public class PlayerAnimator : MonoBehaviour, IInteractiveAnimator, ICombatAnimat
         if(!animationParamData) NCLogger.Log($"Missing Animation State Data", LogLevel.ERROR);
     }
 
+    private void OnDestroy() {
+        this.RemoveListener(EventType.UpdateActiveWeaponEvent, param => _activeType = (WeaponType) param);
+        this.RemoveListener(EventType.PlayAnimationEvent, animData => UpdateAnimAttribute((AnimData)animData));
+        this.RemoveListener(EventType.PlayAttackEvent, animData => UpdateAnimAttribute((AnimData)animData));
+        this.RemoveListener(EventType.RequestPlayerAnimatorEvent, param => OnRequestAnimator());
+        this.RemoveListener(EventType.CancelAttackEvent, state => OnCancelAttack((WeaponType) state) );
+    }
+
     private void UpdateAnimAttribute(AnimData data) {
         _animData = data;
         if (data.State == PlayerAnimState.HaltAllMovement)

@@ -40,7 +40,7 @@ namespace Core.Patterns {
             }
         }
     
-        protected void OnDestroy() {
+        protected void OnApplicationQuit() {
             isQuitting = true;
         }
     }

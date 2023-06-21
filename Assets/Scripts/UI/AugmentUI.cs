@@ -28,11 +28,17 @@ namespace UI {
         private void Awake() {
             _noneData = uiData.GetByType(EmpowerType.None);
             _augmentData = uiData.GetByType(_currentType);
-            EventDispatcher.Instance.AddListener(EventType.AugmentChangedEvent, type => OnElementChange((EmpowerType) type));
-            EventDispatcher.Instance.AddListener(EventType.AugmentChargeEvent, param => Charge((float) param));
-            EventDispatcher.Instance.AddListener(EventType.AugmentDrainEvent, param => Drain((float) param));
+            this.AddListener(EventType.AugmentChangedEvent, type => OnElementChange((EmpowerType) type));
+            this.AddListener(EventType.AugmentChargeEvent, param => Charge((float) param));
+            this.AddListener(EventType.AugmentDrainEvent, param => Drain((float) param));
         }
-        
+
+        private void OnDestroy() {
+            this.RemoveListener(EventType.AugmentChangedEvent, type => OnElementChange((EmpowerType) type));
+            this.RemoveListener(EventType.AugmentChargeEvent, param => Charge((float) param));
+            this.RemoveListener(EventType.AugmentDrainEvent, param => Drain((float) param));
+        }
+
         private void SetColor(AugmentUIData data, float duration) {
             augmentBackground.DOColor(data.primaryColor, duration);
             augmentSprite.DOColor(data.secondaryColor, duration);

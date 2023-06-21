@@ -20,7 +20,12 @@ public class ObjectPool : PoolBase<PooledObjectBase>
         this.AddListener(_pooledObjectEventType, 
             param=> (this.Get()).Init((PooledObjectCallbackData)param, this.Release));
     }
-    
+
+    private void OnDestroy() {
+        this.RemoveListener(_pooledObjectEventType, 
+                         param=> (this.Get()).Init((PooledObjectCallbackData)param, this.Release));
+    }
+
     public override PooledObjectBase CreateSetup()
     {
         return Instantiate(_prefabRef, transform);

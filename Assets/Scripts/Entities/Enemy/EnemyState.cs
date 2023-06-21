@@ -60,6 +60,10 @@ public abstract class EnemyState : MonoBehaviour
         });
     }
 
+    private void OnDestroy() {
+        // this.RemoveListener(EventType.OnPlayerRespawn, _ => );
+    }
+
     protected virtual void RestartState() {
         
     }

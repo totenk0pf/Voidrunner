@@ -10,11 +10,19 @@ namespace UI {
         
         private void Awake() {
             SetChildrenState(false);
-            EventDispatcher.Instance.AddListener(
+            this.AddListener(
                 EventType.SkillPointGainedEvent, 
                 point => UpdatePoints((int) point)
             );
         }
+
+        private void OnDestroy() {
+            this.RemoveListener(
+                EventType.SkillPointGainedEvent, 
+                point => UpdatePoints((int) point)
+            );
+        }
+
         private void UpdatePoints(int newPoints) {
             SetChildrenState(newPoints > 0);
             pointText.text = newPoints.ToString("D2");

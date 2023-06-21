@@ -98,6 +98,13 @@ namespace UI {
             gameObject.SetActive(false);
         }
 
+        private void OnDestroy() {
+            this.RemoveListener(EventType.ItemAddEvent, msg => UpdateItem((ItemMsg) msg, true));
+            this.RemoveListener(EventType.ItemRemoveEvent, msg => UpdateItem((ItemMsg) msg, false));
+            this.RemoveListener(EventType.InventoryToggleEvent, msg => ShowInventoryUI((InventoryToggleMsg) msg));
+            this.RemoveListener(EventType.InventoryUpdateEvent, msg => UpdateInventoryUI((InventoryUpdateMsg) msg));
+        }
+
         private void Update() { 
             MoveItemList();
             if (Input.GetMouseButtonDown(0) && _canMoveList) {

@@ -30,7 +30,11 @@ namespace UI {
         [SerializeField] private Ease easeType;
 
         private void Awake() {
-            EventDispatcher.Instance.AddListener(EventType.UIBarChangedEvent, msg => UpdateBar((BarUIMsg) msg));
+            this.AddListener(EventType.UIBarChangedEvent, msg => UpdateBar((BarUIMsg) msg));
+        }
+
+        private void OnDestroy() {
+            this.RemoveListener(EventType.UIBarChangedEvent, msg => UpdateBar((BarUIMsg) msg));
         }
 
         private void UpdateBar(BarUIMsg msg) {

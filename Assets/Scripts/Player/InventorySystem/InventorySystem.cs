@@ -51,6 +51,13 @@ public class InventorySystem : SerializedMonoBehaviour {
         this.AddListener(EventType.InventoryToggleEvent, msg => UpdateUI((InventoryToggleMsg) msg));
     }
 
+    private void OnDestroy() {
+        this.RemoveListener(EventType.ItemAddEvent, data => Add((ItemMsg) data));
+        this.RemoveListener(EventType.ItemPickEvent, data => Pick((ItemMsg) data));
+        this.RemoveListener(EventType.UpdateInventoryData, specAmt => SetMaxWeight((int) specAmt * weightPerLevel * weightModifier));
+        this.RemoveListener(EventType.InventoryToggleEvent, msg => UpdateUI((InventoryToggleMsg) msg));
+    }
+
     private void Update() {
         if (Input.GetKeyDown(KeyCode.E)) {
             if (!_canUseItem) return;

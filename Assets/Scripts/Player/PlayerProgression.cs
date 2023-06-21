@@ -112,7 +112,31 @@ namespace Player {
             
             FireUI();
         }
-        
+
+        private void OnDestroy() {
+            EventDispatcher.Instance.RemoveListener(EventType.SetCheckpoint
+                                                 ,room => SetCheckpoint((Room) room));
+            
+            EventDispatcher.Instance.RemoveListener(EventType.AddXP
+                                                 ,xp => AddXP((float) xp));
+            
+            EventDispatcher.Instance.RemoveListener(EventType.AddSkillLevel
+                                                 ,type => AddSkillLevel((SkillType) type));
+            
+            EventDispatcher.Instance.RemoveListener(EventType.SetCheckpoint
+                                                 ,room => SetCheckpoint((Room) room));
+            
+            EventDispatcher.Instance.RemoveListener(EventType.OnPlayerEnterDoor
+                                                 ,door => HandlePlayerEnterDoor((Door) door));
+            
+            //Temp
+            EventDispatcher.Instance.RemoveListener(EventType.OnPlayerDie
+                                                 ,_=>HandlePlayerDie());
+            
+            EventDispatcher.Instance.RemoveListener(EventType.OnPlayerRespawn  
+                                                 ,_=>HandlePlayerRespawn());
+        }
+
         //Events
         private void UpdateCombatModifiers(MeleeSequenceData meleeData) {
             //Modifying in SO
