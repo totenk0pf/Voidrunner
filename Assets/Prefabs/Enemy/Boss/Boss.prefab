@@ -298,7 +298,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2387085961047800663, guid: 156ffb807b55a0a47abfc0db3ec0aff6, type: 3}
       propertyPath: name
-      value: Andrew Tate
+      value: BOSS
       objectReference: {fileID: 0}
     - target: {fileID: 4268977109600893350, guid: 156ffb807b55a0a47abfc0db3ec0aff6, type: 3}
       propertyPath: m_AnchorMax.y
