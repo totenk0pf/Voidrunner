@@ -23,7 +23,7 @@ public class Oxygen : MonoBehaviour {
     }
 
     private void Update() {
-#if UNITY_EDITOR && DEBUG
+#if DEBUG
         DebugText();
 #endif
         if (Input.GetKeyDown(KeyCode.Space))

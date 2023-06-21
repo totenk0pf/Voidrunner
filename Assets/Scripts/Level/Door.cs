@@ -101,6 +101,10 @@ namespace Level {
             if (room == _currentRoom || room == _nextRoom) lockContainer.SetActive(state);
         }
 
+        public void ResetLock() {
+            lockContainer.SetActive(false);
+        }
+
         protected void OnTriggerEnter(Collider other) {
             if (!CheckLayerMask.IsInLayerMask(other.gameObject, playerLayer) && _canRunTween) return;
             if (!_canRunTween) return;

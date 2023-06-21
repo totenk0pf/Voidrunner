@@ -77,8 +77,8 @@ namespace Player {
         }
 
         private void Start() {
-            //_oxygen.oxygenPool = 100 + 5 * skillValues[SkillType.Vigor].level;
-            _oxygen.oxygenPool = 5;
+            _oxygen.oxygenPool = 100 + 5 * skillValues[SkillType.Vigor].level;
+            // _oxygen.oxygenPool = 5;
             _oxygen.currentOxygen = _oxygen.oxygenPool;
             
             this.AddListener(EventType.UpdateCombatModifiersEvent
@@ -166,6 +166,7 @@ namespace Player {
                 if (_doorWalkedList.Count > 0) {
                     foreach (var door in _doorWalkedList) {
                         door.ResetDoor(_currCPdata.roomToReset);
+                        door.ResetLock();
                     }
                 
                     _doorWalkedList.Clear();

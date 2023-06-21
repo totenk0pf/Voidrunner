@@ -25,7 +25,7 @@ public class PlayerStats : MonoBehaviour
     }
 
     private void Update() {
-#if UNITY_EDITOR && DEBUG
+#if DEBUG
         DebugGUI.Instance.UpdateText(nameof(PlayerStats),
         "\nProgression\n" + 
             $"XP: {_progression.CurrentXp}\n" +
