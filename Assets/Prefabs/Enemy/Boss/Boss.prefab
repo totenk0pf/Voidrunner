@@ -571,7 +571,7 @@ MonoBehaviour:
   target: {fileID: 0}
   detected: 0
   nextState: {fileID: 6764285391558067201}
-  _moveWithRootMotion: {fileID: 0}
+  _moveWithRootMotion: {fileID: 4570570895715307271}
 --- !u!1001 &4952381753789180899
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -903,4 +903,4 @@ MonoBehaviour:
   nextState: {fileID: 0}
   animData: {fileID: 11400000, guid: 2681d3064bb8d9d438ee4f6974eabae1, type: 2}
   idleAnim: {fileID: 0}
-  _moveWithRootMotion: {fileID: 0}
+  _moveWithRootMotion: {fileID: 4570570895715307271}

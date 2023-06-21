@@ -63,7 +63,8 @@ public class CrawlerAttack : EnemyState
             foreach (var anim in _animData.attackAnim) {
                 ResetAnim(anim);
             }
-            
+
+            _isAttacking = false;
             _canAttack = false;
             inRange = false;
             

@@ -67,7 +67,8 @@ namespace Entities.Enemy.Boss {
                 foreach (var move in animData.moveList) {
                     ResetAnim(move.anim);
                 }
-                
+
+                _isAttacking = false;
                 inRange = false;
                 _canAttack = false;
                 

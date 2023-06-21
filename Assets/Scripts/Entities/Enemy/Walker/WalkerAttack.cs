@@ -62,6 +62,7 @@ public class WalkerAttack : EnemyState
             }
             
             _canAttack = false;
+            _isAttacking = false;
             inRange = false;
             
             _canSwitchState = true;
