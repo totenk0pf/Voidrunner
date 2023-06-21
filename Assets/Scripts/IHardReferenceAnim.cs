@@ -1,5 +1,5 @@
 
 public interface IHardReferenceAnim
 {
-    public void ValidateData();
+    //public void ValidateData();
 }

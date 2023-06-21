@@ -4,7 +4,9 @@ using System.Collections.Generic;
 using System.Linq;
 using Sirenix.OdinInspector;
 using Sirenix.Serialization;
+#if UNITY_EDITOR
 using UnityEditor.Animations;
+#endif
 using UnityEngine;
 
 [Serializable]
@@ -43,6 +45,7 @@ public class AnimParamContainer
 [CreateAssetMenu(fileName = "HardReferenceAnimData", menuName = "Asset/HardReferenceAnimData", order = 0)]
 public class HardReferenceAnimData : SerializedScriptableObject, IHardReferenceAnim {
     [ReadOnly] [ShowInInspector] public List<AnimParam> animParams = new();
+#if UNITY_EDITOR
     [SerializeField] private AnimatorController controller;
 
     [Button("Validate data")]
@@ -57,4 +60,5 @@ public class HardReferenceAnimData : SerializedScriptableObject, IHardReferenceA
             });
         }
     }
+#endif
 }

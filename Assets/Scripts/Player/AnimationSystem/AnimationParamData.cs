@@ -29,9 +29,11 @@ namespace Player.AnimationSystem
         }
 
         private void OnEnable() {
+#if UNITY_EDITOR
             ValidateData();
+#endif
         }
-
+#if UNITY_EDITOR
         [Button("Validate & Create Refs")]
         public void ValidateData()
         {
@@ -44,5 +46,6 @@ namespace Player.AnimationSystem
                 }
             }
         }
+#endif
     }
 }

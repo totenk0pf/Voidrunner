@@ -27,11 +27,13 @@ namespace Entities.Enemy {
             return hardRefdata.animParams.Select(x => new ValueDropdownItem(x.name, x));
         }
         
+#if UNITY_EDITOR
         [Button("Validate & Create Refs")]
         public void ValidateData()
         {
             //Validate hard reference data
             hardRefdata.ValidateData();
         }
+#endif
     }
 }
