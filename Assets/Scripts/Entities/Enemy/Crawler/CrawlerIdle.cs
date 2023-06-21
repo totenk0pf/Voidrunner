@@ -21,7 +21,6 @@ namespace Entities.Enemy.Crawler {
             }
 
             if (detected) {
-                moveRootMotion.useNavAgent = true;
                 return nextState;
             }
 

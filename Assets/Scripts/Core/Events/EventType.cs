@@ -104,10 +104,14 @@ namespace Core.Events {
         
         //Player Events
         OnPlayerDie,
+        OnPlayerRespawn,
         OnPlayerEnterDoor,
         AddXP, 
         AddSkillLevel,
         
+        //Player Die Events
+        ToggleDeathUI,
+
         // Entity update events
         EntityDeathEvent,
         SkillPointGainedEvent

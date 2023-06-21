@@ -57,11 +57,12 @@ public class WalkerIdle : EnemyState {
         if (detected && !_stateSwitched) {
             _stateSwitched = false;
             StopAllCoroutines();
-            _moveWithRootMotion.useNavAgent = true;
+            _nextState.ResetState();
             return _nextState;
         }
         return this;
     }
+    
     
     private IEnumerator Delay() {
         _canWalk = false;

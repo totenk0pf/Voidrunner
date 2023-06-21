@@ -25,5 +25,9 @@ namespace Entities.Enemy.Boss {
             
             return this;
         }
+        
+        protected override void RestartState() {
+            canSwitchState = true;
+        }
     }
 }

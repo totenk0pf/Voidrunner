@@ -51,6 +51,16 @@ public class WalkerAttack : EnemyState
         StartAttack();
     }
     
+    protected override void RestartState() {
+        StopAllCoroutines();
+        foreach (var anim in _animData.attackAnim) {
+            ResetAnim(anim);
+        }
+        _canAttack = false;
+        inRange = false;
+            
+        _canSwitchState = true;
+    }
     
     public override void OnTriggerExit(Collider other) {
         if (CheckLayerMask.IsInLayerMask(other.gameObject, playerMask)) {
