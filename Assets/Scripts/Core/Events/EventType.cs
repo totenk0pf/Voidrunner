@@ -98,6 +98,9 @@ namespace Core.Events {
         DisableRoom,
         DoorInvoked, 
         SetCheckpoint,
+        RoomEntered,
+        RoomLock,
+        RoomUnlock,
         
         //Player Events
         OnPlayerDie,

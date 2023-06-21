@@ -98,17 +98,24 @@ namespace Level {
 
         private void Awake() {
             enemiesInRoom = GetComponentsInChildren<EnemyBase>().ToList();
-            EventDispatcher.Instance.AddListener(Core.Events.EventType.OnEnemyDie, enemy => HandleEnemyDie((EnemyBase) enemy));
+            this.AddListener(Core.Events.EventType.OnEnemyDie, enemy => HandleEnemyDie((EnemyBase) enemy));
+            this.AddListener(Core.Events.EventType.RoomEntered, room => EnemyCheck((Room) room));
         }
 
         private void HandleEnemyDie(EnemyBase enemy) {
             if (enemiesInRoom.Contains(enemy)) enemiesInRoom.Remove(enemy);
+            if (enemiesInRoom.Count == 0) this.FireEvent(Core.Events.EventType.RoomUnlock, this);
+        }
+
+        private void EnemyCheck(Room room) {
+            if (room != this) return; 
+            if (enemiesInRoom.Count > 0) this.FireEvent(Core.Events.EventType.RoomLock, this);
         }
 
         [Button("Rotate collider")]
         private void RotateCollider() {
-            var currentSize = col.size;
-            var rotated = new Vector3(currentSize.z, currentSize.y, currentSize.x);
+            Vector3 currentSize = col.size;
+            Vector3 rotated = new (currentSize.z, currentSize.y, currentSize.x);
             col.size = rotated;
         }
 

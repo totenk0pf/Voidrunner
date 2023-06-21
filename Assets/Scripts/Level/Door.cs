@@ -21,6 +21,7 @@ namespace Level {
         }
         
         public GameObject doorContainer;
+        [SerializeField] private GameObject lockContainer;
         
         [TitleGroup("Room Config")] 
         public bool isBacktrackDisabled; //set if door open on previous room
@@ -53,8 +54,10 @@ namespace Level {
             _currentRoom = roomInfo.previousRoom;
             _nextRoom    = roomInfo.nextRoom;
             canOpen      = true;
-            
-            EventDispatcher.Instance.AddListener(EventType.DoorInvoked, cb => CheckDoor());
+
+            this.AddListener(EventType.DoorInvoked, cb => CheckDoor());
+            this.AddListener(EventType.RoomLock, room => UpdateLock((Room) room, true));
+            this.AddListener(EventType.RoomUnlock, room => UpdateLock((Room) room, false));
             CheckDoor();
         }
 
@@ -89,10 +92,13 @@ namespace Level {
         private void CheckDoor() {
             if (!_currentRoom.gameObject.activeInHierarchy && !_nextRoom.gameObject.activeInHierarchy) {
                 doorContainer.SetActive(false);
-            }
-            else {
+            } else {
                 if (!doorContainer.activeInHierarchy) doorContainer.SetActive(true);
             }
+        }
+
+        private void UpdateLock(Room room, bool state) {
+            if (room == _currentRoom || room == _nextRoom) lockContainer.SetActive(state);
         }
 
         protected void OnTriggerEnter(Collider other) {
@@ -103,14 +109,14 @@ namespace Level {
             if (!InheritedCheck(other)) return;
             if (_currentRoom.enemiesInRoom.Count > 0) return;
             
-            EventDispatcher.Instance.FireEvent(EventType.EnableRoom, _nextRoom);
-            EventDispatcher.Instance.FireEvent(EventType.OnPlayerEnterDoor, this);
-            EventDispatcher.Instance.FireEvent(EventType.DoorInvoked);
+            this.FireEvent(EventType.EnableRoom, _nextRoom);
+            this.FireEvent(EventType.OnPlayerEnterDoor, this);
+            this.FireEvent(EventType.DoorInvoked);
             PlayAudio(AudioType.Open);
 
             if (isCheckpoint && !_hasCheckPointSet) {
                 _hasCheckPointSet = false;
-                EventDispatcher.Instance.FireEvent(EventType.SetCheckpoint, _currentRoom);
+                this.FireEvent(EventType.SetCheckpoint, _currentRoom);
             }
             
             _currentTween?.Pause();
@@ -135,12 +141,13 @@ namespace Level {
                 .OnComplete(() => {
                     PlayAudio(AudioType.CloseImpact);
                     if (_currentRoom.IsInRoom) {
-                        EventDispatcher.Instance.FireEvent(EventType.DisableRoom, _nextRoom);
-                        EventDispatcher.Instance.FireEvent(EventType.DoorInvoked);
-                    }
-                    else {
-                        EventDispatcher.Instance.FireEvent(EventType.DisableRoom, _currentRoom);
-                        EventDispatcher.Instance.FireEvent(EventType.DoorInvoked);
+                        this.FireEvent(EventType.DisableRoom, _nextRoom);
+                        this.FireEvent(EventType.DoorInvoked);
+                        this.FireEvent(EventType.RoomEntered, _currentRoom);
+                    } else {
+                        this.FireEvent(EventType.DisableRoom, _currentRoom);
+                        this.FireEvent(EventType.RoomEntered, _nextRoom);
+                        this.FireEvent(EventType.DoorInvoked);
                         
                         if (isBacktrackDisabled) return;
                         if (_currentRoom == roomInfo.previousRoom) {

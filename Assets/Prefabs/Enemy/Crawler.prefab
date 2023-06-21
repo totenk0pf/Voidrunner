@@ -87,8 +87,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   type: 0
-  enemyDamage: 10
-  enemyHP: 100
+  enemyDamage: 5
+  enemyHP: 75
   ui: {fileID: 907737044374819495}
   audios: {fileID: 11400000, guid: 44fcdc3ba55075f4d8ff7d52e1044412, type: 2}
   animData: {fileID: 11400000, guid: cb0b6e593aa29d741b115bb5825fccdb, type: 2}
@@ -128,8 +128,8 @@ NavMeshAgent:
   m_Enabled: 1
   m_AgentTypeID: 0
   m_Radius: 0.5
-  m_Speed: 3
-  m_Acceleration: 2
+  m_Speed: 6
+  m_Acceleration: 3
   avoidancePriority: 50
   m_AngularSpeed: 360
   m_StoppingDistance: 1

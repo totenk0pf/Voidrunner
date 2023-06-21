@@ -1121,7 +1121,7 @@ TrailRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Time: 0.3
+  m_Time: 0.125
   m_Parameters:
     serializedVersion: 3
     widthMultiplier: 1
@@ -1151,7 +1151,7 @@ TrailRenderer:
       m_RotationOrder: 4
     colorGradient:
       serializedVersion: 2
-      key0: {r: 1, g: 0.60209423, b: 0.050000012, a: 0.39215687}
+      key0: {r: 1, g: 0.60209423, b: 0.050000012, a: 0.3137255}
       key1: {r: 1, g: 0.6875, b: 0.25, a: 0}
       key2: {r: 0, g: 0, b: 0, a: 0}
       key3: {r: 0, g: 0, b: 0, a: 0}
@@ -1178,13 +1178,13 @@ TrailRenderer:
       m_Mode: 0
       m_NumColorKeys: 2
       m_NumAlphaKeys: 2
-    numCornerVertices: 0
+    numCornerVertices: 2
     numCapVertices: 0
     alignment: 1
     textureMode: 0
     shadowBias: 0.5
     generateLightingData: 0
-  m_MinVertexDistance: 0.05
+  m_MinVertexDistance: 0.01
   m_Autodestruct: 0
   m_Emitting: 0
 --- !u!114 &4865699114600256905
