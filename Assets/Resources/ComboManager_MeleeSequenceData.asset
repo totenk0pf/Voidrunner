@@ -68,7 +68,7 @@ MonoBehaviour:
       Data: 2.5
     - Name: knockBackDuration
       Entry: 4
-      Data: 0.5
+      Data: 0.6
     - Name: playerTransform
       Entry: 6
       Data: 
@@ -150,7 +150,7 @@ MonoBehaviour:
       Data: 2
     - Name: knockBackDuration
       Entry: 4
-      Data: 0.25
+      Data: 0.4
     - Name: playerTransform
       Entry: 6
       Data: 
@@ -232,7 +232,7 @@ MonoBehaviour:
       Data: 1.5
     - Name: knockBackDuration
       Entry: 4
-      Data: 0.2
+      Data: 0.3
     - Name: playerTransform
       Entry: 6
       Data: 

@@ -17,21 +17,20 @@ MonoBehaviour:
     preshotDelay: 0
     aftershotDelay: 0
     reloadTime: 0
-    knockBackRange: 1
-    knockBackDuration: 0.1
+    knockBackRange: 1.25
+    knockBackDuration: 0.15
     knockbackStackCap: 15
     playerTransform: {fileID: 0}
-    damagePerPellet: 5
+    damagePerPellet: 4
     pelletCount: 8
     rayCastRange: 30
-    maxSpreadAngle: 10
+    maxSpreadAngle: 15
     maxAmmo: 20
     maxClip: 1
     raycastMask:
       serializedVersion: 2
       m_Bits: 8448
     fireClip: {fileID: 7400000, guid: d678c89824242554baac333cb9a5d1e1, type: 2}
-    Enemies:
-    - {fileID: 0}
+    Enemies: []
     canDamageMod: 1
     attackSpeed: 1
