@@ -7,5 +7,9 @@ namespace Entities.Enemy.Crawler {
         public void OnAttack() {
             if (attack.inRange) attack.DealDamage();
         }
+
+        public void RestartAttack() {
+            attack.RestartAttack();
+        }
     }
 }

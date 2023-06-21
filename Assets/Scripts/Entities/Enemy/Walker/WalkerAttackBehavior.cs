@@ -10,4 +10,8 @@ public class WalkerAttackBehavior : MonoBehaviour {
             _walkerAttack.DealDamage();
         }
     }
+
+    public void ResetAttack() {
+        _walkerAttack.RestartAttack();
+    }
 }

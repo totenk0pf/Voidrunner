@@ -27,38 +27,35 @@ public class WalkerAttack : EnemyState
         }
 
         if (_canAttack) {
-            StartCoroutine(StartAttack());
+            StartAttack();
         }
 
         return this;
     }
 
-    private IEnumerator StartAttack() {
-        if (_canSwitchState) yield break;
+    private void StartAttack() {
         _canAttack = false;
         _isAttacking = true;
         if (_moveWithRootMotion.canMove) _moveWithRootMotion.canMove = false;
         TriggerAnim(_animData.attackAnim[0]);
-        yield return StartCoroutine(FinishAnimation());
-        yield return StartCoroutine(DelayAttack());
+    }
+
+    public void RestartAttack() {
+        _isAttacking = false;
+        if (_canSwitchState) return;
+        StartCoroutine(DelayAttack());
     }
 
     private IEnumerator DelayAttack() {
         yield return new WaitForSeconds(attackDelay);
-        StartCoroutine(StartAttack());
+        StartAttack();
     }
-
-    private IEnumerator FinishAnimation() {
-        yield return new WaitUntil(() => animator.GetCurrentAnimatorStateInfo(0).normalizedTime >= 0.95f);
-        _isAttacking = false;
-    }
+    
     
     public override void OnTriggerExit(Collider other) {
         if (CheckLayerMask.IsInLayerMask(other.gameObject, playerMask)) {
             StopAllCoroutines();
-            if (_isAttacking) {
-                StartCoroutine(FinishAnimation());
-            }
+
             
             foreach (var anim in _animData.attackAnim) {
                 ResetAnim(anim);

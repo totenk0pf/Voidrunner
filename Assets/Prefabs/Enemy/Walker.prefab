@@ -359,7 +359,7 @@ MonoBehaviour:
     m_Bits: 8
   target: {fileID: 0}
   detected: 0
-  attackDelay: 2.25
+  attackDelay: 0
   inRange: 0
   _previousState: {fileID: 8457903045779802717}
   _animData: {fileID: 11400000, guid: 8522a6f20a0c8004383cdfb1d49b917d, type: 2}
