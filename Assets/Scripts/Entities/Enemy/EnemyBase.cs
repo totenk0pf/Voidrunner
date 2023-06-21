@@ -203,7 +203,8 @@ public class EnemyBase : EntityBase {
 
         if (isHit && test.distance <= stopOffset) yield break;
         
-        enemyRootMotion.OnMoveChange(false);
+        enemyRootMotion.enabled = false;
+        _navAgent.updatePosition = true;
         isStunned = true;
 
         foreach (var anim in animData.attackAnim) {ResetAnim(anim);}
@@ -227,14 +228,16 @@ public class EnemyBase : EntityBase {
                 _currentTween.Kill();
                     
                 animator.speed = 1;
-                enemyRootMotion.OnMoveChange(true);
+                enemyRootMotion.enabled = true;
+                _navAgent.updatePosition = false;
                 isStunned = false;
             })
             .OnComplete(() => {
                 _currentTween = null;
                 
                 animator.speed = 1;
-                enemyRootMotion.OnMoveChange(true);
+                enemyRootMotion.enabled = true;
+                _navAgent.updatePosition = false;
                 isStunned = false; 
             });
 
