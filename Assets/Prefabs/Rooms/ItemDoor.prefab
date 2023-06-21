@@ -333,7 +333,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   doorContainer: {fileID: 2717462743436330911}
-  lockContainer: {fileID: 0}
+  lockContainer: {fileID: 4973827186581714469}
   isBacktrackDisabled: 0
   playerLayer:
     serializedVersion: 2
@@ -535,6 +535,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 14b5c8580c6c1ae4b893059f365c755f, type: 3}
+--- !u!1 &4973827186581714469 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 8951571655662618439, guid: 14b5c8580c6c1ae4b893059f365c755f, type: 3}
+  m_PrefabInstance: {fileID: 4124395139636130146}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &6281340006395750127 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 7932816912502806413, guid: 14b5c8580c6c1ae4b893059f365c755f, type: 3}
