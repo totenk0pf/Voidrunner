@@ -23,15 +23,15 @@ MonoBehaviour:
     SerializationNodes: []
   animParams:
   - type: 4
-    name: isRunning
-    hash: 1239866031
+    name: Running
+    hash: -526601997
+  - type: 4
+    name: Walking
+    hash: 1744665739
   - type: 9
-    name: Spin
-    hash: -1304917071
+    name: Punch
+    hash: -316645540
   - type: 9
     name: Slam
     hash: -153875945
-  - type: 4
-    name: isIdle
-    hash: 2098831385
-  controller: {fileID: 9100000, guid: 97bd86f533ca331438ed13edece5f680, type: 2}
+  controller: {fileID: 9100000, guid: e798ac9b9e2ef034d8e447bd131889da, type: 2}

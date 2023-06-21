@@ -54,7 +54,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   type: 0
   enemyDamage: 10
-  enemyHP: 100
+  enemyHP: 200
   ui: {fileID: 2970694111892148635}
   audios: {fileID: 11400000, guid: 49ce36d87df5fd74dbc81609fbaaa92d, type: 2}
   animData: {fileID: 11400000, guid: 7497e4a145c882b4994849ef89527bd0, type: 2}
@@ -134,7 +134,7 @@ Rigidbody:
   m_UseGravity: 1
   m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 122
+  m_Constraints: 126
   m_CollisionDetection: 0
 --- !u!1 &5173689491394797258
 GameObject:
@@ -263,7 +263,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 2387085961047800663, guid: 156ffb807b55a0a47abfc0db3ec0aff6, type: 3}
       propertyPath: name
-      value: WHAT IS THIS MELDOY
+      value: Juggernaut
       objectReference: {fileID: 0}
     - target: {fileID: 4268977109600893350, guid: 156ffb807b55a0a47abfc0db3ec0aff6, type: 3}
       propertyPath: m_AnchorMax.y
@@ -487,7 +487,7 @@ MonoBehaviour:
   detected: 0
   _nextState: {fileID: 2842254728877912562}
   animData: {fileID: 11400000, guid: 7497e4a145c882b4994849ef89527bd0, type: 2}
-  _moveWithRootMotion: {fileID: 0}
+  _moveWithRootMotion: {fileID: 7529486643522435776}
 --- !u!1001 &3616472263502851776
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -602,6 +602,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   canMove: 1
+  setYToRootMotion: 0
   useNavAgent: 0
 --- !u!95 &7159280801654461265 stripped
 Animator:
@@ -754,7 +755,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7389021632460828519, guid: 47663268f90cf224e851bd321ca0641b, type: 3}
       propertyPath: m_Size.x
-      value: 1.4
+      value: 1.7
       objectReference: {fileID: 0}
     - target: {fileID: 7389021632460828519, guid: 47663268f90cf224e851bd321ca0641b, type: 3}
       propertyPath: m_Size.y
@@ -762,11 +763,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7389021632460828519, guid: 47663268f90cf224e851bd321ca0641b, type: 3}
       propertyPath: m_Size.z
-      value: 1.2
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7389021632460828519, guid: 47663268f90cf224e851bd321ca0641b, type: 3}
       propertyPath: m_Center.z
-      value: 0.8
+      value: 0.5
       objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 4554049958587841281, guid: 47663268f90cf224e851bd321ca0641b, type: 3}
@@ -799,9 +800,9 @@ MonoBehaviour:
     m_Bits: 8
   target: {fileID: 0}
   detected: 0
-  attackDelay: 2.5
+  attackDelay: 0.5
   inRange: 0
   _previousState: {fileID: 2842254728877912562}
   _nextState: {fileID: 0}
-  _moveWithRootMotion: {fileID: 0}
+  _moveWithRootMotion: {fileID: 7529486643522435776}
   animData: {fileID: 11400000, guid: 7497e4a145c882b4994849ef89527bd0, type: 2}

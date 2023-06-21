@@ -11,4 +11,8 @@ public class JuggernautAttackBehavior : MonoBehaviour {
             state.DealDamage();
         }
     }
+
+    public void ResetAttack() {
+        state.ResetAttack();
+    }
 }

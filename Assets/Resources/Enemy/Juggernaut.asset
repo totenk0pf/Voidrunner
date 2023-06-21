@@ -26,14 +26,18 @@ MonoBehaviour:
     type: 4
     name: isIdle
     hash: 2098831385
+  hitAnim: []
   hostileAnim:
   - type: 4
-    name: isRunning
-    hash: 1239866031
+    name: Running
+    hash: -526601997
+  - type: 4
+    name: Walking
+    hash: 1744665739
   attackAnim:
   - type: 9
-    name: Spin
-    hash: -1304917071
+    name: Punch
+    hash: -316645540
   - type: 9
     name: Slam
     hash: -153875945

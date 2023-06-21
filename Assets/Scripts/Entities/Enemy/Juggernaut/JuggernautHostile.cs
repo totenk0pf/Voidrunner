@@ -10,16 +10,22 @@ public class JuggernautHostile : EnemyState {
     [SerializeField] private AnimSerializedData animData;
 
     [HideInInspector] public bool canSwitch = true;
+    private AnimParam _currHostileAnim;
 
     public override EnemyState RunCurrentState() {
-        if (!animator.GetBool(animData.hostileAnim[0].name)) TriggerAnim(animData.hostileAnim[0]);
+
+        if (_currHostileAnim.name == null) {
+            _currHostileAnim = animData.hostileAnim[Random.Range(0, animData.hostileAnim.Count)];
+            TriggerAnim(_currHostileAnim);
+        }
 
         Agent.SetDestination(target.transform.position);
 
         if (_nextState.inRange && canSwitch) {
             canSwitch = false;
             Agent.ResetPath();
-            TriggerAnim(animData.hostileAnim[0]);
+            TriggerAnim(_currHostileAnim);
+            _currHostileAnim.name = null;
             return _nextState;
         }
         

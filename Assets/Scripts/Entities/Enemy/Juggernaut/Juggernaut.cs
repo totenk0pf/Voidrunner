@@ -21,7 +21,7 @@ namespace Entities.Enemy.Juggernaut {
             base.TakeDamage(amount);
             
             AudioManager.Instance.PlayClip(transform.position, GetAudioClip(EnemyAudioType.GoreLight));
-            DOVirtual.DelayedCall(Random.Range(0.4f, 0.9f), () => {
+            DOVirtual.DelayedCall(0.1f, () => {
                 AudioManager.Instance.PlayClip(transform.position, GetAudioClip(EnemyAudioType.Hit));
             });
         }

@@ -29,40 +29,35 @@ namespace Entities.Enemy.Juggernaut {
             }
 
             if (_canAttack) {
-                StartCoroutine(StartAttack());
+                StartAttack();
             }
 
             return this;
         }
         
-        IEnumerator StartAttack() {
+        private void StartAttack() {
             _canAttack = false;
             _isAttacking = true;
             if (_moveWithRootMotion.canMove) _moveWithRootMotion.canMove = false;
             var randomAttack = Random.Range(0, animData.attackAnim.Count);
             var attack = animData.attackAnim[randomAttack];
             TriggerAnim(attack);
-            yield return StartCoroutine(FinishAnimation());
-            yield return StartCoroutine(DelayAttack());
         }
 
-        private IEnumerator DelayAttack()
-        {
-            yield return new WaitForSeconds(attackDelay);
-            StartCoroutine(StartAttack());
-        }
-        
-        private IEnumerator FinishAnimation() {
-            yield return new WaitUntil(() => animator.GetCurrentAnimatorStateInfo(0).normalizedTime >= 0.99f);
+        public void ResetAttack() {
             _isAttacking = false;
+            if (_canSwitchState) return;
+            StartCoroutine(DelayAttack());
+        }
+
+        private IEnumerator DelayAttack() {
+            yield return new WaitForSeconds(attackDelay);
+            StartAttack();
         }
 
         public override void OnTriggerExit(Collider other) {
             if (CheckLayerMask.IsInLayerMask(other.gameObject, playerMask)) {
                 StopAllCoroutines();
-                if (_isAttacking) {
-                    StartCoroutine(FinishAnimation());
-                }
 
                 foreach (var anim in animData.attackAnim) {
                     ResetAnim(anim);
