@@ -840,7 +840,7 @@ MonoBehaviour:
     m_Bits: 256
   grapplePointLayer:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 4096
   gravityDampDuration: 0.3
   momentumForce: 2500
   forceMode: 5
@@ -867,7 +867,7 @@ LineRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: e9b54fe53d453b56a8fb459296d5a20b, type: 2}
+  - {fileID: 2100000, guid: 75b790c8fd21d9149abb84139283d353, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -1006,7 +1006,7 @@ MonoBehaviour:
   maxWeight: 0
   weightPerLevel: 0
   weightModifier: 0
-  defaultWeight: 5
+  defaultWeight: 10
 --- !u!114 &2072302959703469181
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1881,7 +1881,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4256722287336621164, guid: e6817e8341ddb4645849058a84016fdf, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 447.46228
+      value: 360
       objectReference: {fileID: 0}
     - target: {fileID: 4256722287336621164, guid: e6817e8341ddb4645849058a84016fdf, type: 3}
       propertyPath: m_AnchoredPosition.y
