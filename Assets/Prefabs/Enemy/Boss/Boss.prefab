@@ -298,7 +298,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2387085961047800663, guid: 156ffb807b55a0a47abfc0db3ec0aff6, type: 3}
       propertyPath: name
-      value: Andrew Tate
+      value: BOSS
       objectReference: {fileID: 0}
     - target: {fileID: 4268977109600893350, guid: 156ffb807b55a0a47abfc0db3ec0aff6, type: 3}
       propertyPath: m_AnchorMax.y
@@ -571,7 +571,7 @@ MonoBehaviour:
   target: {fileID: 0}
   detected: 0
   nextState: {fileID: 6764285391558067201}
-  _moveWithRootMotion: {fileID: 0}
+  _moveWithRootMotion: {fileID: 4570570895715307271}
 --- !u!1001 &4952381753789180899
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -903,4 +903,4 @@ MonoBehaviour:
   nextState: {fileID: 0}
   animData: {fileID: 11400000, guid: 2681d3064bb8d9d438ee4f6974eabae1, type: 2}
   idleAnim: {fileID: 0}
-  _moveWithRootMotion: {fileID: 0}
+  _moveWithRootMotion: {fileID: 4570570895715307271}

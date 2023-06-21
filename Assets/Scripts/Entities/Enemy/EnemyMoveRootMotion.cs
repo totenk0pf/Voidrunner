@@ -20,7 +20,6 @@ namespace Entities.Enemy {
             _agent = transform.parent.GetComponent<NavMeshAgent>();
 
             _agent.updatePosition = false;
-            _agent.acceleration = _agent.angularSpeed;
         }
 
         private void Update() {

@@ -62,7 +62,8 @@ namespace Entities.Enemy.Juggernaut {
                 foreach (var anim in animData.attackAnim) {
                     ResetAnim(anim);
                 }
-                
+
+                _isAttacking = false;
                 _canAttack = false;
                 inRange = false;
                 

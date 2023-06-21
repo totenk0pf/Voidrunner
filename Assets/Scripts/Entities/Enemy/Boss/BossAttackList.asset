@@ -27,7 +27,7 @@ MonoBehaviour:
         mscorlib
     - Name: 
       Entry: 12
-      Data: 4
+      Data: 3
     - Name: 
       Entry: 7
       Data: Entities.Enemy.EnemyMovelist, Assembly-CSharp
@@ -48,7 +48,7 @@ MonoBehaviour:
       Data: 
     - Name: weight
       Entry: 4
-      Data: 0.9
+      Data: 1
     - Name: 
       Entry: 8
       Data: 
@@ -72,7 +72,7 @@ MonoBehaviour:
       Data: 
     - Name: weight
       Entry: 4
-      Data: 0.9
+      Data: 1
     - Name: 
       Entry: 8
       Data: 
@@ -96,31 +96,7 @@ MonoBehaviour:
       Data: 
     - Name: weight
       Entry: 4
-      Data: 0.9
-    - Name: 
-      Entry: 8
-      Data: 
-    - Name: 
-      Entry: 7
-      Data: Entities.Enemy.EnemyMovelist, Assembly-CSharp
-    - Name: anim
-      Entry: 7
-      Data: AnimParam, Assembly-CSharp
-    - Name: type
-      Entry: 3
-      Data: 9
-    - Name: name
-      Entry: 1
-      Data: Grab
-    - Name: hash
-      Entry: 3
-      Data: -1347921612
-    - Name: 
-      Entry: 8
-      Data: 
-    - Name: weight
-      Entry: 4
-      Data: 0.3
+      Data: 0.5
     - Name: 
       Entry: 8
       Data: 
@@ -141,6 +117,3 @@ MonoBehaviour:
   - type: 9
     name: Stomp
     hash: -1643012858
-  - type: 9
-    name: Grab
-    hash: -1347921612

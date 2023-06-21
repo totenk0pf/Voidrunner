@@ -21,6 +21,10 @@ namespace Entities.Enemy.Boss {
             }
         }
 
+        public void RestartAttack() {
+            attack.RestartAttack();
+        }
+
         public void OnGrab() {
             if (!attack.inRange) return;
             _isGrabbing = true;

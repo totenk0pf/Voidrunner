@@ -26,10 +26,11 @@ MonoBehaviour:
     type: 4
     name: isIdle
     hash: 2098831385
+  hitAnim: []
   hostileAnim:
   - type: 4
-    name: isWalking
-    hash: -830007593
+    name: Walking
+    hash: 1744665739
   attackAnim:
   - type: 9
     name: SwipeL
@@ -40,6 +41,3 @@ MonoBehaviour:
   - type: 9
     name: Stomp
     hash: -1643012858
-  - type: 9
-    name: Grab
-    hash: -1347921612
