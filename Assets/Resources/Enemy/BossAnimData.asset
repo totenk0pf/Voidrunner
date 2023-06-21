@@ -23,11 +23,8 @@ MonoBehaviour:
     SerializationNodes: []
   animParams:
   - type: 4
-    name: isIdle
-    hash: 2098831385
-  - type: 4
-    name: isWalking
-    hash: -830007593
+    name: Walking
+    hash: 1744665739
   - type: 9
     name: SwipeL
     hash: 85304741
@@ -37,7 +34,4 @@ MonoBehaviour:
   - type: 9
     name: Stomp
     hash: -1643012858
-  - type: 9
-    name: Grab
-    hash: -1347921612
-  controller: {fileID: 9100000, guid: 2275b3e202d6fcd43bb2783d0dadafc6, type: 2}
+  controller: {fileID: 9100000, guid: e1ed2f066c2b10a4db3116921e004c2b, type: 2}
