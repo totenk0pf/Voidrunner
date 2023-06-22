@@ -37,7 +37,7 @@ public class MeleeSequenceAttribute : IAnimDataConvertable {
     [ShowIf("canDamageMod")] [SerializeField] private float damageScale = 1;
     [ShowIf("canDamageMod")] [SerializeField] private float damageModifier = 0;
     [ShowIf("canDamageMod")] [SerializeField] public float modifierScale = 1;
-    [ShowIf("canDamageMod")] [SerializeField] private float attackSpeedModifier = 1;
+    [ShowIf("canDamageMod")] [SerializeField] private float attackSpeedModifier;
     public List<ComboAnimContainer> ComboAnim;
     
     
@@ -84,6 +84,10 @@ public class MeleeSequenceAttribute : IAnimDataConvertable {
 
     public AnimData CloneToAnimData(Transform transform) {
         return new AnimData(State, collider.Enemies, Damage, KnockbackRange, KnockbackDuration, transform, AtkSpdModifier);
+    }
+    
+    public AnimData CloneToAnimData(Transform transform, float atkSpeed) {
+        return new AnimData(State, collider.Enemies, Damage, KnockbackRange, KnockbackDuration, transform, atkSpeed);
     }
     
     public MeleeSequenceAttribute(PlayerAnimState animState, float seqInputWin, float dmg, float knockRange, float knockDuration, MeleeCollider col,
@@ -298,7 +302,21 @@ public class CombatManager : MonoBehaviour
         //Clone -> not edit in SO data
         this.FireEvent(EventType.CancelGrappleEvent, true);
         this.FireEvent(EventType.UpdateActiveWeaponEvent, _activeWeapon);
-        this.FireEvent(EventType.PlayAttackEvent, MeleeSequence.OrderToAttributes[_curMeleeOrder].CloneToAnimData(transform.root));
+        switch (_curMeleeOrder)
+        {
+            case MeleeOrder.First:
+                this.FireEvent(EventType.PlayAttackEvent, MeleeSequence.OrderToAttributes[_curMeleeOrder].CloneToAnimData(transform.root, 2));
+                break;
+            case MeleeOrder.Second:
+                this.FireEvent(EventType.PlayAttackEvent, MeleeSequence.OrderToAttributes[_curMeleeOrder].CloneToAnimData(transform.root, 2.3f));
+                break;
+            case MeleeOrder.Third:
+                this.FireEvent(EventType.PlayAttackEvent, MeleeSequence.OrderToAttributes[_curMeleeOrder].CloneToAnimData(transform.root, 2));
+                break;
+            default:
+                throw new ArgumentOutOfRangeException();
+        }
+        
         //this.FireEvent(EventType.StopMovementEvent);
         this.FireEvent(EventType.SetMovementStateEvent, PlayerMovementController.MovementState.Locked);
     }

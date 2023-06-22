@@ -20,6 +20,7 @@ MonoBehaviour:
     - {fileID: 0}
     - {fileID: 0}
     - {fileID: 0}
+    - {fileID: 0}
     SerializedBytesString: 
     Prefab: {fileID: 0}
     PrefabModificationsReferencedUnityObjects: []
@@ -89,7 +90,7 @@ MonoBehaviour:
       Data: 0
     - Name: attackSpeedModifier
       Entry: 4
-      Data: 2.4
+      Data: 1
     - Name: ComboAnim
       Entry: 7
       Data: 3|System.Collections.Generic.List`1[[ComboAnimContainer, Assembly-CSharp]],
@@ -171,7 +172,7 @@ MonoBehaviour:
       Data: 0
     - Name: attackSpeedModifier
       Entry: 4
-      Data: 1.6
+      Data: 1
     - Name: ComboAnim
       Entry: 7
       Data: 6|System.Collections.Generic.List`1[[ComboAnimContainer, Assembly-CSharp]],
@@ -184,7 +185,7 @@ MonoBehaviour:
       Data: 7|ComboAnimContainer, Assembly-CSharp
     - Name: transform
       Entry: 10
-      Data: 1
+      Data: 3
     - Name: destTransform
       Entry: 6
       Data: 
@@ -238,7 +239,7 @@ MonoBehaviour:
       Data: 
     - Name: collider
       Entry: 10
-      Data: 3
+      Data: 4
     - Name: canDamageMod
       Entry: 5
       Data: true
@@ -253,7 +254,7 @@ MonoBehaviour:
       Data: 0
     - Name: attackSpeedModifier
       Entry: 4
-      Data: 1.2
+      Data: 1
     - Name: ComboAnim
       Entry: 7
       Data: 9|System.Collections.Generic.List`1[[ComboAnimContainer, Assembly-CSharp]],
@@ -266,7 +267,7 @@ MonoBehaviour:
       Data: 10|ComboAnimContainer, Assembly-CSharp
     - Name: transform
       Entry: 10
-      Data: 1
+      Data: 3
     - Name: destTransform
       Entry: 6
       Data: 
@@ -284,7 +285,7 @@ MonoBehaviour:
       Data: 11|ComboAnimContainer, Assembly-CSharp
     - Name: transform
       Entry: 10
-      Data: 1
+      Data: 3
     - Name: destTransform
       Entry: 6
       Data: 
