@@ -208,20 +208,13 @@ public class EnemyBase : EntityBase {
     }
 
     private IEnumerator KnockbackCoroutine(Vector3 dir, float duration) {
-        var isHit =
-            Physics.Raycast(
-                transform.position,
-                -transform.forward,
-                out var test,
-                10f,
-                stopKnockbackLayers);
+        var isHit = _rb.SweepTest(dir, out var hit, 10f);
+        if (isHit && hit.distance <= stopOffset) yield break;
 
-        if (isHit && test.distance <= stopOffset) yield break;
-        
         enemyRootMotion.enabled = false;
         _navAgent.updatePosition = true;
         isStunned = true;
-
+        
         foreach (var anim in animData.attackAnim) {ResetAnim(anim);}
         animator.SetTrigger(animData.hitAnim[0].name);
         animator.speed = animator.GetCurrentAnimatorStateInfo(0).length / duration;
@@ -229,16 +222,10 @@ public class EnemyBase : EntityBase {
             .DOMove(dir + transform.position, duration)
             .SetEase(knockbackEaseType)
             .OnUpdate(() => {
-                var isHit =
-                    Physics.Raycast(
-                        transform.position,
-                        -transform.forward,
-                        out var hit,
-                        10f,
-                        stopKnockbackLayers);
-
-                if (!isHit) return;
-                if (!(hit.distance <= stopOffset)) return;
+                var hitUpdate = _rb.SweepTest(dir, out var hitUpdateInfo, 10f);
+                
+                if (!hitUpdate) return;
+                if (!(hitUpdateInfo.distance <= stopOffset)) return;
                 
                 _currentTween.Kill();
                     
@@ -255,7 +242,6 @@ public class EnemyBase : EntityBase {
                 _navAgent.updatePosition = false;
                 isStunned = false; 
             });
-
         yield return null;
     }
     #endregion
