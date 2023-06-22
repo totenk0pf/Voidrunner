@@ -60,7 +60,7 @@ MonoBehaviour:
   animData: {fileID: 11400000, guid: 8522a6f20a0c8004383cdfb1d49b917d, type: 2}
   enemyRootMotion: {fileID: 3780823670310675607}
   animator: {fileID: 3672347906166251355}
-  stopOffset: 2.5
+  stopOffset: 0.3
   knockbackEaseType: 18
   stopKnockbackLayers:
     serializedVersion: 2

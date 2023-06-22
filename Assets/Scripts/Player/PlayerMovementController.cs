@@ -263,6 +263,10 @@ public class PlayerMovementController : MonoBehaviour
 
     #region Movement Base
 
+    public void ResetMovement() {
+        this.FireEvent(EventType.PlayAnimationEvent, new AnimData(PlayerAnimState.HaltAllMovement, 1f));
+    }
+
     private void ToggleMovement(bool canMove) {
         moveState = canMove ? MovementState.Normal : MovementState.Locked;
         this.FireEvent(EventType.SetMovementStateEvent, moveState);
