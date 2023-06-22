@@ -30,20 +30,20 @@ public class PlayerStats : MonoBehaviour
     }
 
     private void Update() {
-#if DEBUG
-        DebugGUI.Instance.UpdateText(nameof(PlayerStats),
-        "\nProgression\n" + 
-            $"XP: {_progression.CurrentXp}\n" +
-            $"XP cap: {_progression.CurrentXpCap}\n" +
-            $"Level: {_progression.CurrentLevel}\n" +
-            $"Skill points: {_progression.SkillPoints}\n" +
-            $"\nSpec types\n" +
-            $"Vigor: {_progression.CurrentSpec[PlayerProgression.SpecType.Vigor]}\n"+
-            $"Endurance: {_progression.CurrentSpec[PlayerProgression.SpecType.Endurance]}\n" +
-            $"Strength: {_progression.CurrentSpec[PlayerProgression.SpecType.Strength]}\n" +
-            $"Dexterity: {_progression.CurrentSpec[PlayerProgression.SpecType.Dexterity]}\n"        
-            );
-#endif
+// #if DEBUG
+//         DebugGUI.Instance.UpdateText(nameof(PlayerStats),
+//         "\nProgression\n" + 
+//             $"XP: {_progression.CurrentXp}\n" +
+//             $"XP cap: {_progression.CurrentXpCap}\n" +
+//             $"Level: {_progression.CurrentLevel}\n" +
+//             $"Skill points: {_progression.SkillPoints}\n" +
+//             $"\nSpec types\n" +
+//             $"Vigor: {_progression.CurrentSpec[PlayerProgression.SpecType.Vigor]}\n"+
+//             $"Endurance: {_progression.CurrentSpec[PlayerProgression.SpecType.Endurance]}\n" +
+//             $"Strength: {_progression.CurrentSpec[PlayerProgression.SpecType.Strength]}\n" +
+//             $"Dexterity: {_progression.CurrentSpec[PlayerProgression.SpecType.Dexterity]}\n"        
+//             );
+// #endif
     }
 
     private void UpdateCombatModifiers(MeleeSequenceData meleeData)

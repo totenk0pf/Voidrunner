@@ -6,10 +6,10 @@ using UnityEngine;
 
 [Serializable]
 public class EnemyExperienceData {
-#if UNITY_EDITOR
     [ValueDropdown("GetEnemyTags", DropdownTitle = "Select enemy type")]
     public string tag;
     public float gain;
+#if UNITY_EDITOR
     private IEnumerable<string> GetEnemyTags() {
         return UnityEditorInternal.InternalEditorUtility.tags.Where(x => x.ToLower().Contains("enemy"));
     }

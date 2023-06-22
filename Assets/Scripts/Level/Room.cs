@@ -27,6 +27,7 @@ namespace Level {
 
     [RequireComponent(typeof(BoxCollider))]
     public class Room : MonoBehaviour {
+        public Transform respawnPoint;
         public RoomType type;
         public bool IsInRoom { get; private set; }
         [ReadOnly] public List<EnemyBase> enemiesInRoom;
@@ -62,7 +63,7 @@ namespace Level {
             }
 
             _worldSpaceBounds = tempBounds;
-            col.size          = new Vector3(tempBounds.size.x, 3, tempBounds.size.z);
+            col.size          = tempBounds.size;
             col.center        = transform.worldToLocalMatrix.MultiplyPoint3x4(tempBounds.center);
             _pivot            = new Vector3(tempBounds.center.x, tempBounds.min.y, tempBounds.center.z);
             NCLogger.Log($"Bound generated: size of {col.size.ToString()}");

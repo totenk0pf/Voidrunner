@@ -75,14 +75,14 @@ public class InventorySystem : SerializedMonoBehaviour {
                 itemOnly      = false
             });
         }
-#if DEBUG
-        DebugGUI.Instance.UpdateText(nameof(InventorySystem),
-            "\nInventory\n" +
-            $"Weight: {_currentWeight}\n" + 
-            $"Max weight: {maxWeight}\n" +
-            $"Weight mod: {weightModifier}\n"
-        );
-#endif
+// #if DEBUG
+//         DebugGUI.Instance.UpdateText(nameof(InventorySystem),
+//             "\nInventory\n" +
+//             $"Weight: {_currentWeight}\n" + 
+//             $"Max weight: {maxWeight}\n" +
+//             $"Weight mod: {weightModifier}\n"
+//         );
+// #endif
     }
 
     public void UpdateUI(InventoryToggleMsg msg) {

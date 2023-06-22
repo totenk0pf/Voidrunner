@@ -114,6 +114,8 @@ namespace Core.Events {
 
         // Entity update events
         EntityDeathEvent,
-        SkillPointGainedEvent
+        SkillPointGainedEvent,
+        
+        LoadingProgressEvent
     }
 }

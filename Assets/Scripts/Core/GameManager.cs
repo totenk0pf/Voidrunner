@@ -51,7 +51,7 @@ namespace Core {
             AsyncOperation asyncLoad = SceneManager.LoadSceneAsync(1, LoadSceneMode.Single);
             asyncLoad.allowSceneActivation = false;
             while (!asyncLoad.isDone) {
-                NCLogger.Log(asyncLoad.progress);
+                this.FireEvent(EventType.LoadingProgressEvent, asyncLoad.progress);
                 if (asyncLoad.progress >= 0.9f) {
                     asyncLoad.allowSceneActivation = true;
                 }
