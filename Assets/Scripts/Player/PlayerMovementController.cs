@@ -468,12 +468,41 @@ public class PlayerMovementController : MonoBehaviour
         moveState = MovementState.Dodge;
         this.FireEvent(EventType.SetMovementStateEvent, MovementState.Dodge);
         Vector3 dest = transform.position + _dodgeDir * dodgeDistance;
-        var isHit = Physics.Raycast(transform.position, _dodgeDir, out var hit, dodgeDistance, ~dodgeSafetyIgnoreLayer);
+        // var isHit = Physics.Raycast(transform.position + -_dodgeDir * 2f, _dodgeDir, out var hit, dodgeDistance + 2f, ~dodgeSafetyIgnoreLayer);
         float dodgeDuration = dodgeTime;
-        if (isHit && !hit.collider.isTrigger) {
-            dodgeDuration = dodgeTime * (hit.distance / dodgeDistance);
-            dest = hit.point;
+        var hits = Physics.RaycastAll(transform.position, _dodgeDir, dodgeDistance, ~dodgeSafetyIgnoreLayer);
+        RaycastHit actualHit = new RaycastHit();
+        if (hits.Length > 0) {
+            for(var i = 0; i < hits.Length; i++) {
+                if (hits[i].collider != null || !hits[i].collider.isTrigger) {
+                    if (i == 0) {
+                        actualHit = hits[i];
+                    } else {
+                        if (hits[i].distance < actualHit.distance)
+                            actualHit = hits[i];
+                    }
+                }
+            }
+            NCLogger.Log($"DASH stops at {Time.time} | collider: {actualHit.collider.name} | hit pos {actualHit.point}");
+            dodgeDuration = dodgeTime * (actualHit.distance / dodgeDistance);
+            dest = actualHit.point;
+            Debug.DrawLine(transform.position, dest, Color.red, 5f);
         }
+        else
+        {
+            NCLogger.Log($"DASH stops at {Time.time} | collider: None | hit pos {dest}");
+            // dodgeDuration = dodgeTime * (actualHit.distance / dodgeDistance);
+            // dest = actualHit.point;
+            Debug.DrawLine(transform.position, dest, Color.red, 5f);
+        }
+
+      
+        
+        
+        // if (isHit && !hit.collider.isTrigger) {
+        //     dodgeDuration = dodgeTime * (hit.distance / dodgeDistance);
+        //     dest = hit.point;
+        // }
 
         if (new Vector2(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical")).magnitude <= .01f) return;
         Vector3 rollAxis = Vector3.Cross(_dodgeDir, transform.root.up);

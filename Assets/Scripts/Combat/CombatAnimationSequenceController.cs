@@ -110,15 +110,44 @@ public class CombatAnimationSequenceController : MonoBehaviour
             //change this into a coroutine so you can cancel it
             var origin = anim.transform.position;
             var dest = anim.destTransform.position;
-            var isHit = Physics.Linecast(origin, dest, out var hit, ~tweenSafetyIgnoreLayer);
-            if (isHit && !hit.collider.isTrigger) {
-                dest = hit.point;
+            var hits = Physics.RaycastAll(origin, (dest-origin).normalized, (dest-origin).magnitude, ~tweenSafetyIgnoreLayer);
+            RaycastHit actualHit = new RaycastHit();
+            if (hits.Length > 0) {
+                for(var i = 0; i < hits.Length; i++) {
+                    if (hits[i].collider != null || !hits[i].collider.isTrigger) {
+                        if (i == 0) {
+                            actualHit = hits[i];
+                        } else {
+                            if (hits[i].distance < actualHit.distance)
+                                actualHit = hits[i];
+                        }
+                    }
+                }
+                NCLogger.Log($"COMBAT DASH stops at {Time.time} | collider: {actualHit.collider.name} | hit pos {actualHit.point}");
+                dest = actualHit.point;
                 Debug.DrawLine(transform.position, dest, Color.red, 5f);
-                //NCLogger.Log($"dodge hit {hit.collider.name}");
             }
-            else {
+            else
+            {
+                NCLogger.Log($"COMBAT DASH stops at {Time.time} | collider: None | hit pos {dest}");
+                // dodgeDuration = dodgeTime * (actualHit.distance / dodgeDistance);
+                // dest = actualHit.point;
                 Debug.DrawLine(transform.position, dest, Color.red, 5f);
             }
+            // foreach (var hit in hits)
+            // {
+            //     if (hit.collider != null) {
+            //         dest = hit.point;
+            //         Debug.DrawLine(transform.position, dest, Color.red, 5f);
+            //         break;
+            //         //NCLogger.Log($"dodge hit {hit.collider.name}");
+            //     } else {
+            //         Debug.DrawLine(transform.position, dest, Color.red, 5f);
+            //     }
+            // }
+            
+            
+            
             sequence.Append(anim.transform.DOMove(dest , anim.time).SetEase(anim.easeType));
         }
 
