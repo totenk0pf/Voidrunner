@@ -570,7 +570,7 @@ public class PlayerMovementController : MonoBehaviour
             (-9.8f * 1 * Vector3.up) : 
             (-gravityAcceleration * gravityScale * Vector3.up);
         
-        Rb.AddForce((-gravityAcceleration * gravityScale * Vector3.up), ForceMode.Acceleration);
+        Rb.AddForce(gravityVector, ForceMode.Acceleration);
     }
 
     private void GetMovementState() {

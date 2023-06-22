@@ -327,7 +327,7 @@ namespace Grapple {
             }
             else //TODO: This is hardcoded, fix this later.
             {
-                // Rigidbody.AddForce(Vector3.up*momentumForce/3, forceMode);
+                Rigidbody.AddForce(Vector3.up*momentumForce/3, forceMode);
                 // this.FireEvent(EventType.ReUpdateMovementAnimEvent);
             }
             this.FireEvent(EventType.PlayAnimationEvent, new AnimData(PlayerAnimState.DeGrappleEverything, 1f));
@@ -335,7 +335,7 @@ namespace Grapple {
             _moveState = PlayerMovementController.MovementState.Normal;
             this.FireEvent(EventType.SetMovementStateEvent, PlayerMovementController.MovementState.Normal);
             //damping fall velocity
-            // StartCoroutine(_controller.GravityDampRoutine(gravityDampDuration));
+            StartCoroutine(_controller.GravityDampRoutine(gravityDampDuration));
             currentGrappleType = GrappleType.None;
             currGrappleObj = null;
             _currentGrappleHit = new RaycastHit();
