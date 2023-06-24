@@ -36,6 +36,7 @@ namespace Audio {
             };
 
             var source = audioInst.AddComponent<AudioSource>();
+            source.spatialBlend = 1;
             source.clip = audioClip;
             source.outputAudioMixerGroup = isBoost ? _effectMixerGroup[1] : _effectMixerGroup[0];
             source.Play();

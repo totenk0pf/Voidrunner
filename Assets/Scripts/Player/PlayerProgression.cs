@@ -198,8 +198,8 @@ namespace Player {
                 
                 EventDispatcher.Instance.FireEvent(EventType.EnableRoom, _currCPdata.roomToReset);
                 EventDispatcher.Instance.FireEvent(EventType.DoorInvoked);
-                var doorTransform = _currCPdata.roomToReset.transform;
-                gameObject.transform.position = doorTransform.position + new Vector3(0, doorTransform.localScale.y, 0);
+                var respawnPoint = _currCPdata.roomToReset.respawnPoint;
+                gameObject.transform.position = respawnPoint.position + transform.localScale;
             }
 
             else {
