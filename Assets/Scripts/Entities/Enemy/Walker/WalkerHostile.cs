@@ -6,6 +6,7 @@ using DG.Tweening;
 using Entities.Enemy;
 using Sirenix.OdinInspector;
 using UnityEngine;
+using UnityEngine.AI;
 
 public class WalkerHostile : EnemyState
 {
@@ -18,18 +19,31 @@ public class WalkerHostile : EnemyState
     private bool _canSwitchChaseState = true;
     private bool _canSwitchState = true;
     
-    private AnimParam _currAnim;
+    private AnimParam _currHostileAnim;
+    private bool _canSetAnim;
 
     public override EnemyState RunCurrentState() {
-        Agent.SetDestination(target.transform.position);
-        if (_canSwitchChaseState) {
-            StartCoroutine(SwitchChaseState());
+        if (NavMesh.SamplePosition(target.transform.position, out var hit, Agent.height / 2, NavMesh.AllAreas)) {
+            Agent.SetDestination(target.transform.position);
+            _canSetAnim = true;
+
+            if (_currHostileAnim.name == null) {
+                StartCoroutine(SwitchChaseState());
+            } 
+        }
+        
+        else {
+            if (_canSetAnim) {
+                _canSetAnim = false;
+                ResetAnim(_currHostileAnim);
+                _currHostileAnim.name = null;
+            };
         }
         
         if (_nextState.inRange && _canSwitchState) {
             _canSwitchState = false;
-            TriggerAnim(_currAnim);
-            Agent.ResetPath();
+            ResetAnim(_currHostileAnim);
+            _currHostileAnim.name = null;
             return _nextState;
         }
         
@@ -53,8 +67,8 @@ public class WalkerHostile : EnemyState
             ResetAnim(animParam);
         }
 
-        _currAnim = GetItemFromMoveList(_hostileAnimData.moveList);
-        TriggerAnim(_currAnim);
+        _currHostileAnim = GetItemFromMoveList(_hostileAnimData.moveList);
+        TriggerAnim(_currHostileAnim);
         yield return null;
     }
 }
