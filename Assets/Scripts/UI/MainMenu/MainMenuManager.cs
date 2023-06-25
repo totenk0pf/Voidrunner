@@ -22,7 +22,6 @@ namespace UI.MainMenu {
         }
         
         private void Update() {
-            NCLogger.Log(Time.timeScale);
         }
 
         public void ToggleSettings() {

@@ -120,7 +120,7 @@ MonoBehaviour:
   isRelative: 0
   isFrom: 1
   isIndependentUpdate: 0
-  autoKill: 1
+  autoKill: 0
   isActive: 1
   isValid: 1
   target: {fileID: 7738640593365373245}

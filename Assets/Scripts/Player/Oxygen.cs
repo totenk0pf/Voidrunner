@@ -23,13 +23,6 @@ public class Oxygen : MonoBehaviour {
     }
 
     private void Update() {
-// #if DEBUG
-//         DebugText();
-// #endif
-        if (Input.GetKeyDown(KeyCode.Space))
-        {
-            ReduceOxygen(10f);
-        }
     }
 
     private void DebugText() {

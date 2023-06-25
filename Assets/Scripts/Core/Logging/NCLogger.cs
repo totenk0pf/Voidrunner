@@ -1,3 +1,5 @@
+// #define DEBUG_ENABLED
+
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -19,8 +21,10 @@ namespace Core.Logging {
         };
 
         public static void Log(object message, LogLevel level = LogLevel.INFO) {
+#if DEBUG_ENABLED
             string content = $"<color={_colors[level]}>[{GetClassName()}]</color> {message}";
             UnityEngine.Debug.Log(content);
+#endif
         }
 
         private static string GetClassName() {
