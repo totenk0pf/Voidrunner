@@ -15,6 +15,10 @@ namespace UI.MainMenu {
         [SerializeField] private DOTweenAnimation exitAnim;
         [SerializeField] private MainMenuTooltip tooltip;
 
+        private void Awake() {
+            Cursor.lockState = CursorLockMode.Confined;
+        }
+
         public void ToggleSettings() {
             if (_settingsEnabled) {
                 settingsAnim.DOPlayBackwards();

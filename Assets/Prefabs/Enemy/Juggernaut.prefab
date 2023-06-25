@@ -54,7 +54,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   type: 0
   enemyDamage: 10
-  enemyHP: 200
+  enemyHP: 130
   ui: {fileID: 2970694111892148635}
   audios: {fileID: 11400000, guid: 49ce36d87df5fd74dbc81609fbaaa92d, type: 2}
   animData: {fileID: 11400000, guid: 7497e4a145c882b4994849ef89527bd0, type: 2}
@@ -800,7 +800,7 @@ MonoBehaviour:
     m_Bits: 8
   target: {fileID: 0}
   detected: 0
-  attackDelay: 0.5
+  attackDelay: 2
   inRange: 0
   _previousState: {fileID: 2842254728877912562}
   _nextState: {fileID: 0}

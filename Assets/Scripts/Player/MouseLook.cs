@@ -15,14 +15,17 @@ public class MouseLook : MonoBehaviour {
     private bool _canLook;
 
     private void Awake() {
-        _transform = transform;
-        _camera = Camera.main;
+        _transform       = transform;
+        _camera          = Camera.main;
+        _canLook         = true;
         Cursor.lockState = CursorLockMode.Locked;
         this.AddListener(EventType.InventoryToggleEvent, msg => OnInventoryUIEvent((InventoryToggleMsg) msg));
+        this.AddListener(EventType.GamePausedEvent, _ => _canLook = !_canLook);
     }
 
     private void OnDestroy() {
         this.RemoveListener(EventType.InventoryToggleEvent, msg => OnInventoryUIEvent((InventoryToggleMsg) msg));
+        this.RemoveListener(EventType.GamePausedEvent, _ => _canLook = !_canLook);
     }
 
     private void OnInventoryUIEvent(InventoryToggleMsg msg) {
@@ -30,7 +33,7 @@ public class MouseLook : MonoBehaviour {
     }
 
     private void LateUpdate() {
-        // if (!_canLook) return;
+        if (!_canLook) return;
         RotatePlayer();
         RotateCamera();
     }

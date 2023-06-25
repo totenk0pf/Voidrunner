@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using Core;
 using Core.Events;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -28,7 +29,8 @@ namespace UI.GameOver {
 
         public void ToMenu() {
             EventDispatcher.Instance.ClearListeners();
-            SceneManager.LoadScene(0);
+            GameManager.Instance.QuitToMenu();
+            Cursor.lockState = CursorLockMode.Confined;
         }
     }
 }

@@ -84,8 +84,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   type: 0
-  enemyDamage: 20
-  enemyHP: 500
+  enemyDamage: 25
+  enemyHP: 300
   ui: {fileID: 2970694111892148635}
   audios: {fileID: 11400000, guid: dc947bef87c881349a4d17ea507a6d30, type: 2}
   animData: {fileID: 11400000, guid: 7e424ba713b89b94d94843999e0cc043, type: 2}

@@ -104,8 +104,9 @@ namespace Level {
         }
 
         private void HandleEnemyDie(EnemyBase enemy) {
+            if (enemiesInRoom.Count == 1 && enemiesInRoom.Contains(enemy)) 
+                this.FireEvent(Core.Events.EventType.RoomUnlock, this);
             if (enemiesInRoom.Contains(enemy)) enemiesInRoom.Remove(enemy);
-            if (enemiesInRoom.Count == 0) this.FireEvent(Core.Events.EventType.RoomUnlock, this);
         }
 
         private void EnemyCheck(Room room) {

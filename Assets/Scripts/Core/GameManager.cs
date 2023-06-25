@@ -44,11 +44,15 @@ namespace Core {
         }
 
         public void StartGame() {
-            StartCoroutine(LoadAsyncScene());
+            StartCoroutine(LoadAsyncScene(2));
         }
 
-        private IEnumerator LoadAsyncScene() {
-            AsyncOperation asyncLoad = SceneManager.LoadSceneAsync(1, LoadSceneMode.Single);
+        public void QuitToMenu() {
+            StartCoroutine(LoadAsyncScene(1));
+        }
+
+        private IEnumerator LoadAsyncScene(int sceneIndex) {
+            AsyncOperation asyncLoad = SceneManager.LoadSceneAsync(sceneIndex, LoadSceneMode.Single);
             asyncLoad.allowSceneActivation = false;
             while (!asyncLoad.isDone) {
                 this.FireEvent(EventType.LoadingProgressEvent, asyncLoad.progress);
