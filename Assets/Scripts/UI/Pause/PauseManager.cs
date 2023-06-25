@@ -21,7 +21,6 @@ namespace UI.Pause {
         }
 
         private void OnDestroy() {
-            this.RemoveListener(EventType.GamePausedEvent, _ => HandlePause());
             DOTween.Kill(0);
         }
 

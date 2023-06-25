@@ -57,6 +57,7 @@ namespace Core {
             while (!asyncLoad.isDone) {
                 this.FireEvent(EventType.LoadingProgressEvent, asyncLoad.progress);
                 if (asyncLoad.progress >= 0.9f) {
+                    EventDispatcher.Instance.ClearListeners();
                     asyncLoad.allowSceneActivation = true;
                 }
                 yield return null;
