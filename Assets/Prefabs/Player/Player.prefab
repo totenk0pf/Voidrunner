@@ -3178,7 +3178,7 @@ PrefabInstance:
     - target: {fileID: 8187974697658281720, guid: e6817e8341ddb4645849058a84016fdf, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
-      objectReference: {fileID: 2405811868932181139}
+      objectReference: {fileID: 3960370131296621021}
     - target: {fileID: 8187974697658281720, guid: e6817e8341ddb4645849058a84016fdf, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Target
       value: 
@@ -3189,7 +3189,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8187974697658281720, guid: e6817e8341ddb4645849058a84016fdf, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: ToMenu
+      value: QuitToMenu
       objectReference: {fileID: 0}
     - target: {fileID: 8187974697658281720, guid: e6817e8341ddb4645849058a84016fdf, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_MethodName
@@ -3197,7 +3197,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8187974697658281720, guid: e6817e8341ddb4645849058a84016fdf, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
-      value: UI.GameOver.GameOverUI, Assembly-CSharp
+      value: UI.Loading.LoadingUI, Assembly-CSharp
       objectReference: {fileID: 0}
     - target: {fileID: 8187974697658281720, guid: e6817e8341ddb4645849058a84016fdf, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_TargetAssemblyTypeName
@@ -4748,6 +4748,18 @@ PrefabInstance:
     - target: {fileID: 6707658158001508116, guid: 5653fcbe133016f4e99613442abaeaed, type: 3}
       propertyPath: m_Name
       value: PauseHUD
+      objectReference: {fileID: 0}
+    - target: {fileID: 6929752824944934164, guid: 5653fcbe133016f4e99613442abaeaed, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 3960370131296621021}
+    - target: {fileID: 6929752824944934164, guid: 5653fcbe133016f4e99613442abaeaed, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: QuitToMenu
+      objectReference: {fileID: 0}
+    - target: {fileID: 6929752824944934164, guid: 5653fcbe133016f4e99613442abaeaed, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: UI.Loading.LoadingUI, Assembly-CSharp
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 5653fcbe133016f4e99613442abaeaed, type: 3}

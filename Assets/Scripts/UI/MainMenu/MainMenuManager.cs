@@ -16,7 +16,13 @@ namespace UI.MainMenu {
         [SerializeField] private MainMenuTooltip tooltip;
 
         private void Awake() {
-            Cursor.lockState = CursorLockMode.Confined;
+            Cursor.lockState    = CursorLockMode.Confined;
+            Time.timeScale      = 1f;
+            Time.fixedDeltaTime = 0.02f * Time.timeScale;
+        }
+        
+        private void Update() {
+            NCLogger.Log(Time.timeScale);
         }
 
         public void ToggleSettings() {

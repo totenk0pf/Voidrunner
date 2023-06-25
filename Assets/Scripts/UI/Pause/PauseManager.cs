@@ -22,6 +22,7 @@ namespace UI.Pause {
 
         private void OnDestroy() {
             this.RemoveListener(EventType.GamePausedEvent, _ => HandlePause());
+            DOTween.Kill(0);
         }
 
         private void Update() {
@@ -40,9 +41,12 @@ namespace UI.Pause {
             pauseUI.SetActive(_isPaused);
             Cursor.lockState = _isPaused ? CursorLockMode.None : CursorLockMode.Locked;
             DOTween.To(() => Time.timeScale, 
-                       x => Time.timeScale = x, 
+                       x => {
+                           Time.timeScale      = x;
+                           Time.fixedDeltaTime = 0.02f * Time.timeScale;
+                       },
                        _isPaused ? 0f : 1f, 
-                       transitionDuration).SetEase(transitionEase).OnPlay(() => {
+                       transitionDuration).SetId(0).SetEase(transitionEase).OnPlay(() => {
                 foreach (UnityAction action in _isPaused ? onPause : onResume) {
                     action.Invoke();
                 }
